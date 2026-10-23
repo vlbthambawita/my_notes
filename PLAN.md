@@ -2,7 +2,7 @@
 
 A personal learning site for AI topics and research papers. Each topic is explained **step by step, in simple language, with visualizations**, and published as a GitHub Pages site at:
 
-> **https://vlbthambawita.github.io/my_notes/**
+> **https://vajira.info/my_notes/**
 
 ---
 

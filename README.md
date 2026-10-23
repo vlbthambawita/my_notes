@@ -2,7 +2,7 @@
 
 AI topics and research papers explained step by step, with interactive visualizations.
 
-📖 **Read the site:** https://vlbthambawita.github.io/my_notes/
+📖 **Read the site:** https://vajira.info/my_notes/
 
 - See [PLAN.md](PLAN.md) for how this project is organised.
 - Lessons live in `docs/topics/`, paper walkthroughs in `docs/papers/`.
