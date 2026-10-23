@@ -26,7 +26,7 @@ A personal learning site for AI topics and research papers. Each topic is explai
 | Interactive visualizations | **Plain JavaScript + D3.js / Plotly.js**, embedded in pages | Sliders, animations, live plots (e.g. "drag the learning rate and watch gradient descent") |
 | Static figures | **Python (matplotlib) scripts** saved as SVG/PNG | Reproducible plots kept in the repo |
 | Code examples | Python snippets (NumPy / PyTorch), optional Colab links | Run the idea yourself |
-| Hosting | **GitHub Pages**, deployed by **GitHub Actions** | Every push to `main` rebuilds and publishes the site automatically |
+| Hosting | **GitHub Pages**, deployed by **GitHub Actions** | Every push to `main` rebuilds the site and publishes it to the `gh-pages` branch |
 
 Why not plain HTML pages? MkDocs keeps writing fast (Markdown) while still allowing full HTML/JS where a visualization needs it.
 
@@ -134,7 +134,7 @@ Every topic page follows the same structure, so lessons feel familiar:
 - [ ] Create lesson and paper templates
 - [ ] Add shared JS/CSS helpers for visualizations (color palette, step-through animation, slider controls)
 - [ ] Build one **demo lesson** (e.g. "Gradient descent") to test every feature: math, Mermaid, interactive widget, code
-- [ ] Enable GitHub Pages in repo settings (Settings → Pages → Source: GitHub Actions)
+- [ ] Enable GitHub Pages in repo settings (Settings → Pages → Deploy from a branch → `gh-pages` / root)
 
 ### Phase 1 — Topics and papers (ongoing, driven by you)
 - Add lessons and paper walkthroughs as you request them.
