@@ -1,0 +1,119 @@
+/* Shared look for every interactive visualization on the site.
+   Colour roles stay the same across lessons:
+   data = blue, model/prediction = orange, loss = purple, gradient = red, optimum = green */
+
+:root {
+  --viz-bg: #ffffff;
+  --viz-panel: #f6f7fb;
+  --viz-border: #d9dce6;
+  --viz-text: #1f2330;
+  --viz-muted: #6b7185;
+  --viz-grid: #e7e9f0;
+  --viz-data: #2f6fde;
+  --viz-model: #e8792b;
+  --viz-loss: #7b4fd6;
+  --viz-grad: #d63b4f;
+  --viz-opt: #1f9d6b;
+}
+
+[data-md-color-scheme="slate"] {
+  --viz-bg: #1b1e2a;
+  --viz-panel: #232737;
+  --viz-border: #3a3f55;
+  --viz-text: #e6e8f0;
+  --viz-muted: #9aa0b8;
+  --viz-grid: #2f3446;
+  --viz-data: #6c9cff;
+  --viz-model: #ffa15c;
+  --viz-loss: #b392ff;
+  --viz-grad: #ff6b7f;
+  --viz-opt: #4fd39f;
+}
+
+.viz {
+  background: var(--viz-panel);
+  border: 1px solid var(--viz-border);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 1.2em 0;
+  color: var(--viz-text);
+}
+
+.viz-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.viz-plots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.viz-plots > * {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.viz svg,
+.viz canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--viz-bg);
+  border: 1px solid var(--viz-border);
+  border-radius: 6px;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 10px;
+  font-size: 0.75rem;
+}
+
+.viz-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls input[type="range"] {
+  width: 160px;
+  accent-color: var(--viz-model);
+}
+
+.viz-controls button {
+  font: inherit;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--viz-border);
+  background: var(--viz-bg);
+  color: var(--viz-text);
+  cursor: pointer;
+}
+
+.viz-controls button:hover {
+  border-color: var(--viz-model);
+}
+
+.viz-readout {
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.72rem;
+  color: var(--viz-muted);
+  margin-top: 8px;
+  min-height: 1.4em;
+}
+
+.viz-hint {
+  font-size: 0.7rem;
+  color: var(--viz-muted);
+  margin-top: 4px;
+}
+
+.viz svg text {
+  fill: var(--viz-muted);
+  font-size: 11px;
+}
