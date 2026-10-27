@@ -170,6 +170,20 @@ Every topic page follows the same structure, so lessons feel familiar:
 - Embeddings and tokenization
 - Vision Transformers
 
+**Reinforcement learning**
+- What is reinforcement learning? Agents, environments, rewards
+- Multi-armed bandits and exploration vs. exploitation
+- Markov decision processes (MDPs) and Bellman equations
+- Dynamic programming: value and policy iteration
+- Monte Carlo and temporal-difference (TD) learning
+- Q-learning and SARSA
+- Deep Q-Networks (DQN)
+- Policy gradients (REINFORCE)
+- Actor-critic methods (A2C, PPO, SAC)
+- Model-based RL and planning (MCTS, AlphaZero)
+- Offline RL and imitation learning
+- RL from human feedback (RLHF) and preference optimization (DPO)
+
 **Generative AI**
 - Autoencoders and VAEs
 - GANs
