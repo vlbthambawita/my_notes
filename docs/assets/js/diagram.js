@@ -51,12 +51,14 @@
 
     const groups = (spec.groups || []).map((g) => {
       const el = div("dg-group", stage);
+      if (g.id) el.dataset.id = g.id;
       div("dg-group-label", el, g.label || "");
       return { spec: g, el };
     });
 
     const nodes = spec.nodes.map((n) => {
       const el = div("dg-node", stage);
+      el.dataset.id = n.id;
       el.dataset.role = n.role || "neutral";
       if (n.shape) el.dataset.shape = n.shape;
       if (n.icon) div("dg-icon", el, n.icon);
@@ -67,6 +69,7 @@
 
     const edges = (spec.edges || []).map((e) => {
       const path = svgEl("path", { class: "dg-edge" + (e.dashed ? " dg-dashed" : ""), "marker-end": `url(#${id}-base)` }, svg);
+      Object.assign(path.dataset, { from: e.from, to: e.to });
       const label = e.label ? div("dg-edge-label", stage, e.label) : null;
       return { spec: e, id: e.id || `${e.from}>${e.to}`, path, label };
     });
@@ -81,30 +84,45 @@
       const narrow = spec.narrow && w < NARROW;
       const L = narrow ? { ...spec, ...spec.narrow } : spec;
       const pos = (narrow && spec.narrow.pos) || {};
-      const rowH = L.rowHeight || 100, cellW = w / L.cols;
-      stage.style.height = L.rows * rowH + "px";
-      stage.classList.toggle("dg-compact", narrow || cellW < 120);
-      const boxes = {};
+      const cellW = w / L.cols;
+      const compact = narrow || cellW < 120;
+      stage.classList.toggle("dg-compact", compact);
+      stage.classList.toggle("dg-nosub", narrow && !!spec.narrow.hideSub);   // phones: drop subtitles to make room
 
+      // 1. Box widths always leave room for a visible arrow between neighbouring cells.
+      const gapX = compact ? 36 : 44, gapY = 48;
+      for (const n of nodes) {
+        const span = narrow ? 1 : n.spec.span || 1;     // spans are for the wide layout only
+        n.el.style.width = Math.max(64, Math.min(cellW * span - gapX, n.spec.maxWidth || 190)) + "px";
+      }
+      // 2. Rows grow to fit the tallest box, so wrapped text never pushes a box into the next row or off the stage.
+      const rowH = Math.max(L.rowHeight || 100, Math.max(...nodes.map((n) => n.el.offsetHeight)) + gapY);
+      stage.style.height = L.rows * rowH + "px";
+
+      const boxes = {};
       for (const g of groups) {
         const [c, r, cs, rs] = pos[g.spec.id] || [g.spec.col, g.spec.row, g.spec.cols, g.spec.rows];
         Object.assign(g.el.style, { left: c * cellW + 6 + "px", top: r * rowH + 4 + "px", width: cs * cellW - 12 + "px", height: rs * rowH - 8 + "px" });
-        if (g.spec.id) boxes[g.spec.id] = { x: (c + cs / 2) * cellW, y: (r + rs / 2) * rowH, hw: (cs * cellW - 12) / 2, hh: (rs * rowH - 8) / 2 };
+        if (g.spec.id) boxes[g.spec.id] = { x: (c + cs / 2) * cellW, y: (r + rs / 2) * rowH, hw: (cs * cellW - 12) / 2, hh: (rs * rowH - 8) / 2, group: true };
       }
       for (const n of nodes) {
         const [c, r] = pos[n.spec.id] || [n.spec.col, n.spec.row];
-        const span = narrow ? 1 : n.spec.span || 1;     // spans are for the wide layout only
-        const width = Math.min(cellW * (narrow ? 0.94 : 0.88) * span, n.spec.maxWidth || 190);
-        Object.assign(n.el.style, { left: (c + 0.5) * cellW + "px", top: (r + 0.5) * rowH + "px", width: width + "px" });
-      }
-      for (const n of nodes) {
-        const [c, r] = pos[n.spec.id] || [n.spec.col, n.spec.row];
+        Object.assign(n.el.style, { left: (c + 0.5) * cellW + "px", top: (r + 0.5) * rowH + "px" });
         boxes[n.spec.id] = { x: (c + 0.5) * cellW, y: (r + 0.5) * rowH, hw: n.el.offsetWidth / 2, hh: n.el.offsetHeight / 2 };
+      }
+
+      // A container is big: aim at the part of its border facing the other box, so the arrow runs
+      // straight across instead of slanting towards the container's centre.
+      function anchor(box, other) {
+        if (!box.group) return box;
+        if (Math.abs(other.x - box.x) > box.hw && Math.abs(other.y - box.y) < box.hh - 16) return { ...box, y: other.y };
+        if (Math.abs(other.y - box.y) > box.hh && Math.abs(other.x - box.x) < box.hw - 16) return { ...box, x: other.x };
+        return box;
       }
 
       svg.setAttribute("viewBox", `0 0 ${w} ${L.rows * rowH}`);
       for (const e of edges) {
-        const a = boxes[e.spec.from], b = boxes[e.spec.to];
+        const a = anchor(boxes[e.spec.from], boxes[e.spec.to]), b = anchor(boxes[e.spec.to], boxes[e.spec.from]);
         const k = narrow && e.spec.narrowCurve !== undefined ? e.spec.narrowCurve : e.spec.curve || 0;
         // Bend: push the midpoint sideways by k × length (k > 0 bends to the left of travel).
         // First aim from the box centres to find where the arrow leaves each box,

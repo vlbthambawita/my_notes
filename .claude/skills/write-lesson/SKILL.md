@@ -57,12 +57,17 @@ Copy the pattern from `docs/topics/gradient-descent/viz/gradient-descent.js` or
 ## Verify before finishing
 
 1. `mkdocs build --strict -d <scratchpad>/site` must have no warnings.
-2. Look at the page in headless Chromium at **1100px and 390px**, in **light and dark** mode
+2. `node scripts/check_diagrams.mjs <scratchpad>/site` must print "All diagrams look clean." It measures every
+   diagram at 1440/1100/820/390px for overlaps, arrows through boxes, broken words and misalignment.
+   Fix the layout (see the rules in [diagrams.md](diagrams.md)) rather than ignoring a finding.
+3. Look at the page in headless Chromium at **1440px** (both sidebars, narrowest desktop content) **and 390px**, in **light and dark** mode
    (`data-md-color-scheme="slate"` on `<body>`). Click through every widget and every diagram step.
    Playwright's Chromium is in `~/.cache/ms-playwright/chromium_headless_shell-*/*/chrome-headless-shell`;
    run it with `--remote-debugging-port` and drive it over CDP with Node's built-in `WebSocket`
-   (serve the built site with `python3 -m http.server`). Emoji show as boxes in headless screenshots; that's only a missing font.
-3. Check: no overlapping boxes, no arrow crossing a box, no label covering a box, no words broken mid-word.
+   (open pages with `file://`, or serve the built site with `python3 -m http.server`). Emoji show as boxes in headless
+   screenshots; that's only a missing font. A `search_index.js` error under `file://` is harmless.
+4. Check by eye what the script can't: nothing cramped or lopsided, no big empty bands, boxes on a clean grid,
+   arrows straight (diagonal only across an empty cell), labels short and clear of boxes.
 
 ## Git
 

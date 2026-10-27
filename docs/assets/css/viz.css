@@ -265,6 +265,7 @@
 
 .dg-compact .dg-node { font-size: 0.6rem; padding: 5px 5px; }
 .dg-compact .dg-sub { font-size: 0.56rem; }
+.dg-nosub .dg-sub { display: none; }
 .dg-compact .dg-icon,
 .dg-compact .dg-label { display: inline; }
 .dg-compact .dg-icon { font-size: 0.95rem; margin-right: 4px; vertical-align: -2px; }

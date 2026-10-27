@@ -53,15 +53,15 @@ They interact in a loop, one **time step** at a time:
 {
   "title": "🔄 The agent–environment loop",
   "cols": 3,
-  "rows": 2.4,
+  "rows": 1.9,
   "rowHeight": 100,
   "nodes": [
-    {"id": "agent", "col": 0, "row": 0.7, "icon": "🤖", "label": "<b>Agent</b>", "sub": "picks actions with its policy π", "role": "model", "note": "The learner: the dog, the game player, the robot's controller."},
-    {"id": "env", "col": 2, "row": 0.7, "icon": "🌍", "label": "<b>Environment</b>", "sub": "the world: rules, physics, game", "role": "data", "note": "Everything outside the agent. It decides what happens next and how much reward to give."}
+    {"id": "agent", "col": 0, "row": 0.45, "icon": "🤖", "label": "<b>Agent</b>", "sub": "picks actions with its policy π", "role": "model", "note": "The learner: the dog, the game player, the robot's controller."},
+    {"id": "env", "col": 2, "row": 0.45, "icon": "🌍", "label": "<b>Environment</b>", "sub": "the world: rules, physics, game", "role": "data", "note": "Everything outside the agent. It decides what happens next and how much reward to give."}
   ],
   "edges": [
     {"from": "agent", "to": "env", "label": "action a<sub>t</sub>", "curve": 0.3},
-    {"from": "env", "to": "agent", "id": "state", "label": "new state s<sub>t+1</sub>", "curve": 0.1},
+    {"from": "env", "to": "agent", "id": "state", "label": "state s<sub>t+1</sub>", "curve": 0.1},
     {"from": "env", "to": "agent", "id": "reward", "label": "reward r<sub>t+1</sub>", "curve": 0.38}
   ],
   "steps": [
@@ -71,7 +71,7 @@ They interact in a loop, one **time step** at a time:
     {"show": ["state", "reward", "env"], "text": "It sends back the <b>new state</b> s<sub>t+1</sub> and a <b>reward</b> r<sub>t+1</sub>, a number saying how good that was."},
     {"show": ["agent", "agent>env"], "text": "Time moves on (t → t+1) and the loop repeats until the episode ends."}
   ],
-  "narrow": {"rows": 2.2, "rowHeight": 90, "pos": {"agent": [0, 0.6], "env": [2, 0.6]}}
+  "narrow": {"cols": 2.4, "rows": 1.9, "hideSub": true, "pos": {"agent": [0, 0.45], "env": [1.4, 0.45]}}
 }
 </script>
 </div>
@@ -194,35 +194,36 @@ An RL agent that only exploits could take the safe route on its first lucky epis
 <script type="application/json">
 {
   "title": "🧩 How an RL agent learns, episode after episode",
-  "cols": 4,
-  "rows": 2.75,
-  "rowHeight": 88,
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
   "nodes": [
-    {"id": "obs", "col": 0, "row": 0.6, "icon": "👀", "label": "Observe state s", "role": "data"},
-    {"id": "pol", "col": 1, "row": 0, "icon": "🧭", "label": "Policy π picks action a", "sub": "explore or exploit?", "role": "model"},
-    {"id": "env", "col": 2, "row": 0, "icon": "🌍", "label": "Environment returns r and s′", "role": "data"},
-    {"id": "learn", "col": 3, "row": 0, "icon": "🧠", "label": "Learn", "sub": "update values and/or policy", "role": "loss", "note": "This is where RL algorithms differ: Q-learning, policy gradients, actor-critic… all answer “how do we do this box?”"},
-    {"id": "end", "col": 3, "row": 1.15, "label": "Episode over?", "shape": "decision", "role": "grad"},
-    {"id": "reset", "col": 1.5, "row": 1.85, "icon": "🔁", "label": "Reset: start a new episode", "shape": "pill"}
+    {"id": "reset", "col": 0, "row": 0, "icon": "🔁", "label": "Start a new episode", "shape": "pill", "sub": "reset the environment"},
+    {"id": "obs", "col": 1, "row": 0, "icon": "👀", "label": "Observe state s", "role": "data"},
+    {"id": "pol", "col": 2, "row": 0, "icon": "🧭", "label": "Policy π picks action a", "sub": "explore or exploit?", "role": "model"},
+    {"id": "env", "col": 2, "row": 1, "icon": "🌍", "label": "Environment returns r and s′", "role": "data"},
+    {"id": "learn", "col": 1, "row": 1, "icon": "🧠", "label": "Learn", "sub": "update values and/or policy", "role": "loss", "note": "This is where RL algorithms differ: Q-learning, policy gradients, actor-critic… all answer “how do we do this box?”"},
+    {"id": "end", "col": 0, "row": 1, "label": "Episode over?", "shape": "decision", "role": "grad"}
   ],
   "edges": [
+    {"from": "reset", "to": "obs"},
     {"from": "obs", "to": "pol"},
     {"from": "pol", "to": "env"},
     {"from": "env", "to": "learn"},
     {"from": "learn", "to": "end"},
-    {"from": "end", "to": "obs", "label": "no", "narrowCurve": 0.3},
-    {"from": "end", "to": "reset", "label": "yes"},
-    {"from": "reset", "to": "obs"}
+    {"from": "end", "to": "obs", "label": "no"},
+    {"from": "end", "to": "reset", "label": "yes"}
   ],
   "steps": [
-    {"show": ["obs"], "text": "The agent looks at the current state."},
+    {"show": ["reset"], "text": "An episode starts: the environment is reset to a starting state."},
+    {"show": ["reset>obs", "obs"], "text": "The agent looks at the current state."},
     {"show": ["obs>pol", "pol"], "text": "Its policy chooses an action, usually the best-known one, sometimes a random one to explore."},
     {"show": ["pol>env", "env"], "text": "The environment responds with a reward and the next state."},
     {"show": ["env>learn", "learn"], "text": "The agent <b>learns</b> from that experience. Every RL method on the roadmap is a different recipe for this box."},
     {"show": ["learn>end", "end", "end>obs", "obs"], "text": "If the episode isn't over, carry on from the new state."},
-    {"show": ["end>reset", "reset", "reset>obs"], "text": "If it is over (goal reached, game lost), reset and start a new episode, keeping everything learned so far."}
+    {"show": ["end>reset", "reset"], "text": "If it is over (goal reached, game lost), start a new episode, keeping everything learned so far."}
   ],
-  "narrow": {"cols": 2, "rows": 4, "rowHeight": 88, "pos": {"obs": [0, 0], "pol": [1, 0], "env": [1, 1], "learn": [1, 2], "end": [1, 3], "reset": [0, 3]}}
+  "narrow": {"cols": 2, "rows": 3, "pos": {"reset": [0, 0], "obs": [1, 0], "pol": [1, 1], "env": [1, 2], "learn": [0, 2], "end": [0, 1]}}
 }
 </script>
 </div>
