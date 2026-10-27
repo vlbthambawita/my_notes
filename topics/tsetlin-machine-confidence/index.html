@@ -1,0 +1,2307 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/tsetlin-machine-confidence/">
+      
+      
+        <link rel="prev" href="../convolutional-tsetlin-machine/">
+      
+      
+        <link rel="next" href="../../papers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Confidence & composites - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#confidence-trustworthiness-and-composites" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Confidence & composites
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-confidence-is-the-size-of-the-vote-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Confidence is the size of the vote sum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-trustworthiness-confidence-must-match-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Trustworthiness: confidence must match performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-confidence-on-real-patients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Confidence on real patients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-knowing-when-to-refer-a-triage-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Knowing when to refer: a triage rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-an-honest-look-at-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — An honest look at calibration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-different-machines-different-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Different machines, different skills
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-normalisation-one-scale-for-every-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Normalisation: one scale for every machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-build-a-composite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Build a composite
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-confidence-is-the-size-of-the-vote-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Confidence is the size of the vote sum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-trustworthiness-confidence-must-match-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Trustworthiness: confidence must match performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-confidence-on-real-patients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Confidence on real patients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-knowing-when-to-refer-a-triage-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Knowing when to refer: a triage rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-an-honest-look-at-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — An honest look at calibration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-different-machines-different-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Different machines, different skills
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-normalisation-one-scale-for-every-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Normalisation: one scale for every machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-build-a-composite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Build a composite
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="confidence-trustworthiness-and-composites">Confidence, Trustworthiness and Composites<a class="headerlink" href="#confidence-trustworthiness-and-composites" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A Tsetlin machine (TM) can tell you <strong>how sure it is</strong>, for free: the <strong>confidence</strong> of a prediction is the size of the vote sum, <span class="arithmatex">\(|v|\)</span>. Many rules agreeing gives a large <span class="arithmatex">\(|v|\)</span>; few rules, or rules that disagree, give a <span class="arithmatex">\(|v|\)</span> near zero. A TM is <strong>trustworthy</strong> when its confidence matches its performance: the cases it is sure about should be the ones it gets right. You check this on held-out data by answering only the cases above a confidence threshold and measuring accuracy on them, which gives a <strong>coverage/accuracy trade-off</strong> (answer fewer patients, make fewer mistakes, refer the rest to a human). Vote sums are a <em>ranking</em>, not probabilities, so check how they line up with real outcomes before reading too much into them. Finally, several specialised TMs can form a <strong>TM composite</strong>: each one <strong>normalises</strong> its vote sum by its own range, and the normalised sums are added. On a breast-cancer dataset, three specialists that each see one group of measurements reach 88.0%, 90.7% and 82.6% accuracy alone, and <strong>96.1%</strong> together.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../tsetlin-machine-classification/">Classification by voting</a> (rules voting for and against a class, the vote sum <span class="arithmatex">\(v\)</span>, the Voting Margin <span class="arithmatex">\(T\)</span>). <a href="../convolutional-tsetlin-machine/">Convolutional Tsetlin machines</a> helps for the image examples, but isn't needed.</p>
+<p>This lesson follows Chapter 7 of Ole-Christoffer Granmo's free book <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a>, redrawn and retold in this site's style. The patient experiments are our own runs, made for this lesson.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Think about your family doctor (the chapter opens with this example). Nobody expects them to know every corner of medicine. You trust them because of one skill: <strong>they know when they don't know</strong>, and then they refer you to a specialist.</p>
+<p>A model that helps with clinical decisions needs the same skill, and medical AI is full of situations where it matters:</p>
+<ul>
+<li><strong>Triage.</strong> A screening model could handle the clear-cut cases and send the doubtful ones to a radiologist or pathologist. That only works if "doubtful" is something the model can measure.</li>
+<li><strong>Safety.</strong> A confident wrong answer is the most dangerous kind. You want to know how often the model is confident <em>and</em> wrong before anyone relies on it.</li>
+<li><strong>Combining sources.</strong> Hospitals hold different patient populations; one patient has blood tests, images and clinical notes. Models trained on each source could work as a team, if their opinions can be put on the same scale.</li>
+</ul>
+<p>Tsetlin machines are a good fit here because the same vote sum that decides the class also measures how sure the machine is, and the rules behind every vote can be read. This lesson shows how to measure confidence, how to check whether it deserves trust, and how to build TM composites.</p>
+<hr />
+<h2 id="step-1-confidence-is-the-size-of-the-vote-sum">Step 1 — Confidence is the size of the vote sum<a class="headerlink" href="#step-1-confidence-is-the-size-of-the-vote-sum" title="Permanent link">&para;</a></h2>
+<p>Recall from <a href="../tsetlin-machine-classification/">Classification by voting</a> how a two-class TM decides: every rule whose condition is true casts a vote, votes for the class count <span class="arithmatex">\(+1\)</span>, votes against it count <span class="arithmatex">\(-1\)</span>, and the <strong>vote sum</strong> <span class="arithmatex">\(v\)</span> decides (class if <span class="arithmatex">\(v \ge 0\)</span>). The chapter's key observation is that <span class="arithmatex">\(v\)</span> carries more information than its sign:</p>
+<ul>
+<li><strong>Many rules agree on "yes"</strong> → a large positive <span class="arithmatex">\(v\)</span>. The machine is <strong>confident in the class</strong>.</li>
+<li><strong>Many rules agree on "no"</strong> → a large negative <span class="arithmatex">\(v\)</span>. The machine is <strong>confident in the other class</strong>.</li>
+<li><strong>Few rules vote, or they disagree</strong> → <span class="arithmatex">\(v\)</span> near zero. There is no clear consensus: the machine is <strong>uncertain</strong>.</li>
+</ul>
+<p>So the chapter defines confidence as the size of the vote sum, ignoring its sign:</p>
+<div class="arithmatex">\[
+\text{confidence} = |v|
+\]</div>
+<p>The chapter illustrates this with a small, invented example: predicting which of six students pass a course from three habits (did they follow the lectures, read the textbook, do the assignments?), using three rules. Click the buttons to answer only the students whose confidence reaches a threshold.</p>
+<div id="viz-students" class="viz"><div class="viz-title">🎓 Interactive: confidence for six students (the book's Table 7.1)</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Students #1 and #3</strong> match R1 and R2 and nothing votes against them: <span class="arithmatex">\(v = +2\)</span>, the most confident Pass.</li>
+<li><strong>Student #2</strong> is the interesting one. R2 (Textbook) votes Pass, R3 (no Assignments) votes Fail, so <span class="arithmatex">\(v = 0\)</span>: a tie. The machine still has to pick something (<span class="arithmatex">\(v \ge 0\)</span> gives Pass), and it is wrong. It is also the <strong>least confident</strong> student.</li>
+<li><strong>Ranking by confidence:</strong> #1 and #3 (<span class="arithmatex">\(|v| = 2\)</span>), then #4, #5, #6 (<span class="arithmatex">\(|v| = 1\)</span>), then #2 (<span class="arithmatex">\(|v| = 0\)</span>). Answer everyone and accuracy is 5 of 6 (83%). Answer only <span class="arithmatex">\(|v| \ge 1\)</span> and it is 5 of 5 (100%). The one mistake was the case the machine was least sure about.</li>
+</ul>
+</div>
+<p><strong>How big is "big"?</strong> The Voting Margin <span class="arithmatex">\(T\)</span> gives the natural scale. During learning, a TM clips <span class="arithmatex">\(v\)</span> at <span class="arithmatex">\(\pm T\)</span> and stops giving feedback for an example once its vote sum reaches <span class="arithmatex">\(T\)</span> in the right direction: <span class="arithmatex">\(T\)</span> is how sure training <em>asks</em> the machine to be. So <span class="arithmatex">\(|v| \ge T\)</span> means "as sure as training ever pushed it", and <span class="arithmatex">\(|v|/T\)</span> is a handy 0-to-1 reading of confidence. (Vote sums can go beyond <span class="arithmatex">\(T\)</span> when more rules happen to agree; they are simply not pushed further.)</p>
+<div class="admonition note">
+<p class="admonition-title">More than two classes</p>
+<p>A multi-class TM keeps one vote sum per class and predicts the class with the <strong>largest</strong> sum. The chapter takes that largest sum as the confidence:</p>
+<div class="arithmatex">\[
+\text{multi-class confidence} = \max_{\text{classes}} v_{\text{class}}
+\]</div>
+<p>A common alternative in other models, not used in the chapter, is the gap between the largest and second-largest sums, which also catches the case where two classes are both strongly supported.</p>
+</div>
+<hr />
+<h2 id="step-2-trustworthiness-confidence-must-match-performance">Step 2 — Trustworthiness: confidence must match performance<a class="headerlink" href="#step-2-trustworthiness-confidence-must-match-performance" title="Permanent link">&para;</a></h2>
+<p>Confidence on its own proves nothing. A person can be very confident and still wrong, and someone too timid to act also does badly. Confidence is only useful when it <strong>matches ability</strong>. The chapter sums this up in a 2 × 2 table:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Low performance</strong></th>
+<th><strong>High performance</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High confidence</strong></td>
+<td>🚩 Overconfident</td>
+<td>✅ Justifiably confident</td>
+</tr>
+<tr>
+<td><strong>Low confidence</strong></td>
+<td>✅ Justifiably uncertain</td>
+<td>🐢 Underconfident</td>
+</tr>
+</tbody>
+</table>
+<p>For a classifier, you test this by comparing predictions with the true labels at each confidence level, exactly as in the student widget: if accuracy rises as you keep only the more confident cases, then confidence is <strong>faithful to performance</strong>, and the machine is trustworthy in this sense. If accuracy is flat (or even falls), its confidence tells you nothing.</p>
+<p>The chapter also reports this test for a much larger problem: a multi-class TM that sorts colour images into 100 classes, using Boolean features made by thresholding each pixel's colour against its neighbours. Ranking 10,000 test images by multi-class confidence (from about −2,500 to 10,000), <strong>accuracy climbs from about 34% for the least confident images to 100% for the most confident ones</strong> (Granmo, Ch. 7, Fig. 7.3; we did not rerun this). The machine was unsure about images made mostly of colour texture, such as a pink flower, and sure about large, distinct objects such as a tank or the Eiffel Tower.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Trustworthiness here is a property you <strong>measure</strong> on data the machine has not seen, not something you assume.</li>
+<li>The test does not need the confidence to be a probability. It only asks: <em>are the more confident cases more often right?</em></li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-confidence-on-real-patients">Step 3 — Confidence on real patients<a class="headerlink" href="#step-3-confidence-on-real-patients" title="Permanent link">&para;</a></h2>
+<p>Now the real test, on two breast-cancer datasets. For each, we trained our own TM (numpy, written for this lesson following the book's algorithm; 20 rules, Voting Margin <span class="arithmatex">\(T = 10\)</span>, Memorize Value <span class="arithmatex">\(2/3\)</span>, Forget Value <span class="arithmatex">\(1/3\)</span>, 40 passes over the data). To make the test honest, we used <strong>5-fold cross-validation</strong>: the patients are split into five groups, and each group's vote sums come from a machine trained on the other four. Every vote sum below is for a patient the machine had <strong>never seen</strong>.</p>
+<ol>
+<li><strong>Diagnosis (Wisconsin).</strong> The public <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">Wisconsin Diagnostic Breast Cancer data</a> (also bundled with scikit-learn): 569 patients, 212 malignant and 357 benign. Each has 30 measurements of the cell nuclei in a digitised image of a fine-needle aspirate (10 properties such as radius, texture and concavity, each as a mean, a standard error and a "worst" value). We Booleanize each measurement with 4 thresholds ("mean radius &gt; 11.39?", and so on, at the 20th, 40th, 60th and 80th percentiles of the training patients), giving 120 Boolean features.</li>
+<li><strong>Recurrence (the book's data).</strong> The public <a href="https://archive.ics.uci.edu/dataset/14/breast+cancer">UCI Breast Cancer data</a> from the Institute of Oncology in Ljubljana, which Chapter 1 of the book uses: 286 patients, 85 of whom had a recurrence, with 9 properties (age, menopause, tumour size, involved nodes, malignancy grade and so on), one Boolean feature per value: 41 features.</li>
+</ol>
+<p>Slide the threshold to answer only patients with <span class="arithmatex">\(|v|\)</span> at or above it. The rest are referred.</p>
+<div id="viz-confidence" class="viz"><div class="viz-title">🎚️ Interactive: answer only the confident cases</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Diagnosis: confidence is very informative.</strong> Answering everyone, the machine is right 92.3% of the time (44 errors in 569). At <span class="arithmatex">\(|v| \ge 2\)</span> it answers 473 patients (83.1%) with <strong>99.2%</strong> accuracy (4 errors). The 96 referred patients hold <strong>40 of the 44 errors</strong>.</li>
+<li><strong>The silent cases.</strong> 42 patients (7.4%) got <span class="arithmatex">\(v = 0\)</span>: either no rule fired, or the votes for and against cancelled out. They are classed malignant by the <span class="arithmatex">\(v \ge 0\)</span> rule, but 25 of them are benign: a machine with nothing to say should not be trusted to say it.</li>
+<li><strong>Confident is not the same as infallible.</strong> At <span class="arithmatex">\(|v| \ge 10\)</span> (the full Voting Margin) it still makes 1 error in 64 patients: a malignant case that got the most confident possible <em>benign</em> vote, <span class="arithmatex">\(v = -10\)</span>.</li>
+<li><strong>Recurrence: switch datasets.</strong> Here the TM's overall accuracy is 72.4%, barely above the 70.3% you get by always saying "no recurrence". Accuracy does rise with confidence (84.1% at <span class="arithmatex">\(|v| \ge 6\)</span>), but look at the dashed line: all 69 of those patients are predicted "no recurrence", and always guessing "no recurrence" in that same group <em>also</em> gives 84.1%. The rising curve here only shows the machine finding the patients whose recurrence was least likely to begin with; within that group its confidence adds nothing beyond the class balance.</li>
+</ul>
+</div>
+<p>That last point is a general lesson, not a quirk of Tsetlin machines. <strong>Always compare against the simplest baseline, in the same subgroup.</strong> An accuracy-vs-confidence curve that rises can still describe a model that has learned little.</p>
+<hr />
+<h2 id="step-4-knowing-when-to-refer-a-triage-rule">Step 4 — Knowing when to refer: a triage rule<a class="headerlink" href="#step-4-knowing-when-to-refer-a-triage-rule" title="Permanent link">&para;</a></h2>
+<p>A confidence threshold turns a classifier into a <strong>triage tool</strong>: answer when sure, refer when not. Because a TM is built from readable rules, it can hand the human more than "I don't know". It can show <em>which</em> rules fired on each side, so the clinician sees what the conflict was.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🩺 A Tsetlin machine that knows when to refer",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "pat", "col": 0, "row": 0, "icon": "🧾", "label": "New patient", "sub": "Boolean features", "role": "data", "note": "Measurements turned into true/false features, the same way as during training."},
+    {"id": "tm", "col": 1, "row": 0, "icon": "🗳️", "label": "Rules vote", "sub": "vote sum v", "role": "model", "note": "Rules whose condition is true vote for or against the class. v = votes for − votes against."},
+    {"id": "gate", "col": 1, "row": 1, "label": "|v| ≥ threshold?", "shape": "decision", "role": "loss", "note": "The threshold is chosen on validation data, from the coverage/accuracy trade-off."},
+    {"id": "ans", "col": 2, "row": 1, "icon": "✅", "label": "Answer", "sub": "class + rules that fired", "role": "opt", "note": "The prediction comes with its reasons: the rules that voted."},
+    {"id": "ref", "col": 0, "row": 1, "icon": "👩‍⚕️", "label": "Refer to a clinician", "sub": "show the conflicting rules", "role": "grad", "note": "Low confidence: few rules fired, or rules on both sides fired. Show both sides to the human."}
+  ],
+  "edges": [
+    {"from": "pat", "to": "tm"},
+    {"from": "tm", "to": "gate"},
+    {"from": "gate", "to": "ans", "label": "yes"},
+    {"from": "gate", "to": "ref", "label": "no"}
+  ],
+  "steps": [
+    {"show": ["pat"], "text": "A new patient arrives, described by the same Boolean features the machine was trained on."},
+    {"show": ["pat>tm", "tm"], "text": "Every rule whose condition holds casts its vote. The vote sum <b>v</b> gives both the class (its sign) and the confidence (its size |v|)."},
+    {"show": ["tm>gate", "gate"], "text": "Compare |v| with a threshold chosen in advance on validation data. On our diagnosis run, |v| ≥ 2 answered 83.1% of patients at 99.2% accuracy."},
+    {"show": ["gate>ans", "ans"], "text": "Confident: report the class, together with the rules that voted for it. That is the explanation."},
+    {"show": ["gate>ref", "ref"], "text": "Uncertain: refer the case. Show the rules that fired on each side, or say that none fired, so the clinician knows what the machine saw."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "rowHeight": 100, "pos": {"pat": [0, 0], "tm": [1, 0], "gate": [1, 1], "ans": [1, 2], "ref": [0, 1]}}
+}
+</script>
+</div>
+
+<p>What does "the rules that fired" look like? Here are some rules our size specialist (Step 8) learned, from one of the five training runs. Each is an AND of thresholded measurements:</p>
+<ul>
+<li><strong>if</strong> worst radius &gt; 20.35 <strong>then</strong> malignant</li>
+<li><strong>if</strong> mean radius &gt; 17.16 <strong>then</strong> malignant</li>
+<li><strong>if</strong> area SE &gt; 57.94 <strong>then</strong> malignant (SE = standard error)</li>
+<li><strong>if</strong> worst perimeter ≤ 91.31 <strong>then</strong> benign</li>
+<li><strong>if</strong> worst perimeter ≤ 91.31 <strong>and</strong> mean perimeter ≤ 91.35 <strong>then</strong> benign</li>
+</ul>
+<p>(A few of its other rules are long chains of thresholds that a person would want to simplify, and one rule appears twice, just like the duplicated rules in the book's Chapter 1 example.) This is what the chapter means by trustworthiness in a wider sense: an answer you can check (<em>why</em>) together with an honest signal of doubt (<em>how sure</em>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Before anything like this touches patients</p>
+<p>These are teaching experiments, not a validated clinical tool. A real triage threshold has to be chosen on a separate validation set and then checked on fresh data from the setting where it will be used. The Wisconsin data come from one centre, decades ago; a new scanner, lab or patient population can shift every number above. Errors also have different costs: missing a cancer is not the same as a false alarm, so a real system might demand more confidence before saying "benign" than before saying "malignant" (our own suggestion, not from the book).</p>
+</div>
+<hr />
+<h2 id="step-5-an-honest-look-at-calibration">Step 5 — An honest look at calibration<a class="headerlink" href="#step-5-an-honest-look-at-calibration" title="Permanent link">&para;</a></h2>
+<p>It is tempting to read <span class="arithmatex">\(|v|/T\)</span> as a probability: "<span class="arithmatex">\(v = 8\)</span> with <span class="arithmatex">\(T = 10\)</span> means 80% sure". That is <strong>not</strong> what the vote sum is. The TM never learns probabilities; it learns rules and pushes vote sums towards <span class="arithmatex">\(\pm T\)</span>. Whether a vote sum corresponds to 60% or 99% of patients actually being positive is an empirical question, and the answer differs between machines and datasets.</p>
+<p>The standard way to look is a <strong>reliability diagram</strong> (as in Guo et al., 2017). Group the held-out patients by their vote sum and, for each group, plot the share that truly had the positive class. Here are both of our machines.</p>
+<div id="viz-reliability" class="viz"><div class="viz-title">📊 Interactive: what does each vote sum really mean?</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Diagnosis: the scale saturates fast.</strong> Every one of the 11 patients with <span class="arithmatex">\(v = +2\)</span> was malignant, as were all 115 with <span class="arithmatex">\(v \ge 8\)</span>. A vote sum of +2 is "only" 20% of the margin, yet it already behaves like near-certainty. Reading <span class="arithmatex">\(|v|/T\)</span> as a probability would badly <em>understate</em> this machine's confidence.</li>
+<li><strong>The middle is where the doubt lives.</strong> <span class="arithmatex">\(v = 0\)</span>: 17 of 42 malignant (40%). <span class="arithmatex">\(v = +1\)</span>: 9 of 18 (50%), even though the machine says "malignant" for all of them. <span class="arithmatex">\(v = -1\)</span>: 6 of 36 (17%).</li>
+<li><strong>Small groups, wide error bars.</strong> 11 out of 11 sounds conclusive, but the 95% interval for <span class="arithmatex">\(v = +2\)</span> runs from 74% to 100%. With a few hundred patients, a per-vote-sum table is a rough sketch.</li>
+<li><strong>Recurrence: nothing is certain.</strong> The positive vote sums never pass +4, and their recurrence shares bounce around (8 of 11 at <span class="arithmatex">\(v = +2\)</span>, 6 of 11 at <span class="arithmatex">\(v = +3\)</span>). Even <span class="arithmatex">\(v = -5\)</span> still had 11 recurrences among 29 patients (38%). This machine's ranking is weak, and the picture shows it immediately.</li>
+</ul>
+</div>
+<p>If you need actual probabilities (for a risk score, or to combine with costs), you can <strong>learn a mapping</strong> from vote sum to probability on validation data, for example by binning as above or by fitting a logistic curve to <span class="arithmatex">\(v\)</span> (Platt scaling). That mapping is only as good as the data it was fitted on, and it has to be re-checked when the patient population changes.</p>
+<hr />
+<h2 id="step-6-different-machines-different-skills">Step 6 — Different machines, different skills<a class="headerlink" href="#step-6-different-machines-different-skills" title="Permanent link">&para;</a></h2>
+<p>The second half of the chapter is about teamwork. Just as a house needs carpenters, plumbers and electricians, a hard problem may need several Tsetlin machines with different skills. The chapter names two ways TMs end up with different skills:</p>
+<ul>
+<li><strong>Different populations.</strong> Two hospitals train their own recurrence TMs. Different demographics, treatments and equipment give each machine its own perspective.</li>
+<li><strong>Different modalities.</strong> One TM reads blood tests, another mammograms, a third the doctor's notes. Each sees something the others miss.</li>
+</ul>
+<p>A <strong>TM composite</strong> lets such machines work together. Each machine runs on its own, completely unchanged, but instead of announcing a class it reports its <strong>vote sum</strong>. Because the only thing exchanged is a vote sum, any kind of TM (plain, convolutional, trained on any data) can join a composite: the chapter calls this <em>plug-and-play</em>. The research paper behind the chapter calls them <a href="https://arxiv.org/abs/2309.04801">TMComposites</a>.</p>
+<p>The chapter's toy example reuses the recurrence rules from Chapter 1, split into two machines:</p>
+<ul>
+<li><strong>Recurrence TM</strong>, trained only on recurrence patients: R1 and R2, both "if Deg-malig 3 and NOT Menopause lt40 then Recurrence".</li>
+<li><strong>Non-Recurrence TM</strong>, trained only on non-recurrence patients: R3, "if Inv-nodes 0-2 then Non-Recurrence".</li>
+</ul>
+<p>Step through the composite for patient #1 of the book's Table 1.9 (Menopause ge40, Inv-nodes 3-5, Deg-malig 3; she did have a recurrence).</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 A two-machine composite (after the book's Fig. 7.5)",
+  "cols": 4,
+  "rows": 2,
+  "rowHeight": 120,
+  "nodes": [
+    {"id": "pat", "col": 0, "row": 0, "icon": "🧾", "label": "Patient #1", "sub": "ge40 · nodes 3-5 · grade 3", "role": "data", "note": "Menopause ge40, Inv-nodes 3-5, Deg-malig 3."},
+    {"id": "rec", "col": 1, "row": 0, "icon": "🗳️", "label": "Recurrence TM", "sub": "R1, R2 fire: v = +2", "role": "model", "note": "R1 = R2 = if Deg-malig 3 and NOT Menopause lt40 then Recurrence. Both conditions hold."},
+    {"id": "non", "col": 1, "row": 1, "icon": "🗳️", "label": "Non-Recurrence TM", "sub": "R3 silent: v = 0", "role": "model", "note": "R3 = if Inv-nodes 0-2 then Non-Recurrence. This patient has 3-5 nodes, so R3 stays silent."},
+    {"id": "nrec", "col": 2, "row": 0, "icon": "➗", "label": "÷ 2", "sub": "+2 → +1", "role": "loss", "note": "On the six patients, this machine's vote sums range from 0 to +2, so its normalisation factor is 2."},
+    {"id": "nnon", "col": 2, "row": 1, "icon": "➗", "label": "÷ 1", "sub": "0 → 0", "role": "loss", "note": "This machine's vote sums range from 0 to 1, so its factor is 1."},
+    {"id": "sum", "col": 3, "row": 0, "icon": "➕", "label": "+1 − 0 = +1", "sub": "≥ 0 → Recurrence", "role": "opt", "note": "Non-Recurrence votes count against Recurrence. The composite sum +1 is ≥ 0, so the composite predicts Recurrence: correct."}
+  ],
+  "edges": [
+    {"from": "pat", "to": "rec"},
+    {"from": "pat", "to": "non"},
+    {"from": "rec", "to": "nrec"},
+    {"from": "non", "to": "nnon"},
+    {"from": "nrec", "to": "sum"},
+    {"from": "nnon", "to": "sum"}
+  ],
+  "steps": [
+    {"show": ["pat"], "text": "Patient #1: Menopause ge40, 3-5 involved nodes, malignancy grade 3. Both machines see the same patient."},
+    {"show": ["pat>rec", "rec", "pat>non", "non"], "text": "Each machine votes on its own. The Recurrence TM's two rules both fire (<b>v = +2</b>); the Non-Recurrence TM's rule does not (<b>v = 0</b>)."},
+    {"show": ["rec>nrec", "nrec", "non>nnon", "nnon"], "text": "Each machine divides by its own range (highest − lowest vote sum on the data): 2 for the Recurrence TM, 1 for the other. Now both speak on the same scale."},
+    {"show": ["nrec>sum", "nnon>sum", "sum"], "text": "Add them, counting Non-Recurrence votes as negative: <b>+1 − 0 = +1 ≥ 0</b>, so the composite says Recurrence. The confident machine decided; the silent one stayed out of the way."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 100, "hideSub": false, "pos": {"pat": [0.5, 0], "rec": [0, 1], "non": [1, 1], "nrec": [0, 2], "nnon": [1, 2], "sum": [0.5, 3]}}
+}
+</script>
+</div>
+
+<p>Doing the same for all six patients of the book's Table 1.9 (our calculation):</p>
+<table>
+<thead>
+<tr>
+<th>Patient</th>
+<th>Recurrence TM <span class="arithmatex">\(v\)</span> → ÷ 2</th>
+<th>Non-Recurrence TM <span class="arithmatex">\(v\)</span> → ÷ 1</th>
+<th>Composite</th>
+<th>Prediction</th>
+<th>Truth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td>+2 → +1</td>
+<td>0 → 0</td>
+<td>+1</td>
+<td>Recurrence</td>
+<td>Recurrence</td>
+</tr>
+<tr>
+<td>#2</td>
+<td>0 → 0</td>
+<td>1 → 1</td>
+<td>−1</td>
+<td>No recurrence</td>
+<td>No recurrence</td>
+</tr>
+<tr>
+<td>#3</td>
+<td>+2 → +1</td>
+<td>0 → 0</td>
+<td>+1</td>
+<td>Recurrence</td>
+<td>Recurrence</td>
+</tr>
+<tr>
+<td>#4</td>
+<td>0 → 0</td>
+<td>1 → 1</td>
+<td>−1</td>
+<td>No recurrence</td>
+<td>No recurrence</td>
+</tr>
+<tr>
+<td>#5</td>
+<td>+2 → +1</td>
+<td>1 → 1</td>
+<td>0</td>
+<td>Recurrence</td>
+<td>Recurrence</td>
+</tr>
+<tr>
+<td>#6</td>
+<td>0 → 0</td>
+<td>1 → 1</td>
+<td>−1</td>
+<td>No recurrence</td>
+<td>No recurrence</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">A note on signs</p>
+<p>The chapter writes the composite as the <em>sum</em> of the two normalised vote sums and predicts Recurrence when it is <span class="arithmatex">\(\ge 0\)</span>. For that to work, the Non-Recurrence machine's votes must count as <strong>negative</strong> (they are votes against Recurrence), just like rules voting against a class in a single TM. With more than two classes this question disappears: each machine reports one sum per class, the sums are added class by class, and the largest wins.</p>
+</div>
+<hr />
+<h2 id="step-7-normalisation-one-scale-for-every-machine">Step 7 — Normalisation: one scale for every machine<a class="headerlink" href="#step-7-normalisation-one-scale-for-every-machine" title="Permanent link">&para;</a></h2>
+<p>Why divide at all? Because members of a composite can be built very differently: different data, different numbers of rules, different Voting Margins. A machine with 40 rules can produce vote sums of ±20; one with 10 rules rarely goes past ±5. Added raw, the big machine would drown out the small one, whatever their actual skill.</p>
+<p>The chapter's fix is simple. Each machine finds the <strong>highest</strong> and <strong>lowest</strong> vote sum it produces on the (training) data, and divides by the difference:</p>
+<div class="arithmatex">\[
+\text{normalised vote sum} = \frac{v}{\;v_{\text{highest}} - v_{\text{lowest}}\;}
+\]</div>
+<p>The composite then adds the normalised sums and decides as usual:</p>
+<div class="arithmatex">\[
+v_{\text{composite}} = \sum_{\text{machines } m} \frac{v_m}{\;v_{m,\text{highest}} - v_{m,\text{lowest}}\;}, \qquad \text{class if } v_{\text{composite}} \ge 0
+\]</div>
+<p>After normalisation, every machine's opinion lives on a range of width 1. A machine that is confident relative to its <em>own</em> range counts for more than one that is lukewarm, regardless of size. That is how the composite "leans on the confident ones".</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The factor is a property of the <strong>machine</strong>, computed once from data, not of the patient.</li>
+<li>Use the training data (or a validation set) for the range, never the patients you test on.</li>
+<li>Normalising by the range is the chapter's choice. It is simple and needs no labels, but it is sensitive to a single extreme vote sum; other scalings are possible.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-8-build-a-composite">Step 8 — Build a composite<a class="headerlink" href="#step-8-build-a-composite" title="Permanent link">&para;</a></h2>
+<p>Back to the Wisconsin data. Instead of one machine that sees all 30 measurements, we trained three <strong>specialists</strong>, each seeing only one group of measurements, and gave them deliberately different sizes:</p>
+<table>
+<thead>
+<tr>
+<th>Specialist</th>
+<th>Sees (mean, SE and worst of …)</th>
+<th>Boolean features</th>
+<th>Rules</th>
+<th><span class="arithmatex">\(T\)</span></th>
+<th>Normalisation factor (per fold)</th>
+<th>Accuracy alone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Size TM</td>
+<td>radius, perimeter, area</td>
+<td>36</td>
+<td>10</td>
+<td>4</td>
+<td>7 to 10</td>
+<td>88.0%</td>
+</tr>
+<tr>
+<td>Shape TM</td>
+<td>compactness, concavity, concave points</td>
+<td>36</td>
+<td>40</td>
+<td>20</td>
+<td>40</td>
+<td>90.7%</td>
+</tr>
+<tr>
+<td>Texture TM</td>
+<td>texture, smoothness, symmetry, fractal dimension</td>
+<td>48</td>
+<td>20</td>
+<td>10</td>
+<td>18 to 20</td>
+<td>82.6%</td>
+</tr>
+</tbody>
+</table>
+<p>All other settings are as in Step 3, with the same 5-fold cross-validation and seed. Tick specialists on and off, switch normalisation off, and browse the patients on whom the specialists disagree.</p>
+<div id="viz-composite" class="viz"><div class="viz-title">🧩 Interactive: three specialists, one composite</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The team beats every member.</strong> Alone, the specialists reach 88.0%, 90.7% and 82.6%. The normalised composite of all three reaches <strong>96.1%</strong> (22 errors in 569). The specialists disagree on 183 patients; the composite gets 164 of those right.</li>
+<li><strong>Normalisation matters here.</strong> Switch it off: the raw sum drops to 94.2%, because the 40-rule shape machine shouts loudest. The first patient shown (patient 11, malignant) is a case in point: size +2/8 = +0.25, shape −14/40 = −0.35, texture +3/19 = +0.16. Normalised, the sum is +0.06 → malignant ✓. Raw, it is 2 − 14 + 3 = −9 → benign ✗.</li>
+<li><strong>But it is not magic.</strong> Among the 183 disagreement cases, normalising fixed 14 and broke 3. For the shape + texture pair it even does worse than the raw sum (90.0% vs 91.7%). Normalising makes the scales comparable; it cannot know which machine is right.</li>
+<li><strong>Fair comparison.</strong> One TM on all 30 measurements with 20 rules reaches 92.3%; with 70 rules (as many as the three specialists together) it reaches 96.1%, the same as the composite. The composite's advantage is not raw accuracy: it is that <strong>separately trained machines can be combined without retraining</strong>, which is exactly the situation of different hospitals or different modalities.</li>
+<li><strong>The composite has a confidence too</strong>: <span class="arithmatex">\(|v_{\text{composite}}|\)</span>. Answering only <span class="arithmatex">\(|v_{\text{composite}}| \ge 0.25\)</span> covers 90.7% of patients at 98.6% accuracy, and <span class="arithmatex">\(\ge 0.5\)</span> covers 76.1% at 99.3%.</li>
+</ul>
+</div>
+<p>We repeated the whole experiment with two other random splits (seeds 2 and 3). The normalised composite reached 94.9% and 96.1%, the raw sum 93.5% and 94.2%, and no single specialist went above 90.7%. So the ranking held, though the exact numbers move by a percentage point or so.</p>
+<div class="admonition note">
+<p class="admonition-title">The chapter's image composite</p>
+<p>The chapter's larger example (Fig. 7.6) combines four multi-class TMs for colour images, each with a different view of the same picture: one on a <strong>histogram of gradients</strong>, one on <strong>colour thresholding</strong> with 10 × 10 convolution filters, and two on <strong>colour thermometers</strong> with 3 × 3 and 4 × 4 convolution filters (see <a href="../convolutional-tsetlin-machine/">Convolutional Tsetlin machines</a>). Each normalises its class sums, the sums are added class by class, and the composite predicts the class with the largest total (argmax). The book develops image understanding in a later chapter.</p>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔗 A trustworthy TM composite, end to end",
+  "cols": 3.3,
+  "rows": 3.1,
+  "rowHeight": 95,
+  "groups": [
+    {"id": "team", "label": "Specialist TMs, trained separately", "col": 0, "row": 0, "cols": 1, "rows": 3.1}
+  ],
+  "nodes": [
+    {"id": "size", "col": 0, "row": 0.45, "icon": "📏", "label": "Size TM", "sub": "v ÷ its range", "role": "model", "note": "Sees only radius, perimeter and area. 10 rules, T = 4."},
+    {"id": "shape", "col": 0, "row": 1.3, "icon": "🔷", "label": "Shape TM", "sub": "v ÷ its range", "role": "model", "note": "Sees only compactness and concavity. 40 rules, T = 20."},
+    {"id": "tex", "col": 0, "row": 2.15, "icon": "🧶", "label": "Texture TM", "sub": "v ÷ its range", "role": "model", "note": "Sees only texture, smoothness, symmetry and fractal dimension. 20 rules, T = 10."},
+    {"id": "sum", "col": 1.25, "row": 1.3, "icon": "➕", "label": "Add normalised votes", "sub": "composite v", "role": "loss", "note": "Two classes: one number, class if ≥ 0. Many classes: add per class, then argmax."},
+    {"id": "gate", "col": 2.3, "row": 1.3, "label": "|v| ≥ threshold?", "shape": "decision", "role": "loss", "note": "The composite's own confidence. Pick the threshold on validation data."},
+    {"id": "ans", "col": 2.3, "row": 0.45, "icon": "✅", "label": "Answer + rules", "role": "opt"},
+    {"id": "ref", "col": 2.3, "row": 2.15, "icon": "👩‍⚕️", "label": "Refer", "role": "grad"}
+  ],
+  "edges": [
+    {"from": "team", "to": "sum"},
+    {"from": "sum", "to": "gate"},
+    {"from": "gate", "to": "ans", "label": "yes"},
+    {"from": "gate", "to": "ref", "label": "no"}
+  ],
+  "steps": [
+    {"show": ["team", "size", "shape", "tex"], "text": "Each specialist is an ordinary TM trained on its own view of the data (its own features, rules and Voting Margin). It reports a vote sum, divided by its own range of vote sums."},
+    {"show": ["team>sum", "sum"], "text": "Add the normalised votes. On our run: 96.1% accuracy, against 88.0%, 90.7% and 82.6% for the specialists alone."},
+    {"show": ["sum>gate", "gate"], "text": "The size of the composite vote sum is its confidence. |v| ≥ 0.25 kept 90.7% of patients at 98.6% accuracy."},
+    {"show": ["gate>ans", "ans"], "text": "Confident: answer, with the rules that fired in each specialist as the explanation."},
+    {"show": ["gate>ref", "ref"], "text": "Not confident: refer to a clinician. Check the whole pipeline on held-out data, against simple baselines, before trusting it."}
+  ],
+  "narrow": {"cols": 2, "rows": 5.8, "rowHeight": 90, "hideSub": true, "pos": {"team": [0, 0, 2, 2.5], "size": [0, 0.6], "shape": [1, 0.6], "tex": [0.5, 1.5], "sum": [0, 2.85], "gate": [0, 3.85], "ref": [1, 3.85], "ans": [0, 4.85]}}
+}
+</script>
+</div>
+
+<p>Here is the whole composite experiment in numpy, the Tsetlin machine included. It reproduces the numbers in Step 8 and runs in about half a minute.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_breast_cancer</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">TsetlinMachine</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="sd">"""Two-class TM: the first half of the rules vote for class 1, the rest for class 0."""</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">n_rules</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span>                       <span class="c1"># positions 1..depth; memorized above N</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_rules</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_features</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>     <span class="c1"># every literal starts barely forgotten</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_rules</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n_rules</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>                                                  <span class="c1"># vote sum v for every row of X</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">lit</span><span class="p">,</span> <span class="n">mem</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">X</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">fired</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lit</span><span class="p">)</span> <span class="o">@</span> <span class="n">mem</span><span class="o">.</span><span class="n">T</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mem</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># all memorized literals true, rule not empty</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="k">return</span> <span class="n">fired</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>                <span class="n">lit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                <span class="n">out</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lit</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>                <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>       <span class="c1"># votes for the object's own class</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>   <span class="c1"># far from the margin: more feedback</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">p</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>                <span class="n">own</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">chosen</span> <span class="o">&amp;</span> <span class="n">own</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>                     <span class="c1"># Recognize / Erase feedback</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>                    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">lit</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>                    <span class="k">if</span> <span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>                        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">lit</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>                        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">lit</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>                    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>                        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>                    <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">chosen</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">own</span> <span class="o">&amp;</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>              <span class="c1"># Reject feedback</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">lit</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="k">return</span> <span class="bp">self</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="k">def</span><span class="w"> </span><span class="nf">thermometer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>                                      <span class="c1"># "x &gt; threshold" bits, 4 per measurement</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="n">cuts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>    <span class="n">bits</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cuts</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="k">return</span> <span class="n">bits</span><span class="p">(</span><span class="n">train</span><span class="p">),</span> <span class="n">bits</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="n">data</span> <span class="o">=</span> <span class="n">load_breast_cancer</span><span class="p">()</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>   <span class="c1"># y = 1: malignant</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="n">cols</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">kinds</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kinds</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="n">views</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"size"</span><span class="p">:</span> <span class="p">(</span><span class="n">cols</span><span class="p">(</span><span class="s2">"radius"</span><span class="p">,</span> <span class="s2">"perimeter"</span><span class="p">,</span> <span class="s2">"area"</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>                        <span class="c1"># (columns, rules, T)</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>         <span class="s2">"shape"</span><span class="p">:</span> <span class="p">(</span><span class="n">cols</span><span class="p">(</span><span class="s2">"compactness"</span><span class="p">,</span> <span class="s2">"concavity"</span><span class="p">,</span> <span class="s2">"concave points"</span><span class="p">),</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>         <span class="s2">"texture"</span><span class="p">:</span> <span class="p">(</span><span class="n">cols</span><span class="p">(</span><span class="s2">"texture"</span><span class="p">,</span> <span class="s2">"smoothness"</span><span class="p">,</span> <span class="s2">"symmetry"</span><span class="p">,</span> <span class="s2">"fractal"</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)}</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                                          <span class="c1"># stratified 5-fold split</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="n">fold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>    <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">c</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="n">fold</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span> <span class="o">%</span> <span class="mi">5</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="n">normalised</span><span class="p">,</span> <span class="n">raw</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">rules</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="ow">in</span> <span class="n">views</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    <span class="n">raw</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">normalised</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>                                                  <span class="c1"># every vote comes from a TM that never saw the patient</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>        <span class="n">tr</span><span class="p">,</span> <span class="n">te</span> <span class="o">=</span> <span class="n">thermometer</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">fold</span> <span class="o">!=</span> <span class="n">k</span><span class="p">][:,</span> <span class="n">columns</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">fold</span> <span class="o">==</span> <span class="n">k</span><span class="p">][:,</span> <span class="n">columns</span><span class="p">])</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>        <span class="n">tm</span> <span class="o">=</span> <span class="n">TsetlinMachine</span><span class="p">(</span><span class="n">tr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">rules</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">100</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">fold</span> <span class="o">!=</span> <span class="n">k</span><span class="p">])</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>        <span class="n">seen</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">vote</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>        <span class="n">raw</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">fold</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">vote</span><span class="p">(</span><span class="n">te</span><span class="p">)</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>        <span class="n">normalised</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">fold</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">vote</span><span class="p">(</span><span class="n">te</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">seen</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">seen</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>   <span class="c1"># Eq. 7.3</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">8s</span><span class="si">}</span><span class="s2"> alone: accuracy </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">raw</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="n">composite</span> <span class="o">=</span> <span class="n">normalised</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span> <span class="o">+</span> <span class="n">normalised</span><span class="p">[</span><span class="s2">"shape"</span><span class="p">]</span> <span class="o">+</span> <span class="n">normalised</span><span class="p">[</span><span class="s2">"texture"</span><span class="p">]</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"composite, raw sums:        </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="nb">sum</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"composite, normalised sums: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">composite</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a><span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">):</span>                                           <span class="c1"># confidence = |composite vote sum|</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="n">keep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">composite</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"|composite| &gt;= </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">: answer </span><span class="si">{</span><span class="n">keep</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> of patients, "</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>          <span class="sa">f</span><span class="s2">"accuracy </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">composite</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="n">keep</span><span class="p">])</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">, refer </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">keep</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>size     alone: accuracy 88.0%
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>shape    alone: accuracy 90.7%
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>texture  alone: accuracy 82.6%
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>composite, raw sums:        94.2%
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>composite, normalised sums: 96.1%
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>|composite| &gt;= 0.25: answer 90.7% of patients, accuracy 98.6%, refer 53
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>|composite| &gt;= 0.5: answer 76.1% of patients, accuracy 99.3%, refer 136
+</code></pre></div>
+<p>Each literal's memory here has a depth of 200 positions (1 to 200, memorized above 100), rules start with every literal at position 100, just below the memorized half, and <code>s = 3</code> gives Memorize Value 2/3 and Forget Value 1/3, as in <a href="../tsetlin-machine-feedback/">Recognize, Erase &amp; Reject feedback</a>. The feedback probability <span class="arithmatex">\((T - v)/(2T)\)</span> is the book's <span class="arithmatex">\((2 - v)/4\)</span> with a general Voting Margin.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"A confident Tsetlin machine is a correct one.\"</p>
+<p>Confidence makes errors <em>rarer</em>, not impossible. Our diagnosis TM gave one malignant patient the most confident possible benign vote (<span class="arithmatex">\(v = -10\)</span>). Always report how many confident errors remain, not just the accuracy.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"If accuracy rises with confidence, the model is useful.\"</p>
+<p>Check the baseline in the same subgroup. On the recurrence data, accuracy rose to 84.1% at <span class="arithmatex">\(|v| \ge 6\)</span>, but every one of those 69 patients was predicted "no recurrence", and simply always saying "no recurrence" scores 84.1% there too.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"<span class="arithmatex">\(v = 8\)</span> with <span class="arithmatex">\(T = 10\)</span> means an 80% chance.\"</p>
+<p>Vote sums are a ranking, not probabilities. On the diagnosis data, all 11 patients with <span class="arithmatex">\(v = +2\)</span> (only 20% of the margin) were malignant, while <span class="arithmatex">\(v = +1\)</span> was a coin flip (9 of 18). To get probabilities, fit a mapping on validation data, and re-check it whenever the setting changes.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A composite wins because it has more rules.\"</p>
+<p>A single TM with the same total of 70 rules matched our composite (96.1% each). The point of a composite is that machines trained <strong>separately</strong>, on different data, sizes and margins, can be combined plug-and-play, and each stays small and readable.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Normalisation always improves the composite.\"</p>
+<p>It makes the machines' scales comparable, which helped the full trio (96.1% vs 94.2% raw). But for the shape + texture pair, the raw sum did better (91.7% vs 90.0%). Normalisation decides <em>how loud</em> each machine is, not <em>which one is right</em>.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. One TM gives patient A the vote sum <span class="arithmatex">\(v = -3\)</span> and patient B <span class="arithmatex">\(v = +1\)</span>. Which prediction is more confident, and what does each predict?</summary>
+<p>Confidence is <span class="arithmatex">\(|v|\)</span>: patient A has confidence 3, patient B has 1, so <strong>A's prediction is more confident</strong>. A is predicted as the <em>other</em> class (negative sum); B is predicted as the class (<span class="arithmatex">\(v \ge 0\)</span>), but only weakly: few rules or disagreeing rules.</p>
+</details>
+<details class="question">
+<summary>2. A multi-class TM gives vote sums Car = 4, Plane = 9, Boat = −2. What does it predict, and with what confidence (the chapter's definition)?</summary>
+<p>It predicts the class with the largest sum, <strong>Plane</strong>, and the chapter's multi-class confidence is that largest sum, <strong>9</strong>. (The gap to the runner-up, 9 − 4 = 5, is another useful measure, though not the chapter's.)</p>
+</details>
+<details class="question">
+<summary>3. Machine A's training vote sums range from −5 to +4; machine B's from −20 to +20. For a patient, A votes +3 and B votes −12. What does the composite predict, with and without normalisation?</summary>
+<p>Normalised: A gives <span class="arithmatex">\(3 / (4 - (-5)) = 3/9 \approx +0.33\)</span>, B gives <span class="arithmatex">\(-12 / 40 = -0.30\)</span>. The sum is about <strong>+0.03 ≥ 0</strong>: the positive class, although only just (very low composite confidence). Raw: <span class="arithmatex">\(3 - 12 = -9\)</span>, the <strong>negative class</strong>. Without normalisation, B wins simply because it has more rules.</p>
+</details>
+<details class="question">
+<summary>4. On our diagnosis run, answering only <span class="arithmatex">\(|v| \ge 2\)</span> kept 473 of 569 patients at 99.2% accuracy. What is the price, and how would you choose the threshold for real use?</summary>
+<p>The price is <strong>96 referred patients</strong> (16.9%) that a human must handle; in exchange, 40 of the 44 errors land in that referred group instead of being reported confidently. A real threshold is chosen on a <strong>separate validation set</strong>, weighing the cost of a missed cancer, a false alarm and a referral, and then checked on fresh data from the clinic where it will be used, not on the test data quoted here.</p>
+</details>
+<details class="question">
+<summary>5. Why must the confidence check use patients the machine has not seen?</summary>
+<p>On its training patients a TM has been pushed to reach the Voting Margin, so its vote sums there are large and mostly right: confidence would look perfectly trustworthy. Only held-out patients (here via 5-fold cross-validation) show how confidence behaves on new cases, which is the only situation that matters in practice.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a>, <strong>Chapter 7</strong> (confidence, trustworthiness and composites; the source of this lesson, including the student example, Tables 7.1 to 7.3 and Figs. 7.3 to 7.6), and Chapter 1, §1.5 to §1.6 (the vote sum and the Voting Margin; Table 1.9).</li>
+<li>Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/2309.04801"><em>TMComposites: Plug-and-Play Collaboration Between Specialized Tsetlin Machines</em></a> (2023). The research paper behind the composites.</li>
+<li>Chuan Guo, Geoff Pleiss, Yu Sun &amp; Kilian Weinberger, <a href="https://arxiv.org/abs/1706.04599"><em>On Calibration of Modern Neural Networks</em></a> (2017). Reliability diagrams and why confident models are often miscalibrated.</li>
+<li>Yonatan Geifman &amp; Ran El-Yaniv, <a href="https://arxiv.org/abs/1705.08500"><em>Selective Classification for Deep Neural Networks</em></a> (2017). The coverage/accuracy trade-off ("selective prediction") in general.</li>
+<li>Data: W. N. Street, W. H. Wolberg &amp; O. L. Mangasarian (1993), the <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">Wisconsin Diagnostic Breast Cancer data</a>; M. Zwitter &amp; M. Soklic, the <a href="https://archive.ics.uci.edu/dataset/14/breast+cancer">UCI Breast Cancer (recurrence) data</a>, University Medical Centre, Institute of Oncology, Ljubljana.</li>
+</ul>
+<p><strong>Next lessons:</strong> This is the last published chapter of the book so far. See the <a href="../../roadmap/#tsetlin-machines">Tsetlin machines section of the roadmap</a> for what comes next; later chapters (for example on image understanding) will be added when they are published.</p>
+<script src="viz/tsetlin-machine-confidence.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../convolutional-tsetlin-machine/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Convolutional Tsetlin machines">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Convolutional Tsetlin machines
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../papers/" class="md-footer__link md-footer__link--next" aria-label="Next: Papers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Papers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

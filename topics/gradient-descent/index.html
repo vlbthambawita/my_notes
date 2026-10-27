@@ -1,0 +1,1899 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/gradient-descent/">
+      
+      
+        <link rel="prev" href="../../roadmap/">
+      
+      
+        <link rel="next" href="../reinforcement-learning-intro/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Gradient Descent - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gradient-descent" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gradient Descent
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-intuition-walking-down-a-foggy-mountain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — The intuition: walking down a foggy mountain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-what-are-we-trying-to-make-small-the-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — What are we trying to make small? The loss
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-which-way-is-downhill-the-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Which way is downhill? The gradient
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-taking-the-step-the-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Taking the step: the update rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-more-parameters-a-landscape-instead-of-a-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — More parameters: a landscape instead of a curve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-real-data-is-big-stochastic-gradient-descent-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Real data is big: Stochastic Gradient Descent (SGD)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="gradient-descent">Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>Gradient descent is how almost every AI model learns. You measure <strong>how wrong</strong> the model is (the <em>loss</em>), work out <strong>which direction makes it less wrong</strong> (the <em>gradient</em>), and take a <strong>small step</strong> that way. Repeat thousands of times, and the model gets good.</p>
+</div>
+<p><strong>Level:</strong> beginner · <strong>Prerequisites:</strong> basic algebra; knowing that a derivative is "the slope" helps but is not required.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>When people say a neural network "learns", what is really happening is gradient descent (or one of its close relatives, such as Adam). ChatGPT, image classifiers and medical-image segmentation models are all trained this way. Once you understand this lesson, "training a model" stops being magic.</p>
+<hr />
+<h2 id="step-1-the-intuition-walking-down-a-foggy-mountain">Step 1 — The intuition: walking down a foggy mountain<a class="headerlink" href="#step-1-the-intuition-walking-down-a-foggy-mountain" title="Permanent link">&para;</a></h2>
+<p>Imagine you are standing on a mountain in thick fog. You want to reach the lowest point of the valley, but you can only see the ground right under your feet. What do you do?</p>
+<ol>
+<li>Feel which way the ground slopes.</li>
+<li>Take a step <strong>downhill</strong>.</li>
+<li>Repeat until the ground is flat.</li>
+</ol>
+<p>That is the whole algorithm. In AI:</p>
+<table>
+<thead>
+<tr>
+<th>Mountain</th>
+<th>Machine learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your position</td>
+<td>The model's <strong>parameters</strong> (its adjustable numbers, also called <em>weights</em>)</td>
+</tr>
+<tr>
+<td>Height of the ground</td>
+<td>The <strong>loss</strong>: how wrong the model is</td>
+</tr>
+<tr>
+<td>Slope under your feet</td>
+<td>The <strong>gradient</strong></td>
+</tr>
+<tr>
+<td>Size of your step</td>
+<td>The <strong>learning rate</strong></td>
+</tr>
+<tr>
+<td>Bottom of the valley</td>
+<td>The best parameters (lowest loss)</td>
+</tr>
+</tbody>
+</table>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The gradient-descent loop",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 100,
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0, "icon": "🎲", "label": "Start with random parameters", "shape": "pill", "note": "We don't know the right weights yet, so we start anywhere: you're dropped somewhere on the mountain."},
+    {"id": "pred", "col": 1, "row": 0, "icon": "🔮", "label": "Make predictions", "role": "model", "note": "Run the model with the current parameters, e.g. ŷ = w·x."},
+    {"id": "loss", "col": 2, "row": 0, "icon": "📏", "label": "Measure the loss", "sub": "how wrong?", "role": "loss", "note": "One number for how wrong the predictions are: the height of the ground where you stand."},
+    {"id": "grad", "col": 2, "row": 1, "icon": "🧭", "label": "Compute the gradient", "sub": "which way is downhill?", "role": "grad", "note": "The slope of the loss for every parameter: feeling the ground under your feet."},
+    {"id": "step", "col": 1, "row": 1, "icon": "👣", "label": "Take a small step downhill", "role": "opt", "note": "Move each parameter a little against its slope: w ← w − η · dL/dw."}
+  ],
+  "edges": [
+    {"from": "init", "to": "pred"},
+    {"from": "pred", "to": "loss"},
+    {"from": "loss", "to": "grad"},
+    {"from": "grad", "to": "step"},
+    {"from": "step", "to": "pred", "label": "repeat"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Pick starting values for the parameters, usually at random."},
+    {"show": ["init>pred", "pred"], "text": "Use the current parameters to make predictions on the data."},
+    {"show": ["pred>loss", "loss"], "text": "Compare predictions with the true answers and squash all the errors into one number: the loss."},
+    {"show": ["loss>grad", "grad"], "text": "Work out the slope of the loss for each parameter. It points uphill."},
+    {"show": ["grad>step", "step"], "text": "Move every parameter a small step the opposite way, downhill. The learning rate η sets the step size."},
+    {"show": ["step>pred", "pred"], "text": "Go round again with the new parameters. Thousands of loops later, the loss is small."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"init": [0, 0], "pred": [0, 1], "loss": [1, 1], "grad": [1, 2], "step": [0, 2]}}
+}
+</script>
+</div>
+
+<hr />
+<h2 id="step-2-what-are-we-trying-to-make-small-the-loss">Step 2 — What are we trying to make small? The loss<a class="headerlink" href="#step-2-what-are-we-trying-to-make-small-the-loss" title="Permanent link">&para;</a></h2>
+<p>Let's use a tiny example. We have 7 data points (blue dots) and want to fit a straight line through the origin:</p>
+<div class="arithmatex">\[
+\hat{y} = w \cdot x
+\]</div>
+<p>There is only <strong>one</strong> parameter, the slope <span class="arithmatex">\(w\)</span>. For each point the model makes an error <span class="arithmatex">\(\hat{y}_i - y_i\)</span> (the dashed red lines). We square the errors (so negative and positive errors don't cancel out, and big errors count extra) and take their average. This is the <strong>mean squared error (MSE)</strong> loss:</p>
+<div class="arithmatex">\[
+L(w) = \frac{1}{N}\sum_{i=1}^{N} \left(w\,x_i - y_i\right)^2
+\]</div>
+<p><strong>Try it:</strong> drag the slider. Watch the line on the left and the orange dot on the right. The right plot shows the loss for <em>every</em> possible value of <span class="arithmatex">\(w\)</span>. It is a bowl, and we want the bottom of it.</p>
+<div id="viz-fit" class="viz"><div class="viz-title">🎚️ Interactive: find a good w by hand</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>When the line fits the dots well, the dashed error lines are short and the orange dot is near the bottom of the bowl.</li>
+<li>You found the minimum by <em>looking</em> at the whole curve. A real model has millions of parameters, so we can never draw the whole curve. We need a method that only uses local information. That method is gradient descent.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-which-way-is-downhill-the-gradient">Step 3 — Which way is downhill? The gradient<a class="headerlink" href="#step-3-which-way-is-downhill-the-gradient" title="Permanent link">&para;</a></h2>
+<p>Look at the <strong>red line</strong> touching the curve in the widget above. That is the <strong>slope</strong> of the loss at your current <span class="arithmatex">\(w\)</span>, written <span class="arithmatex">\(\frac{dL}{dw}\)</span>. It is the "feel the ground under your feet" step.</p>
+<ul>
+<li>Slope <strong>positive</strong> → loss goes <em>up</em> as <span class="arithmatex">\(w\)</span> increases → move <span class="arithmatex">\(w\)</span> <strong>left</strong> (decrease it).</li>
+<li>Slope <strong>negative</strong> → loss goes <em>down</em> as <span class="arithmatex">\(w\)</span> increases → move <span class="arithmatex">\(w\)</span> <strong>right</strong> (increase it).</li>
+<li>Slope <strong>≈ 0</strong> → the ground is flat → you're at the bottom.</li>
+</ul>
+<p>So the rule is simple: <strong>always move opposite to the slope.</strong></p>
+<p>For our loss, calculus gives the slope directly:</p>
+<div class="arithmatex">\[
+\frac{dL}{dw} = \frac{1}{N}\sum_{i=1}^{N} 2\,x_i\left(w\,x_i - y_i\right)
+\]</div>
+<p>You don't need to derive this yourself. In practice libraries like PyTorch compute it automatically (this is called <em>automatic differentiation</em>, and <em>backpropagation</em> in neural networks). What matters is the meaning: <strong>it tells us which way is uphill, and how steep it is.</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Gradient vs. derivative</p>
+<p>With one parameter we call it the <em>derivative</em> or <em>slope</em>. With many parameters we get one slope per parameter. That list of slopes is called the <strong>gradient</strong>, written <span class="arithmatex">\(\nabla L\)</span>. It points in the direction of steepest <em>ascent</em>, so we walk the opposite way.</p>
+</div>
+<hr />
+<h2 id="step-4-taking-the-step-the-update-rule">Step 4 — Taking the step: the update rule<a class="headerlink" href="#step-4-taking-the-step-the-update-rule" title="Permanent link">&para;</a></h2>
+<p>Now combine everything into one line, the heart of gradient descent:</p>
+<div class="arithmatex">\[
+w_{\text{new}} = w_{\text{old}} - \eta \cdot \frac{dL}{dw}
+\]</div>
+<ul>
+<li>The <strong>minus sign</strong> means "go opposite to the slope", i.e. downhill.</li>
+<li><span class="arithmatex">\(\eta\)</span> (Greek letter <em>eta</em>) is the <strong>learning rate</strong>: how big a step to take.</li>
+<li>Steep slope → big step; gentle slope → small step. The algorithm slows down by itself as it nears the bottom.</li>
+</ul>
+<p><strong>Try it:</strong> press <strong>Run 30 steps</strong>, then try the preset learning rates. The green ring marks the true minimum.</p>
+<div id="viz-gd1d" class="viz"><div class="viz-title">🏃 Interactive: gradient descent in action</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice: the learning rate matters a lot</p>
+<table>
+<thead>
+<tr>
+<th>Learning rate</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Too small</strong> (0.01)</td>
+<td>Safe but slow: after 30 steps it still hasn't arrived.</td>
+</tr>
+<tr>
+<td><strong>Good</strong> (0.05)</td>
+<td>Gets to the bottom quickly and smoothly.</td>
+</tr>
+<tr>
+<td><strong>Big</strong> (0.18)</td>
+<td>Overshoots and bounces from side to side, but slowly settles.</td>
+</tr>
+<tr>
+<td><strong>Too big</strong> (0.22)</td>
+<td>Every jump lands <em>higher</em> than the last one, and the loss explodes. This is called <strong>divergence</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>Choosing the learning rate is one of the most important practical decisions when training a model.</p>
+</div>
+<hr />
+<h2 id="step-5-more-parameters-a-landscape-instead-of-a-curve">Step 5 — More parameters: a landscape instead of a curve<a class="headerlink" href="#step-5-more-parameters-a-landscape-instead-of-a-curve" title="Permanent link">&para;</a></h2>
+<p>Real models have more than one parameter. Let's add an intercept <span class="arithmatex">\(b\)</span>, so the line no longer has to pass through the origin:</p>
+<div class="arithmatex">\[
+\hat{y} = w \cdot x + b
+\]</div>
+<p>Now the loss depends on <strong>two</strong> numbers, <span class="arithmatex">\(L(w, b)\)</span>. Instead of a curve, it is a <strong>surface</strong>, like a real valley. Below, we view it from above as a <em>contour map</em>: the stronger the purple, the lower the loss. The green ring marks the minimum. The gradient now has two parts, one per parameter:</p>
+<div class="arithmatex">\[
+\nabla L = \left(\frac{\partial L}{\partial w},\; \frac{\partial L}{\partial b}\right),
+\qquad
+\begin{aligned}
+w &amp;\leftarrow w - \eta\,\frac{\partial L}{\partial w}\\
+b &amp;\leftarrow b - \eta\,\frac{\partial L}{\partial b}
+\end{aligned}
+\]</div>
+<p>Exactly the same rule, applied to each parameter at the same time.</p>
+<div id="viz-gd2d" class="viz"><div class="viz-title">🗺️ Interactive: descending a 2-D loss landscape</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Click</strong> different starting points. Every path ends at the green ring, because this bowl has only one bottom.</li>
+<li>The valley is long and narrow. With a learning rate around 0.15 the path <strong>zig-zags</strong> across the narrow direction while crawling along the long one. This exact problem is what improved optimizers like <strong>Momentum</strong> and <strong>Adam</strong> were invented to fix (a future lesson).</li>
+<li>Push the learning rate to 0.2 and the path diverges, just as in 1-D.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-real-data-is-big-stochastic-gradient-descent-sgd">Step 6 — Real data is big: Stochastic Gradient Descent (SGD)<a class="headerlink" href="#step-6-real-data-is-big-stochastic-gradient-descent-sgd" title="Permanent link">&para;</a></h2>
+<p>To compute the exact gradient we averaged over <strong>all</strong> data points. With 7 points that's easy. With 10 million images it is far too slow to do for every single step.</p>
+<p>The trick is to <strong>estimate</strong> the gradient from a small random subset of the data, called a <strong>mini-batch</strong>, at every step:</p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Gradient computed from</th>
+<th>Each step is…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Batch</strong> gradient descent</td>
+<td>all <span class="arithmatex">\(N\)</span> examples</td>
+<td>accurate but slow</td>
+</tr>
+<tr>
+<td><strong>Stochastic</strong> gradient descent (SGD)</td>
+<td>1 random example</td>
+<td>very cheap but noisy</td>
+</tr>
+<tr>
+<td><strong>Mini-batch</strong> gradient descent</td>
+<td>e.g. 32–512 examples</td>
+<td>the practical sweet spot, used almost everywhere</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Try it:</strong> in the 2-D widget above, switch <em>gradient from</em> to <strong>1 random point (SGD)</strong> and press Run. The path becomes wobbly, because each step only "sees" one point. It still heads towards the minimum on average. That noise is not all bad: in deep learning it can even help the model escape poor regions.</p>
+<div class="admonition info">
+<p class="admonition-title">Vocabulary: epoch</p>
+<p>One <strong>epoch</strong> is one full pass over the training data. With 10,000 examples and a mini-batch of 100, one epoch is 100 steps.</p>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 The full training algorithm",
+  "cols": 3,
+  "rows": 5.15,
+  "rowHeight": 100,
+  "groups": [
+    {"id": "loop", "label": "Repeat for many epochs", "col": 0, "row": 1.15, "cols": 3, "rows": 2.6}
+  ],
+  "nodes": [
+    {"id": "init", "col": 1, "row": 0, "icon": "🎲", "label": "Initialise parameters θ randomly", "shape": "pill"},
+    {"id": "batch", "col": 0, "row": 1.6, "icon": "🗂️", "label": "Sample a mini-batch", "role": "data", "note": "A small random subset of the training data, e.g. 32–512 examples."},
+    {"id": "fwd", "col": 1, "row": 1.6, "icon": "🔮", "label": "Forward pass", "sub": "predictions ŷ", "role": "model", "note": "Run the model on the mini-batch."},
+    {"id": "loss", "col": 2, "row": 1.6, "icon": "📏", "label": "Loss L(ŷ, y)", "role": "loss", "note": "How wrong the predictions on this mini-batch are."},
+    {"id": "grad", "col": 2, "row": 2.75, "icon": "🧭", "label": "Gradient ∇L", "sub": "via backpropagation", "role": "grad", "note": "Computed automatically by the library (loss.backward() in PyTorch)."},
+    {"id": "upd", "col": 0, "row": 2.75, "icon": "👣", "label": "Update parameters", "role": "opt", "note": "One small step downhill (optimizer.step() in PyTorch).", "sub": "θ ← θ − η∇L"},
+    {"id": "done", "col": 1, "row": 4.15, "icon": "🏁", "label": "Trained model", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "init", "to": "loop"},
+    {"from": "batch", "to": "fwd"},
+    {"from": "fwd", "to": "loss"},
+    {"from": "loss", "to": "grad"},
+    {"from": "grad", "to": "upd"},
+    {"from": "upd", "to": "batch", "label": "next batch"},
+    {"from": "loop", "to": "done", "label": "loss is low"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Start from random parameters θ (all the weights of the model)."},
+    {"show": ["init>loop", "loop", "batch"], "text": "Enter the training loop: grab a small random mini-batch of examples."},
+    {"show": ["batch>fwd", "fwd"], "text": "Forward pass: the model makes predictions ŷ for the batch."},
+    {"show": ["fwd>loss", "loss"], "text": "Measure how wrong they are with the loss."},
+    {"show": ["loss>grad", "grad"], "text": "Backpropagation computes the gradient of the loss for every parameter."},
+    {"show": ["grad>upd", "upd"], "text": "Take one step downhill. Then fetch the next batch; one pass over all the data is an epoch."},
+    {"show": ["loop>done", "done"], "text": "After enough epochs the loss stops improving, and the parameters are the trained model."}
+  ],
+  "narrow": {"cols": 2, "rows": 6.35, "pos": {"init": [0.5, 0], "loop": [0, 1.15, 2, 3.8], "batch": [0, 1.6], "fwd": [1, 1.6], "loss": [1, 2.75], "grad": [1, 3.9], "upd": [0, 3.9], "done": [0.5, 5.35]}}
+}
+</script>
+</div>
+
+<p>Here is the full algorithm from the 2-D widget, in a few lines of NumPy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">])</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">5.0</span>        <span class="c1"># starting point</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>                <span class="c1"># learning rate (η)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">y_hat</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>                     <span class="c1"># 1. predict</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">error</span> <span class="o">=</span> <span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>            <span class="c1"># 2. measure loss (MSE)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">grad_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">error</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>       <span class="c1"># 3. gradient</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">grad_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">error</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_w</span>                      <span class="c1"># 4. step downhill</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">b</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_b</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"w = </span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, b = </span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, loss = </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>And the same thing in PyTorch, which computes the gradient for you:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">])</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>   <span class="c1"># clear old gradients</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>         <span class="c1"># compute gradients automatically</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>        <span class="c1"># w ← w − lr · grad</span>
+</code></pre></div>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"Gradient descent always finds the best possible answer.\"</p>
+<p>Only for bowl-shaped (<em>convex</em>) losses like the ones in this lesson. Neural-network loss landscapes have many hills, valleys and flat regions. Gradient descent finds <em>a</em> low point, not necessarily <em>the</em> lowest. In practice, these low points are usually good enough.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A bigger learning rate means faster training.\"</p>
+<p>Only up to a point. Past it, training oscillates or diverges (you saw this in Step 4). That's why practitioners often use <em>learning-rate schedules</em> that start larger and shrink over time.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The gradient points towards the minimum.\"</p>
+<p>It points in the direction of steepest <em>local</em> descent, which is not necessarily straight at the minimum. The zig-zag in the 2-D widget shows this clearly.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. At the current w, the slope dL/dw = +3. Should w increase or decrease?</summary>
+<p><strong>Decrease.</strong> A positive slope means the loss rises as <span class="arithmatex">\(w\)</span> grows, so we move the opposite way: <span class="arithmatex">\(w_{\text{new}} = w - \eta \cdot 3\)</span>.</p>
+</details>
+<details class="question">
+<summary>2. Your training loss gets bigger every step and eventually becomes <code>NaN</code>. What is the most likely cause?</summary>
+<p>The <strong>learning rate is too large</strong>, so gradient descent is diverging. Try reducing it by a factor of 10.</p>
+</details>
+<details class="question">
+<summary>3. Why does gradient descent automatically take smaller steps near the minimum, even with a fixed learning rate?</summary>
+<p>Because the step is <span class="arithmatex">\(\eta \times\)</span> gradient, and the gradient (the slope) gets close to zero near the bottom of the bowl.</p>
+</details>
+<details class="question">
+<summary>4. What is the difference between batch GD and SGD?</summary>
+<p>Batch GD computes the gradient from <strong>all</strong> training examples: it is accurate but slow per step. SGD uses <strong>one</strong> (or a small mini-batch of) random examples: each step is cheap and noisy, but on average it still points downhill.</p>
+</details>
+<details class="question">
+<summary>5. With 50,000 training images and a mini-batch size of 250, how many update steps are in one epoch?</summary>
+<p>$50{,}000 / 250 = $ <strong>200 steps</strong>.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>3Blue1Brown, <a href="https://www.youtube.com/watch?v=IHZwWFHWa-w"><em>Gradient descent, how neural networks learn</em></a> (video)</li>
+<li>Sebastian Ruder, <a href="https://arxiv.org/abs/1609.04747"><em>An overview of gradient descent optimization algorithms</em></a> (2016), the classic survey of SGD, Momentum, Adam and others</li>
+<li>Goodfellow, Bengio &amp; Courville, <a href="https://www.deeplearningbook.org/"><em>Deep Learning</em></a>, Chapter 4.3 (Gradient-Based Optimization)</li>
+<li>Distill, <a href="https://distill.pub/2017/momentum/"><em>Why Momentum Really Works</em></a>, a beautiful interactive follow-up to the zig-zag problem</li>
+</ul>
+<p><strong>Next lessons:</strong> Backpropagation · Optimizers (Momentum, Adam)</p>
+<script src="viz/gradient-descent.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../roadmap/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Roadmap">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Roadmap
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../reinforcement-learning-intro/" class="md-footer__link md-footer__link--next" aria-label="Next: What is RL?">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                What is RL?
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

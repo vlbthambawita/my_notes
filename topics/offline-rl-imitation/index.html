@@ -1,0 +1,2272 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/offline-rl-imitation/">
+      
+      
+        <link rel="prev" href="../model-based-rl/">
+      
+      
+        <link rel="next" href="../rlhf-dpo/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Offline RL & imitation - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#offline-rl-and-imitation-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Offline RL & imitation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-three-ways-to-get-experience-online-off-policy-offline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Three ways to get experience: online, off-policy, offline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-imitation-learning-behaviour-cloning-is-supervised-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Imitation learning: behaviour cloning is supervised learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-why-copying-drifts-compounding-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Why copying drifts: compounding errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-dagger-ask-the-expert-about-your-own-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — DAgger: ask the expert about your own mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-offline-rl-and-why-plain-q-learning-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Offline RL, and why plain Q-learning breaks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — The fix: be pessimistic about what you have not seen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-behaviour-cloning-or-offline-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Behaviour cloning or offline RL?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-three-ways-to-get-experience-online-off-policy-offline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Three ways to get experience: online, off-policy, offline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-imitation-learning-behaviour-cloning-is-supervised-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Imitation learning: behaviour cloning is supervised learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-why-copying-drifts-compounding-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Why copying drifts: compounding errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-dagger-ask-the-expert-about-your-own-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — DAgger: ask the expert about your own mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-offline-rl-and-why-plain-q-learning-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Offline RL, and why plain Q-learning breaks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — The fix: be pessimistic about what you have not seen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-behaviour-cloning-or-offline-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Behaviour cloning or offline RL?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="offline-rl-and-imitation-learning">Offline RL and Imitation Learning<a class="headerlink" href="#offline-rl-and-imitation-learning" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>Sometimes trial and error is too dangerous or too expensive: you can't let a robot crash a car or let an algorithm experiment on patients. Instead you learn from a <strong>fixed dataset</strong> of what others did. <strong>Imitation learning</strong> copies an expert (<strong>behaviour cloning</strong>), but small mistakes snowball because the copy ends up in situations the expert never showed it; <strong>DAgger</strong> fixes this by asking the expert about the learner's own mistakes. <strong>Offline RL</strong> uses the rewards in the data to do <em>better</em> than the data, but plain Q-learning breaks offline: it trusts made-up values for actions nobody ever tried. The fix is <strong>pessimism</strong>: only trust what the data supports (BCQ, CQL, IQL).</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../q-learning-sarsa/">Q-learning &amp; SARSA</a>, <a href="../deep-q-networks/">Deep Q-Networks</a></p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Every RL method so far learns by <strong>trying things</strong>: an ε-greedy agent in the cliff world falls off the cliff hundreds of times before it learns not to. That is fine in a simulator. It is not fine when:</p>
+<ul>
+<li><strong>Healthcare:</strong> you want a policy for dosing fluids and vasopressors in sepsis. You cannot give random doses to see what happens. But hospitals have years of electronic health records showing what clinicians did and how patients fared.</li>
+<li><strong>Driving:</strong> you have millions of kilometres of human driving logs, but you cannot let a learning car explore by swerving into traffic.</li>
+<li><strong>Robotics:</strong> real robots are slow, break, and need a person to reset them. Logs of past runs and human tele-operation are cheap by comparison.</li>
+</ul>
+<p>In all three cases there is a lot of <strong>logged data</strong> and very little room for <strong>new trial and error</strong>. This lesson is about squeezing a good policy out of that data, and about the traps that make it much harder than it looks.</p>
+<div class="admonition note">
+<p class="admonition-title">A word of caution for clinical data</p>
+<p>Learning treatment policies from records is an active research area (for example the "AI Clinician" for sepsis, see Further reading), and also a heavily debated one. Records hide things: doctors act on information that never made it into the data, so "patients who got drug X did worse" can simply mean "sicker patients got drug X". Everything in this lesson assumes the state you see contains what the decision-maker saw. In medicine that is rarely fully true, so treat any learned policy as a hypothesis to test carefully, not a treatment recommendation.</p>
+</div>
+<hr />
+<h2 id="step-1-three-ways-to-get-experience-online-off-policy-offline">Step 1 — Three ways to get experience: online, off-policy, offline<a class="headerlink" href="#step-1-three-ways-to-get-experience-online-off-policy-offline" title="Permanent link">&para;</a></h2>
+<p>So far the agent has always been able to <strong>collect its own data</strong>. RL methods differ in how they use that data:</p>
+<ul>
+<li><strong>Online, on-policy</strong> (SARSA, policy gradients, PPO): act with the current policy, learn from what just happened, throw the experience away, repeat.</li>
+<li><strong>Off-policy</strong> (Q-learning, DQN): keep experience in a <strong>replay buffer</strong> and reuse it, even data collected by older versions of the policy. But the agent still keeps acting and adding fresh data.</li>
+<li><strong>Offline</strong> (also called <em>batch RL</em>): someone else, the <strong>behaviour policy</strong> <span class="arithmatex">\(\pi_\beta\)</span>, collected a dataset <span class="arithmatex">\(\mathcal{D} = \{(s, a, r, s')\}\)</span> in the past. The learner gets that dataset and <strong>nothing else</strong>. It never acts in the environment until training is over.</li>
+</ul>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔀 Where does the experience come from?",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "beh", "maxWidth": 150, "col": 0, "row": 0, "icon": "🧑‍⚕️", "label": "Behaviour policy π<sub>β</sub>", "sub": "clinicians, drivers, an old controller", "note": "Whoever made the decisions in the logged data. We may not even know exactly how they decided."},
+    {"id": "data", "maxWidth": 150, "col": 0, "row": 1, "icon": "🗄️", "label": "<b>Fixed dataset D</b>", "sub": "logged once, never grows", "role": "data", "note": "Tuples (s, a, r, s′): what the situation was, what was done, what happened next."},
+    {"id": "pol", "maxWidth": 150, "col": 1, "row": 0, "icon": "🤖", "label": "<b>Current policy π</b>", "role": "model"},
+    {"id": "env", "maxWidth": 150, "col": 2, "row": 0, "icon": "🌍", "label": "<b>Environment</b>", "sub": "the real world or a simulator", "role": "data"},
+    {"id": "buf", "maxWidth": 150, "col": 2, "row": 1, "icon": "📦", "label": "<b>Replay buffer</b>", "sub": "old + new experience", "role": "data", "note": "Off-policy methods such as DQN keep experience here and reuse it many times."},
+    {"id": "learn", "maxWidth": 150, "col": 1, "row": 1, "icon": "🧠", "label": "<b>Update π</b>", "sub": "Q-learning, BC, CQL…", "role": "loss"}
+  ],
+  "edges": [
+    {"from": "beh", "to": "data", "label": "logged"},
+    {"from": "data", "to": "learn", "label": "only this"},
+    {"from": "pol", "to": "env", "label": "action"},
+    {"from": "env", "to": "buf", "label": "s′, r"},
+    {"from": "buf", "to": "learn", "label": "sample"},
+    {"from": "learn", "to": "pol", "label": "new π"}
+  ],
+  "steps": [
+    {"show": ["pol", "pol>env", "env", "env>buf", "buf", "buf>learn", "learn", "learn>pol"], "text": "<b>Online, on-policy</b> (SARSA, PPO): the agent acts, learns from what just happened, and discards it. The “buffer” holds only the latest experience. Every improvement costs fresh trial and error."},
+    {"show": ["env>buf", "buf", "buf>learn", "learn"], "text": "<b>Off-policy</b> (Q-learning, DQN): experience is <b>kept</b> in a replay buffer and reused, even when an older policy collected it. The agent still keeps acting, so it can try out its own ideas."},
+    {"show": ["beh", "beh>data", "data", "data>learn", "learn"], "text": "<b>Offline</b>: someone else collected the data in the past. The learner sees only D, and <b>never acts</b> while it trains. No new data, no way to test its guesses."},
+    {"show": ["learn", "learn>pol", "pol"], "text": "Only at the very end is the learned policy deployed, after careful checks. If its guesses about unseen actions were wrong, this is where it hurts."}
+  ],
+  "narrow": {"cols": 2.4, "rows": 3, "hideSub": true, "pos": {"pol": [0, 0], "env": [1.4, 0], "buf": [1.4, 1], "learn": [0, 1], "data": [0, 2], "beh": [1.4, 2]}}
+}
+</script>
+</div>
+
+<p>There are two very different things you can do with a fixed dataset:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Imitation learning</strong></th>
+<th><strong>Offline RL</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data needed</td>
+<td>states and the expert's actions <span class="arithmatex">\((s, a)\)</span></td>
+<td>states, actions <strong>and rewards</strong> <span class="arithmatex">\((s, a, r, s')\)</span></td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>act like the expert</td>
+<td>act <strong>better</strong> than the data, if possible</td>
+</tr>
+<tr>
+<td>Main tool</td>
+<td>supervised learning</td>
+<td>Q-learning, made pessimistic</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>Off-policy and offline sound alike, but the difference is huge. Q-learning <em>is</em> off-policy, yet in Step 5 you will see it fail badly offline. Off-policy learners can still try an action to find out that it is bad. Offline learners can't.</p>
+</div>
+<hr />
+<h2 id="step-2-imitation-learning-behaviour-cloning-is-supervised-learning">Step 2 — Imitation learning: behaviour cloning is supervised learning<a class="headerlink" href="#step-2-imitation-learning-behaviour-cloning-is-supervised-learning" title="Permanent link">&para;</a></h2>
+<p>The simplest idea: you have recordings of an expert. In each recorded state <span class="arithmatex">\(s_i\)</span> the expert took action <span class="arithmatex">\(a_i\)</span>. Treat this as an ordinary <strong>supervised learning</strong> problem: the state is the input, the expert's action is the label. This is <strong>behaviour cloning</strong> (BC).</p>
+<p>For discrete actions, train a classifier <span class="arithmatex">\(\pi_\theta(a \mid s)\)</span> with the usual cross-entropy loss. For continuous actions (a steering angle, a drug dose), train a regressor with squared error:</p>
+<div class="arithmatex">\[
+\theta^* = \arg\max_\theta \sum_i \log \pi_\theta(a_i \mid s_i)
+\qquad\text{or}\qquad
+\theta^* = \arg\min_\theta \sum_i \big\| \pi_\theta(s_i) - a_i \big\|^2
+\]</div>
+<p>No rewards, no Bellman equation, no exploration. That is why BC is the first thing to try when you have expert data: it is just a neural network trained on labelled data, which you already know how to do. It has worked surprisingly well in practice, from NVIDIA's 2016 end-to-end car that learned to steer from 72 hours of human driving to modern robot manipulation policies trained on tele-operation data.</p>
+<p>The running example for the next two steps is a car following a winding lane. The state is three numbers: how much the road bends here (<span class="arithmatex">\(\kappa\)</span>), how far the car is from the lane centre (<span class="arithmatex">\(e\)</span>), and how far its heading points away from the road (<span class="arithmatex">\(h\)</span>). The expert steers with the bend and gently back towards the centre:</p>
+<div class="arithmatex">\[
+a^{\text{expert}} = \kappa - 0.1\, e - 0.5\, h
+\]</div>
+<p>We record one perfect drive by this expert and fit a linear policy <span class="arithmatex">\(a = w_1 \kappa + w_2 e + w_3 h\)</span> to it by least squares. The fit is perfect: on the recorded states, the clone's action differs from the expert's by less than <span class="arithmatex">\(10^{-6}\)</span>. The training loss is essentially zero.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>"Zero training error" sounds like success. Hold on to that thought: in the next step this perfect student drives off the road in 94% of drives.</p>
+</div>
+<hr />
+<h2 id="step-3-why-copying-drifts-compounding-errors">Step 3 — Why copying drifts: compounding errors<a class="headerlink" href="#step-3-why-copying-drifts-compounding-errors" title="Permanent link">&para;</a></h2>
+<p>Here is the catch. Look at the expert's recording: the expert drove perfectly, so <span class="arithmatex">\(e\)</span> and <span class="arithmatex">\(h\)</span> were <strong>always zero</strong>. The data shows how to follow the bend. It never shows what to do when you are off-centre, because the expert never was. The clone learns <span class="arithmatex">\(w = (1, 0, 0)\)</span>: "steer with the bend" and nothing else.</p>
+<p>Now let the clone drive with a tiny bit of steering noise (a gust of wind, a bump, a small modelling error). After the first small mistake it is in a state the expert never visited. It has no idea how to recover, so it makes another error, which takes it even further from familiar territory, and so on.</p>
+<p><strong>Try it:</strong> the red line is the behaviour-cloned car, the green line is the expert, both with exactly the same random noise. The chart averages 200 drives.</p>
+<div id="viz-drift-bc" class="viz"><div class="viz-title">🚗 Interactive: a perfect copy that drives off the road</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>With the default noise (<span class="arithmatex">\(\sigma = 0.01\)</span>), the expert stays within about 0.03 of the centre. The clone, with <strong>zero training error</strong>, is on average 0.55 off at <span class="arithmatex">\(t = 25\)</span>, 1.60 at <span class="arithmatex">\(t = 50\)</span> and 4.69 at <span class="arithmatex">\(t = 100\)</span>, and leaves the lane in <strong>94%</strong> of drives.</li>
+<li>The error doesn't just grow, it <strong>speeds up</strong>: each doubling of time multiplies the offset by about 2.9. Mistakes compound.</li>
+<li>Set <span class="arithmatex">\(\sigma = 0\)</span>. Now the clone is perfect too: with no mistakes, it never leaves the expert's states. The problem is not the copy itself but the <strong>distribution shift</strong>: at test time the learner visits states that were not in its training data.</li>
+<li>Double the noise to <span class="arithmatex">\(\sigma = 0.02\)</span> and the clone's offset at <span class="arithmatex">\(t = 100\)</span> doubles to 9.37.</li>
+</ul>
+</div>
+<p>Why "errors grow like <span class="arithmatex">\(T^2\)</span>"? A simple counting argument (Ross &amp; Bagnell, 2010): suppose the learner makes a mistake with a small probability <span class="arithmatex">\(\varepsilon\)</span> per step <strong>on the expert's states</strong>, and once it is off the expert's path it never gets back. The chance of being off-track by step <span class="arithmatex">\(t\)</span> is <span class="arithmatex">\(1 - (1-\varepsilon)^t \approx \varepsilon t\)</span>. Adding these up over an episode of length <span class="arithmatex">\(T\)</span>:</p>
+<div class="arithmatex">\[
+\text{expected steps off-track} \;=\; \sum_{t=1}^{T} \big(1 - (1-\varepsilon)^t\big) \;\approx\; \frac{\varepsilon\, T^2}{2}
+\]</div>
+<p>With <span class="arithmatex">\(\varepsilon = 0.01\)</span> and <span class="arithmatex">\(T = 100\)</span> that is 37.2 bad steps; with <span class="arithmatex">\(T = 200\)</span> it is 114.3. A learner that could <strong>recover</strong> after each mistake would only lose about <span class="arithmatex">\(\varepsilon T\)</span> steps: 1.0 and 2.0. Supervised learning assumes that test inputs come from the same distribution as training inputs. In sequential decision-making, <strong>your own actions choose your next input</strong>, so that assumption breaks.</p>
+<hr />
+<h2 id="step-4-dagger-ask-the-expert-about-your-own-mistakes">Step 4 — DAgger: ask the expert about your own mistakes<a class="headerlink" href="#step-4-dagger-ask-the-expert-about-your-own-mistakes" title="Permanent link">&para;</a></h2>
+<p>If the problem is "the training data has no off-track states", the fix is to put them in. <strong>DAgger</strong> (<em>Dataset Aggregation</em>, Ross, Gordon &amp; Bagnell, 2011) does exactly this:</p>
+<ol>
+<li>Train a policy on the expert's demonstrations (plain BC).</li>
+<li>Let <strong>the learner</strong> drive, and record the states <strong>it</strong> visits, including its mistakes.</li>
+<li>Ask the expert: "what would you have done here?" Label those states with the expert's actions.</li>
+<li>Add them to the dataset (keep everything old), retrain, and repeat.</li>
+</ol>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The DAgger loop",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "start", "col": 0, "row": 0, "icon": "🎬", "label": "Expert demos D", "shape": "pill", "role": "data", "note": "The usual behaviour-cloning dataset: the expert's own states and actions."},
+    {"id": "train", "col": 1, "row": 0, "icon": "🎓", "label": "<b>Train π on D</b>", "sub": "supervised learning", "role": "model"},
+    {"id": "run", "col": 2, "row": 0, "icon": "🚗", "label": "<b>Let π drive</b>", "sub": "record the states it visits", "role": "model", "note": "These include the learner's own mistakes: exactly the states the expert's data never covered."},
+    {"id": "ask", "col": 2, "row": 1, "icon": "🧑‍🏫", "label": "<b>Expert labels them</b>", "sub": "“what would you do here?”", "role": "opt", "note": "The expert only labels; the learner is the one driving. In practice the expert can be a human, a planner, or a slow but safe controller."},
+    {"id": "agg", "col": 1, "row": 1, "icon": "➕", "label": "<b>Add to D</b>", "sub": "keep all old data", "role": "data"}
+  ],
+  "edges": [
+    {"from": "start", "to": "train"},
+    {"from": "train", "to": "run"},
+    {"from": "run", "to": "ask", "label": "its states"},
+    {"from": "ask", "to": "agg"},
+    {"from": "agg", "to": "train", "label": "retrain"}
+  ],
+  "steps": [
+    {"show": ["start", "start>train", "train"], "text": "Round 0 is ordinary behaviour cloning on the expert's demonstrations."},
+    {"show": ["train>run", "run"], "text": "Now <b>the learner</b> drives. It makes mistakes and ends up in states the expert never visited."},
+    {"show": ["run>ask", "ask"], "text": "The expert labels every state the learner visited with the action it would have taken there: often a <b>correction</b>."},
+    {"show": ["ask>agg", "agg"], "text": "Those labelled states are added to the dataset, old data included."},
+    {"show": ["agg>train", "train"], "text": "Retrain on everything and repeat. The training data now looks like the states the learner will really see."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"start": [0, 0], "train": [0, 1], "run": [1, 1], "ask": [1, 2], "agg": [0, 2]}}
+}
+</script>
+</div>
+
+<p>The key change: the training states now come from <strong>the learner's own distribution</strong>, not the expert's. That gives the guarantee the counting argument wanted: mistakes cost about <span class="arithmatex">\(\varepsilon T\)</span>, not <span class="arithmatex">\(\varepsilon T^2\)</span>.</p>
+<p><strong>Try it:</strong> same road, same noise, now with a DAgger learner (orange). Each DAgger round adds 5 drives by the learner, labelled by the expert.</p>
+<div id="viz-drift-dagger" class="viz"><div class="viz-title">🧑‍🏫 Interactive: behaviour cloning vs DAgger</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>After <strong>one</strong> round, DAgger learns the weights <span class="arithmatex">\((1.00, -0.10, -0.50)\)</span>: exactly the expert's rule, including how to steer back. Its average offset at <span class="arithmatex">\(t = 100\)</span> is 0.03 and it leaves the lane in 0% of drives, like the expert.</li>
+<li>Set DAgger rounds to 0: the orange line becomes the red one. DAgger <em>starts</em> as behaviour cloning.</li>
+<li>One round is enough here because the learner (a linear rule) can represent the expert exactly. Real policies are neural networks that can't, and usually need several rounds.</li>
+<li>Set <span class="arithmatex">\(\sigma = 0\)</span> and look at the DAgger weights: with no mistakes there are no off-track states to learn from, so the offset and heading weights are poorly pinned down. DAgger needs the learner's mistakes to learn from them.</li>
+</ul>
+</div>
+<p>The catch: DAgger needs an <strong>expert you can query</strong> on new states. A driving instructor in the passenger seat, a slow planning algorithm, or a simulator with a known-good controller can do this. A ten-year-old hospital database cannot: nobody can go back and ask what the doctor would have done for a patient state that never happened. Practical workarounds include adding noise to the expert's demonstrations so they contain small recoveries (the <em>DART</em> idea) and training on lots of diverse data.</p>
+<hr />
+<h2 id="step-5-offline-rl-and-why-plain-q-learning-breaks">Step 5 — Offline RL, and why plain Q-learning breaks<a class="headerlink" href="#step-5-offline-rl-and-why-plain-q-learning-breaks" title="Permanent link">&para;</a></h2>
+<p>Imitation learning has a ceiling: at best it is as good as the expert. Often the data is <strong>not</strong> expert data. Hospital records mix good and bad decisions; driving logs mix careful and careless drivers. If the data also contains <strong>rewards</strong> (patient survived, trip completed safely), we could hope to do <em>better</em> than the average decision in the data: keep the good choices, avoid the bad ones. That is <strong>offline RL</strong>.</p>
+<p>The obvious first attempt: Q-learning is off-policy, so just run it on the fixed dataset. Sweep over the logged transitions again and again with the familiar update:</p>
+<div class="arithmatex">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha \Big[\, r + \gamma \max_{a'} Q(s', a') - Q(s, a) \Big]
+\]</div>
+<p>Look at the <span class="arithmatex">\(\max_{a'}\)</span>. It considers <strong>every</strong> action in the next state, including actions that <strong>never appear in the data</strong>. Their <span class="arithmatex">\(Q\)</span>-values were never trained. In a table they keep whatever value they started with; in a neural network they are whatever the network happens to extrapolate. Either way, nothing in the data ever corrects them. And because the max <em>seeks out</em> the largest value, it picks exactly these made-up numbers whenever they are too high. This is called <strong>extrapolation error</strong>, and the result is <strong>overestimation</strong>: the agent believes unseen actions are wonderful.</p>
+<p>Online, this would fix itself: the agent would try the "wonderful" action, get a bad reward, and update. Offline, it never gets the chance.</p>
+<p><strong>Try it:</strong> this is the cliff world from lesson 1 (no slipping, <span class="arithmatex">\(\gamma = 0.95\)</span>). The data was logged by someone following the <em>safe detour</em> policy, who takes a random action a fraction <span class="arithmatex">\(\varepsilon\)</span> of the time. Naive Q-learning sweeps that dataset 200 times. The blue wedges show which actions appear in the data.</p>
+<div id="viz-offline-naive" class="viz"><div class="viz-title">🗄️ Interactive: naive Q-learning on a fixed dataset</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The agent is confidently wrong.</strong> With the default data (ε = 0.1, 20 episodes, 239 transitions), the data covers only 26 of the 72 state-action pairs. In the start cell the data shows only "up" and "left", each worth <span class="arithmatex">\(-1.0\)</span> (one step cost). "Right" and "down" were never tried and keep their starting guess of 0, which looks better. So the agent <strong>believes</strong> <span class="arithmatex">\(V(\text{start}) = 0.00\)</span>, picks "right", and <strong>really</strong> gets <span class="arithmatex">\(-20.00\)</span>: straight off the cliff.</li>
+<li><strong>Red arrows</strong> are actions the agent has never seen in the data, chosen <em>because</em> nothing ever corrected their values.</li>
+<li>Set ε = 0 (the logger always follows the detour): only 11 of 72 pairs are covered, and the result is the same cliff dive. The logging policy itself is worth <span class="arithmatex">\(-2.04\)</span>, so the "learned" policy is far worse than simply copying the data.</li>
+<li>Now give it <strong>coverage</strong>: ε = 0.5 and 100 episodes (71 of 72 pairs). Naive Q-learning now finds the best route along the cliff edge and gets <span class="arithmatex">\(2.05\)</span>, the optimal value. Offline Q-learning is fine <strong>when the data covers the actions it wants to take</strong>. The trouble is that real datasets almost never do.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Why this is worse with neural networks</p>
+<p>In a table, an unseen action keeps one stale value. A deep Q-network (lesson 7) is trained on the dataset's actions, and its outputs for other actions are an unconstrained extrapolation. Some of those extrapolations are too high by chance, the max picks them, and bootstrapping copies the inflated value backwards to earlier states. In practice offline DQN's value estimates can grow without limit while the actual policy gets worse.</p>
+</div>
+<hr />
+<h2 id="step-6-the-fix-be-pessimistic-about-what-you-have-not-seen">Step 6 — The fix: be pessimistic about what you have not seen<a class="headerlink" href="#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen" title="Permanent link">&para;</a></h2>
+<p>All modern offline RL methods share one principle: <strong>don't trust values for actions the data doesn't support.</strong> They differ in how they enforce it.</p>
+<p><strong>1. Stay close to the data (policy constraints, e.g. BCQ).</strong> <em>Batch-Constrained Q-learning</em> (Fujimoto, Meger &amp; Precup, 2019) only allows the max to look at actions that the behaviour policy would plausibly take. In a table this is easy: take the max only over actions that appear in the data,</p>
+<div class="arithmatex">\[
+r + \gamma \max_{a' \,:\, (s', a') \in \mathcal{D}} Q(s', a').
+\]</div>
+<p>With neural networks, BCQ trains a generative model of the data's actions and only considers actions it would produce. Related methods (BEAR, TD3+BC) add a penalty that keeps the learned policy close to the data's actions.</p>
+<p><strong>2. Push unseen values down (pessimism, e.g. CQL).</strong> <em>Conservative Q-Learning</em> (Kumar et al., 2020) keeps the network free, but adds a term to the loss that pushes <span class="arithmatex">\(Q\)</span> <strong>down</strong> on all actions (mostly on the ones it currently rates highly) and <strong>up</strong> on the actions that are actually in the data:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{CQL}}(\theta) = \underbrace{\mathbb{E}_{(s,a,r,s') \sim \mathcal{D}}\Big[\big(Q_\theta(s,a) - y\big)^2\Big]}_{\text{the usual TD loss}}
+\;+\; \lambda \, \mathbb{E}_{s \sim \mathcal{D}}\Big[\, \underbrace{\log \sum_{a} e^{Q_\theta(s,a)}}_{\text{push all actions down}} \;-\; \underbrace{\mathbb{E}_{a \sim \mathcal{D}}\, Q_\theta(s,a)}_{\text{push data actions up}} \Big]
+\]</div>
+<p>The net effect: an action the data never shows gets pushed down until it no longer wins the max. The learned values become a <strong>lower bound</strong> on the true values, so when the agent is wrong, it errs on the side of caution.</p>
+<p><strong>3. Never ask about unseen actions at all (IQL).</strong> <em>Implicit Q-Learning</em> (Kostrikov, Nair &amp; Levine, 2021) avoids the max entirely. It learns <span class="arithmatex">\(Q\)</span> only on the dataset's own actions, estimates "how good is the best action the data shows here" with a trick called expectile regression, and then extracts a policy by <strong>weighted behaviour cloning</strong>: copy the data's actions, but copy the ones with a high advantage <span class="arithmatex">\(Q(s,a) - V(s)\)</span> much more strongly. It is simple, stable, and a common default today.</p>
+<p>Our widget uses a tabular version of the same idea, a <strong>pessimistic Q-learning</strong>: actions that never appear in the data get value <span class="arithmatex">\(-\infty\)</span> (so they are never chosen), and actions seen only a few times pay a penalty <span class="arithmatex">\(\beta / \sqrt{n(s,a)}\)</span>, where <span class="arithmatex">\(n(s,a)\)</span> is how often they appear. The fewer times we have seen something, the less we trust it. (The <span class="arithmatex">\(-\infty\)</span> part is BCQ's constraint; the penalty is CQL's spirit, in its simplest form.)</p>
+<p><strong>Try it:</strong> switch between the three learners on the same dataset.</p>
+<div id="viz-offline-fix" class="viz"><div class="viz-title">🛡️ Interactive: naive vs pessimistic offline learning</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>On the default data (ε = 0.1, 20 episodes), <strong>pessimistic Q-learning</strong> follows the detour to the goal and really gets <span class="arithmatex">\(-2.04\)</span>. It believes <span class="arithmatex">\(V(\text{start}) = -3.00\)</span>: a little lower than the truth, which is exactly the point of pessimism. No red arrows: it never picks an action it hasn't seen.</li>
+<li>Naive Q-learning on the <strong>same</strong> data believes <span class="arithmatex">\(0.00\)</span> and gets <span class="arithmatex">\(-20.00\)</span>. Same data, same algorithm family; the only change is refusing to trust the unknown.</li>
+<li>Pessimism also helps when the data is good. With ε = 0.5 and 100 episodes, pessimistic Q-learning finds the optimal edge route (<span class="arithmatex">\(2.05\)</span>), even though the logging policy itself is only worth <span class="arithmatex">\(-12.57\)</span>. It <strong>stitches</strong> together the good pieces of many imperfect episodes.</li>
+<li>Pessimism is not magic. With ε = 1 (purely random logging) and only 20 episodes, the data is mostly aimless wandering and every learner fails: naive <span class="arithmatex">\(-19.88\)</span>, pessimistic <span class="arithmatex">\(-20.00\)</span>, behaviour cloning <span class="arithmatex">\(-19.88\)</span>. No algorithm can find a good route the data never shows.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-behaviour-cloning-or-offline-rl">Step 7 — Behaviour cloning or offline RL?<a class="headerlink" href="#step-7-behaviour-cloning-or-offline-rl" title="Permanent link">&para;</a></h2>
+<p>Use the third button in the widget above, <strong>Behaviour cloning</strong> (in each cell, copy the most common action in the data):</p>
+<table>
+<thead>
+<tr>
+<th>Logged data</th>
+<th>Logging policy is worth</th>
+<th>Behaviour cloning</th>
+<th>Pessimistic Q-learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>expert-like: ε = 0, 20 episodes</td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+</tr>
+<tr>
+<td>mostly good: ε = 0.1, 20 episodes</td>
+<td><span class="arithmatex">\(-3.70\)</span></td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+</tr>
+<tr>
+<td>mixed: ε = 0.5, 100 episodes</td>
+<td><span class="arithmatex">\(-12.57\)</span></td>
+<td><span class="arithmatex">\(-2.04\)</span></td>
+<td><span class="arithmatex">\(2.05\)</span></td>
+</tr>
+<tr>
+<td>random: ε = 1, 100 episodes</td>
+<td><span class="arithmatex">\(-19.88\)</span></td>
+<td><span class="arithmatex">\(-19.88\)</span></td>
+<td><span class="arithmatex">\(2.05\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The pattern matches what researchers find on real benchmarks:</p>
+<ul>
+<li><strong>Expert (or near-expert) data → behaviour cloning.</strong> It is simple and stable, and needs no rewards. Offline RL can't beat the expert's actions if those are the only actions in the data, and its extra machinery adds ways to go wrong. In the clean-data rows, BC already gets everything there is to get.</li>
+<li><strong>Mixed-quality data with rewards → offline RL.</strong> BC faithfully copies the average behaviour, mistakes included (it even filters out some noise by taking the most common action, which is why it beats the logging policy). Offline RL uses the rewards to tell good decisions from bad ones and can <strong>beat every policy in the data</strong>, as in the last two rows.</li>
+<li><strong>In between</strong> there are hybrids: <em>filtered BC</em> (clone only the best episodes), <em>advantage-weighted BC</em> (IQL's last step), and TD3+BC (Q-learning plus a BC term).</li>
+</ul>
+<p>And whatever you train, <strong>evaluate before you deploy</strong>. Offline, you can't simply run the policy to see how good it is. <em>Off-policy evaluation</em> (OPE) methods estimate a new policy's value from the logged data, using importance sampling or a learned Q-function, but they are noisy and share the same blind spots as the data. In healthcare, the realistic path is: offline RL → off-policy evaluation → clinician review → a prospective, carefully monitored study.</p>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧭 Learning from data without trial and error: which tool?",
+  "cols": 3,
+  "rows": 3,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "q1", "maxWidth": 160, "col": 0, "row": 0, "label": "Safe and cheap to try things?", "shape": "decision", "role": "grad"},
+    {"id": "online", "maxWidth": 160, "col": 1, "row": 0, "icon": "🎮", "label": "<b>Online RL</b>", "sub": "Q-learning, DQN, PPO", "role": "model", "note": "Simulators, games, and anything where mistakes are cheap: learn by trial and error."},
+    {"id": "q2", "maxWidth": 160, "col": 0, "row": 1, "label": "Expert-quality actions in the data?", "shape": "decision", "role": "grad"},
+    {"id": "bc", "maxWidth": 140, "col": 1, "row": 1, "icon": "🎓", "label": "<b>Behaviour cloning</b>", "sub": "supervised: state → action", "role": "model", "note": "Simple and stable. Watch out for compounding errors on long tasks."},
+    {"id": "dagger", "maxWidth": 140, "col": 2, "row": 1, "icon": "🧑‍🏫", "label": "<b>DAgger</b>", "sub": "expert labels the learner's states", "role": "opt", "note": "Only possible if an expert (human, planner, safe controller) can be asked about new states."},
+    {"id": "off", "maxWidth": 160, "col": 0, "row": 2, "icon": "🛡️", "label": "<b>Offline RL</b>", "sub": "CQL, IQL: rewards, mixed data", "role": "loss", "note": "Needs rewards in the data. Pessimism keeps it from trusting actions the data never shows."},
+    {"id": "ope", "maxWidth": 160, "col": 1, "row": 2, "icon": "🔬", "label": "<b>Evaluate offline, deploy slowly</b>", "role": "opt", "note": "Off-policy evaluation, expert review, then a small monitored trial. Essential in healthcare."}
+  ],
+  "edges": [
+    {"from": "q1", "to": "online", "label": "yes"},
+    {"from": "q1", "to": "q2", "label": "no"},
+    {"from": "q2", "to": "bc", "label": "yes"},
+    {"from": "bc", "to": "dagger", "label": "can ask"},
+    {"from": "q2", "to": "off", "label": "mixed"},
+    {"from": "off", "to": "ope", "label": "then"}
+  ],
+  "steps": [
+    {"show": ["q1", "q1>online", "online"], "text": "If exploring is safe and cheap (a simulator, a game), use the online methods from the earlier lessons."},
+    {"show": ["q1", "q1>q2", "q2"], "text": "If not, you must learn from logged data. First question: how good are the decisions in it?"},
+    {"show": ["q2", "q2>bc", "bc"], "text": "Expert data: <b>behaviour cloning</b>, plain supervised learning from states to actions."},
+    {"show": ["bc", "bc>dagger", "dagger"], "text": "If small errors compound on long tasks and you can query an expert, use <b>DAgger</b> to add the learner's own states to the data."},
+    {"show": ["q2", "q2>off", "off"], "text": "Mixed-quality data with rewards: <b>offline RL</b> with pessimism (CQL, IQL) can beat the data, without trusting actions it never saw."},
+    {"show": ["off", "off>ope", "ope"], "text": "Either way, estimate the policy's value from data, have experts review it, and deploy step by step."}
+  ],
+  "narrow": {"cols": 2.4, "rows": 4, "hideSub": true, "pos": {"q1": [0, 0], "online": [1.4, 0], "q2": [0, 1], "bc": [1.4, 1], "off": [0, 2], "dagger": [1.4, 2], "ope": [0, 3]}}
+}
+</script>
+</div>
+
+<p>Here is behaviour cloning and DAgger on the lane-following task, in NumPy. The learner is a linear policy fitted with least squares:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">T</span><span class="p">,</span> <span class="n">K1</span><span class="p">,</span> <span class="n">K2</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">kappa</span> <span class="o">=</span> <span class="mf">0.03</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span>     <span class="c1"># how much the road bends at each step</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">expert</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>                     <span class="c1"># steer with the bend, and back towards the lane centre</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">return</span> <span class="n">k</span> <span class="o">-</span> <span class="n">K1</span> <span class="o">*</span> <span class="n">e</span> <span class="o">-</span> <span class="n">K2</span> <span class="o">*</span> <span class="n">h</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="n">policy</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="sd">"""Drive one lap. e = distance from the lane centre, h = heading error."""</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">e</span> <span class="o">=</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">states</span><span class="p">,</span> <span class="n">offsets</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">kappa</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">e</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">policy</span><span class="p">(</span><span class="n">kappa</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">e</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">h</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">kappa</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">()</span>          <span class="c1"># steering noise: small mistakes</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">e</span> <span class="o">+=</span> <span class="n">h</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">return</span> <span class="n">states</span><span class="p">,</span> <span class="n">offsets</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="n">states</span><span class="p">):</span>                                           <span class="c1"># supervised learning: state -&gt; expert action</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">expert</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states</span><span class="p">])</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">return</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">w</span> <span class="o">@</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">w</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="c1"># Behaviour cloning: copy a perfect demonstration</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="n">demo</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">drive</span><span class="p">(</span><span class="n">expert</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="n">bc</span><span class="p">,</span> <span class="n">w_bc</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="c1"># DAgger: let the learner drive, ask the expert what it should have done, retrain on everything</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="n">data</span><span class="p">,</span> <span class="n">dagger</span><span class="p">,</span> <span class="n">w_dag</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">demo</span><span class="p">),</span> <span class="n">bc</span><span class="p">,</span> <span class="n">w_bc</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="k">for</span> <span class="n">round_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">visited</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">drive</span><span class="p">(</span><span class="n">dagger</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">data</span> <span class="o">+=</span> <span class="n">visited</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="n">dagger</span><span class="p">,</span> <span class="n">w_dag</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">pol</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"BC"</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">w_bc</span><span class="p">),</span> <span class="p">(</span><span class="s2">"DAgger"</span><span class="p">,</span> <span class="n">dagger</span><span class="p">,</span> <span class="n">w_dag</span><span class="p">)]:</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>    <span class="n">runs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">drive</span><span class="p">(</span><span class="n">pol</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rng</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)])</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">6s</span><span class="si">}</span><span class="s2"> weights (bend, offset, heading) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">   "</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>          <span class="sa">f</span><span class="s2">"mean |offset| at t=100: </span><span class="si">{</span><span class="n">runs</span><span class="p">[:,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">   left the lane: </span><span class="si">{</span><span class="p">(</span><span class="n">runs</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>BC     weights (bend, offset, heading) = [1. 0. 0.]   mean |offset| at t=100: 4.82   left the lane: 95%
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>DAgger weights (bend, offset, heading) = [ 1.  -0.1 -0.5]   mean |offset| at t=100: 0.03   left the lane: 0%
+</code></pre></div>
+<p>(The random noise differs from the widget's, so the numbers differ slightly: 4.82 and 95% here, 4.69 and 94% in the widget.)</p>
+<p>And here is offline learning on the cliff world: a logged dataset, naive Q-learning, the pessimistic version from Step 6, and behaviour cloning, each evaluated by actually running its greedy policy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">MAP</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"......"</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>       <span class="s2">"..#..."</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>       <span class="s2">"......"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>       <span class="s2">"SCCCCG"</span><span class="p">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">MOVES</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>                  <span class="c1"># up, right, down, left</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">SAFE</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"→→→→→↓"</span><span class="p">,</span>                                           <span class="c1"># the "safe detour" policy from lesson 1</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="s2">"↑↑.↑↑↓"</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="s2">"↑↑←↑↑↓"</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="s2">"↑....."</span><span class="p">]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">GAMMA</span> <span class="o">=</span> <span class="mf">0.95</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">MOVES</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">MOVES</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="ow">or</span> <span class="n">MAP</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"#"</span><span class="p">:</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">s</span>                                            <span class="c1"># bumped into a wall or edge</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="n">tile</span> <span class="o">=</span> <span class="n">MAP</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="p">{</span><span class="s2">"G"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">tile</span> <span class="ow">in</span> <span class="s2">"GC"</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">log_data</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">episodes</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">    </span><span class="sd">"""Someone else's behaviour: the safe detour, with a random action a fraction eps of the time."""</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">episodes</span><span class="p">):</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">eps</span> <span class="k">else</span> <span class="s2">"↑→↓←"</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">SAFE</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>            <span class="n">s2</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">done</span><span class="p">))</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>            <span class="n">s</span> <span class="o">=</span> <span class="n">s2</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>                <span class="k">break</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>    <span class="k">return</span> <span class="n">data</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="k">def</span><span class="w"> </span><span class="nf">offline_q_learning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pessimism</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>                                 <span class="c1"># how often each (s, a) appears in the data</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>        <span class="n">n</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>    <span class="k">if</span> <span class="n">pessimism</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>                             <span class="c1"># naive: unseen actions keep the guess 0</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>                   <span class="c1"># pessimistic: never trust an unseen action</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>                                 <span class="c1"># sweep the SAME fixed dataset again and again</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">done</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>            <span class="n">nxt</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="n">Q</span><span class="p">[</span><span class="n">s2</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>            <span class="k">if</span> <span class="n">nxt</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>                <span class="n">nxt</span> <span class="o">=</span> <span class="mf">0.0</span>                                   <span class="c1"># s2 never left in the data (cut-off episode)</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>            <span class="n">penalty</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">pessimism</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">pessimism</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">])</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>            <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">lr</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">penalty</span> <span class="o">+</span> <span class="n">GAMMA</span> <span class="o">*</span> <span class="n">nxt</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">])</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>    <span class="k">return</span> <span class="n">Q</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a><span class="k">def</span><span class="w"> </span><span class="nf">behaviour_cloning</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>    <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>        <span class="n">counts</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>    <span class="k">return</span> <span class="n">counts</span>                                           <span class="c1"># act = most common action in each state</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a><span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>                                        <span class="c1"># run the greedy policy once in the real world</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a>    <span class="n">s</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">disc</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">s</span><span class="p">])))</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>        <span class="n">G</span> <span class="o">+=</span> <span class="n">disc</span> <span class="o">*</span> <span class="n">r</span>
+<a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>        <span class="n">disc</span> <span class="o">*=</span> <span class="n">GAMMA</span>
+<a id="__codelineno-2-69" name="__codelineno-2-69" href="#__codelineno-2-69"></a>        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-2-70" name="__codelineno-2-70" href="#__codelineno-2-70"></a>            <span class="k">break</span>
+<a id="__codelineno-2-71" name="__codelineno-2-71" href="#__codelineno-2-71"></a>    <span class="k">return</span> <span class="n">G</span>
+<a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a>
+<a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a>
+<a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-2-75" name="__codelineno-2-75" href="#__codelineno-2-75"></a><span class="k">for</span> <span class="n">eps</span><span class="p">,</span> <span class="n">episodes</span> <span class="ow">in</span> <span class="p">[(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)]:</span>
+<a id="__codelineno-2-76" name="__codelineno-2-76" href="#__codelineno-2-76"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">log_data</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">episodes</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-2-77" name="__codelineno-2-77" href="#__codelineno-2-77"></a>    <span class="n">naive</span> <span class="o">=</span> <span class="n">offline_q_learning</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-2-78" name="__codelineno-2-78" href="#__codelineno-2-78"></a>    <span class="n">pess</span> <span class="o">=</span> <span class="n">offline_q_learning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pessimism</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-2-79" name="__codelineno-2-79" href="#__codelineno-2-79"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"data: eps=</span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">episodes</span><span class="si">}</span><span class="s2"> episodes, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> transitions"</span><span class="p">)</span>
+<a id="__codelineno-2-80" name="__codelineno-2-80" href="#__codelineno-2-80"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  naive Q-learning   believes </span><span class="si">{</span><span class="n">naive</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   really gets </span><span class="si">{</span><span class="n">evaluate</span><span class="p">(</span><span class="n">naive</span><span class="p">)</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-81" name="__codelineno-2-81" href="#__codelineno-2-81"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  pessimistic        believes </span><span class="si">{</span><span class="n">pess</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   really gets </span><span class="si">{</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pess</span><span class="p">)</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-82" name="__codelineno-2-82" href="#__codelineno-2-82"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  behaviour cloning                     really gets </span><span class="si">{</span><span class="n">evaluate</span><span class="p">(</span><span class="n">behaviour_cloning</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>data: eps=0.1, 20 episodes, 261 transitions
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  naive Q-learning   believes   0.00   really gets -20.00
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  pessimistic        believes  -2.99   really gets  -2.04
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  behaviour cloning                     really gets  -2.04
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>data: eps=0.5, 100 episodes, 2049 transitions
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  naive Q-learning   believes   2.05   really gets   2.05
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  pessimistic        believes   0.53   really gets   2.05
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  behaviour cloning                     really gets  -2.04
+</code></pre></div>
+<p>The pessimistic learner's beliefs are always <strong>below</strong> what it really gets (<span class="arithmatex">\(-2.99\)</span> vs <span class="arithmatex">\(-2.04\)</span>, <span class="arithmatex">\(0.53\)</span> vs <span class="arithmatex">\(2.05\)</span>). The naive learner's belief of <span class="arithmatex">\(0.00\)</span> hides a cliff dive. When you can't test a policy before deploying it, an under-estimate is a much safer mistake than an over-estimate.</p>
+<p>For real problems, libraries such as <a href="https://github.com/takuseno/d3rlpy">d3rlpy</a> and <a href="https://github.com/tinkoff-ai/CORL">CORL</a> implement BC, CQL, IQL and friends, and <a href="https://minari.farama.org/">Minari</a> (the successor of D4RL) provides standard offline datasets.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"Q-learning is off-policy, so it works on any fixed dataset.\"</p>
+<p>Off-policy means it can learn from data collected by another policy, <strong>as long as it can keep collecting</strong>. Offline, the max in the target picks up values for actions the data never shows, and nothing ever corrects them. In the widget, naive Q-learning believes the start is worth 0.00 and walks off the cliff.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"If behaviour cloning fits the expert data perfectly, it will behave like the expert.\"</p>
+<p>The fit is only measured on the <strong>expert's</strong> states. The clone's own small mistakes take it to states the expert never visited, where it has no idea what to do, and the errors compound. Our clone had essentially zero training error and still left the lane in 94% of drives.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Offline RL can learn any policy if you have enough data.\"</p>
+<p>It can only learn about actions the data contains. A million records of a single treatment protocol say nothing about the alternative. Coverage matters more than size: in the widget, 100 episodes of the plain detour cover just 11 of 72 state-action pairs.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Pessimism just makes the agent copy the data.\"</p>
+<p>It only stops the agent from relying on actions the data doesn't support. Among the supported ones it still picks the best, so it can combine good pieces of different episodes and <strong>beat</strong> the logging policy (<span class="arithmatex">\(2.05\)</span> vs <span class="arithmatex">\(-12.57\)</span> in the mixed-data example).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A policy learned from hospital records tells us the best treatment.\"</p>
+<p>Only if the records capture everything the clinicians based their decisions on, and the reward really measures what matters to patients. Hidden confounders, missing data and rare actions can make an offline policy look good on paper and be harmful in practice. It is a hypothesis to test, not a recommendation.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. What is the difference between off-policy and offline RL?</summary>
+<p>An <strong>off-policy</strong> learner (Q-learning, DQN) can learn from data collected by a different policy, but it keeps interacting with the environment and adding new data. An <strong>offline</strong> learner gets one fixed dataset and never interacts during training, so it can never test what happens when it tries an action the data doesn't show.</p>
+</details>
+<details class="question">
+<summary>2. Why does behaviour cloning suffer from compounding errors, and why does DAgger help?</summary>
+<p>BC is trained only on the states the expert visited. A small mistake moves the learner to a state outside that distribution, where its actions are unreliable, so it makes more mistakes and drifts further: errors can add up to roughly <span class="arithmatex">\(\varepsilon T^2\)</span> over an episode. DAgger runs the <strong>learner</strong>, has the expert label the states the learner actually visits, and retrains on them, so the learner learns how to recover. Errors then grow only like <span class="arithmatex">\(\varepsilon T\)</span>.</p>
+</details>
+<details class="question">
+<summary>3. In the offline cliff-world widget, why does naive Q-learning pick \"right\" from the start cell?</summary>
+<p>In the default dataset, the start cell only shows "up" (the detour) and, once, "left". Both cost a −1 step, so their learned values are negative. "Right" and "down" never appear, so their values stay at the starting guess of 0, which is higher. The max picks "right" for a value that nothing ever checked, and "right" leads straight into the cliff (−20).</p>
+</details>
+<details class="question">
+<summary>4. How does CQL prevent the problem in question 3?</summary>
+<p>It adds a term to the loss that pushes Q-values <strong>down</strong> for all actions (weighted towards the ones currently rated highest) and <strong>up</strong> for actions that actually appear in the data. Unseen actions only ever get pushed down, so they stop winning the max, and the learned values become a lower bound on the true ones. The widget's pessimistic learner gets the same effect in a table by giving unseen actions <span class="arithmatex">\(-\infty\)</span> and penalising rarely seen ones.</p>
+</details>
+<details class="question">
+<summary>5. You have ICU records from many clinicians with very different habits, and a recorded outcome for each patient. Behaviour cloning or offline RL? What would make you cautious?</summary>
+<p>The data is <strong>mixed quality</strong> and has rewards (outcomes), so offline RL with pessimism (CQL, IQL) is the natural choice: BC would copy the average habit, good and bad. Reasons for caution: unrecorded information that influenced treatment (confounding), treatments that were rarely or never given in some situations (poor coverage), whether the outcome is the right reward, and the difficulty of evaluating the policy without trying it. Any result needs off-policy evaluation, clinical review and a careful prospective study before it touches patients.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Sergey Levine, Aviral Kumar, George Tucker &amp; Justin Fu, <a href="https://arxiv.org/abs/2005.01643"><em>Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems</em></a> (2020). The standard overview.</li>
+<li>Stéphane Ross, Geoffrey Gordon &amp; Drew Bagnell, <a href="https://arxiv.org/abs/1011.0686"><em>A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning</em></a> (2011). The DAgger paper.</li>
+<li>Scott Fujimoto, David Meger &amp; Doina Precup, <a href="https://arxiv.org/abs/1812.02900"><em>Off-Policy Deep Reinforcement Learning without Exploration</em></a> (2019). Extrapolation error and BCQ.</li>
+<li>Aviral Kumar, Aurick Zhou, George Tucker &amp; Sergey Levine, <a href="https://arxiv.org/abs/2006.04779"><em>Conservative Q-Learning for Offline Reinforcement Learning</em></a> (2020).</li>
+<li>Ilya Kostrikov, Ashvin Nair &amp; Sergey Levine, <a href="https://arxiv.org/abs/2110.06169"><em>Offline Reinforcement Learning with Implicit Q-Learning</em></a> (2021).</li>
+<li>Matthieu Komorowski et al., <a href="https://www.nature.com/articles/s41591-018-0213-5"><em>The Artificial Intelligence Clinician learns optimal treatment strategies for sepsis in intensive care</em></a>, Nature Medicine (2018), and Omer Gottesman et al., <a href="https://www.nature.com/articles/s41591-018-0310-5"><em>Guidelines for reinforcement learning in healthcare</em></a>, Nature Medicine (2019): a clinical application and a careful look at its pitfalls.</li>
+<li>Sergey Levine, <a href="https://rail.eecs.berkeley.edu/deeprlcourse/">CS 285 lectures on imitation learning and offline RL</a> (UC Berkeley, videos and slides).</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../rlhf-dpo/">RLHF &amp; DPO</a>: imitation learning (supervised fine-tuning) and RL from human preferences are how chatbots like Claude and ChatGPT are trained.</p>
+<script src="viz/offline-rl-imitation.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../model-based-rl/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model-based RL &amp; planning">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Model-based RL & planning
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../rlhf-dpo/" class="md-footer__link md-footer__link--next" aria-label="Next: RLHF &amp; DPO">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                RLHF & DPO
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

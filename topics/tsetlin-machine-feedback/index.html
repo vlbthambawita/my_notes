@@ -1,0 +1,2332 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/tsetlin-machine-feedback/">
+      
+      
+        <link rel="prev" href="../tsetlin-automaton/">
+      
+      
+        <link rel="next" href="../tsetlin-machine-classification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Recognize, Erase & Reject feedback - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#learning-rules-recognize-erase-and-reject-feedback" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Recognize, Erase & Reject feedback
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-a-rule-is-its-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — A rule is its memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-which-feedback-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Which feedback, when?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-recognize-feedback-become-more-like-this-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Recognize Feedback: become more like this example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-erase-feedback-loosen-a-rule-that-is-too-picky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Erase Feedback: loosen a rule that is too picky
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-watch-it-happen-the-books-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Watch it happen: the book's worked example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-recognize-erase-find-frequent-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Recognize + Erase find frequent patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-frequent-is-not-enough-reject-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Frequent is not enough: Reject Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-train-one-rule-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Train one rule yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-two-literals-one-rule-a-game-without-talking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9 — Two literals, one rule: a game without talking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-a-rule-is-its-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — A rule is its memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-which-feedback-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Which feedback, when?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-recognize-feedback-become-more-like-this-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Recognize Feedback: become more like this example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-erase-feedback-loosen-a-rule-that-is-too-picky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Erase Feedback: loosen a rule that is too picky
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-watch-it-happen-the-books-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Watch it happen: the book's worked example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-recognize-erase-find-frequent-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Recognize + Erase find frequent patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-frequent-is-not-enough-reject-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Frequent is not enough: Reject Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-train-one-rule-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Train one rule yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-two-literals-one-rule-a-game-without-talking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9 — Two literals, one rule: a game without talking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="learning-rules-recognize-erase-and-reject-feedback">Learning Rules: Recognize, Erase and Reject Feedback<a class="headerlink" href="#learning-rules-recognize-erase-and-reject-feedback" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A Tsetlin-machine rule learns by nudging each literal's memory position up (memorize) or down (forget), one example at a time. When the example belongs to the rule's own class and the rule <strong>matches</strong>, <strong>Recognize Feedback</strong> memorizes the True literals and forgets the False ones. When the rule <strong>doesn't match</strong> an example of its own class, <strong>Erase Feedback</strong> forgets everything a little. Together these two find <strong>frequent patterns</strong> ("most cars have four wheels"), and the <strong>Forget Value</strong> decides how frequent a literal must be to stay. Frequent is not the same as useful for telling classes apart, so a third type, <strong>Reject Feedback</strong>, fires when the rule wrongly matches an example of another class: it memorizes a literal that is False for that example, so the rule stops matching it.</p>
+</div>
+<p><strong>Level:</strong> beginner · <strong>Prerequisites:</strong> <a href="../tsetlin-machine-intro/">What is a Tsetlin machine?</a> (literals, AND rules) and <a href="../tsetlin-automaton/">The Tsetlin automaton</a> (a literal's graded memory).</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Most machine-learning models learn by gradient descent: compute an error, take derivatives, shift millions of real-valued weights. A Tsetlin machine does something much simpler. Each rule keeps a small counter for every literal, and three plain if-then feedback rules move those counters up or down by one. There are no derivatives and no floating-point weights in the model. The result is still a readable rule, such as <em>IF Deg-malig 3 THEN Recurrence</em>.</p>
+<p>This lesson is about <strong>how one rule learns</strong>. It matters for two reasons:</p>
+<ul>
+<li><strong>It is the whole learning algorithm in miniature.</strong> A full Tsetlin machine (next lesson) is many rules learning side by side with exactly these three feedback types. Only <em>how often</em> each rule gets feedback is added.</li>
+<li><strong>It separates two goals you meet everywhere in medicine and science.</strong> A rule can describe what is <em>typical</em> of a group ("almost no recurrence patients are under 40") or what <em>distinguishes</em> it from other groups ("tumour malignancy grade 3 is more than twice as common in recurrence patients"). The first is easy to learn and often useless for diagnosis. You will see exactly which feedback gives you which.</li>
+</ul>
+<p>We follow Chapter 1, §1.3–1.4 and Chapter 2, §2.2 of Ole-Christoffer Granmo's book <em>An Introduction to Tsetlin Machines</em>, with its two running examples: the six vehicles and the breast-cancer recurrence data.</p>
+<hr />
+<h2 id="step-1-a-rule-is-its-memory">Step 1 — A rule is its memory<a class="headerlink" href="#step-1-a-rule-is-its-memory" title="Permanent link">&para;</a></h2>
+<p>From the <a href="../tsetlin-automaton/">previous lesson</a>: each rule has a <strong>memory</strong> with one slot per literal. With 5 vehicle features there are 10 literals (<span class="arithmatex">\(x_k\)</span> and <span class="arithmatex">\(\lnot x_k\)</span> for each feature). Each literal sits at a position from 1 to 10:</p>
+<ul>
+<li><strong>1 to 5 = Forgotten.</strong> 1 is <em>Maximally Forgotten</em>, 5 is "almost memorized". Forgotten literals are not part of the rule.</li>
+<li><strong>6 to 10 = Memorized.</strong> 6 is lightly held, 10 is <em>Maximally Memorized</em>. Memorized literals <strong>are</strong> the rule.</li>
+</ul>
+<p>The rule's condition is the AND of its memorized literals. A rule <span class="arithmatex">\(C_j\)</span> for class Car with Four Wheels and Transports People memorized reads <em>IF Four Wheels AND Transports People THEN Car</em>. Two details matter for everything below:</p>
+<ul>
+<li><strong>A new rule starts with every literal at position 5.</strong> All forgotten, but each one a single step away from being memorized.</li>
+<li><strong>An empty condition is True.</strong> A rule with nothing memorized makes no demands, so during learning it matches every example.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Book terms and paper terms</p>
+<p>The book's terms are used throughout. In research papers, the memory of one literal is a <strong>Tsetlin automaton</strong> with actions <em>include</em> / <em>exclude</em>, and the three feedback types below are called <strong>Type Ia</strong> (Recognize), <strong>Type Ib</strong> (Erase) and <strong>Type II</strong> (Reject) feedback. Recognize and Erase together are <strong>Type I</strong> feedback.</p>
+</div>
+<hr />
+<h2 id="step-2-which-feedback-when">Step 2 — Which feedback, when?<a class="headerlink" href="#step-2-which-feedback-when" title="Permanent link">&para;</a></h2>
+<p>Every training example comes with its class. For one rule, only two questions decide what happens:</p>
+<ol>
+<li>Is the example of the <strong>rule's own class</strong> (a car, for a Car rule)?</li>
+<li>Does the rule <strong>match</strong> it (is its condition True)?</li>
+</ol>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧭 Choosing the feedback for one rule",
+  "cols": 3,
+  "rows": 4,
+  "rowHeight": 95,
+  "nodes": [
+    {"id": "ex", "col": 0, "row": 0, "icon": "🚗", "label": "Example with its class", "shape": "pill", "role": "data", "note": "The rule sees the literals of one example and its class."},
+    {"id": "own", "col": 0, "row": 1, "label": "Rule's own class?", "shape": "decision", "note": "A Car rule asks: is this a car?"},
+    {"id": "fit1", "col": 0, "row": 2, "label": "Rule True?", "shape": "decision", "note": "Are all memorized literals True for this example?"},
+    {"id": "rec", "col": 2, "row": 2, "icon": "✅", "label": "Recognize", "sub": "True ↑, False ↓", "role": "opt", "note": "Memorize the True literals (Memorize Value), forget the False ones (Forget Value)."},
+    {"id": "fit2", "col": 2, "row": 1, "label": "Rule True?", "shape": "decision", "note": "Does the rule wrongly match an example of another class?"},
+    {"id": "era", "col": 0, "row": 3, "icon": "🧽", "label": "Erase", "sub": "all ↓", "role": "grad", "note": "Forget every literal, each with probability = Forget Value."},
+    {"id": "rej", "col": 2, "row": 0, "icon": "⛔", "label": "Reject", "sub": "forgotten False ↑", "role": "model", "note": "Memorize every Forgotten literal that is False for this example, always (no randomness)."}
+  ],
+  "edges": [
+    {"from": "ex", "to": "own"},
+    {"from": "own", "to": "fit1", "label": "yes"},
+    {"from": "fit1", "to": "rec", "label": "yes"},
+    {"from": "fit1", "to": "era", "label": "no"},
+    {"from": "own", "to": "fit2", "label": "no"},
+    {"from": "fit2", "to": "rej", "label": "yes"}
+  ],
+  "steps": [
+    {"show": ["ex"], "text": "An example arrives with its class label, e.g. vehicle #1, a Car."},
+    {"show": ["ex>own", "own"], "text": "First question: is it of the rule's <b>own class</b>?"},
+    {"show": ["own>fit1", "fit1", "fit1>rec", "rec"], "text": "Own class and the rule matches → <b>Recognize Feedback</b>: make the rule look more like this example."},
+    {"show": ["fit1>era", "era"], "text": "Own class but the rule does not match → <b>Erase Feedback</b>: forget a little of everything, so the rule becomes more general."},
+    {"show": ["own>fit2", "fit2", "fit2>rej", "rej"], "text": "Another class and the rule matches → a mistake → <b>Reject Feedback</b>: memorize a literal that is False here, so the rule stops matching."},
+    {"show": ["fit2"], "text": "Another class and the rule does not match → nothing to fix: <b>no feedback</b>."}
+  ],
+  "narrow": {"cols": 2.4, "rows": 4, "rowHeight": 100, "hideSub": true, "pos": {"ex": [0, 0], "own": [0, 1], "fit1": [0, 2], "rec": [1.4, 2], "era": [0, 3], "fit2": [1.4, 1], "rej": [1.4, 0]}}
+}
+</script>
+</div>
+
+<p>The same thing as a table:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>rule <strong>matches</strong> (True)</th>
+<th>rule <strong>doesn't match</strong> (False)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>example of the <strong>rule's own class</strong></td>
+<td><strong>Recognize Feedback</strong></td>
+<td><strong>Erase Feedback</strong></td>
+</tr>
+<tr>
+<td>example of <strong>another class</strong></td>
+<td><strong>Reject Feedback</strong></td>
+<td>no feedback</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Two of the three feedback types fire on the rule's <strong>own</strong> class. Only Reject looks at the other classes.</li>
+<li>A rule that matches nothing at all only ever gets Erase Feedback (on its own class), which pulls it back towards matching.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-recognize-feedback-become-more-like-this-example">Step 3 — Recognize Feedback: become more like this example<a class="headerlink" href="#step-3-recognize-feedback-become-more-like-this-example" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> the example is of the rule's own class, and the rule matches it.</p>
+<p><strong>What:</strong> for every literal,</p>
+<ul>
+<li>if the literal is <strong>True</strong> for the example, <strong>memorize</strong> it: move it one position up (unless it is already at 10), with probability equal to the <strong>Memorize Value</strong>;</li>
+<li>if the literal is <strong>False</strong> for the example, <strong>forget</strong> it: move it one position down (unless it is already at 1), with probability equal to the <strong>Forget Value</strong>.</li>
+</ul>
+<p>The name says what it does: the rule is pulled towards <em>recognizing</em> this kind of example. Literals that keep showing up in its class climb into memory, and literals that keep being absent sink.</p>
+<p><strong>Why random?</strong> Every single step is a coin flip. Before each move you draw a random number between 0 and 1, and you only make the move if the number is at most the Memorize Value (for an increment) or the Forget Value (for a decrement). One odd example then cannot push the rule far, and different rules trained on the same data end up different, which helps when many rules work together.</p>
+<p><strong>The two values set the speed.</strong> A small Memorize Value (say 0.1) means memorizing is slow; a large Forget Value (0.9) means forgetting is fast. The book usually keeps</p>
+<div class="arithmatex">\[
+\text{Memorize Value} + \text{Forget Value} = 1,
+\]</div>
+<p>so a single knob is enough. In the research papers the knob is the <strong>specificity</strong> <span class="arithmatex">\(s \ge 1\)</span>: Memorize Value <span class="arithmatex">\(= \frac{s-1}{s}\)</span> and Forget Value <span class="arithmatex">\(= \frac{1}{s}\)</span>. A Forget Value of 0.8 is <span class="arithmatex">\(s = 1.25\)</span>; a Forget Value of 0.1 is <span class="arithmatex">\(s = 10\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">A Memorize Value of 1</p>
+<p>The book also allows the Memorize Value to be fixed at 1.0, so True literals always step up, with only the Forget Value (<span class="arithmatex">\(\frac1s\)</span>) left as the knob. Chapter 2 of the book (and Step 8 below) uses that version.</p>
+</div>
+<hr />
+<h2 id="step-4-erase-feedback-loosen-a-rule-that-is-too-picky">Step 4 — Erase Feedback: loosen a rule that is too picky<a class="headerlink" href="#step-4-erase-feedback-loosen-a-rule-that-is-too-picky" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> the example is of the rule's own class, but the rule does <strong>not</strong> match it.</p>
+<p><strong>What:</strong> <strong>forget every literal</strong>, each one moving down a position with probability equal to the Forget Value. True or False doesn't matter.</p>
+<p>A rule that fails on an example of its own class is too demanding: something in its condition is not typical of the class. Erase Feedback can't tell which literal is to blame, so it weakens all of them a little. The memorized literals that are really frequent get pushed back up by the next Recognize Feedback; the one that caused the mismatch does not, and drops out.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>Without Erase Feedback, a rule that memorized too much early on is stuck: it stops matching most of its class, and Recognize never fires on those examples again. In our Python check (1000 runs of 200 steps, Forget Value 0.9), a Car rule trained <strong>without</strong> Erase covered on average 81% of the cars, and 47% of runs got stuck with a colour in the rule (such as <em>… AND Yellow AND NOT Blue</em>). <strong>With</strong> Erase, the rule covered all three cars in 999 of the 1000 runs.</p>
+</div>
+<hr />
+<h2 id="step-5-watch-it-happen-the-books-worked-example">Step 5 — Watch it happen: the book's worked example<a class="headerlink" href="#step-5-watch-it-happen-the-books-worked-example" title="Permanent link">&para;</a></h2>
+<p>The book walks through a Car rule meeting the first four vehicles of its table, with Memorize Value 0.1 and Forget Value 0.9. Because the updates are random, the book <em>chooses</em> which coin flips succeed. The widget replays exactly those choices. Click <strong>Next</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Four Wheels</th>
+<th>Transports People</th>
+<th>Wings</th>
+<th>Yellow</th>
+<th>Blue</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>·</td>
+<td>●</td>
+<td>Car</td>
+</tr>
+<tr>
+<td>2</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>●</td>
+<td>·</td>
+<td>Car</td>
+</tr>
+<tr>
+<td>3</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>●</td>
+<td>·</td>
+<td>Car</td>
+</tr>
+<tr>
+<td>4</td>
+<td>●</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>●</td>
+<td>Plane</td>
+</tr>
+<tr>
+<td>5</td>
+<td>●</td>
+<td>·</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>Plane</td>
+</tr>
+<tr>
+<td>6</td>
+<td>·</td>
+<td>●</td>
+<td>●</td>
+<td>·</td>
+<td>●</td>
+<td>Plane</td>
+</tr>
+</tbody>
+</table>
+<p><em>The vehicle table from Granmo, Ch. 1, Table 1.1 (● True, · False).</em></p>
+<div id="viz-walkthrough" class="viz"><div class="viz-title">🎬 Interactive: one Car rule meets vehicles #1–#4</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Step 1.</strong> The empty rule matches anything, so the very first car gives Recognize Feedback. After it the rule is <em>Four Wheels AND Transports People AND Blue</em>: it has copied the first car, colour included.</li>
+<li><strong>Step 2.</strong> A yellow car fails the "Blue" demand → Erase. Blue drops to 5 and Transports People drops to 5 with it. Only Four Wheels survives because its coin flip happened to skip.</li>
+<li><strong>Step 3.</strong> Now the rule is just <em>Four Wheels</em>, which matches the next yellow car → Recognize. Four Wheels climbs to 7, Transports People comes back to 6, and the colour literals sink lower: Yellow is True in two of the three cars and Blue in one, so neither is frequent enough to stick at these settings.</li>
+<li><strong>Step 4.</strong> The resulting rule <em>Four Wheels AND Transports People</em> also fits plane #4. Reject Feedback (Step 7) moves ¬Wings from 5 to 6, giving <em>Four Wheels AND Transports People AND ¬Wings</em>, which no longer matches the plane.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-recognize-erase-find-frequent-patterns">Step 6 — Recognize + Erase find frequent patterns<a class="headerlink" href="#step-6-recognize-erase-find-frequent-patterns" title="Permanent link">&para;</a></h2>
+<p>Why do these two feedback types end up with "what is typical"? Look at one literal while the rule matches its class. Say the literal is True in a fraction <span class="arithmatex">\(f\)</span> of those examples. Each time, it moves:</p>
+<ul>
+<li><strong>up</strong> with probability <span class="arithmatex">\(f \times \text{Memorize Value}\)</span> (it is True, and the coin flip succeeds),</li>
+<li><strong>down</strong> with probability <span class="arithmatex">\((1-f) \times \text{Forget Value}\)</span> (it is False, and the coin flip succeeds).</li>
+</ul>
+<p>It drifts into memory when up beats down. With Memorize Value <span class="arithmatex">\(= 1 - F\)</span> and Forget Value <span class="arithmatex">\(= F\)</span>:</p>
+<div class="arithmatex">\[
+f\,(1-F) &gt; (1-f)\,F \quad\Longleftrightarrow\quad f &gt; F .
+\]</div>
+<p>So <strong>the Forget Value is a frequency threshold.</strong> With Forget Value 0.8, a literal must be True in more than 80% of the matched examples of its class to stay in the rule. With 0.5, more than half is enough. Low Forget Value → more literals pass → <strong>longer, more specific rules</strong>. That is why the papers call <span class="arithmatex">\(s\)</span> the <em>specificity</em>. (Erase Feedback pulls all literals down a bit more, so the threshold is approximate, but the idea holds.)</p>
+<p>The book's breast-cancer example shows the same arithmetic. Among its three recurrence patients, Deg-malig 3 is True for all three; Menopause ge40 for two of three. With Memorize Value 0.2 and Forget Value 0.8, ge40 expects <span class="arithmatex">\(2 \times 0.2 = 0.4\)</span> steps up and <span class="arithmatex">\(1 \times 0.8 = 0.8\)</span> steps down per pass through those patients, so it is forgotten. With 0.5 and 0.5 it expects 1.0 up and 0.5 down, so it is memorized. In our run of the code at the end of this lesson, 771 of 1000 training runs with Forget Value 0.8 learned exactly the book's rule, <em>Deg-malig 3 AND NOT Menopause lt40</em> (plus the redundant ¬Deg-malig 1 and ¬Deg-malig 2).</p>
+<p>On the vehicles, Yellow (and ¬Blue) are True for 2 of the 3 cars, <span class="arithmatex">\(f \approx 0.67\)</span>. We trained a Car rule 500 times at each Forget Value and measured how often some colour literal was in the rule:</p>
+<table>
+<thead>
+<tr>
+<th>Forget Value</th>
+<th>0.9</th>
+<th>0.8</th>
+<th>0.7</th>
+<th>0.6</th>
+<th>0.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time a colour is memorized</td>
+<td>0.1%</td>
+<td>5.4%</td>
+<td>45.9%</td>
+<td>91.3%</td>
+<td>99.4%</td>
+</tr>
+</tbody>
+</table>
+<p>The switch happens right around the predicted <span class="arithmatex">\(F \approx 0.67\)</span>. (It is a bit above: once <em>Yellow</em> is in the rule, the rule only matches yellow cars, so Yellow is then True in 100% of the matched examples and holds on.)</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>High Forget Value (small <span class="arithmatex">\(s\)</span>) → short, general rules that cover much of the class.</li>
+<li>Low Forget Value (large <span class="arithmatex">\(s\)</span>) → long, specific rules for sub-groups (only the two yellow cars).</li>
+<li>Neither of these used a single <strong>plane</strong>. Recognize and Erase only ever look at the rule's own class.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-frequent-is-not-enough-reject-feedback">Step 7 — Frequent is not enough: Reject Feedback<a class="headerlink" href="#step-7-frequent-is-not-enough-reject-feedback" title="Permanent link">&para;</a></h2>
+<p>A pattern can be typical of a class and <em>also</em> typical of the other classes. <em>Four Wheels AND Transports People</em> describes every car, and plane #4 too. On the full breast-cancer data the problem is real:</p>
+<ul>
+<li>Almost no patient is under 40 (Menopause lt40). So <strong>¬Menopause lt40</strong> is True for 83 of the 85 recurrence patients, a perfect frequent pattern.</li>
+<li>But it is also True for most patients without recurrence. The rule <em>IF ¬Menopause lt40 THEN Recurrence</em> matches 279 of the 286 patients, and only 30% of those it matches have a recurrence: no better than the base rate of 85 / 286.</li>
+</ul>
+<p><strong>Reject Feedback</strong> fixes this.</p>
+<p><strong>When:</strong> the example is of <strong>another class</strong>, and the rule <strong>matches</strong> it: the rule is making a mistake.</p>
+<p><strong>What:</strong> take every literal that is <strong>False</strong> for this example and currently <strong>Forgotten</strong>, and move it <strong>one position up, always</strong> (no coin flip).</p>
+<p>Why exactly those literals? The rule matches, so all its memorized literals are True for this example. To stop matching, the rule needs just one memorized literal that is False here. Every Forgotten False literal is a candidate, and Reject Feedback nudges all of them. The first to cross from 5 to 6 makes the rule reject the example. In the walkthrough above, plane #4 pushes up ¬Four Wheels, ¬Transports People, ¬Wings, Yellow and ¬Blue, and ¬Wings, already at 5, crosses first.</p>
+<p>Which candidate wins in the long run is decided by Recognize and Erase. Pushing up ¬Four Wheels is useless: it is False for every car, so Recognize Feedback immediately pushes it down again. ¬Wings is True for every car, so Recognize keeps it. The survivor is a literal that is <strong>frequent in the rule's class and absent in the wrongly matched example</strong>: frequent <em>and</em> discriminative.</p>
+<div class="admonition warning">
+<p class="admonition-title">Reject alone is not enough either</p>
+<p>The book's notebook demonstrates this: give a rule only Reject Feedback and it keeps adding literals until it matches no plane, but it ends with contradictions like <em>Four Wheels AND NOT Four Wheels</em> that match nothing at all. In our check, a Car rule trained with only Reject matched <strong>none</strong> of the cars in all 1000 runs. The three feedback types work as a team.</p>
+</div>
+<hr />
+<h2 id="step-8-train-one-rule-yourself">Step 8 — Train one rule yourself<a class="headerlink" href="#step-8-train-one-rule-yourself" title="Permanent link">&para;</a></h2>
+<p>Now run the real thing. Each step picks the rule's own class or the other class with equal chance (as the book's notebook does), then a random example from it, and applies the feedback from Step 2. The bars show each literal's position now, and the strip on the right its last 200 positions (green = memorized). The readout shows the current rule and how good it is:</p>
+<ul>
+<li><strong>coverage</strong> = the fraction of the rule's own class it matches;</li>
+<li><strong>precision</strong> = among all examples it matches, the fraction that really are of its class.</li>
+</ul>
+<p>The data is the full <strong>UCI Breast Cancer</strong> dataset (286 patients from the University Medical Centre, Ljubljana, the same public source the book uses), with the book's nine features: Menopause lt40 / ge40 / premeno, Inv-nodes 0-2 / 3-5 / 6 or more, and Deg-malig 1 / 2 / 3.</p>
+<div id="viz-train" class="viz"><div class="viz-title">🏋️ Interactive: train one rule with Recognize, Erase and Reject</div></div>
+
+<p><strong>Try this</strong> (seed 13, Forget Value 0.8, Reject switched off at first):</p>
+<ol>
+<li><strong>Untick Reject</strong> and press <strong>+1000</strong> twice. The rule becomes <em>IF ¬Menopause lt40 THEN Recurrence</em>: it matches 279 of 286 patients, coverage 83/85 = 0.98, precision 0.30. A beautifully frequent, useless rule.</li>
+<li><strong>Tick Reject</strong> and press <strong>+1000</strong> once. The rule switches to <em>IF Deg-malig 3 THEN Recurrence</em>: coverage 45/85 = 0.53, precision 45/85 = 0.53. It catches fewer recurrences, but a patient it flags is now 1.8 times as likely to have one.</li>
+<li><strong>Drag the Forget Value to 0.2</strong> (more specific) and press <strong>+1000</strong> a few times. The rules get longer and precision tends to rise further, at the cost of coverage.</li>
+<li>Switch the data to <strong>vehicles: Car rule</strong>. Set the Forget Value to 0.9, press <strong>Reset</strong> and <strong>+100</strong>: <em>Four Wheels AND Transports People AND ¬Wings</em>, covering all 3 cars. Now set 0.5, press <strong>Reset</strong> and <strong>+100</strong> twice: the yellow-car rule <em>Four Wheels AND Transports People AND ¬Wings AND Yellow AND ¬Blue</em>, which covers only 2 of the 3 cars.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>A single rule never stops moving.</strong> Keep pressing +1000 and the rule sometimes falls back to an empty or frequent-only condition, then finds a precise one again. The book stresses this: the outcome of learning is not one rule but a probability of being in each rule.</li>
+<li><strong>Averaged over time it is clear.</strong> We ran 50 seeds for 5000 steps each and averaged over steps 1000–5000. Forget Value 0.8: precision 0.33 without Reject, 0.44 with it. Forget Value 0.2: 0.37 versus 0.66. Forget Value 0.1: 0.42 versus 0.74, but then the rule covers only about 12% of recurrence patients.</li>
+<li><strong>Coverage and precision trade off.</strong> That is why a Tsetlin machine uses <strong>many</strong> rules: several precise rules together can cover the class (next lesson).</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-9-two-literals-one-rule-a-game-without-talking">Step 9 — Two literals, one rule: a game without talking<a class="headerlink" href="#step-9-two-literals-one-rule-a-game-without-talking" title="Permanent link">&para;</a></h2>
+<p>So far we followed literals one at a time. But a literal's feedback depends on the <strong>other</strong> literals in the same rule. Chapter 2, §2.2 of the book studies the smallest case, a rule with two literals <span class="arithmatex">\(L_1\)</span> and <span class="arithmatex">\(L_2\)</span>, as a <strong>game</strong>.</p>
+<p><strong>The Prisoner's Dilemma in one paragraph.</strong> Two partners in crime are questioned in separate cells and can't talk. Each can stay silent or betray the other. If both stay silent, both get one year. If one betrays and the other stays silent, the traitor walks free and the silent one gets twenty years. If both betray, both get five. What is best for each prisoner depends on what the other one does, and they must decide without coordinating.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>partner stays silent</th>
+<th>partner betrays</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>stay silent</strong></td>
+<td>1 year each</td>
+<td>you 20 years, partner free</td>
+</tr>
+<tr>
+<td><strong>betray</strong></td>
+<td>you free, partner 20 years</td>
+<td>5 years each</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The literal game.</strong> Each literal is a "player" that, without talking to the other, is either Memorized or Forgotten. The four combinations give four rules: empty, <span class="arithmatex">\(L_1\)</span>, <span class="arithmatex">\(L_2\)</span>, or <span class="arithmatex">\(L_1 \wedge L_2\)</span>. For a given observation, each combination decides whether the rule matches and therefore which feedback each literal gets. Look at observation (<span class="arithmatex">\(L_1\)</span> False, <span class="arithmatex">\(L_2\)</span> True, own class <span class="arithmatex">\(Y\)</span>):</p>
+<ul>
+<li>If <span class="arithmatex">\(L_1\)</span> is Forgotten, the rule matches, so Recognize Feedback <strong>pulls <span class="arithmatex">\(L_2\)</span> up</strong>.</li>
+<li>If <span class="arithmatex">\(L_1\)</span> is Memorized, the rule fails, so Erase Feedback <strong>pushes <span class="arithmatex">\(L_2\)</span> down</strong>, although <span class="arithmatex">\(L_2\)</span> is True.</li>
+</ul>
+<p>Same observation, same <span class="arithmatex">\(L_2\)</span>, opposite feedback, all because of the other player's choice. No literal sees the others, yet their moves are coupled through the rule's truth value. That is how a rule gets coordinated without any communication.</p>
+<p>Use the left panel to step through all eight observations (2 truth values × 2 truth values × 2 classes). The right panel solves the long-run behaviour exactly: with a memory of depth 8 per literal (positions 1–4 forgotten, 5–8 memorized), the pair of positions is a Markov chain with 64 states, and the heat map is its <strong>stationary distribution</strong>, the fraction of time spent at each pair of positions. Like the book, it uses Memorize Value 1.0 and Forget Value <span class="arithmatex">\(1/s\)</span>, and all four input patterns are equally likely.</p>
+<div id="viz-game" class="viz"><div class="viz-title">🎲 Interactive: the literal game and where learning settles</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Scenario 1: one useful literal.</strong> <span class="arithmatex">\(L_2\)</span> predicts the class (precision 0.9), <span class="arithmatex">\(L_1\)</span> adds nothing. The rule is <em>L₂ only</em> <strong>80.4%</strong> of the time.</li>
+<li><strong>Scenario 2: two equally good literals.</strong> Each alone has precision 0.9. The time splits: <em>L₂ only</em> 42.5%, <em>L₁ only</em> 42.5%. Learning keeps visiting both alternatives.</li>
+<li><strong>Scenario 3: pick the better one.</strong> Lower <span class="arithmatex">\(L_1\)</span>'s precision to 0.7. Now <em>L₂ only</em> gets 67.5% of the time against 13.4% for <em>L₁ only</em>.</li>
+<li><strong>Scenario 4: combine.</strong> Same data as Scenario 2 but <span class="arithmatex">\(s = 4\)</span> (Forget Value 0.25). Patterns that match only a quarter of the data are now frequent enough, and the rule is <em>L₁ ∧ L₂</em> (precision 0.99) <strong>92.9%</strong> of the time, with the single most likely state, both literals at position 8, at 0.36.</li>
+<li>These are exactly the numbers in the book's Tables 2.5–2.8, which our 64-state calculation reproduces.</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>One rule's whole learning loop:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 How one rule learns",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0, "icon": "🆕", "label": "All literals at position 5", "shape": "pill", "sub": "empty rule", "note": "Every literal starts forgotten but one step from memorized."},
+    {"id": "pick", "col": 1, "row": 0, "icon": "🎲", "label": "Pick an example", "sub": "own class or other", "role": "data"},
+    {"id": "eval", "col": 2, "row": 0, "icon": "🔍", "label": "Does the rule match?", "role": "model", "note": "AND of the memorized literals."},
+    {"id": "fb", "col": 2, "row": 1, "icon": "🧭", "label": "Recognize, Erase or Reject", "role": "loss", "note": "Own class + match: Recognize. Own class + no match: Erase. Other class + match: Reject. Otherwise nothing."},
+    {"id": "upd", "col": 1, "row": 1, "icon": "↕️", "label": "Move literals ±1", "sub": "Memorize / Forget Value", "role": "opt", "note": "Recognize and Erase move literals at random with the Memorize and Forget Values; Reject always moves its literals."}
+  ],
+  "edges": [
+    {"from": "init", "to": "pick"},
+    {"from": "pick", "to": "eval"},
+    {"from": "eval", "to": "fb"},
+    {"from": "fb", "to": "upd"},
+    {"from": "upd", "to": "pick", "label": "next"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "A fresh rule: all literals at position 5, so the condition is empty and matches everything."},
+    {"show": ["init>pick", "pick"], "text": "Pick a training example and look at its class."},
+    {"show": ["pick>eval", "eval"], "text": "Evaluate the rule: are all its memorized literals True for this example?"},
+    {"show": ["eval>fb", "fb"], "text": "Pick the feedback. <b>Recognize</b> and <b>Erase</b> (own class) find what is frequent; <b>Reject</b> (other class, wrong match) adds what discriminates."},
+    {"show": ["fb>upd", "upd"], "text": "Move literals one position up or down. The Forget Value sets how frequent a literal must be to stay."},
+    {"show": ["upd>pick", "pick"], "text": "Repeat. The memorized literals, read off at any time, are the rule."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"init": [0, 0], "pick": [0, 1], "eval": [1, 1], "fb": [1, 2], "upd": [0, 2]}}
+}
+</script>
+</div>
+
+<p>The whole algorithm for one rule in plain Python. It trains a Car rule on the vehicles at two Forget Values, then the book's six breast-cancer patients 1000 times:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">DEPTH</span> <span class="o">=</span> <span class="mi">10</span>                                   <span class="c1"># memory positions 1..10; 6..10 = Memorized</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">literals</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""[x1, NOT x1, x2, NOT x2, ...] as 1/0 truth values."""</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xi</span><span class="p">)]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">matches</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">lits</span><span class="p">):</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="sd">"""The rule is the AND of its memorized literals (empty rule = True)."""</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">lits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">DEPTH</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">learn_step</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">lits</span><span class="p">,</span> <span class="n">own_class</span><span class="p">,</span> <span class="n">forget</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">memorize</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">forget</span>                    <span class="c1"># Memorize Value + Forget Value = 1</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">fires</span> <span class="o">=</span> <span class="n">matches</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">lits</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="k">if</span> <span class="n">own_class</span> <span class="ow">and</span> <span class="n">fires</span><span class="p">:</span>                  <span class="c1"># Recognize: memorize True literals, forget False ones</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lits</span><span class="p">):</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            <span class="k">if</span> <span class="n">v</span> <span class="ow">and</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">memorize</span><span class="p">:</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DEPTH</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">v</span> <span class="ow">and</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">forget</span><span class="p">:</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="k">elif</span> <span class="n">own_class</span><span class="p">:</span>                          <span class="c1"># Erase: forget every literal</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="p">)):</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">forget</span><span class="p">:</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>                <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">elif</span> <span class="n">fires</span><span class="p">:</span>                              <span class="c1"># Reject: memorize the Forgotten False literals (no randomness)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lits</span><span class="p">):</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span> <span class="ow">and</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">DEPTH</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>                <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="k">def</span><span class="w"> </span><span class="nf">train_rule</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">forget</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="n">own</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">]</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="n">other</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">target</span><span class="p">]</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">DEPTH</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>     <span class="c1"># every literal starts at position 5</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">k</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">own</span> <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">learn_step</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">literals</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">y</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">,</span> <span class="n">forget</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="k">return</span> <span class="n">pos</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="k">def</span><span class="w"> </span><span class="nf">rule_text</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">"NOT "</span> <span class="o">+</span> <span class="n">f</span><span class="p">)]</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>    <span class="k">return</span> <span class="s2">" AND "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">DEPTH</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">"(empty)"</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="c1"># Granmo, Ch. 1, Table 1.1: three cars (1) and three planes (0)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="n">vehicles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Four Wheels"</span><span class="p">,</span> <span class="s2">"Transports People"</span><span class="p">,</span> <span class="s2">"Wings"</span><span class="p">,</span> <span class="s2">"Yellow"</span><span class="p">,</span> <span class="s2">"Blue"</span><span class="p">]</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="n">X_veh</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="n">y_veh</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="k">for</span> <span class="n">forget</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">):</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>    <span class="n">pos</span> <span class="o">=</span> <span class="n">train_rule</span><span class="p">(</span><span class="n">X_veh</span><span class="p">,</span> <span class="n">y_veh</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">forget</span><span class="o">=</span><span class="n">forget</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Forget </span><span class="si">{</span><span class="n">forget</span><span class="si">}</span><span class="s2">: IF </span><span class="si">{</span><span class="n">rule_text</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="w"> </span><span class="n">vehicles</span><span class="p">)</span><span class="si">}</span><span class="s2"> THEN Car"</span><span class="p">)</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="c1"># Granmo, Ch. 1, Table 1.4: six patients from the UCI breast-cancer data (1 = recurrence)</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="n">patients</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"lt40"</span><span class="p">,</span> <span class="s2">"ge40"</span><span class="p">,</span> <span class="s2">"premeno"</span><span class="p">,</span> <span class="s2">"nodes 0-2"</span><span class="p">,</span> <span class="s2">"nodes 3-5"</span><span class="p">,</span> <span class="s2">"nodes 6-8"</span><span class="p">,</span> <span class="s2">"malig 1"</span><span class="p">,</span> <span class="s2">"malig 2"</span><span class="p">,</span> <span class="s2">"malig 3"</span><span class="p">]</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="n">X_bc</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="n">y_bc</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="n">rules</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">rule_text</span><span class="p">(</span><span class="n">train_rule</span><span class="p">(</span><span class="n">X_bc</span><span class="p">,</span> <span class="n">y_bc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">forget</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">s</span><span class="p">),</span> <span class="n">patients</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">rules</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> of 1000 runs: IF </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2"> THEN Recurrence"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Forget 0.9: IF Four Wheels AND Transports People AND NOT Wings THEN Car
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Forget 0.5: IF Four Wheels AND Transports People AND NOT Wings AND Yellow AND NOT Blue THEN Car
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> 771 of 1000 runs: IF NOT lt40 AND NOT malig 1 AND NOT malig 2 AND malig 3 THEN Recurrence
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  25 of 1000 runs: IF NOT lt40 AND NOT nodes 3-5 AND NOT malig 1 AND NOT malig 2 AND malig 3 THEN Recurrence
+</code></pre></div>
+<p>The whole learner is three <code>if</code> branches and some ±1 steps. Note that NOT malig 1 and NOT malig 2 follow from malig 3 (a tumour has one grade), so the most common rule is the book's <em>Deg-malig 3 AND NOT Menopause lt40</em>. (This script uses Python's own random generator, so its counts differ a little from the widgets, which use a small seeded generator of their own.)</p>
+<table>
+<thead>
+<tr>
+<th>Feedback</th>
+<th>Fires when</th>
+<th>True literals</th>
+<th>False literals</th>
+<th>Random?</th>
+<th>Finds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recognize</strong></td>
+<td>own class, rule matches</td>
+<td>up (Memorize Value)</td>
+<td>down (Forget Value)</td>
+<td>yes</td>
+<td>frequent patterns</td>
+</tr>
+<tr>
+<td><strong>Erase</strong></td>
+<td>own class, rule fails</td>
+<td>down (Forget Value)</td>
+<td>down (Forget Value)</td>
+<td>yes</td>
+<td>keeps rules general</td>
+</tr>
+<tr>
+<td><strong>Reject</strong></td>
+<td>other class, rule matches</td>
+<td>unchanged</td>
+<td>Forgotten ones up</td>
+<td>no</td>
+<td>discriminating literals</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"Recognize Feedback only memorizes.\"</p>
+<p>It does both: True literals move up and False literals move down. The downward half is what removes details that don't belong to the pattern, like the colour of a particular car.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Reject Feedback forgets the literals that caused the wrong match.\"</p>
+<p>The opposite. Reject never forgets anything. It <strong>memorizes</strong> literals that are False for the wrongly matched example, which makes the rule's AND fail on it. Adding a literal can only make an AND rule match fewer examples.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A frequent pattern is a good classifier.\"</p>
+<p><em>¬Menopause lt40</em> is True for 83 of the 85 recurrence patients, yet as a rule it has a precision of only 0.30, the base rate. Frequency within a class says nothing about the other classes. That is the job of Reject Feedback.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"After training, the rule is fixed.\"</p>
+<p>The memory keeps moving as long as feedback continues. A rule learned from data with no perfect pattern keeps visiting several rules, spending more time in the better ones. In the widget, keep pressing +1000 and watch.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A lower Forget Value is always better because the rules get more precise.\"</p>
+<p>Lower Forget Value means more specific rules that cover less of their class. At 0.1, our single rule's precision rose to 0.74 but it covered only about 12% of recurrence patients. The right value depends on the data and on how many rules share the work.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. A Car rule is currently <em>Four Wheels AND Blue</em>. It sees vehicle #2 (a yellow car). Which feedback fires, and what happens to Four Wheels?</summary>
+<p>Vehicle #2 is a car (own class) but it is not Blue, so the rule is False → <strong>Erase Feedback</strong>. Every literal, Four Wheels included, moves down one position with probability equal to the Forget Value. Four Wheels is True for this car, but Erase doesn't look at truth values.</p>
+</details>
+<details class="question">
+<summary>2. A Car rule is <em>Transports People</em>. It sees plane #6 (no four wheels, transports people, wings, not yellow, blue). Which literals can Reject Feedback move?</summary>
+<p>The rule matches the plane (it transports people) → <strong>Reject Feedback</strong>. It moves up every <strong>Forgotten</strong> literal that is <strong>False</strong> for this plane: Four Wheels, ¬Transports People, ¬Wings, Yellow and ¬Blue. Later, Recognize Feedback on the cars knocks ¬Transports People back down (False for every car), lets Yellow and ¬Blue fade at a high Forget Value (True for only two of the three cars), and keeps Four Wheels and ¬Wings (True for all cars).</p>
+</details>
+<details class="question">
+<summary>3. With Memorize Value 0.3 and Forget Value 0.7, will a literal that is True for 60% of the matched examples of its class end up memorized?</summary>
+<p>Expected move up per example: <span class="arithmatex">\(0.6 \times 0.3 = 0.18\)</span>. Down: <span class="arithmatex">\(0.4 \times 0.7 = 0.28\)</span>. Down wins, so it is mostly <strong>forgotten</strong>. The threshold is <span class="arithmatex">\(f &gt; F = 0.7\)</span>, and 0.6 is below it. Lower the Forget Value below 0.6 (e.g. 0.5) and it would stay.</p>
+</details>
+<details class="question">
+<summary>4. Why is Reject Feedback not randomized, while Recognize and Erase are?</summary>
+<p>Reject only fires on a clear <strong>mistake</strong>: the rule claimed an example of another class. One step up for every candidate literal fixes it fast. Recognize and Erase work on statistics (how often is this literal True in my class?), so random, small steps let the memory average over many examples instead of copying the last one.</p>
+</details>
+<details class="question">
+<summary>5. In the literal game, observation (L₁ True, L₂ False, other class). What happens in each of the four cells?</summary>
+<p>The class is not the rule's own, so only Reject Feedback can fire, and only if the rule matches. <strong>Empty rule</strong>: matches → Reject: L₂ is False and Forgotten, so L₂ goes up; L₁ is True, so nothing. <strong>L₁ only</strong>: matches (L₁ True) → Reject: L₂ goes up. <strong>L₂ only</strong>: L₂ is False → rule doesn't match → no feedback. <strong>L₁ ∧ L₂</strong>: doesn't match → no feedback.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a> (free book). Chapter 1, §1.3 (Recognize and Erase Feedback) and §1.4 (Reject Feedback) are the source of this lesson's algorithm and vehicle example; Chapter 2, §2.2 (Multi-Literal Learning) is the source of the literal game. The book's Chapter 1 notebook implements one rule in about 50 lines.</li>
+<li>Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/1804.01508"><em>The Tsetlin Machine – A Game Theoretic Bandit Driven Approach to Optimal Pattern Recognition with Propositional Logic</em></a> (2018). The original paper, with Type I and Type II feedback as tables.</li>
+<li>M. Zwitter &amp; M. Soklic, <a href="https://archive.ics.uci.edu/dataset/14/breast+cancer">Breast Cancer dataset</a>, UCI Machine Learning Repository. The 286-patient data used in the widget.</li>
+</ul>
+<p><strong>Next lesson:</strong> <a href="../tsetlin-machine-classification/">Many rules voting: classification with a Tsetlin machine</a></p>
+<script src="viz/tsetlin-machine-feedback.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tsetlin-automaton/" class="md-footer__link md-footer__link--prev" aria-label="Previous: The Tsetlin automaton">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                The Tsetlin automaton
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tsetlin-machine-classification/" class="md-footer__link md-footer__link--next" aria-label="Next: Classification by voting">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Classification by voting
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

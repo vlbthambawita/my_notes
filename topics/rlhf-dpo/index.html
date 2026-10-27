@@ -1,0 +1,2186 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/rlhf-dpo/">
+      
+      
+        <link rel="prev" href="../offline-rl-imitation/">
+      
+      
+        <link rel="next" href="../tsetlin-machine-intro/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>RLHF & DPO - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rl-from-human-feedback-rlhf-and-dpo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RLHF & DPO
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-problem-a-text-predictor-is-not-an-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — The problem: a text predictor is not an assistant
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-a-language-model-is-a-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — A language model is a policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-rlhf-recipe-in-three-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The RLHF recipe in three stages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-learning-a-reward-from-comparisons-bradleyterry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Learning a reward from comparisons (Bradley–Terry)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-rl-fine-tuning-with-a-kl-leash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — RL fine-tuning with a KL leash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-dpo-skip-the-reward-model-and-the-rl-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — DPO: skip the reward model and the RL loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-rlhf-with-ppo-vs-dpo-and-what-came-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — RLHF with PPO vs DPO, and what came next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-problem-a-text-predictor-is-not-an-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — The problem: a text predictor is not an assistant
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-a-language-model-is-a-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — A language model is a policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-rlhf-recipe-in-three-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The RLHF recipe in three stages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-learning-a-reward-from-comparisons-bradleyterry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Learning a reward from comparisons (Bradley–Terry)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-rl-fine-tuning-with-a-kl-leash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — RL fine-tuning with a KL leash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-dpo-skip-the-reward-model-and-the-rl-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — DPO: skip the reward model and the RL loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-rlhf-with-ppo-vs-dpo-and-what-came-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — RLHF with PPO vs DPO, and what came next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="rl-from-human-feedback-rlhf-and-dpo">RL from Human Feedback (RLHF) and DPO<a class="headerlink" href="#rl-from-human-feedback-rlhf-and-dpo" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A pre-trained language model predicts text; it does not try to be helpful. <strong>RLHF</strong> fixes that in three stages: fine-tune on good examples (<strong>SFT</strong>), train a <strong>reward model</strong> from human comparisons ("reply A is better than reply B"), then use RL (usually <strong>PPO</strong>) to make the model produce replies the reward model likes, while a <strong>KL penalty</strong> keeps it close to where it started. <strong>DPO</strong> reaches the same goal with a single supervised-style loss on the comparisons: no reward model and no RL loop.</p>
+</div>
+<p><strong>Level:</strong> advanced · <strong>Prerequisites:</strong> <a href="../policy-gradients/">Policy gradients</a>, <a href="../actor-critic/">Actor-critic</a> (PPO). Knowing what a language model does ("predict the next token") helps.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>This is where the whole RL series pays off. In the <a href="../reinforcement-learning-intro/">first lesson</a> the chatbot row of the table said: state = the conversation so far, action = the next word, reward = a score for the finished reply. This lesson fills in that row.</p>
+<ul>
+<li><strong>It is how chat assistants are aligned.</strong> OpenAI's InstructGPT paper (Ouyang et al., 2022) showed that labellers preferred replies from a 1.3-billion-parameter model fine-tuned with RLHF over replies from the 175-billion-parameter GPT-3 it started from. The same recipe, or a close relative, is used to fine-tune most chat assistants.</li>
+<li><strong>It turns "be helpful" into something you can optimise.</strong> Nobody can write a formula for a good answer. But people can easily say which of two answers is better. RLHF learns a reward from those judgements.</li>
+<li><strong>It shows RL's classic failure modes in a modern setting.</strong> Reward hacking, distribution shift and the need for a "leash" on the policy all show up, and the fixes reuse ideas from PPO and from the value-function lessons.</li>
+</ul>
+<hr />
+<h2 id="step-1-the-problem-a-text-predictor-is-not-an-assistant">Step 1 — The problem: a text predictor is not an assistant<a class="headerlink" href="#step-1-the-problem-a-text-predictor-is-not-an-assistant" title="Permanent link">&para;</a></h2>
+<p>A <strong>pre-trained</strong> language model has read a huge amount of text and learned one thing: given some text, predict the next token (a word or a piece of a word). Ask it a question and it continues the text in whatever way is most typical of the internet. That might be an answer. It might also be three more questions, a forum argument, or a confident wrong answer.</p>
+<table>
+<thead>
+<tr>
+<th>Prompt: "Why is the sky blue? Explain for a 10-year-old."</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What a pre-trained model might write</td>
+<td>"Why is grass green? Why is the sea salty? 50 science questions kids ask…" (it continues the <em>list</em> it thinks it is reading)</td>
+</tr>
+<tr>
+<td>What we want</td>
+<td>"Sunlight is made of all colours. Air bounces blue light around much more than red, so blue comes at you from every part of the sky."</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supervised fine-tuning (SFT)</strong> is the obvious first fix: collect prompts with good human-written answers and train the model to imitate them (ordinary next-token cross-entropy). It helps a lot. But it has limits:</p>
+<ol>
+<li><strong>Writing ideal answers is slow and expensive</strong>, and the model can only be as good as the demonstrations.</li>
+<li><strong>Imitation never says what is <em>bad</em>.</strong> The model sees good answers, not "this answer is wrong", "this one is rude", "this one is long-winded".</li>
+<li><strong>"Helpful, honest, harmless" is hard to write as a reward function.</strong> You can't code <code>def reward(answer): ...</code> for helpfulness.</li>
+</ol>
+<p>The key observation behind RLHF (Christiano et al., 2017) is that <strong>comparing is much easier than writing or scoring</strong>. Show a person two replies and ask "which is better?". They can answer in seconds, and they don't need to agree on an absolute scale. Those comparisons are the training signal.</p>
+<hr />
+<h2 id="step-2-a-language-model-is-a-policy">Step 2 — A language model is a policy<a class="headerlink" href="#step-2-a-language-model-is-a-policy" title="Permanent link">&para;</a></h2>
+<p>To use RL, we need the familiar pieces from lesson 1: states, actions, a policy and a reward. A language model already is a policy. Generating a reply token by token is an episode:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔤 Writing a reply, one token at a time, is an RL episode",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "prompt", "col": 0, "row": 0, "icon": "💬", "label": "Prompt x", "sub": "“Why is the sky blue?”", "shape": "pill", "role": "data", "note": "Each episode starts from a prompt drawn from a dataset of user requests."},
+    {"id": "state", "col": 1, "row": 0, "icon": "📜", "label": "State s<sub>t</sub>", "sub": "prompt + tokens so far", "role": "data", "note": "The state is all the text so far. It grows by one token per step, and nothing about it is hidden: the transition is deterministic."},
+    {"id": "policy", "col": 2, "row": 0, "icon": "🤖", "label": "Policy π<sub>θ</sub>", "sub": "the language model", "role": "model", "note": "π_θ(a | s) is exactly the model's next-token distribution: a softmax over the whole vocabulary."},
+    {"id": "token", "col": 2, "row": 1, "icon": "🎲", "label": "Action a<sub>t</sub>", "sub": "sample the next token", "role": "model", "note": "The action space is the vocabulary: tens of thousands of possible tokens at every step."},
+    {"id": "done", "col": 1, "row": 1, "label": "End of reply?", "shape": "decision", "role": "grad"},
+    {"id": "reward", "col": 0, "row": 1, "icon": "⚖️", "label": "Reward r(x, y)", "sub": "one score for the whole reply", "role": "loss", "note": "In RLHF the reward comes from a learned reward model and arrives only once, at the end: a sparse, delayed reward, just like winning a game of chess."}
+  ],
+  "edges": [
+    {"from": "prompt", "to": "state"},
+    {"from": "state", "to": "policy"},
+    {"from": "policy", "to": "token"},
+    {"from": "token", "to": "done"},
+    {"from": "done", "to": "state", "label": "no"},
+    {"from": "done", "to": "reward", "label": "yes"}
+  ],
+  "steps": [
+    {"show": ["prompt"], "text": "An episode starts with a <b>prompt</b> x, for example a user's question."},
+    {"show": ["prompt>state", "state"], "text": "The <b>state</b> is the prompt plus every token written so far."},
+    {"show": ["state>policy", "policy"], "text": "The language model is the <b>policy</b>: it outputs a probability for every possible next token."},
+    {"show": ["policy>token", "token"], "text": "The <b>action</b> is the token we sample. It is appended to the text."},
+    {"show": ["token>done", "done", "done>state", "state"], "text": "If the reply isn't finished, the new text is the next state and the loop repeats. Intermediate rewards are zero."},
+    {"show": ["done>reward", "reward"], "text": "When the model emits its end-of-reply token, the episode ends and the whole reply y gets <b>one reward</b>."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "pos": {"prompt": [0, 0], "state": [0, 1], "policy": [1, 1], "token": [1, 2], "done": [0, 2], "reward": [0, 3]}}
+}
+</script>
+</div>
+
+<p>The probability of a whole reply <span class="arithmatex">\(y = (y_1, \dots, y_T)\)</span> is the product of the token probabilities, so its log-probability is a sum:</p>
+<div class="arithmatex">\[
+\log \pi_\theta(y \mid x) = \sum_{t=1}^{T} \log \pi_\theta(y_t \mid x, y_{&lt;t})
+\]</div>
+<p>That is exactly the <span class="arithmatex">\(\log \pi_\theta(a_t \mid s_t)\)</span> term from the <a href="../policy-gradients/">policy gradients</a> lesson, summed over the episode. So REINFORCE, actor-critic and PPO all apply without change. The hard part is the reward.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The "environment" is trivial: appending a token is deterministic, and nothing pushes back. All the difficulty sits in the <strong>reward</strong>, which is given only once per reply.</li>
+<li>Because the reward is per reply, it is common to treat the <em>whole reply</em> as one big action. That simpler view (a "contextual bandit", like the <a href="../multi-armed-bandits/">bandits</a> lesson with a prompt as context) is the one the rest of this lesson uses, and it is the view DPO is built on.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-the-rlhf-recipe-in-three-stages">Step 3 — The RLHF recipe in three stages<a class="headerlink" href="#step-3-the-rlhf-recipe-in-three-stages" title="Permanent link">&para;</a></h2>
+<p>The pipeline popularised by InstructGPT (Ouyang et al., 2022), building on Christiano et al. (2017) and Stiennon et al. (2020), has three stages. Click through it:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🏭 The classic RLHF pipeline",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "pre", "col": 0, "row": 0, "icon": "📚", "label": "Pre-trained LM", "sub": "predicts the next token", "role": "model", "note": "Trained on a huge text corpus. Knows a lot, but doesn't follow instructions."},
+    {"id": "sft", "col": 1, "row": 0, "icon": "✍️", "label": "<b>1. SFT model</b>", "sub": "imitates good answers", "role": "model", "note": "Supervised fine-tuning on prompts with human-written demonstrations. Ordinary cross-entropy training."},
+    {"id": "pairs", "col": 2, "row": 0, "icon": "👥", "label": "Humans compare replies", "sub": "y<sub>w</sub> ≻ y<sub>l</sub>", "role": "data", "note": "For each prompt, sample several replies from the SFT model and ask labellers to rank them. Every ranking gives pairs (winner, loser)."},
+    {"id": "rm", "col": 2, "row": 1, "icon": "⚖️", "label": "<b>2. Reward model</b> r<sub>φ</sub>", "sub": "Bradley–Terry loss", "role": "loss", "note": "Usually the SFT model with its output layer replaced by a single number. Trained so that winners score higher than losers."},
+    {"id": "ppo", "col": 1, "row": 1, "icon": "🔁", "label": "<b>3. RL with PPO</b>", "sub": "max r − β·KL", "role": "model", "note": "The policy writes replies, the reward model scores them, PPO updates the policy. A KL penalty keeps it close to the SFT model."},
+    {"id": "aligned", "col": 0, "row": 1, "icon": "✅", "label": "Aligned assistant", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "pre", "to": "sft"},
+    {"from": "sft", "to": "pairs"},
+    {"from": "pairs", "to": "rm"},
+    {"from": "rm", "to": "ppo"},
+    {"from": "sft", "to": "ppo", "label": "π<sub>ref</sub>, init"},
+    {"from": "ppo", "to": "aligned"}
+  ],
+  "steps": [
+    {"show": ["pre"], "text": "Start from a <b>pre-trained</b> language model."},
+    {"show": ["pre>sft", "sft"], "text": "<b>Stage 1, SFT:</b> fine-tune it on human-written demonstrations, so it at least answers in the right style."},
+    {"show": ["sft>pairs", "pairs"], "text": "Sample several replies per prompt from the SFT model. Humans say which they prefer. (InstructGPT asked labellers to rank 4 to 9 replies per prompt.)"},
+    {"show": ["pairs>rm", "rm"], "text": "<b>Stage 2, reward model:</b> train a network to give higher scores to the replies humans preferred (Step 4)."},
+    {"show": ["rm>ppo", "sft>ppo", "ppo"], "text": "<b>Stage 3, RL:</b> starting from the SFT model, PPO maximises the reward model's score minus a KL penalty that keeps the policy near the SFT model π<sub>ref</sub> (Step 5)."},
+    {"show": ["ppo>aligned", "aligned"], "text": "The result is the assistant you chat with. In practice stages 2 and 3 are often repeated with fresh comparisons of the new model's replies."}
+  ],
+  "narrow": {"cols": 2.4, "rows": 4, "pos": {"pre": [0, 0], "sft": [0, 1], "pairs": [1.4, 1], "rm": [1.4, 2], "ppo": [0, 2], "aligned": [0, 3]}}
+}
+</script>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Humans appear only once, as <strong>labellers of comparisons</strong>. Everything after that is automatic: the reward model stands in for the humans during RL, so the policy can be scored millions of times.</li>
+<li>The SFT model plays two roles in stage 3: it is the <strong>starting point</strong> of the policy and the <strong>reference</strong> <span class="arithmatex">\(\pi_{\text{ref}}\)</span> that the KL penalty measures distance from.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-learning-a-reward-from-comparisons-bradleyterry">Step 4 — Learning a reward from comparisons (Bradley–Terry)<a class="headerlink" href="#step-4-learning-a-reward-from-comparisons-bradleyterry" title="Permanent link">&para;</a></h2>
+<p>The labellers give us triples <span class="arithmatex">\((x, y_w, y_l)\)</span>: a prompt, the <strong>winning</strong> (preferred) reply and the <strong>losing</strong> one. We want a reward model <span class="arithmatex">\(r_\phi(x, y)\)</span> that outputs one number per reply. How do we turn "A beat B" into a training signal for numbers?</p>
+<p>The <strong>Bradley–Terry model</strong> (from 1952, originally for ranking chess players and sports teams) says: the probability that A beats B depends only on the <strong>difference</strong> of their scores, squashed through the sigmoid <span class="arithmatex">\(\sigma(z) = 1/(1+e^{-z})\)</span>:</p>
+<div class="arithmatex">\[
+P(y_w \succ y_l \mid x) = \sigma\big(r_\phi(x, y_w) - r_\phi(x, y_l)\big)
+\]</div>
+<p>Training the reward model is then ordinary maximum likelihood, i.e. logistic regression on the score difference:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{RM}}(\phi) = -\,\mathbb{E}_{(x, y_w, y_l)}\Big[\log \sigma\big(r_\phi(x, y_w) - r_\phi(x, y_l)\big)\Big]
+\]</div>
+<p><strong>Try it:</strong> set the reward model's two scores and see what it predicts and how much loss it pays for each possible human choice.</p>
+<div id="viz-bt" class="viz"><div class="viz-title">⚖️ Interactive: Bradley–Terry preference probability and loss</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Equal scores mean a coin flip:</strong> <span class="arithmatex">\(\Delta = 0\)</span> gives <span class="arithmatex">\(P = 0.5\)</span> and loss <span class="arithmatex">\(\log 2 \approx 0.693\)</span> either way. That is where training starts.</li>
+<li><strong>Getting it right pays little, getting it wrong costs a lot.</strong> At <span class="arithmatex">\(\Delta = 2\)</span> the model says <span class="arithmatex">\(P = 0.881\)</span>; if humans chose A the loss is only 0.127, but if they chose B it is 2.127. At <span class="arithmatex">\(\Delta = 4\)</span> the loss for a correct prediction is down to 0.018, so confident, correct pairs stop contributing much.</li>
+<li><strong>Add +1 to both:</strong> nothing changes. Rewards are only defined <strong>up to a constant</strong>. A reward model's absolute numbers mean nothing; only differences between replies to the same prompt do. (This shift-freedom is exactly what makes DPO possible in Step 6.)</li>
+<li>Humans disagree and are noisy, so a perfect reward model would <em>not</em> hit 100% accuracy. In the code below, the true hidden preference itself only predicts 84.8% of held-out human choices.</li>
+</ul>
+</div>
+<p>In practice the reward model is a copy of the SFT model with the next-token output layer swapped for a single scalar output. In the toy version below, each "reply" is just three features (helpful, correct, length) and the reward model is linear. The hidden human taste ignores length:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                     <span class="c1"># 500 responses, features: helpful, correct, length</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">w_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>      <span class="c1"># the hidden "human taste": length doesn't matter</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">r_true</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">w_true</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># 5000 comparisons: the labeller prefers a over b with probability sigmoid(r_a - r_b)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">(</span><span class="mi">5000</span><span class="p">,)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">(</span><span class="mi">5000</span><span class="p">,))</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">a_wins</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">r_true</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-</span> <span class="n">r_true</span><span class="p">[</span><span class="n">b</span><span class="p">])</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">chosen</span><span class="p">,</span> <span class="n">rejected</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">a_wins</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">a_wins</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4000</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">reward_model_loss</span><span class="p">(</span><span class="n">r_chosen</span><span class="p">,</span> <span class="n">r_rejected</span><span class="p">):</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="sd">"""Bradley-Terry: -log P(chosen beats rejected) = -log sigmoid(r_w - r_l)."""</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">return</span> <span class="o">-</span><span class="n">F</span><span class="o">.</span><span class="n">logsigmoid</span><span class="p">(</span><span class="n">r_chosen</span> <span class="o">-</span> <span class="n">r_rejected</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">reward_model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>   <span class="c1"># in real RLHF: a transformer with a scalar head</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">reward_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">301</span><span class="p">):</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">reward_model_loss</span><span class="p">(</span><span class="n">reward_model</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">chosen</span><span class="p">[</span><span class="n">train</span><span class="p">]])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                             <span class="n">reward_model</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">rejected</span><span class="p">[</span><span class="n">train</span><span class="p">]])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"step </span><span class="si">{</span><span class="n">step</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">  loss </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">reward_model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">chosen</span><span class="p">[</span><span class="n">test</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="n">r</span><span class="p">[</span><span class="n">rejected</span><span class="p">[</span><span class="n">test</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="n">acc_true</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_true</span><span class="p">[</span><span class="n">chosen</span><span class="p">[</span><span class="n">test</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="n">r_true</span><span class="p">[</span><span class="n">rejected</span><span class="p">[</span><span class="n">test</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"learned weights:"</span><span class="p">,</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">reward_model</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()])</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"held-out accuracy: reward model </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, true reward </span><span class="si">{</span><span class="n">acc_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>step   0  loss 0.774
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>step 100  loss 0.334
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>step 200  loss 0.334
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>step 300  loss 0.334
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>learned weights: [1.41, 1.86, 0.05]
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>held-out accuracy: reward model 0.850, true reward 0.848
+</code></pre></div>
+<p>From nothing but "A beat B" labels, the reward model recovered the hidden taste (<span class="arithmatex">\([1.41, 1.86, 0.05]\)</span> vs the true <span class="arithmatex">\([1.5, 2.0, 0.0]\)</span>) and predicts held-out human choices as well as the true reward does. With a real network and real text, it is never this clean: the reward model sees a limited set of comparisons and has to generalise to replies unlike any it was trained on. That is the weak spot Step 5 deals with.</p>
+<hr />
+<h2 id="step-5-rl-fine-tuning-with-a-kl-leash">Step 5 — RL fine-tuning with a KL leash<a class="headerlink" href="#step-5-rl-fine-tuning-with-a-kl-leash" title="Permanent link">&para;</a></h2>
+<p>Now the RL stage. The policy <span class="arithmatex">\(\pi_\theta\)</span> (initialised from the SFT model) writes replies, the reward model scores them, and we maximise</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{x \sim \mathcal{D},\; y \sim \pi_\theta(\cdot \mid x)}\big[\, r_\phi(x, y) \,\big] \;-\; \beta\, \mathrm{KL}\big(\pi_\theta(\cdot \mid x)\,\big\|\,\pi_{\text{ref}}(\cdot \mid x)\big)
+\]</div>
+<p>The first term is "get a high score". The second is a <strong>leash</strong>: the KL divergence <span class="arithmatex">\(\mathrm{KL}(\pi \| \pi_{\text{ref}}) = \mathbb{E}_{y \sim \pi}\big[\log \tfrac{\pi(y \mid x)}{\pi_{\text{ref}}(y \mid x)}\big]\)</span> measures how far the policy has drifted from the SFT model, and <span class="arithmatex">\(\beta\)</span> sets how strongly drifting is punished.</p>
+<p>The optimiser is usually <strong>PPO</strong> from the <a href="../actor-critic/">actor-critic</a> lesson. In InstructGPT-style implementations the KL term is folded into the reward, <span class="arithmatex">\(r_\phi(x, y) - \beta \log \frac{\pi_\theta(y \mid x)}{\pi_{\text{ref}}(y \mid x)}\)</span>, often spread over tokens as a per-token penalty, and a value head (the critic) estimates advantages. So during training four networks are in play: the policy, the frozen reference, the frozen reward model and the critic.</p>
+<p><strong>Why the leash?</strong> The reward model is only a proxy for what people want. It was trained on replies from the SFT model, so it is only trustworthy <em>near</em> the SFT model's replies. A policy that is pushed hard to maximise the proxy will find the places where the proxy is wrong: replies the reward model over-rates. This is <strong>reward hacking</strong> or <strong>reward over-optimisation</strong>, an instance of Goodhart's law ("when a measure becomes a target, it ceases to be a good measure"). Gao et al. (2022) measured it directly: as RL pushes the policy further from its start, the learned reward keeps rising while the true quality first rises and then falls.</p>
+<p>The KL-regularised objective has a beautiful exact solution. For one prompt, the best possible policy is</p>
+<div class="arithmatex">\[
+\pi^*(y \mid x) = \frac{1}{Z(x)}\,\pi_{\text{ref}}(y \mid x)\,\exp\!\Big(\frac{r(x, y)}{\beta}\Big), \qquad Z(x) = \sum_{y} \pi_{\text{ref}}(y \mid x)\exp\!\Big(\frac{r(x, y)}{\beta}\Big)
+\]</div>
+<p><strong>Reweight the reference model by the exponentiated reward.</strong> (Why: a few lines of algebra show <span class="arithmatex">\(\mathbb{E}_\pi[r] - \beta\,\mathrm{KL}(\pi \| \pi_{\text{ref}}) = \beta \log Z(x) - \beta\,\mathrm{KL}(\pi \| \pi^*)\)</span>. The first term doesn't depend on <span class="arithmatex">\(\pi\)</span>, and a KL is zero only when the two distributions are equal, so <span class="arithmatex">\(\pi = \pi^*\)</span> is the maximum.) We can't compute <span class="arithmatex">\(Z(x)\)</span> for a real model, since it sums over every possible reply. That is why RLHF needs RL to <em>approximate</em> <span class="arithmatex">\(\pi^*\)</span>. But in a toy with five candidate replies we can compute it exactly.</p>
+<p><strong>Try it:</strong> the prompt is "Why is the sky blue?", asked by a 10-year-old. The SFT model <span class="arithmatex">\(\pi_{\text{ref}}\)</span> spreads its probability over five replies: <strong>A</strong> a simple correct answer, <strong>B</strong> a correct but technical one, <strong>C</strong> a wrong one ("it reflects the ocean"), <strong>D</strong> a refusal, and <strong>E</strong> gushing flattery ("What a WONDERFUL question!!!") with no real answer. The reward model got E badly wrong: it scores it 3.0, the highest of all, while its true quality is −0.5. Lower <span class="arithmatex">\(\beta\)</span> (loosen the leash) and watch.</p>
+<div id="viz-kl" class="viz"><div class="viz-title">🪢 Interactive: the KL-regularised optimum and reward hacking</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Large <span class="arithmatex">\(\beta\)</span> = tight leash.</strong> At <span class="arithmatex">\(\beta = 10\)</span>, <span class="arithmatex">\(\pi^*\)</span> is almost <span class="arithmatex">\(\pi_{\text{ref}}\)</span> (KL 0.012) and the true quality barely moves from the starting model's −0.275 to −0.112.</li>
+<li><strong>Moderate <span class="arithmatex">\(\beta\)</span> helps for real.</strong> At <span class="arithmatex">\(\beta = 1\)</span> the policy shifts mass from C and D to A (0.391), and the true quality rises to 0.715. Scanning <span class="arithmatex">\(\beta\)</span>, true quality peaks at 0.717 around <span class="arithmatex">\(\beta \approx 1.05\)</span>.</li>
+<li><strong>Small <span class="arithmatex">\(\beta\)</span> = reward hacking.</strong> At <span class="arithmatex">\(\beta = 0.25\)</span> the policy puts 0.947 of its mass on the flattery reply E. The reward-model score climbs to 2.945, but true quality falls to −0.368, <em>worse</em> than the model we started with. As <span class="arithmatex">\(\beta \to 0\)</span> the policy collapses onto E entirely (score 3.0, quality −0.5). The purple and green curves on the right are Goodhart's law in one picture.</li>
+<li><strong>Tick "fix the reward model's mistake on E"</strong>: now the two curves move together, and loosening the leash keeps helping (true quality 1.976 at <span class="arithmatex">\(\beta = 0.25\)</span>, nearly all mass on A). The KL penalty is insurance against <em>the reward model's errors</em>, which in real life you can't see.</li>
+<li>Notice <span class="arithmatex">\(\pi^*\)</span> can only move mass between replies that <span class="arithmatex">\(\pi_{\text{ref}}\)</span> already gives some probability to: a reply with <span class="arithmatex">\(\pi_{\text{ref}} = 0\)</span> stays at 0. RLHF sharpens and re-ranks what the SFT model can already say. It doesn't teach it things it could never produce.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-dpo-skip-the-reward-model-and-the-rl-loop">Step 6 — DPO: skip the reward model and the RL loop<a class="headerlink" href="#step-6-dpo-skip-the-reward-model-and-the-rl-loop" title="Permanent link">&para;</a></h2>
+<p>RLHF with PPO works, but it is heavy: two training stages, four networks in memory, sampling replies inside the training loop, and PPO's many hyperparameters. <strong>Direct Preference Optimization</strong> (DPO; Rafailov et al., 2023) asks: since we know the exact form of the optimal policy, can we skip straight to it?</p>
+<p>The trick is to read the closed form from Step 5 <strong>backwards</strong>. Take logs and solve for the reward:</p>
+<div class="arithmatex">\[
+r(x, y) = \beta \log \frac{\pi^*(y \mid x)}{\pi_{\text{ref}}(y \mid x)} + \beta \log Z(x)
+\]</div>
+<p>Any policy <em>implies</em> a reward: <span class="arithmatex">\(\beta\)</span> times its log-ratio to the reference, plus a term that depends only on the prompt. Now plug this into the Bradley–Terry model from Step 4. Bradley–Terry only uses <strong>differences</strong> of rewards for the same prompt, so the troublesome <span class="arithmatex">\(\beta \log Z(x)\)</span> <strong>cancels</strong>:</p>
+<div class="arithmatex">\[
+P(y_w \succ y_l \mid x) = \sigma\Big(\beta \log \frac{\pi^*(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi^*(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\Big)
+\]</div>
+<p>Replace <span class="arithmatex">\(\pi^*\)</span> by our trainable policy <span class="arithmatex">\(\pi_\theta\)</span> and fit it to the human comparisons by maximum likelihood, exactly as we fitted the reward model:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{DPO}}(\theta) = -\,\mathbb{E}_{(x, y_w, y_l)}\Big[\log \sigma\Big(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\Big)\Big]
+\]</div>
+<p>That's it: <strong>the reward model loss with the reward replaced by <span class="arithmatex">\(\beta \log \pi_\theta / \pi_{\text{ref}}\)</span></strong>. The policy <em>is</em> the reward model ("your language model is secretly a reward model" is the paper's subtitle). Training needs only the log-probabilities of the two fixed replies under <span class="arithmatex">\(\pi_\theta\)</span> and <span class="arithmatex">\(\pi_{\text{ref}}\)</span>: no sampling, no critic, no reward model. Its gradient pushes <span class="arithmatex">\(\log \pi_\theta(y_w)\)</span> up and <span class="arithmatex">\(\log \pi_\theta(y_l)\)</span> down, weighted by <span class="arithmatex">\(\sigma(\hat r_l - \hat r_w)\)</span>, i.e. by how badly the implicit rewards <span class="arithmatex">\(\hat r = \beta \log \pi_\theta / \pi_{\text{ref}}\)</span> currently rank the pair.</p>
+<p><strong>Try it:</strong> the same five replies and the same <span class="arithmatex">\(\pi_{\text{ref}}\)</span> as above. The training data are 200 human comparisons (20 for each pair of replies), drawn from the hidden true quality. Each click runs plain gradient descent (learning rate 1) on the DPO loss.</p>
+<div id="viz-dpo" class="viz"><div class="viz-title">🎯 Interactive: DPO on five candidate replies</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Step 0:</strong> the policy equals <span class="arithmatex">\(\pi_{\text{ref}}\)</span>, every implicit reward is 0 and the loss is <span class="arithmatex">\(\log 2 = 0.693\)</span>, just like an untrained reward model.</li>
+<li><strong>With <span class="arithmatex">\(\beta = 1\)</span>:</strong> after 10 steps A has grown from 0.15 to 0.377 and C has shrunk from 0.30 to 0.126. After 200 steps the policy is <span class="arithmatex">\([0.65, 0.268, 0.028, 0.039, 0.015]\)</span> and the loss has levelled off at 0.388.</li>
+<li><strong>It lands on the green ticks.</strong> Fit a Bradley–Terry reward model <span class="arithmatex">\(\hat r\)</span> to the same 200 comparisons and compute <span class="arithmatex">\(\pi_{\text{ref}} \exp(\hat r/\beta)/Z\)</span>: you get <span class="arithmatex">\([0.651, 0.267, 0.028, 0.039, 0.015]\)</span>, the same policy. DPO and "reward model + exact KL-regularised RL" reach the same answer on this toy, which is the claim of the DPO paper.</li>
+<li><strong><span class="arithmatex">\(\beta\)</span> is still the leash.</strong> <span class="arithmatex">\(\beta = 0.5\)</span> ends further from <span class="arithmatex">\(\pi_{\text{ref}}\)</span> (A at 0.884, KL 1.485, true quality 1.877); <span class="arithmatex">\(\beta = 2\)</span> stays closer (A at 0.405, KL 0.295, true quality 0.773).</li>
+<li>The flattery reply E never gets a chance here: humans compared it directly and it lost most of its comparisons, and there is no separate reward model to fool. That doesn't make DPO immune to over-optimisation, though; with few or one-sided comparisons it can also drift far from <span class="arithmatex">\(\pi_{\text{ref}}\)</span> in ways the data don't justify.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-rlhf-with-ppo-vs-dpo-and-what-came-next">Step 7 — RLHF with PPO vs DPO, and what came next<a class="headerlink" href="#step-7-rlhf-with-ppo-vs-dpo-and-what-came-next" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>RLHF with PPO</strong></th>
+<th><strong>DPO</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is trained</td>
+<td>a reward model, then the policy (plus a critic)</td>
+<td>the policy only</td>
+</tr>
+<tr>
+<td>Networks in memory during training</td>
+<td>policy, reference, reward model, critic</td>
+<td>policy, reference</td>
+</tr>
+<tr>
+<td>Data used while training the policy</td>
+<td>fresh replies <strong>sampled from the current policy</strong> (on-policy)</td>
+<td>a <strong>fixed</strong> dataset of (prompt, winner, loser)</td>
+</tr>
+<tr>
+<td>Loss</td>
+<td>PPO's clipped policy-gradient objective on <span class="arithmatex">\(r - \beta\,\mathrm{KL}\)</span></td>
+<td>a logistic loss on log-probability ratios</td>
+</tr>
+<tr>
+<td>Strengths</td>
+<td>can keep exploring and score new replies; a reward model can be reused</td>
+<td>simple, stable, cheap; ordinary supervised training code</td>
+</tr>
+<tr>
+<td>Weak spots</td>
+<td>complex and sensitive to hyperparameters; reward hacking of the reward model</td>
+<td>can't score replies outside its dataset; depends heavily on the quality and coverage of the comparisons</td>
+</tr>
+</tbody>
+</table>
+<p>Neither one is "the winner": both are widely used, and they solve the same objective in theory. Other well-known variations change one ingredient each:</p>
+<ul>
+<li><strong>Who labels?</strong> In <strong>RLAIF</strong>, an AI model produces the preference labels instead of people. <strong>Constitutional AI</strong> (Bai et al., 2022) does this guided by a short written list of principles.</li>
+<li><strong>Which reward?</strong> For maths or code, the reward can come from a <strong>checker</strong> (is the final answer right? do the tests pass?) instead of a learned model, which removes one source of reward hacking.</li>
+<li><strong>Which RL algorithm?</strong> <strong>GRPO</strong> (Shao et al., 2024, in the DeepSeekMath paper) drops PPO's critic: it samples a group of replies per prompt and uses the group's average reward as the baseline, the same baseline idea as in REINFORCE.</li>
+<li><strong>Which preference loss?</strong> Many DPO variants (IPO, KTO, ...) change the loss, for example to cope with noisy labels or with single "thumbs up / thumbs down" ratings instead of pairs.</li>
+</ul>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>Both routes start from the same human comparisons and the same SFT model, and aim for the same KL-regularised optimum <span class="arithmatex">\(\pi^* \propto \pi_{\text{ref}} \exp(r/\beta)\)</span>:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔀 Two routes from human preferences to an aligned policy",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "prefs", "col": 0, "row": 0, "icon": "👥", "label": "Preference pairs", "sub": "(x, y<sub>w</sub>, y<sub>l</sub>) + π<sub>ref</sub>", "role": "data", "note": "Prompts, a preferred and a rejected reply for each, and the SFT model as the reference."},
+    {"id": "rm", "col": 1, "row": 0, "icon": "⚖️", "label": "Reward model r<sub>φ</sub>", "sub": "−log σ(r<sub>w</sub> − r<sub>l</sub>)", "role": "loss"},
+    {"id": "ppo", "col": 2, "row": 0, "icon": "🔁", "label": "PPO loop", "sub": "sample, score, update", "role": "model", "note": "Maximise r_φ(x, y) − β·KL(π_θ ‖ π_ref) with on-policy samples."},
+    {"id": "dpo", "col": 0, "row": 1, "icon": "🎯", "label": "DPO loss", "sub": "−log σ(β·Δ log-ratio)", "role": "loss", "note": "The reward model's loss with r replaced by β log π_θ/π_ref. Plain supervised training."},
+    {"id": "policy", "col": 2, "row": 1, "icon": "✅", "label": "Aligned policy", "sub": "≈ π<sub>ref</sub>·exp(r/β)/Z", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "prefs", "to": "rm"},
+    {"from": "rm", "to": "ppo"},
+    {"from": "ppo", "to": "policy"},
+    {"from": "prefs", "to": "dpo"},
+    {"from": "dpo", "to": "policy", "label": "one loss"}
+  ],
+  "steps": [
+    {"show": ["prefs"], "text": "Both routes start from human comparisons and the SFT model π<sub>ref</sub>."},
+    {"show": ["prefs>rm", "rm"], "text": "<b>RLHF:</b> fit a reward model with the Bradley–Terry loss."},
+    {"show": ["rm>ppo", "ppo"], "text": "Then run PPO: the policy writes replies, the reward model scores them, a KL penalty keeps the policy near π<sub>ref</sub>."},
+    {"show": ["ppo>policy", "policy"], "text": "The result approximates the optimum π<sub>ref</sub>·exp(r/β)/Z."},
+    {"show": ["prefs>dpo", "dpo"], "text": "<b>DPO:</b> use the closed form backwards, so the policy's own log-ratios act as the reward. Same Bradley–Terry loss, no reward model."},
+    {"show": ["dpo>policy", "policy"], "text": "A single supervised loss reaches the same optimum, without sampling or a critic."}
+  ],
+  "narrow": {"cols": 2.4, "rows": 3, "hideSub": true, "pos": {"prefs": [0, 0], "rm": [1.4, 0], "ppo": [1.4, 1], "policy": [1.4, 2], "dpo": [0, 2]}}
+}
+</script>
+</div>
+
+<p>Here is DPO on the five-reply toy from the widget, with a compact <code>dpo_loss</code>. In a real model, <code>logp_w</code> would be the sum of token log-probabilities of the winning reply (Step 2), computed by the policy, and <code>ref_logp_w</code> the same under the frozen SFT model:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"A simple"</span><span class="p">,</span> <span class="s2">"B technical"</span><span class="p">,</span> <span class="s2">"C wrong"</span><span class="p">,</span> <span class="s2">"D refuses"</span><span class="p">,</span> <span class="s2">"E flattery"</span><span class="p">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">ref</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>     <span class="c1"># π_ref: the SFT model's probabilities</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">quality</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">])</span>   <span class="c1"># hidden human taste (never shown to DPO)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># 20 human comparisons for every pair of responses</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">winners</span><span class="p">,</span> <span class="n">losers</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        <span class="n">i_wins</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(())</span> <span class="o">&lt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">quality</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">quality</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        <span class="n">winners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span> <span class="k">if</span> <span class="n">i_wins</span> <span class="k">else</span> <span class="n">j</span><span class="p">);</span> <span class="n">losers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span> <span class="k">if</span> <span class="n">i_wins</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">W</span><span class="p">,</span> <span class="n">L</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">winners</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">losers</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">dpo_loss</span><span class="p">(</span><span class="n">logp_w</span><span class="p">,</span> <span class="n">logp_l</span><span class="p">,</span> <span class="n">ref_logp_w</span><span class="p">,</span> <span class="n">ref_logp_l</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="sd">"""-log sigmoid( beta * [log π/π_ref (y_w) - log π/π_ref (y_l)] )"""</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="n">h</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="p">((</span><span class="n">logp_w</span> <span class="o">-</span> <span class="n">ref_logp_w</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">logp_l</span> <span class="o">-</span> <span class="n">ref_logp_l</span><span class="p">))</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="k">return</span> <span class="o">-</span><span class="n">F</span><span class="o">.</span><span class="n">logsigmoid</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="n">theta</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">log</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>          <span class="c1"># the policy's logits; start at π_ref</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">theta</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">201</span><span class="p">):</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="n">logp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">dpo_loss</span><span class="p">(</span><span class="n">logp</span><span class="p">[</span><span class="n">W</span><span class="p">],</span> <span class="n">logp</span><span class="p">[</span><span class="n">L</span><span class="p">],</span> <span class="n">ref</span><span class="o">.</span><span class="n">log</span><span class="p">()[</span><span class="n">W</span><span class="p">],</span> <span class="n">ref</span><span class="o">.</span><span class="n">log</span><span class="p">()[</span><span class="n">L</span><span class="p">],</span> <span class="n">beta</span><span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>    <span class="k">if</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">):</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"step </span><span class="si">{</span><span class="n">step</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">  loss </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">  π = </span><span class="si">{</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">logp</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>step   0  loss 0.693  π = [0.15, 0.2, 0.3, 0.3, 0.05]
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>step  10  loss 0.448  π = [0.377, 0.313, 0.126, 0.147, 0.038]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>step  50  loss 0.390  π = [0.592, 0.293, 0.041, 0.054, 0.019]
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>step 200  loss 0.388  π = [0.65, 0.268, 0.028, 0.039, 0.015]
+</code></pre></div>
+<p>For real models, Hugging Face's <a href="https://huggingface.co/docs/trl">TRL</a> library implements reward-model training, PPO, DPO and GRPO trainers on top of <code>transformers</code>.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"RLHF teaches the model new knowledge.\"</p>
+<p>Mostly it doesn't. The optimal policy <span class="arithmatex">\(\pi_{\text{ref}} \exp(r/\beta)/Z\)</span> only <strong>reweights</strong> replies the starting model could already produce. RLHF changes <em>which</em> of its possible behaviours the model prefers (helpful, honest, on-topic, polite), not what it knows. Knowledge comes from pre-training.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The reward model knows what humans want.\"</p>
+<p>It is a learned approximation from a limited set of comparisons, and it can be confidently wrong on replies unlike its training data, such as the flattery reply in the widget. Optimise it too hard and you get reward hacking. That's why there is a KL penalty, and why teams keep collecting fresh comparisons.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"DPO isn't really RL, so it has nothing to do with this course.\"</p>
+<p>DPO is trained like supervised learning, but it solves the <strong>same KL-regularised RL objective</strong> as RLHF; its loss is derived from that objective's exact solution. On the toy above it reaches the same policy as "reward model + optimal RL". It is RL's answer, computed in closed form.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A smaller β is always better because the model improves more.\"</p>
+<p>A smaller <span class="arithmatex">\(\beta\)</span> lets the policy move further from <span class="arithmatex">\(\pi_{\text{ref}}\)</span>, and the <strong>proxy</strong> reward always goes up. Whether the <em>true</em> quality goes up depends on whether the reward (or the preference data) is right in the region the policy moves into. In the KL widget, true quality peaks at a moderate <span class="arithmatex">\(\beta\)</span> and then falls.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Rewards from the reward model are on a meaningful absolute scale.\"</p>
+<p>Bradley–Terry only constrains <strong>differences</strong>: adding a constant to every score changes nothing. A reward of 3.2 means nothing alone; it only means something compared with other replies to the same prompt.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. In the RL view of a language model, what are the state, the action, the episode and the reward?</summary>
+<p><strong>State:</strong> the prompt plus all tokens generated so far. <strong>Action:</strong> the next token (from the whole vocabulary). <strong>Episode:</strong> generating one complete reply. <strong>Reward:</strong> in RLHF, a single score from the reward model for the finished reply (plus a KL penalty), so rewards are sparse and delayed.</p>
+</details>
+<details class="question">
+<summary>2. The reward model gives reply A a score of 3 and reply B a score of 1. What probability does Bradley–Terry give to humans preferring A, and what is the loss if they actually preferred B?</summary>
+<p><span class="arithmatex">\(\Delta = 3 - 1 = 2\)</span>, so <span class="arithmatex">\(P(A \succ B) = \sigma(2) = 0.881\)</span>. If humans chose B, the loss is <span class="arithmatex">\(-\log \sigma(-2) = 2.127\)</span>: a confident wrong prediction is punished heavily.</p>
+</details>
+<details class="question">
+<summary>3. What would happen in RLHF if you set β = 0?</summary>
+<p>Nothing would stop the policy from drifting as far as it likes to maximise the reward model's score. It would find replies the reward model over-rates (reward hacking) and could collapse onto a few of them, losing fluency and diversity. In the KL widget, very small <span class="arithmatex">\(\beta\)</span> puts essentially all mass on the flattery reply E, with true quality −0.5, worse than the starting model.</p>
+</details>
+<details class="question">
+<summary>4. Why does the partition function Z(x) disappear in the DPO loss, and why does that matter?</summary>
+<p>DPO writes the reward as <span class="arithmatex">\(\beta \log \frac{\pi(y \mid x)}{\pi_{\text{ref}}(y \mid x)} + \beta \log Z(x)\)</span>. Bradley–Terry uses only the <strong>difference</strong> of two rewards for the <strong>same prompt</strong>, so the <span class="arithmatex">\(\beta \log Z(x)\)</span> terms cancel. That matters because <span class="arithmatex">\(Z(x)\)</span> is a sum over every possible reply and can't be computed; without the cancellation the DPO loss would be intractable.</p>
+</details>
+<details class="question">
+<summary>5. Give one advantage of RLHF with PPO over DPO, and one advantage of DPO over RLHF with PPO.</summary>
+<p><strong>PPO:</strong> it is on-policy, so it scores fresh replies from the current model and can improve beyond the replies in a fixed dataset; the reward model can also be reused. <strong>DPO:</strong> it is much simpler and cheaper, with no reward model, no critic and no sampling during training, and it trains stably with ordinary supervised code.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Paul Christiano et al., <a href="https://arxiv.org/abs/1706.03741"><em>Deep Reinforcement Learning from Human Preferences</em></a> (2017). The original idea: learn a reward from comparisons of short clips, then run RL on it.</li>
+<li>Nisan Stiennon et al., <a href="https://arxiv.org/abs/2009.01325"><em>Learning to Summarize from Human Feedback</em></a> (2020). The reward model + PPO + KL recipe applied to language.</li>
+<li>Long Ouyang et al., <a href="https://arxiv.org/abs/2203.02155"><em>Training Language Models to Follow Instructions with Human Feedback</em></a> (2022). InstructGPT: SFT → reward model → PPO.</li>
+<li>Rafael Rafailov et al., <a href="https://arxiv.org/abs/2305.18290"><em>Direct Preference Optimization: Your Language Model is Secretly a Reward Model</em></a> (2023). The DPO derivation in full.</li>
+<li>Leo Gao, John Schulman &amp; Jacob Hilton, <a href="https://arxiv.org/abs/2210.10760"><em>Scaling Laws for Reward Model Overoptimization</em></a> (2022). Goodhart's law measured.</li>
+<li>Yuntao Bai et al., <a href="https://arxiv.org/abs/2212.08073"><em>Constitutional AI: Harmlessness from AI Feedback</em></a> (2022). AI-generated preference labels guided by written principles.</li>
+<li>Nathan Lambert, <a href="https://rlhfbook.com/"><em>Reinforcement Learning from Human Feedback</em></a> (free online book). A thorough, practical overview.</li>
+</ul>
+<p><strong>Next lessons:</strong> this is the last lesson of the reinforcement-learning series. Continue with the <a href="../../roadmap/#generative-ai">Generative AI</a> section of the roadmap, starting with <em>Large language models</em> (coming soon).</p>
+<script src="viz/rlhf-dpo.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../offline-rl-imitation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Offline RL &amp; imitation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Offline RL & imitation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tsetlin-machine-intro/" class="md-footer__link md-footer__link--next" aria-label="Next: What is a Tsetlin machine?">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                What is a Tsetlin machine?
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2177 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/multi-armed-bandits/">
+      
+      
+        <link rel="prev" href="../reinforcement-learning-intro/">
+      
+      
+        <link rel="next" href="../mdp-bellman-equations/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Multi-armed bandits - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-armed-bandits" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-armed bandits
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-k-armed-bandit-one-state-k-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — The k-armed bandit: one state, k actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-action-values-what-is-each-arm-worth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Action values: what is each arm worth?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-learning-incrementally-new-estimate-old-estimate-step-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Learning incrementally: new estimate = old estimate + step × error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-greedy-vs-greedy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Greedy vs ε-greedy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-optimistic-initial-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Optimistic initial values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Upper confidence bounds (UCB): explore where you are unsure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-regret-the-yardstick-for-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Regret: the yardstick for exploration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-k-armed-bandit-one-state-k-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — The k-armed bandit: one state, k actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-action-values-what-is-each-arm-worth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Action values: what is each arm worth?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-learning-incrementally-new-estimate-old-estimate-step-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Learning incrementally: new estimate = old estimate + step × error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-greedy-vs-greedy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Greedy vs ε-greedy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-optimistic-initial-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Optimistic initial values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Upper confidence bounds (UCB): explore where you are unsure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-regret-the-yardstick-for-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Regret: the yardstick for exploration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="multi-armed-bandits">Multi-Armed Bandits<a class="headerlink" href="#multi-armed-bandits" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A <strong>multi-armed bandit</strong> is the simplest reinforcement-learning problem: there is only one situation, and you repeatedly choose one of <span class="arithmatex">\(k\)</span> actions ("arms"), each paying a random reward from its own hidden distribution. To do well you must <strong>explore</strong> (try arms to learn what they are worth) and <strong>exploit</strong> (pull the arm that looks best). This lesson builds the tools for that trade-off: running <strong>value estimates</strong>, the update rule <em>new estimate = old + step × error</em>, and four ways to explore (<strong>ε-greedy</strong>, <strong>optimistic initial values</strong>, <strong>UCB</strong> and <strong>Thompson sampling</strong>), compared by their <strong>regret</strong>.</p>
+</div>
+<p><strong>Level:</strong> beginner · <strong>Prerequisites:</strong> <a href="../reinforcement-learning-intro/">What is RL?</a> (agent, action, reward, ε-greedy). Knowing what an average and a square root are is enough for the math.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Many real decisions are bandit problems:</p>
+<ul>
+<li><strong>A/B testing on websites.</strong> Which of three headlines gets the most clicks? Every visitor you show a weak headline to is a lost click.</li>
+<li><strong>Clinical trials.</strong> Which of several treatments works best? Every patient given the worse treatment pays a real price, so you want to shift patients to the better one as soon as the evidence allows.</li>
+<li><strong>Recommendations and ads.</strong> Which song, article or ad should you show next? You learn from every click, while still trying new items.</li>
+</ul>
+<p>Bandits are also the cleanest place to study <strong>exploration versus exploitation</strong>, which lesson 1 only teased. In a bandit there are no states that change and no delayed rewards, so exploration is the <em>only</em> hard part. The tools you build here (value estimates, the incremental update, ε-greedy, optimism) are reused in every later lesson of this series.</p>
+<hr />
+<h2 id="step-1-the-k-armed-bandit-one-state-k-actions">Step 1 — The k-armed bandit: one state, k actions<a class="headerlink" href="#step-1-the-k-armed-bandit-one-state-k-actions" title="Permanent link">&para;</a></h2>
+<p>Picture a row of slot machines (old slang: "one-armed bandits", because they take your money). Each machine pays out a random amount when you pull its arm. Some machines are better on average than others, but you don't know which. You have a fixed number of pulls. How do you collect the most money?</p>
+<p>That is the <strong>k-armed bandit</strong> problem:</p>
+<ul>
+<li>You have <span class="arithmatex">\(k\)</span> possible actions (arms).</li>
+<li>Each time step <span class="arithmatex">\(t\)</span>, you pick one arm <span class="arithmatex">\(a_t\)</span> and receive a reward <span class="arithmatex">\(r_{t+1}\)</span>.</li>
+<li>Each arm's reward is random, drawn from that arm's own distribution, which never changes and which you cannot see.</li>
+<li>Your goal: the largest total reward over many pulls.</li>
+</ul>
+<p>In the language of <a href="../reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">lesson 1</a>, the agent–environment loop still runs, but the <strong>state never changes</strong>. Your action affects only the reward you get right now, not the situation you will be in next. That removes the credit-assignment problem completely and leaves the pure question: <em>which arm is best, and how much should I spend finding out?</em></p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Arms</th>
+<th>Reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slot machines</td>
+<td>the machines</td>
+<td>the payout</td>
+</tr>
+<tr>
+<td>A/B test</td>
+<td>page variants A, B, C</td>
+<td>1 if the visitor clicks, else 0</td>
+</tr>
+<tr>
+<td>Clinical trial</td>
+<td>treatments</td>
+<td>1 if the patient recovers, else 0</td>
+</tr>
+<tr>
+<td>News site</td>
+<td>candidate headlines</td>
+<td>1 if clicked, else 0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Try it:</strong> five slot machines, 25 pulls. Each pull pays the arm's hidden value plus random noise, so one lucky or unlucky pull can mislead you. When your pulls run out, the true values are revealed.</p>
+<div id="viz-play" class="viz"><div class="viz-title">🎰 Interactive: play a 5-armed bandit</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>One pull tells you little.</strong> The noise is as large as the differences between arms, so a single good reward can make a mediocre arm look great.</li>
+<li><strong>You felt the dilemma.</strong> Every pull spent testing a new arm is a pull not spent on your current favourite. Stick with your favourite too early and you may never find the real best arm.</li>
+<li><strong>Play a few games.</strong> Did you always find the best arm (★ after the reveal)? The <em>regret</em> in the readout counts how much expected reward your choices cost you compared with always pulling the best arm. Step 7 makes this the yardstick for every method.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-action-values-what-is-each-arm-worth">Step 2 — Action values: what is each arm worth?<a class="headerlink" href="#step-2-action-values-what-is-each-arm-worth" title="Permanent link">&para;</a></h2>
+<p>The <strong>true value</strong> of an arm is the reward it pays <strong>on average</strong>:</p>
+<div class="arithmatex">\[
+q_*(a) = \mathbb{E}\left[\, r_{t+1} \mid a_t = a \,\right]
+\]</div>
+<p>This is the bandit version of the Q-value from lesson 1. With only one state, "how good is action <span class="arithmatex">\(a\)</span>" doesn't depend on where you are. If you knew <span class="arithmatex">\(q_*(a)\)</span> for every arm, the problem would be trivial: always pull the arm with the largest <span class="arithmatex">\(q_*\)</span>. But you don't, so you <strong>estimate</strong> it.</p>
+<p>The most natural estimate is the <strong>sample average</strong>: add up the rewards you have received from arm <span class="arithmatex">\(a\)</span> and divide by the number of times you pulled it.</p>
+<div class="arithmatex">\[
+Q_t(a) = \frac{\text{sum of rewards from } a \text{ so far}}{N_t(a)}
+\]</div>
+<p>where <span class="arithmatex">\(N_t(a)\)</span> is how many times arm <span class="arithmatex">\(a\)</span> has been pulled before step <span class="arithmatex">\(t\)</span>. This is exactly the orange bar in the widget above. By the law of large numbers, <span class="arithmatex">\(Q_t(a) \to q_*(a)\)</span> as <span class="arithmatex">\(N_t(a)\)</span> grows: more pulls, better estimate.</p>
+<p>The <strong>greedy action</strong> is the arm with the highest estimate right now, <span class="arithmatex">\(\arg\max_a Q_t(a)\)</span>. Choosing it is <strong>exploiting</strong>; choosing anything else is <strong>exploring</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The estimate of an arm only improves <strong>when you pull that arm</strong>. An arm you ignore keeps whatever estimate (good or bad) it had.</li>
+<li>So a greedy agent can get stuck: if the best arm happens to give a poor first reward, its estimate stays low, and the agent never comes back to correct it.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-learning-incrementally-new-estimate-old-estimate-step-error">Step 3 — Learning incrementally: new estimate = old estimate + step × error<a class="headerlink" href="#step-3-learning-incrementally-new-estimate-old-estimate-step-error" title="Permanent link">&para;</a></h2>
+<p>Storing every reward to recompute the average is wasteful. There is a neater way. Say arm <span class="arithmatex">\(a\)</span> has given rewards <span class="arithmatex">\(r_1, \dots, r_n\)</span> (numbered by pulls <em>of this arm</em>), and <span class="arithmatex">\(Q_n\)</span> is the average of the first <span class="arithmatex">\(n-1\)</span> of them. Then the average of all <span class="arithmatex">\(n\)</span> is</p>
+<div class="arithmatex">\[
+Q_{n+1} = \frac{1}{n}\sum_{i=1}^{n} r_i = \frac{1}{n}\Big(r_n + (n-1)\,Q_n\Big) = Q_n + \frac{1}{n}\Big(r_n - Q_n\Big)
+\]</div>
+<p>Read the last form out loud:</p>
+<div class="arithmatex">\[
+\text{new estimate} \;=\; \text{old estimate} \;+\; \text{step size} \times \underbrace{(\text{target} - \text{old estimate})}_{\text{error}}
+\]</div>
+<p>You only need to remember <span class="arithmatex">\(Q\)</span> and <span class="arithmatex">\(N\)</span> for each arm. Each new reward nudges the estimate towards itself, by a step that shrinks as evidence accumulates.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 Updating an estimate, one reward at a time",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 100,
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0, "icon": "🆕", "label": "Start: Q(a) = 0, N(a) = 0", "shape": "pill", "note": "Before any pulls we know nothing. The starting value matters more than you might think (Step 5)."},
+    {"id": "pull", "col": 1, "row": 0, "icon": "🎰", "label": "Pull arm a", "sub": "get reward r", "role": "data", "note": "The environment pays a random reward around the arm's hidden value q*(a)."},
+    {"id": "err", "col": 2, "row": 0, "icon": "😮", "label": "Error: r − Q(a)", "sub": "how surprised am I?", "role": "grad", "note": "Positive: better than expected. Negative: worse than expected."},
+    {"id": "size", "col": 2, "row": 1, "icon": "📐", "label": "Step size 1 / N(a)", "sub": "after N(a) ← N(a) + 1", "role": "model", "note": "Early rewards move the estimate a lot; later ones only a little. A constant α instead tracks a changing world."},
+    {"id": "upd", "col": 1, "row": 1, "icon": "✏️", "label": "Q(a) ← Q(a) + step × error", "role": "loss", "note": "The new estimate moves part of the way towards the reward it just saw."}
+  ],
+  "edges": [
+    {"from": "init", "to": "pull"},
+    {"from": "pull", "to": "err"},
+    {"from": "err", "to": "size"},
+    {"from": "size", "to": "upd"},
+    {"from": "upd", "to": "pull", "label": "next pull"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Every arm starts with an estimate Q(a) and a count N(a) of zero."},
+    {"show": ["init>pull", "pull"], "text": "Pull an arm and receive a reward r: the <b>target</b> the estimate should move towards."},
+    {"show": ["pull>err", "err"], "text": "Compare it with what you expected. The difference r − Q(a) is the <b>error</b>."},
+    {"show": ["err>size", "size"], "text": "Count the pull and choose the <b>step size</b>: 1/N(a) gives the exact running average."},
+    {"show": ["size>upd", "upd"], "text": "Move the estimate a fraction of the way towards the reward: <b>new = old + step × error</b>."},
+    {"show": ["upd>pull", "pull"], "text": "Repeat with the next pull. The same pattern returns in TD learning, Q-learning and DQN."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"init": [0, 0], "pull": [0, 1], "err": [1, 1], "size": [1, 2], "upd": [0, 2]}}
+}
+</script>
+</div>
+
+<p>This pattern is everywhere in machine learning. Gradient descent (<a href="../gradient-descent/">lesson</a>) has the same shape, <span class="arithmatex">\(w \leftarrow w - \eta \nabla L\)</span>: old value plus a step in the direction that reduces the error. In fact, <span class="arithmatex">\(Q \leftarrow Q + \alpha (r - Q)\)</span> <em>is</em> one gradient-descent step on the squared error <span class="arithmatex">\(\tfrac{1}{2}(r - Q)^2\)</span>. In later lessons the target will change (it becomes "reward plus the value of the next state"), but the update keeps this form.</p>
+<div class="admonition note">
+<p class="admonition-title">When the world changes: a constant step size</p>
+<p>With step <span class="arithmatex">\(\tfrac{1}{n}\)</span>, the 1000th reward counts as much as the first. That is right if the arms never change. If they drift (a headline goes stale, a market moves), use a <strong>constant step size</strong> <span class="arithmatex">\(\alpha\)</span>, say 0.1: <span class="arithmatex">\(Q \leftarrow Q + \alpha (r - Q)\)</span>. Then recent rewards count more and old ones fade away exponentially, so the estimate keeps tracking the moving target. Most of deep RL uses a constant step size (the learning rate).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The update needs only two numbers per arm, <span class="arithmatex">\(Q(a)\)</span> and <span class="arithmatex">\(N(a)\)</span>, however many pulls you make.</li>
+<li>The <strong>error</strong> <span class="arithmatex">\(r - Q\)</span> is the learning signal. If rewards match expectations, the estimate stops moving.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-greedy-vs-greedy">Step 4 — Greedy vs ε-greedy<a class="headerlink" href="#step-4-greedy-vs-greedy" title="Permanent link">&para;</a></h2>
+<p>Now we can build agents. The simplest is <strong>greedy</strong>: always pull the arm with the highest <span class="arithmatex">\(Q\)</span> (break ties at random). <strong>ε-greedy</strong> (from lesson 1) adds a little exploration: with probability <span class="arithmatex">\(\varepsilon\)</span> pick a random arm, otherwise act greedily.</p>
+<p>To compare them fairly we use the classic <strong>10-armed testbed</strong> from Sutton &amp; Barto's textbook:</p>
+<ol>
+<li>Make a random bandit with 10 arms. Each arm's true value <span class="arithmatex">\(q_*(a)\)</span> is drawn from a normal distribution with mean 0 and standard deviation 1.</li>
+<li>Each pull of arm <span class="arithmatex">\(a\)</span> pays <span class="arithmatex">\(q_*(a)\)</span> plus normal noise (standard deviation 1).</li>
+<li>Let the agent play 1000 pulls, learning with sample averages.</li>
+<li>Repeat on <strong>2000 different random bandits</strong> and average, so the curves show typical behaviour rather than luck.</li>
+</ol>
+<p>The widget runs all of this in your browser (with a fixed random seed, so everyone sees the same curves). Move the slider to try your own <span class="arithmatex">\(\varepsilon\)</span>.</p>
+<div id="viz-testbed-eps" class="viz"><div class="viz-title">📈 Interactive: greedy vs ε-greedy on the 10-armed testbed</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Greedy gets stuck.</strong> It improves fast at first, then flattens: over the last 100 steps it picks the best arm only <strong>34.4%</strong> of the time (average reward 1.004). In most runs it locked onto a decent-looking arm early and never checked the others again.</li>
+<li><strong>A little exploration pays off.</strong> ε = 0.1 reaches <strong>80.0%</strong> optimal (reward 1.361), and ε = 0.01 reaches <strong>59.1%</strong> (reward 1.299). For comparison, always pulling the best arm would earn 1.532 on average on these bandits.</li>
+<li><strong>ε = 0.1 has a ceiling.</strong> Even with perfect estimates it still explores 10% of the time, so it can pick the best arm at most <span class="arithmatex">\(90\% + 10\% \times \tfrac{1}{10} = 91\%\)</span> of the time.</li>
+<li><strong>ε = 0.01 is slower but ends higher.</strong> Run both for 10,000 steps (we did, in Python) and ε = 0.01 overtakes: average reward 1.501 vs 1.378 over the last 100 steps. Try ε = 0.3 or 0.5 with the slider: too much exploration wastes pulls on arms you already know are bad.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-optimistic-initial-values">Step 5 — Optimistic initial values<a class="headerlink" href="#step-5-optimistic-initial-values" title="Permanent link">&para;</a></h2>
+<p>Here is a trick that makes even a greedy agent explore. Instead of starting every estimate at 0, start it <strong>way too high</strong>, say <span class="arithmatex">\(Q_1(a) = 5\)</span>, when real values are around 0 to 2.</p>
+<p>Now every arm looks wonderful until it is tried. The greedy agent pulls the arm with the highest estimate, gets a reward around 1, and its estimate drops: <em>disappointing!</em> So the agent moves on to another arm that still looks wonderful. It ends up trying every arm, several times, before settling down. The exploration comes from <strong>optimism</strong>, not randomness.</p>
+<p>Like Sutton &amp; Barto, this agent uses a constant step size <span class="arithmatex">\(\alpha = 0.1\)</span>. (With step <span class="arithmatex">\(\tfrac{1}{n}\)</span>, the very first reward would replace the 5 completely, so each arm would be tried only once. In our Python check that version reached only 69.2% optimal.)</p>
+<div id="viz-testbed-opt" class="viz"><div class="viz-title">🌈 Interactive: optimistic initial values</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The early spike.</strong> For the first 10 pulls the optimistic agent tries the 10 arms one after another, so it picks the best arm only about 10% of the time. At step 11 it returns to the arm whose estimate fell the least, often the best one, and jumps to <strong>41.3%</strong> optimal. The next pulls wobble as the optimism wears off.</li>
+<li><strong>Then it beats ε-greedy.</strong> Over the last 100 steps it picks the best arm <strong>85.9%</strong> of the time (reward 1.495), without ever acting randomly.</li>
+<li><strong>Turn the dial.</strong> With <span class="arithmatex">\(Q_1 = 0\)</span> it is just the greedy agent again (with α = 0.1). Bigger values explore for longer before settling.</li>
+<li><strong>The catch:</strong> optimism only drives exploration <strong>at the start</strong>. If the arms change later, the agent has no reason to explore again.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure">Step 6 — Upper confidence bounds (UCB): explore where you are unsure<a class="headerlink" href="#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure" title="Permanent link">&para;</a></h2>
+<p>ε-greedy explores <strong>blindly</strong>: when it explores, a hopeless arm it has tried 300 times is as likely as a promising arm it has tried twice. Smarter: explore the arms you are <strong>unsure</strong> about, because they might be better than they look.</p>
+<p><strong>Upper Confidence Bound</strong> (UCB) action selection gives each arm a bonus that is large when the arm has been tried rarely:</p>
+<div class="arithmatex">\[
+a_t = \arg\max_a \left[\, Q_t(a) + c \sqrt{\frac{\ln t}{N_t(a)}} \,\right]
+\]</div>
+<ul>
+<li><span class="arithmatex">\(Q_t(a)\)</span>: what the arm seems to be worth (exploitation).</li>
+<li><span class="arithmatex">\(c\sqrt{\ln t / N_t(a)}\)</span>: an <strong>uncertainty bonus</strong> (exploration). It shrinks as you pull the arm more (<span class="arithmatex">\(N_t(a)\)</span> grows) and grows slowly for arms you neglect (<span class="arithmatex">\(\ln t\)</span> keeps rising).</li>
+<li><span class="arithmatex">\(c\)</span>: how optimistic to be. <span class="arithmatex">\(c = 0\)</span> is plain greedy.</li>
+<li>An arm never tried has <span class="arithmatex">\(N_t(a) = 0\)</span> and an infinite bonus, so UCB tries every arm once first.</li>
+</ul>
+<p>The idea is called <strong>optimism in the face of uncertainty</strong>: act as if each arm is as good as it <em>plausibly</em> could be. Either the arm really is good (you win), or it isn't and pulling it shrinks its bonus (you learn).</p>
+<div id="viz-ucb" class="viz"><div class="viz-title">🎯 Interactive: watch UCB choose</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Bars shrink with pulls.</strong> After a few dozen steps, the arm you pull most has a short bar (you are sure about it), while rarely pulled arms keep tall bars.</li>
+<li><strong>Neglected arms come back.</strong> Watch an arm with a low estimate: its top slowly rises (the <span class="arithmatex">\(\ln t\)</span> term) until it is checked again. UCB never stops exploring completely, but it explores less and less often.</li>
+<li><strong>c sets the balance.</strong> With <span class="arithmatex">\(c = 0\)</span> the bars vanish and UCB is greedy. With <span class="arithmatex">\(c = 3\)</span> it keeps re-checking bad arms for a long time.</li>
+</ul>
+</div>
+<p>On the testbed, UCB with <span class="arithmatex">\(c = 2\)</span> picks the best arm <strong>84.9%</strong> of the time over the last 100 steps (reward 1.479), and like the optimistic agent it jumps to <strong>43.6%</strong> at step 11, right after its round of trying each arm once.</p>
+<div class="admonition note">
+<p class="admonition-title">Thompson sampling: explore by sampling your beliefs</p>
+<p>A third idea, from 1933 and very popular in industry: keep a <strong>belief</strong> about each arm's value, a probability distribution that is wide when you have few pulls and narrow when you have many. Each step, <strong>draw one random sample</strong> from each arm's belief and pull the arm with the highest sample. An uncertain arm sometimes draws a high sample and gets tried; a well-known bad arm almost never does. As the beliefs narrow, the agent naturally shifts to exploiting.</p>
+<p>In our testbed the belief for an arm is a normal distribution with mean <span class="arithmatex">\(\frac{\text{sum of rewards}}{N(a) + 1}\)</span> and standard deviation <span class="arithmatex">\(\frac{1}{\sqrt{N(a)+1}}\)</span> (Bayes' rule, starting from the belief that values look like <span class="arithmatex">\(\mathcal{N}(0, 1)\)</span>). It reaches <strong>91.3%</strong> optimal over the last 100 steps. It has a head start here, because that starting belief matches exactly how the testbed creates its arms.</p>
+</div>
+<hr />
+<h2 id="step-7-regret-the-yardstick-for-exploration">Step 7 — Regret: the yardstick for exploration<a class="headerlink" href="#step-7-regret-the-yardstick-for-exploration" title="Permanent link">&para;</a></h2>
+<p>How should we compare these agents? "Average reward at the end" ignores how much the agent lost <strong>while learning</strong>. The standard yardstick is <strong>regret</strong>: the reward you expect to lose compared with someone who knew the best arm <span class="arithmatex">\(a^*\)</span> from the start.</p>
+<div class="arithmatex">\[
+\text{Regret}_T = \sum_{t=1}^{T} \Big( q_*(a^*) - q_*(a_t) \Big)
+\]</div>
+<p>Each step you pick the best arm costs nothing; each step you pick another arm costs the gap between their true values. Lower is better, and zero is impossible (you have to try arms to learn which is best).</p>
+<p>How regret <strong>grows</strong> tells you the most:</p>
+<ul>
+<li><strong>Greedy:</strong> if it locks onto the wrong arm, it pays the same gap every step forever. Regret grows <strong>linearly</strong> in <span class="arithmatex">\(T\)</span>.</li>
+<li><strong>ε-greedy (fixed ε):</strong> it keeps exploring at the same rate forever, so it also grows <strong>linearly</strong>, just with a smaller slope.</li>
+<li><strong>UCB and Thompson sampling:</strong> they explore less and less as they become sure, so regret grows only like <span class="arithmatex">\(\log T\)</span>. A classic result by Lai and Robbins (1985) shows that, up to a constant, <span class="arithmatex">\(\log T\)</span> is the best any method can do.</li>
+</ul>
+<div id="viz-testbed-all" class="viz"><div class="viz-title">🏁 Interactive: every method, measured by regret</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Total regret after 1000 pulls</strong> (2000 runs, seed 1): greedy <strong>535.1</strong>, ε-greedy 0.1 <strong>229.8</strong>, optimistic <strong>242.3</strong>, UCB (c = 2) <strong>148.2</strong>, Thompson <strong>69.7</strong>. For scale, a perfect agent would collect about 1532 in total.</li>
+<li><strong>Look at the slopes on the right.</strong> Greedy and ε-greedy keep climbing in a straight line: over the last 100 steps they still lose 0.527 and 0.169 per step. UCB and Thompson bend over and flatten: by then they lose only 0.050 and 0.017 per step.</li>
+<li><strong>Optimistic vs ε-greedy:</strong> the optimistic agent's early exploration is expensive (it loses 0.581 per step during steps 100–200, against 0.287 for ε-greedy), so its total regret ends slightly higher. But its curve flattens (0.036 per step at the end), so it would pull ahead in a longer run.</li>
+<li><strong>Tune c.</strong> Set UCB's <span class="arithmatex">\(c\)</span> to 1: its regret drops to <strong>59.1</strong> and it picks the best arm 91.7% of the time. The best knob setting depends on the problem, which is why theory-backed defaults matter.</li>
+<li><strong>Change the seed or the number of runs.</strong> With 200 runs the curves get noisier, but the ranking stays the same (we checked seeds 2, 3 and 7 in Python).</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>Every bandit agent is the same loop. They differ only in one box: <strong>how to choose the arm</strong>.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 A bandit agent, start to finish",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "start", "col": 0, "row": 0, "icon": "🆕", "label": "Set Q(a), N(a) for every arm", "shape": "pill", "sub": "0, or optimistic"},
+    {"id": "choose", "col": 1, "row": 0, "icon": "🧭", "label": "Choose an arm", "sub": "the exploration rule", "role": "model", "note": "Greedy, ε-greedy, optimistic greedy, UCB or Thompson sampling."},
+    {"id": "pull", "col": 2, "row": 0, "icon": "🎰", "label": "Pull it, get reward r", "role": "data"},
+    {"id": "upd", "col": 2, "row": 1, "icon": "✏️", "label": "N(a) += 1, Q(a) += step × (r − Q(a))", "role": "loss"},
+    {"id": "done", "col": 1, "row": 1, "label": "Out of pulls?", "shape": "decision", "role": "grad"},
+    {"id": "end", "col": 0, "row": 1, "icon": "🏁", "label": "Total reward, regret", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "start", "to": "choose"},
+    {"from": "choose", "to": "pull"},
+    {"from": "pull", "to": "upd"},
+    {"from": "upd", "to": "done"},
+    {"from": "done", "to": "choose", "label": "no"},
+    {"from": "done", "to": "end", "label": "yes"}
+  ],
+  "steps": [
+    {"show": ["start"], "text": "Give every arm a starting estimate and a count. Starting high (optimistic values) already builds in exploration."},
+    {"show": ["start>choose", "choose"], "text": "<b>Greedy:</b> pick the highest Q. <b>ε-greedy:</b> the same, but a random arm with probability ε."},
+    {"show": ["choose"], "text": "<b>UCB:</b> pick the highest Q + c√(ln t / N). <b>Thompson:</b> sample a guess from each arm's belief and pick the highest guess."},
+    {"show": ["choose>pull", "pull"], "text": "Pull the chosen arm. The environment pays a noisy reward."},
+    {"show": ["pull>upd", "upd"], "text": "Update only that arm: new estimate = old + step × error."},
+    {"show": ["upd>done", "done", "done>choose", "choose"], "text": "Still have pulls left? Choose again with the improved estimates."},
+    {"show": ["done>end", "end"], "text": "At the end, judge the agent by its total reward, or equivalently its <b>regret</b>."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 95, "pos": {"start": [0, 0], "choose": [0, 1], "pull": [1, 1], "upd": [1, 2], "done": [0, 2], "end": [0, 3]}}
+}
+</script>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>How it explores</th>
+<th>Knob</th>
+<th>Regret on our testbed (1000 pulls)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Greedy</td>
+<td>never</td>
+<td>none</td>
+<td>535.1</td>
+</tr>
+<tr>
+<td>ε-greedy</td>
+<td>at random, at a fixed rate</td>
+<td>ε</td>
+<td>229.8 (ε = 0.1)</td>
+</tr>
+<tr>
+<td>Optimistic greedy</td>
+<td>every arm looks great until tried</td>
+<td>starting value <span class="arithmatex">\(Q_1\)</span></td>
+<td>242.3 (<span class="arithmatex">\(Q_1 = 5\)</span>)</td>
+</tr>
+<tr>
+<td>UCB</td>
+<td>arms with few pulls get a bonus</td>
+<td>c</td>
+<td>148.2 (c = 2)</td>
+</tr>
+<tr>
+<td>Thompson sampling</td>
+<td>sample from beliefs, pick the best sample</td>
+<td>prior belief</td>
+<td>69.7</td>
+</tr>
+</tbody>
+</table>
+<p>Here is the whole testbed in numpy. To keep it fast it plays all 2000 bandits at once: each row of <code>Q</code> is one bandit.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">run_testbed</span><span class="p">(</span><span class="n">choose</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">q0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="sd">"""Play `runs` random k-armed bandits at once (one per row). Returns % optimal and total regret."""</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">q_star</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>            <span class="c1"># true action values, hidden from the agent</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">best</span> <span class="o">=</span> <span class="n">q_star</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">runs</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">q0</span><span class="p">)</span>                       <span class="c1"># estimates</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">runs</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>                          <span class="c1"># how often each arm was pulled</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">optimal</span><span class="p">,</span> <span class="n">regret</span> <span class="o">=</span> <span class="p">[],</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">choose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>                     <span class="c1"># 1. pick an arm in every run</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">r</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">q_star</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>           <span class="c1"># 2. pull it: noisy reward</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">N</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>                              <span class="c1"># 3. update the estimate:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">step</span> <span class="o">=</span> <span class="n">alpha</span> <span class="k">if</span> <span class="n">alpha</span> <span class="k">else</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>    <span class="c1">#    new = old + step × (reward − old)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">Q</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">optimal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">best</span><span class="p">))</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">regret</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">q_star</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">best</span><span class="p">]</span> <span class="o">-</span> <span class="n">q_star</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">return</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">optimal</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:]),</span> <span class="n">regret</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">argmax_random_ties</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-9</span>          <span class="c1"># tiny noise breaks ties at random</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">values</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">epsilon_greedy</span><span class="p">(</span><span class="n">eps</span><span class="p">):</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">choose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">greedy</span> <span class="o">=</span> <span class="n">argmax_random_ties</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">random</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">,</span> <span class="n">random</span><span class="p">,</span> <span class="n">greedy</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="k">return</span> <span class="n">choose</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">ucb</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">choose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="n">tried</span> <span class="o">=</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">bonus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tried</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>  <span class="c1"># untried arms first</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="k">return</span> <span class="n">argmax_random_ties</span><span class="p">(</span><span class="n">Q</span> <span class="o">+</span> <span class="n">bonus</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="k">return</span> <span class="n">choose</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"greedy"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">choose</span><span class="o">=</span><span class="n">epsilon_greedy</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))),</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>                     <span class="p">(</span><span class="s2">"ε-greedy 0.01"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">choose</span><span class="o">=</span><span class="n">epsilon_greedy</span><span class="p">(</span><span class="mf">0.01</span><span class="p">))),</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>                     <span class="p">(</span><span class="s2">"ε-greedy 0.1"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">choose</span><span class="o">=</span><span class="n">epsilon_greedy</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))),</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>                     <span class="p">(</span><span class="s2">"optimistic Q0=5"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">choose</span><span class="o">=</span><span class="n">epsilon_greedy</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span> <span class="n">q0</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)),</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>                     <span class="p">(</span><span class="s2">"UCB c=2"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">choose</span><span class="o">=</span><span class="n">ucb</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)))]:</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="n">pct</span><span class="p">,</span> <span class="n">regret</span> <span class="o">=</span> <span class="n">run_testbed</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">16s</span><span class="si">}</span><span class="s2"> optimal action (last 100 steps) </span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">%   total regret </span><span class="si">{</span><span class="n">regret</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>greedy           optimal action (last 100 steps)  34.7%   total regret  521.5
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ε-greedy 0.01    optimal action (last 100 steps)  58.4%   total regret  357.8
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ε-greedy 0.1     optimal action (last 100 steps)  80.0%   total regret  233.4
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>optimistic Q0=5  optimal action (last 100 steps)  85.6%   total regret  240.9
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>UCB c=2          optimal action (last 100 steps)  85.4%   total regret  148.3
+</code></pre></div>
+<p>The numbers differ a little from the widgets because numpy draws different random bandits, but the ranking and the sizes are the same.</p>
+<div class="admonition note">
+<p class="admonition-title">From bandits to full reinforcement learning</p>
+<ul>
+<li>In a <strong>contextual bandit</strong>, the agent also sees a <em>context</em> before choosing (the user's profile, the patient's symptoms), and the best arm depends on it. This is how most real recommendation and ad systems work.</li>
+<li>In <strong>full RL</strong>, the action also changes <strong>what happens next</strong>: the next state, and so the future rewards. Then "how good is this action" must include everything that follows. Describing that properly is the job of the next lesson, Markov decision processes and the Bellman equations.</li>
+</ul>
+</div>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"Exploration is wasted reward.\"</p>
+<p>Exploration is an <strong>investment</strong>. Greedy never "wastes" a pull, yet it had by far the worst regret on the testbed (535.1, against 229.8 for ε = 0.1), because it never found the best arm in most runs.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"More exploration is always safer.\"</p>
+<p>Exploring costs reward every time. On the testbed, ε = 0.2 picked the best arm less often than ε = 0.1 (73.8% vs 80.0% over the last 100 steps) and had higher regret (352.6 vs 229.8), because it kept pulling arms it already knew were bad.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The arm with the highest average so far is the best arm.\"</p>
+<p>Only if you have pulled every arm often enough. After a few pulls, averages are dominated by noise. That is exactly why UCB adds a bonus that depends on the <strong>number of pulls</strong>, not just the average.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"UCB prefers risky arms.\"</p>
+<p>UCB's bonus is about <strong>how little you know</strong> (few pulls), not about how variable an arm's payouts are. An arm with wildly varying rewards that you have pulled 500 times gets a small bonus.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. An arm's estimate is Q = 2.0 after 4 pulls. The 5th pull pays 4.5. What is the new sample-average estimate?</summary>
+<p>$Q \leftarrow 2.0 + \tfrac{1}{5}(4.5 - 2.0) = 2.0 + 0.5 = $ <strong>2.5</strong>. (Check: the 4 earlier rewards sum to 8.0; <span class="arithmatex">\((8.0 + 4.5)/5 = 2.5\)</span>.)</p>
+</details>
+<details class="question">
+<summary>2. With ε = 0.1 and 10 arms, what is the highest possible % of optimal actions, even with perfect estimates?</summary>
+<p>With probability 0.9 it acts greedily (the best arm, once the estimates are right). With probability 0.1 it picks a random arm, which is the best one with probability <span class="arithmatex">\(\tfrac{1}{10}\)</span>. Total: <span class="arithmatex">\(0.9 + 0.1 \times 0.1 = 0.91\)</span>, so <strong>91%</strong>.</p>
+</details>
+<details class="question">
+<summary>3. UCB with c = 2 at step t = 200. Arm A: Q = 1.0 after 100 pulls. Arm B: Q = 0.8 after 4 pulls. Which does it pick?</summary>
+<p><span class="arithmatex">\(\ln 200 \approx 5.30\)</span>. Arm A: <span class="arithmatex">\(1.0 + 2\sqrt{5.30/100} \approx 1.0 + 0.46 = 1.46\)</span>. Arm B: <span class="arithmatex">\(0.8 + 2\sqrt{5.30/4} \approx 0.8 + 2.30 = 3.10\)</span>. UCB picks <strong>arm B</strong>: its estimate is lower, but it is so uncertain that it might well be better.</p>
+</details>
+<details class="question">
+<summary>4. Why do optimistic initial values not help when the arms' values change over time?</summary>
+<p>Optimism makes the agent explore only <strong>at the beginning</strong>, until the inflated estimates have come down. After that the agent is plain greedy. If an arm later becomes better, nothing pushes the agent to try it again. ε-greedy (with a constant step size) or UCB keep exploring and can notice the change.</p>
+</details>
+<details class="question">
+<summary>5. A clinical trial gives half the patients treatment A and half treatment B, then picks the winner. A bandit algorithm shifts patients towards the better-looking treatment as results arrive. Which has lower regret, and why?</summary>
+<p>Usually the <strong>bandit</strong>. The fixed 50/50 split keeps giving the worse treatment to half the patients until the trial ends, so its regret grows linearly during the trial. A bandit (UCB, Thompson) gives the worse treatment less and less often as the evidence accumulates. The price is that the final comparison is less balanced, which is why medical trials use bandits only with careful statistical design.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Richard Sutton &amp; Andrew Barto, <a href="http://incompleteideas.net/book/the-book-2nd.html"><em>Reinforcement Learning: An Introduction</em></a> (2nd ed., free online), Chapter 2. The 10-armed testbed comes from here.</li>
+<li>Tor Lattimore &amp; Csaba Szepesvári, <a href="https://tor-lattimore.com/downloads/book/book.pdf"><em>Bandit Algorithms</em></a> (free online). The thorough, mathematical treatment, including regret bounds.</li>
+<li>Daniel Russo et al., <a href="https://arxiv.org/abs/1707.02038"><em>A Tutorial on Thompson Sampling</em></a> (2018). Clear and practical.</li>
+<li>Peter Auer, Nicolò Cesa-Bianchi &amp; Paul Fischer, <a href="https://link.springer.com/article/10.1023/A:1013689704352"><em>Finite-time Analysis of the Multiarmed Bandit Problem</em></a> (2002). The paper that introduced UCB1.</li>
+<li>David Silver, <a href="https://www.davidsilver.uk/teaching/"><em>UCL Course on RL</em></a>, Lecture 9: Exploration and Exploitation.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../mdp-bellman-equations/">MDPs &amp; Bellman equations</a> · <a href="../dynamic-programming/">Dynamic programming</a></p>
+<script src="viz/multi-armed-bandits.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../reinforcement-learning-intro/" class="md-footer__link md-footer__link--prev" aria-label="Previous: What is RL?">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                What is RL?
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../mdp-bellman-equations/" class="md-footer__link md-footer__link--next" aria-label="Next: MDPs &amp; Bellman equations">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                MDPs & Bellman equations
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

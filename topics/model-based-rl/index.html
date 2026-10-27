@@ -1,0 +1,2402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/model-based-rl/">
+      
+      
+        <link rel="prev" href="../actor-critic/">
+      
+      
+        <link rel="next" href="../offline-rl-imitation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Model-based RL & planning - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#model-based-rl-and-planning-dyna-mcts-and-alphazero" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Model-based RL & planning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-what-is-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — What is a model?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-learning-a-model-by-counting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Learning a model by counting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-dyna-q-learn-model-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Dyna-Q: learn, model, plan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-how-much-does-planning-buy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — How much does planning buy?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-planning-at-decision-time-monte-carlo-tree-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Planning at decision time: Monte Carlo Tree Search
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-alphago-alphazero-and-muzero-search-deep-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — AlphaGo, AlphaZero and MuZero: search + deep learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-when-the-model-is-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — When the model is wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-what-is-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — What is a model?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-learning-a-model-by-counting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Learning a model by counting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-dyna-q-learn-model-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Dyna-Q: learn, model, plan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-how-much-does-planning-buy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — How much does planning buy?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-planning-at-decision-time-monte-carlo-tree-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Planning at decision time: Monte Carlo Tree Search
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-alphago-alphazero-and-muzero-search-deep-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — AlphaGo, AlphaZero and MuZero: search + deep learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-when-the-model-is-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — When the model is wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="model-based-rl-and-planning-dyna-mcts-and-alphazero">Model-Based RL and Planning: Dyna, MCTS and AlphaZero<a class="headerlink" href="#model-based-rl-and-planning-dyna-mcts-and-alphazero" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A <strong>model</strong> of the environment predicts what happens next: given a state and an action, it returns the next state and the reward. An agent that has a model can <strong>plan</strong>: it can try things out <em>in its head</em> instead of in the real world. <strong>Dyna-Q</strong> learns a model from its own experience and uses it to replay imagined steps, so it needs far fewer real steps. <strong>Monte Carlo Tree Search</strong> (MCTS) plans at the moment of choosing a move, by growing a search tree of possible futures. <strong>AlphaZero</strong> guides that search with a neural network trained by self-play, and <strong>MuZero</strong> even learns the model itself.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../q-learning-sarsa/">Q-learning &amp; SARSA</a>, <a href="../actor-critic/">Actor-critic</a>. The UCB rule from <a href="../multi-armed-bandits/">Multi-armed bandits</a> comes back in Step 5.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Every method so far in this series was <strong>model-free</strong>. Q-learning, DQN, policy gradients and actor-critic all learn <em>what to do</em> straight from experience, and they need a lot of it. The original DQN trained on 50 million frames per Atari game, roughly 38 days of non-stop play for a human.</p>
+<p>Real experience is often expensive or slow: a robot wears out, a chemistry experiment takes a day, a patient cannot be used for trial and error. People don't learn like that either. Before you cross a busy road, you <em>imagine</em> what would happen if you stepped out now. That imagined experience is free.</p>
+<p>Model-based RL gives agents the same ability. It is behind some of RL's biggest successes:</p>
+<ul>
+<li><strong>AlphaGo</strong> beat Go world champion Lee Sedol in 2016, and <strong>AlphaZero</strong> (2017) beat the strongest chess, shogi and Go programs. Both search ahead, using the game's rules as the model.</li>
+<li><strong>MuZero</strong> (2019) reached the same level <em>without being told the rules</em>, by learning its own model, and also mastered Atari.</li>
+<li>Planning with learned models is how many robot-control systems squeeze good behaviour out of a few hours of real data.</li>
+</ul>
+<hr />
+<h2 id="step-1-what-is-a-model">Step 1 — What is a model?<a class="headerlink" href="#step-1-what-is-a-model" title="Permanent link">&para;</a></h2>
+<p>In the <a href="../reinforcement-learning-intro/">first lesson</a> the environment was a black box: you send an action, it sends back a reward and a next state. A <strong>model</strong> is the agent's own copy of that black box. It answers the question <em>"if I am in state <span class="arithmatex">\(s\)</span> and take action <span class="arithmatex">\(a\)</span>, what happens?"</em></p>
+<div class="arithmatex">\[
+\text{model}(s, a) \;\to\; \hat{p}(s', r \mid s, a)
+\]</div>
+<p>The hat on <span class="arithmatex">\(\hat p\)</span> means "estimated": the model is the agent's <em>belief</em> about the true dynamics <span class="arithmatex">\(p(s', r \mid s, a)\)</span> from the <a href="../mdp-bellman-equations/">MDP lesson</a>. There are two kinds:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Distribution model</strong></th>
+<th><strong>Sample model</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it gives</td>
+<td>all outcomes with their probabilities</td>
+<td>one random outcome, like a dice roll</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>"80% → next cell, 10% → slide up, 10% → slide into the cliff"</td>
+<td>"this time you slid up"</td>
+</tr>
+<tr>
+<td>Used by</td>
+<td>dynamic programming (it sums over all outcomes)</td>
+<td>Dyna, MCTS (they just need samples)</td>
+</tr>
+</tbody>
+</table>
+<p>And two places a model can come from:</p>
+<ul>
+<li><strong>Given:</strong> the rules are known exactly. Board games, physics simulators, the cliff world when we read its code.</li>
+<li><strong>Learned:</strong> the agent builds it from its own experience. That is what Dyna (Step 3) and MuZero (Step 6) do.</li>
+</ul>
+<p>With a model, the agent can do <strong>planning</strong>: compute or improve a policy using imagined experience instead of real experience. <a href="../dynamic-programming/">Dynamic programming</a> was already planning: value iteration loops over the model's probabilities and never touches the real environment. The new question in this lesson is how to plan when the model has to be <strong>learned</strong>, or when the state space is far too big to sweep through.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p><strong>Model-free</strong> agents learn <em>what to do</em> (Q-values or a policy). <strong>Model-based</strong> agents also learn <em>how the world works</em>, and then work out what to do. The second kind of knowledge can be reused: if the goal moves, a model of the walls and the cliff is still correct.</p>
+</div>
+<hr />
+<h2 id="step-2-learning-a-model-by-counting">Step 2 — Learning a model by counting<a class="headerlink" href="#step-2-learning-a-model-by-counting" title="Permanent link">&para;</a></h2>
+<p>In a small, discrete world, learning a model is just <strong>counting</strong>. Every time the agent takes action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span> and sees reward <span class="arithmatex">\(r\)</span> and next state <span class="arithmatex">\(s'\)</span>, it adds one to a counter <span class="arithmatex">\(n(s, a, s', r)\)</span>. The estimated probability of an outcome is how often it happened:</p>
+<div class="arithmatex">\[
+\hat{p}(s', r \mid s, a) = \frac{n(s, a, s', r)}{n(s, a)}
+\]</div>
+<p>where <span class="arithmatex">\(n(s, a)\)</span> is how often the agent tried <span class="arithmatex">\(a\)</span> in <span class="arithmatex">\(s\)</span> at all. This is the same "average of what you saw" idea as the Monte Carlo value estimates, applied to <em>outcomes</em> instead of returns.</p>
+<p>Here is what that looks like on the slippery cliff world (slip chance 0.2), for one state-action pair: standing at row 2, column 1 (just above the cliff) and moving <strong>right</strong>. The true answer is 80% to the next cell, 10% sliding up and 10% sliding down into the cliff, an expected reward of <span class="arithmatex">\(0.9 \cdot (-1) + 0.1 \cdot (-20) = -2.9\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Tries <span class="arithmatex">\(n(s, a)\)</span></th>
+<th>→ next cell (−1)</th>
+<th>↑ slide up (−1)</th>
+<th>↓ into the cliff (−20)</th>
+<th>estimated expected reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>10 (1.00)</td>
+<td>0 (0.00)</td>
+<td>0 (0.00)</td>
+<td>−1.00</td>
+</tr>
+<tr>
+<td>100</td>
+<td>86 (0.86)</td>
+<td>6 (0.06)</td>
+<td>8 (0.08)</td>
+<td>−2.52</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>779 (0.78)</td>
+<td>104 (0.10)</td>
+<td>117 (0.12)</td>
+<td>−3.22</td>
+</tr>
+<tr>
+<td>true</td>
+<td>0.80</td>
+<td>0.10</td>
+<td>0.10</td>
+<td>−2.90</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>After 10 tries the model has never seen a slip, so it believes that walking along the cliff edge is <strong>perfectly safe</strong>. A planner that trusts this model will happily plan routes along the edge. Small amounts of data give confident, wrong models.</li>
+<li>With more data the counts approach the true probabilities. In a deterministic world (slip 0), a single try per state-action pair gives the exact model.</li>
+<li>For big or continuous state spaces (images, robot joints) you can't count. You train a neural network <span class="arithmatex">\(\hat f_\phi(s, a) \to (\hat s', \hat r)\)</span> by supervised learning on the agent's transitions instead. The idea stays the same.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-dyna-q-learn-model-plan">Step 3 — Dyna-Q: learn, model, plan<a class="headerlink" href="#step-3-dyna-q-learn-model-plan" title="Permanent link">&para;</a></h2>
+<p><strong>Dyna</strong> (Sutton, 1990) is the simplest way to mix the two worlds. It is plain <a href="../q-learning-sarsa/">Q-learning</a> with one addition. After every real step, the agent:</p>
+<ol>
+<li>updates <span class="arithmatex">\(Q\)</span> from the real transition, exactly as Q-learning does (<strong>direct RL</strong>),</li>
+<li>records the transition in its model (<strong>model learning</strong>),</li>
+<li>then performs <span class="arithmatex">\(n\)</span> extra Q-learning updates on transitions <em>imagined</em> by the model (<strong>planning</strong>).</li>
+</ol>
+<p>Each planning update picks a state-action pair <span class="arithmatex">\((s, a)\)</span> the agent has already tried, asks the model for an outcome <span class="arithmatex">\((r, s')\)</span>, and applies the usual update:</p>
+<div class="arithmatex">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha \big[\, r + \gamma \max_{a'} Q(s', a') - Q(s, a) \,\big]
+\]</div>
+<p>That's all. Real and imagined experience go through the <strong>same</strong> update rule; the model is just a free source of extra experience.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 One real step of Dyna-Q",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "act", "col": 0, "row": 0, "icon": "🧭", "label": "Pick action a", "sub": "ε-greedy on Q(s, ·)", "role": "model"},
+    {"id": "real", "col": 1, "row": 0, "icon": "🌍", "label": "<b>Real world</b> returns r, s′", "sub": "costly: one real step", "role": "data", "note": "The only box that touches the real environment. Everything else happens inside the agent."},
+    {"id": "direct", "col": 2, "row": 0, "icon": "📈", "label": "Direct RL", "sub": "Q-learning update on (s, a, r, s′)", "role": "loss"},
+    {"id": "model", "col": 2, "row": 1, "icon": "📒", "label": "<b>Model learning</b>", "sub": "count (s, a) → (r, s′)", "role": "model", "note": "In a tabular world the model is just a table of counts. With images or continuous states it would be a neural network."},
+    {"id": "plan", "col": 1, "row": 1, "icon": "💭", "label": "<b>Planning</b> × n", "sub": "Q-updates on imagined steps", "role": "loss", "note": "Repeat n times: pick an (s, a) seen before, ask the model for (r, s′), apply the Q-learning update. These steps are free: no real environment needed."},
+    {"id": "next", "col": 0, "row": 1, "icon": "⏭️", "label": "s ← s′", "sub": "next real step", "shape": "pill"}
+  ],
+  "edges": [
+    {"from": "act", "to": "real"},
+    {"from": "real", "to": "direct"},
+    {"from": "direct", "to": "model"},
+    {"from": "model", "to": "plan"},
+    {"from": "plan", "to": "next"},
+    {"from": "next", "to": "act", "label": "repeat"}
+  ],
+  "steps": [
+    {"show": ["act"], "text": "In state s, pick an action ε-greedily from the current Q-values, as in Q-learning."},
+    {"show": ["act>real", "real"], "text": "Take it in the <b>real</b> environment. This is the expensive part: one real step of experience."},
+    {"show": ["real>direct", "direct"], "text": "<b>Direct RL:</b> the usual Q-learning update from this one real transition."},
+    {"show": ["direct>model", "model"], "text": "<b>Model learning:</b> remember what happened. In a table, add 1 to the count of (s, a) → (r, s′)."},
+    {"show": ["model>plan", "plan"], "text": "<b>Planning:</b> n times, pick a state-action pair you have tried before, let the model imagine its outcome, and do a Q-learning update on it. No real step needed."},
+    {"show": ["plan>next", "next", "next>act", "act"], "text": "Move on to the next real state and repeat. With n = 0 this is exactly Q-learning."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"act": [0, 0], "real": [1, 0], "direct": [1, 1], "model": [1, 2], "plan": [0, 2], "next": [0, 1]}}
+}
+</script>
+</div>
+
+<p><strong>Try it:</strong> below is one Dyna-Q agent on the (non-slippery) cliff world from lesson 1, with <span class="arithmatex">\(\alpha = 0.1\)</span>, <span class="arithmatex">\(\gamma = 0.95\)</span>, <span class="arithmatex">\(\varepsilon = 0.1\)</span> and all Q-values starting at 0. Pick <span class="arithmatex">\(n\)</span>, then run one episode at a time. The orange ticks are the model: one tick on the side of a cell for each action the agent has tried there.</p>
+<div id="viz-dyna" class="viz"><div class="viz-title">🎚️ Interactive: inside a Dyna-Q agent</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The first episode is a stumble for every n.</strong> The model starts empty and the agent has no idea where the goal is, so the first episode usually ends in the cliff after a few random steps.</li>
+<li><strong>Planning spreads news backwards.</strong> Each real step changes one Q-value. Each planning step can update <em>any</em> pair the model knows, so the +10 of the goal travels back along known paths without the agent walking them again. Compare the green cells after 10 episodes with n = 0 and with n = 50: over 100 Python runs, the median number of cells with a positive value was 1 for n = 0, 3 for n = 5 and 8 for n = 50.</li>
+<li><strong>The model fills up fast.</strong> After a few episodes most cells have ticks on all four sides. In this deterministic world one visit is enough to know an outcome exactly.</li>
+<li><strong>Watch the dashed green line.</strong> With n = 50 the greedy route usually becomes the optimal 7-step path along the cliff edge within a handful of episodes. With n = 0 it takes dozens.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-how-much-does-planning-buy">Step 4 — How much does planning buy?<a class="headerlink" href="#step-4-how-much-does-planning-buy" title="Permanent link">&para;</a></h2>
+<p>One episode is noisy. To compare fairly, we run many independent agents for each value of <span class="arithmatex">\(n\)</span> and ask: <strong>after how many episodes is the greedy route the optimal 7-step route?</strong> The widget runs 50 agents per curve right in your browser.</p>
+<div id="viz-dyna-curves" class="viz"><div class="viz-title">📈 Interactive: Dyna-Q learning curves for different n</div></div>
+
+<p>The Python version of the same experiment (the code is in <a href="#putting-it-all-together">Putting it all together</a>), with 100 runs per setting, gives:</p>
+<table>
+<thead>
+<tr>
+<th>planning steps <span class="arithmatex">\(n\)</span></th>
+<th>median episodes until the optimal route</th>
+<th>runs on it after 10 episodes</th>
+<th>median <strong>real steps</strong> until the optimal route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 (plain Q-learning)</td>
+<td>32</td>
+<td>0%</td>
+<td>about 840</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10</td>
+<td>34%</td>
+<td>211</td>
+</tr>
+<tr>
+<td>50</td>
+<td>7</td>
+<td>84%</td>
+<td>129</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Planning is a trade.</strong> With <span class="arithmatex">\(n = 50\)</span> the agent needs about <strong>6× fewer real steps</strong> than plain Q-learning, but it does 50 extra updates per real step. Dyna pays with computation (cheap) to save experience (expensive).</li>
+<li><strong>Returns diminish.</strong> Going from 0 to 5 helps more than going from 5 to 50. Once the model has been replayed enough for the Q-values to settle, more planning adds little. Try your own <span class="arithmatex">\(n\)</span> with the slider.</li>
+<li><strong>Look closely at n = 50 late on.</strong> Its curve flattens a little below 100%. In the Python runs, 5 of the 100 agents with <span class="arithmatex">\(n = 50\)</span> were still on a 9-step route after 60 episodes. That's a real weakness of planning with a learned model, and Step 7 explains it.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Dyna and the replay buffer</p>
+<p>The <a href="../deep-q-networks/">DQN</a> replay buffer is close to Dyna: it stores real transitions and replays them for extra updates. A replay buffer is a <em>non-parametric</em> model that can only replay exactly what happened. A real model can also answer questions about state-action pairs in new combinations, and (if it is a network) generalise to states it has never seen.</p>
+</div>
+<hr />
+<h2 id="step-5-planning-at-decision-time-monte-carlo-tree-search">Step 5 — Planning at decision time: Monte Carlo Tree Search<a class="headerlink" href="#step-5-planning-at-decision-time-monte-carlo-tree-search" title="Permanent link">&para;</a></h2>
+<p>Dyna plans <strong>in the background</strong>: it improves a Q-table for all states, whenever it has spare time. A different style is to plan <strong>at decision time</strong>: when you have to move <em>now</em>, focus all your thinking on the current state and the futures that can follow from it. That is what chess players do.</p>
+<p>The obvious way is a <strong>search tree</strong>: the current state is the root, each legal move is a branch, each reply is a branch below that, and so on. For tic-tac-toe you could search the whole tree. For Go there are about <span class="arithmatex">\(10^{170}\)</span> positions, so you must be selective. <strong>Monte Carlo Tree Search</strong> (MCTS) grows the tree one path at a time, spending more effort on moves that look promising. Every node stores two numbers: a <strong>visit count</strong> <span class="arithmatex">\(N\)</span> and a <strong>total value</strong> <span class="arithmatex">\(W\)</span>, so its average value is <span class="arithmatex">\(Q = W / N\)</span>.</p>
+<p>Each <strong>simulation</strong> has four phases:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🌳 One MCTS simulation, repeated K times",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "root", "col": 0, "row": 0, "icon": "📍", "label": "Root = the current state", "shape": "pill", "role": "data"},
+    {"id": "sel", "col": 1, "row": 0, "icon": "🔽", "label": "<b>1. Selection</b>", "sub": "walk down: highest UCT score", "role": "model", "note": "UCT = Q + c·√(ln N_parent / N_child): good average value, or not tried much yet."},
+    {"id": "exp", "col": 2, "row": 0, "icon": "🌱", "label": "<b>2. Expansion</b>", "sub": "add one new child node", "role": "opt"},
+    {"id": "sim", "col": 2, "row": 1, "icon": "🎲", "label": "<b>3. Simulation</b>", "sub": "random play-out to the end", "role": "data", "note": "Also called a rollout. It uses the model (the game rules) to play random moves until the game ends. AlphaZero replaces it with a value network."},
+    {"id": "back", "col": 1, "row": 1, "icon": "🔼", "label": "<b>4. Backup</b>", "sub": "N += 1, W += result on the path", "role": "loss", "maxWidth": 150},
+    {"id": "move", "col": 0, "row": 1, "icon": "✅", "label": "Play the most-visited move", "shape": "pill", "role": "opt", "maxWidth": 150}
+  ],
+  "edges": [
+    {"from": "root", "to": "sel"},
+    {"from": "sel", "to": "exp"},
+    {"from": "exp", "to": "sim"},
+    {"from": "sim", "to": "back"},
+    {"from": "back", "to": "sel", "label": "repeat"},
+    {"from": "back", "to": "move", "label": "after K"}
+  ],
+  "steps": [
+    {"show": ["root"], "text": "Start from the current position. At first the tree is just this one node."},
+    {"show": ["root>sel", "sel"], "text": "<b>Selection:</b> from the root, keep choosing the child with the highest UCT score until you reach a node that still has untried moves."},
+    {"show": ["sel>exp", "exp"], "text": "<b>Expansion:</b> add one new child for an untried move. The tree grows by one node per simulation."},
+    {"show": ["exp>sim", "sim"], "text": "<b>Simulation:</b> from the new node, play random moves to the end of the game, using the rules as the model. The result is +1, 0 or −1."},
+    {"show": ["sim>back", "back"], "text": "<b>Backup:</b> walk back up the path, adding 1 to N and the result to W of every node, each from the view of the player who made that move."},
+    {"show": ["back>sel", "sel"], "text": "Repeat. Good moves get a high Q and are selected more, so the tree grows deepest where it matters."},
+    {"show": ["back>move", "move"], "text": "After K simulations, play the child of the root with the <b>most visits</b>. Visit counts are steadier than averages based on a few samples."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "pos": {"root": [0, 0], "sel": [0, 1], "exp": [1, 1], "sim": [1, 2], "back": [0, 2], "move": [0, 3]}}
+}
+</script>
+</div>
+
+<p>The <strong>selection</strong> rule is the heart of MCTS. At each node it treats the children like the arms of a <a href="../multi-armed-bandits/">multi-armed bandit</a> and uses the UCB rule, which in a tree is called <strong>UCT</strong> (Upper Confidence bounds applied to Trees):</p>
+<div class="arithmatex">\[
+\text{UCT}(\text{child}) = \underbrace{\frac{W}{N}}_{\text{exploit: average result}} + \underbrace{c \sqrt{\frac{\ln N_{\text{parent}}}{N}}}_{\text{explore: bonus for few visits}}
+\]</div>
+<p>The first term favours moves that have worked well. The second is large for moves that have hardly been tried, and shrinks as <span class="arithmatex">\(N\)</span> grows. With <span class="arithmatex">\(c = \sqrt 2\)</span> this balances exploring and exploiting in the same way as UCB does for bandits.</p>
+<p><strong>Try it:</strong> X to move in the position at the top. One move wins by force; the others don't. Press <strong>Next phase</strong> a few times to watch single simulations, then <strong>+10</strong> and <strong>+100</strong> to see where the visits go.</p>
+<div id="viz-mcts" class="viz"><div class="viz-title">🌳 Interactive: Monte Carlo Tree Search, step by step</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The winning move is "left".</strong> It makes two threats at once (the left column and the middle row), and O can only block one. Exact minimax search agrees: <em>left</em> is a win (+1), <em>top-left</em>, <em>top</em> and <em>centre</em> are draws (0), and <em>bottom</em> loses (−1).</li>
+<li><strong>Early on, random play-outs mislead.</strong> In our Python run with seed 0, after 25 simulations MCTS preferred <em>top-left</em> (7 visits) and even rated the losing move <em>bottom</em> at +0.25: random opponents don't punish mistakes. After 100 simulations it preferred <em>centre</em>.</li>
+<li><strong>Then the tree takes over.</strong> As the tree grows deeper below <em>left</em>, the search sees that every O reply loses. In the same run, <em>left</em> had 80% of the visits after 400 simulations (<span class="arithmatex">\(Q = +0.91\)</span>) and 91% after 1000.</li>
+<li><strong>More thinking, better moves.</strong> Over 100 Python runs with different seeds, MCTS chose <em>left</em> in 23 runs with K = 25, 36 with K = 50, 67 with K = 100, 97 with K = 200 and all 100 with K = 400.</li>
+<li><strong>Watch the UCT column.</strong> Moves with few visits get a large bonus, so even bad moves are re-checked now and then. The bonus is why the search keeps looking at <em>left</em> long enough to discover it is winning.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-alphago-alphazero-and-muzero-search-deep-learning">Step 6 — AlphaGo, AlphaZero and MuZero: search + deep learning<a class="headerlink" href="#step-6-alphago-alphazero-and-muzero-search-deep-learning" title="Permanent link">&para;</a></h2>
+<p>Random play-outs are a weak judge of a position, and in Go a game lasts 200+ moves, so a random play-out tells you almost nothing. The <strong>AlphaGo</strong> family made MCTS strong by adding a neural network <span class="arithmatex">\(f_\theta(s) = (\mathbf{p}, v)\)</span> with two heads:</p>
+<ul>
+<li>a <strong>policy head</strong> <span class="arithmatex">\(\mathbf{p}\)</span>: prior probabilities for each move, "which moves would a strong player consider?"</li>
+<li>a <strong>value head</strong> <span class="arithmatex">\(v\)</span>: a prediction of the final result from this position, like the critic in <a href="../actor-critic/">actor-critic</a>.</li>
+</ul>
+<p>The network changes two phases of MCTS:</p>
+<ol>
+<li><strong>Selection</strong> uses the prior <span class="arithmatex">\(P(s, a)\)</span> from the policy head, so the search mostly looks at moves the network likes (the <strong>PUCT</strong> rule):
+   $$
+   \text{score}(s, a) = Q(s, a) + c\, P(s, a)\, \frac{\sqrt{N(s)}}{1 + N(s, a)}
+   $$</li>
+<li><strong>Simulation is dropped.</strong> Instead of a random play-out, the new leaf is scored by the value head <span class="arithmatex">\(v\)</span>. One network call replaces hundreds of random moves.</li>
+</ol>
+<p>How is the network trained? By <strong>self-play</strong>: the agent plays games against itself, choosing each move with MCTS. The search makes the agent stronger than its raw network, so the search results are better training targets than the network's own outputs:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "♟️ AlphaZero: self-play, search and learning",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "net", "col": 0, "row": 0, "icon": "🧠", "label": "<b>Network</b> f<sub>θ</sub>(s)", "sub": "move priors p, value v", "role": "model"},
+    {"id": "mcts", "col": 1, "row": 0, "icon": "🌳", "label": "<b>MCTS</b> guided by p, v", "sub": "e.g. 800 simulations", "role": "loss", "note": "Selection uses the PUCT rule with the network's priors; leaves are scored by the value head instead of a random play-out."},
+    {"id": "playmove", "col": 2, "row": 0, "icon": "♟️", "label": "Play a move", "sub": "∝ visit counts π", "role": "model", "note": "The visit counts of the root's children, normalised, form an improved policy π. The move is sampled from it (early in the game) or the most-visited move is played."},
+    {"id": "result", "col": 2, "row": 1, "icon": "🏁", "label": "Game ends", "sub": "result z = +1, 0 or −1", "role": "data"},
+    {"id": "store", "col": 1, "row": 1, "icon": "🗄️", "label": "Store (s, π, z)", "sub": "for every position", "role": "data"},
+    {"id": "train", "col": 0, "row": 1, "icon": "🎯", "label": "<b>Train θ</b>", "sub": "p → π, v → z", "role": "loss", "note": "Loss = (z − v)² − π·log p + weight decay. The policy head learns to predict the search's choices, the value head the game's result."}
+  ],
+  "edges": [
+    {"from": "net", "to": "mcts"},
+    {"from": "mcts", "to": "playmove"},
+    {"from": "playmove", "to": "result", "label": "until end"},
+    {"from": "result", "to": "store"},
+    {"from": "store", "to": "train"},
+    {"from": "train", "to": "net", "label": "new θ"}
+  ],
+  "steps": [
+    {"show": ["net"], "text": "Start with a network f<sub>θ</sub> that outputs move priors p and a value v. At first it knows nothing: random weights."},
+    {"show": ["net>mcts", "mcts"], "text": "At every move, run MCTS. The priors p steer the selection; the value v replaces the random play-out."},
+    {"show": ["mcts>playmove", "playmove"], "text": "The root's visit counts give an improved policy π. Play a move from it."},
+    {"show": ["playmove>result", "result"], "text": "Keep going, the agent playing both sides, until the game ends with a result z."},
+    {"show": ["result>store", "store"], "text": "Every position s of the game becomes a training example (s, π, z): what the search preferred, and who won."},
+    {"show": ["store>train", "train"], "text": "Train the network: the policy head imitates the search (p → π), the value head predicts the result (v → z)."},
+    {"show": ["train>net", "net"], "text": "The better network makes the next searches stronger, which gives better targets. Search and learning pull each other up."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"net": [0, 0], "mcts": [1, 0], "playmove": [1, 1], "result": [1, 2], "store": [0, 2], "train": [0, 1]}}
+}
+</script>
+</div>
+
+<p>This is a form of <strong>policy iteration</strong> (from the <a href="../dynamic-programming/">dynamic programming lesson</a>): MCTS is the <em>policy improvement</em> step, and training the network to imitate it makes the improvement permanent.</p>
+<p>The family in short:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Model used for search</th>
+<th>Network trained from</th>
+<th>Games</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AlphaGo</strong> (2016)</td>
+<td>the game rules</td>
+<td>human expert games, then self-play</td>
+<td>Go</td>
+</tr>
+<tr>
+<td><strong>AlphaGo Zero</strong> (2017)</td>
+<td>the game rules</td>
+<td>self-play only, no human data</td>
+<td>Go</td>
+</tr>
+<tr>
+<td><strong>AlphaZero</strong> (2017)</td>
+<td>the game rules</td>
+<td>self-play only</td>
+<td>Go, chess, shogi</td>
+</tr>
+<tr>
+<td><strong>MuZero</strong> (2019)</td>
+<td>a <strong>learned</strong> model</td>
+<td>self-play and real experience</td>
+<td>Go, chess, shogi, Atari</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MuZero</strong> goes one step further. It doesn't get the rules. It learns three networks: a <em>representation</em> that turns the observation into a hidden state, a <em>dynamics</em> network that predicts the next hidden state and reward from a hidden state and an action (the learned model), and the same <em>prediction</em> network for <span class="arithmatex">\(\mathbf{p}\)</span> and <span class="arithmatex">\(v\)</span>. MCTS then searches entirely inside the learned hidden space. The learned model never has to reconstruct the screen or the board; it only has to predict what matters for planning: rewards, values and policies.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>The network alone is like fast intuition; MCTS is slow deliberate thinking that checks the intuition. Training on the search results turns slow thinking into better intuition, and the loop repeats.</p>
+</div>
+<hr />
+<h2 id="step-7-when-the-model-is-wrong">Step 7 — When the model is wrong<a class="headerlink" href="#step-7-when-the-model-is-wrong" title="Permanent link">&para;</a></h2>
+<p>A model is only useful if it is right where the planner looks. Three things go wrong in practice:</p>
+<ul>
+<li><strong>Errors compound.</strong> A one-step model that is a little off feeds its own prediction back in as the next state, so mistakes add up over a long imagined trajectory. If each predicted step is right with probability 0.95, a 10-step imagined rollout is entirely right with probability <span class="arithmatex">\(0.95^{10} \approx 0.60\)</span>, and a 50-step one only <span class="arithmatex">\(0.95^{50} \approx 0.08\)</span>. This is why methods such as MBPO (model-based policy optimisation) only imagine <strong>short</strong> rollouts branching off real states.</li>
+<li><strong>The planner exploits model errors.</strong> A planner searches for the action with the best <em>predicted</em> outcome. If the model is wrong somewhere in a flattering way, that is exactly where the planner will go, like the 10-try model in Step 2 that thought the cliff edge was perfectly safe.</li>
+<li><strong>The model only knows what you tried.</strong> Dyna-Q's planning only replays state-action pairs it has seen. In all 5 stuck runs from Step 4, the agent had never tried moving right from one or two cells near the end of the cliff edge, so its model knew nothing there and the planner kept polishing a 9-step detour that it <em>did</em> know. <strong>Dyna-Q+</strong> fixes this with a small exploration bonus for state-action pairs not tried for a long time.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Model-based or model-free?</p>
+<p>Model-based methods use data far more efficiently and can reuse a model for new goals. Model-free methods are simpler and don't suffer from model bias: their errors come only from noise. Many modern systems combine both, as Dyna does: plan where the model is trusted, learn directly from real experience everywhere.</p>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🗺️ The methods in this lesson",
+  "cols": 4,
+  "rows": 3,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "mb", "col": 1.5, "row": 0, "icon": "🧠", "label": "<b>Model-based RL</b>", "sub": "plan with p̂(s′, r | s, a)", "span": 1.6, "maxWidth": 240, "role": "loss"},
+    {"id": "given", "col": 0.5, "row": 1, "label": "<b>Model given</b>", "sub": "rules, simulator", "role": "data"},
+    {"id": "learned", "col": 2.5, "row": 1, "label": "<b>Model learned</b>", "sub": "from experience", "role": "model"},
+    {"id": "mcts", "col": 0, "row": 2, "label": "MCTS", "sub": "plan at decision time", "role": "data"},
+    {"id": "az", "col": 1, "row": 2, "label": "AlphaZero", "sub": "MCTS + network", "role": "data"},
+    {"id": "mu", "col": 2, "row": 2, "label": "MuZero", "sub": "MCTS in a learned model", "role": "model"},
+    {"id": "dyna", "col": 3, "row": 2, "label": "Dyna-Q", "sub": "plan in the background", "role": "model"}
+  ],
+  "edges": [
+    {"from": "mb", "to": "given"},
+    {"from": "mb", "to": "learned"},
+    {"from": "given", "to": "mcts"},
+    {"from": "mcts", "to": "az"},
+    {"from": "az", "to": "mu"},
+    {"from": "learned", "to": "dyna"}
+  ],
+  "steps": [
+    {"show": ["mb", "mb>given", "mb>learned", "given", "learned"], "text": "First question: is the model <b>given</b> (game rules, a physics simulator) or must it be <b>learned</b> from experience?"},
+    {"show": ["learned", "learned>dyna", "dyna"], "text": "<b>Dyna-Q</b> learns a table model and plans <b>in the background</b>: extra Q-updates on imagined steps after every real step."},
+    {"show": ["given", "given>mcts", "mcts"], "text": "<b>MCTS</b> uses a given model to plan <b>at decision time</b>: grow a search tree from the current state, then play the most-visited move."},
+    {"show": ["mcts>az", "az"], "text": "<b>AlphaZero</b> adds a policy/value network that guides the search, and trains it by self-play on the search's results."},
+    {"show": ["az>mu", "mu", "learned"], "text": "<b>MuZero</b> keeps AlphaZero's search but drops the rules: it searches inside a model it has learned itself."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 90, "pos": {"mb": [0.5, 0], "given": [0, 1], "learned": [1, 1], "mcts": [0, 2], "dyna": [1, 2], "az": [0, 3], "mu": [1, 3]}}
+}
+</script>
+</div>
+
+<p>Here is Dyna-Q on the cliff world in plain Python, with the model as a table of counts. Set <code>n_planning = 0</code> and it is ordinary Q-learning:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">MAP</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"......"</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       <span class="s2">"..#..."</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       <span class="s2">"......"</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>       <span class="s2">"SCCCCG"</span><span class="p">]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">MOVES</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>          <span class="c1"># up, right, down, left</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">START</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">env_step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="sd">"""The real environment (the agent does NOT get to read this code)."""</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">MOVES</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">MOVES</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="ow">or</span> <span class="n">MAP</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"#"</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">s</span>                                      <span class="c1"># bumped a wall or edge: stay put</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">tile</span> <span class="o">=</span> <span class="n">MAP</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">if</span> <span class="n">tile</span> <span class="o">==</span> <span class="s2">"G"</span><span class="p">:</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="kc">True</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="k">if</span> <span class="n">tile</span> <span class="o">==</span> <span class="s2">"C"</span><span class="p">:</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="kc">True</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="kc">False</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">greedy</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">==</span> <span class="n">best</span><span class="p">])</span>   <span class="c1"># break ties at random</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">def</span><span class="w"> </span><span class="nf">dyna_q</span><span class="p">(</span><span class="n">n_planning</span><span class="p">,</span> <span class="n">episodes</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">Q</span> <span class="o">=</span> <span class="p">{(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)}</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="n">model</span> <span class="o">=</span> <span class="p">{}</span>                       <span class="c1"># (s, a) -&gt; {(s', r, done): how often we saw it}</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>                     <span class="c1"># after each episode: is the greedy route the 7-step one?</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">q_update</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">done</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="n">target</span> <span class="o">=</span> <span class="n">r</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="n">r</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s2</span><span class="p">])</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">a</span><span class="p">])</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">episodes</span><span class="p">):</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">START</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>            <span class="c1"># 1. act in the REAL world (ε-greedy) and learn from it: plain Q-learning</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">eps</span> <span class="k">else</span> <span class="n">greedy</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>            <span class="n">s2</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env_step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>            <span class="n">q_update</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">done</span><span class="p">)</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>            <span class="c1"># 2. learn the MODEL: count what happened</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>            <span class="n">counts</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">setdefault</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="p">{})</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>            <span class="n">counts</span><span class="p">[(</span><span class="n">s2</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span><span class="p">)]</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">s2</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>            <span class="c1"># 3. PLAN: n extra Q-learning updates on experience imagined by the model</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>            <span class="n">seen</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_planning</span><span class="p">):</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>                <span class="n">ps</span><span class="p">,</span> <span class="n">pa</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">seen</span><span class="p">)</span>                       <span class="c1"># a state-action we have tried</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>                <span class="n">outcomes</span> <span class="o">=</span> <span class="n">model</span><span class="p">[(</span><span class="n">ps</span><span class="p">,</span> <span class="n">pa</span><span class="p">)]</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>                <span class="p">(</span><span class="n">ps2</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">pdone</span><span class="p">),</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">outcomes</span><span class="p">),</span> <span class="n">weights</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">outcomes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>                <span class="n">q_update</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">ps2</span><span class="p">,</span> <span class="n">pdone</span><span class="p">)</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>            <span class="n">s</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">s2</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>        <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">greedy_route_length</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>    <span class="k">return</span> <span class="n">history</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="k">def</span><span class="w"> </span><span class="nf">greedy_route_length</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w">    </span><span class="sd">"""Follow the greedy policy (no exploration) from the start; return its number of steps."""</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">START</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">):</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env_step</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">])))</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>            <span class="k">return</span> <span class="n">t</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    <span class="k">return</span> <span class="kc">None</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">]:</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>    <span class="n">runs</span> <span class="o">=</span> <span class="p">[</span><span class="n">dyna_q</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span> <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>    <span class="n">first</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="ow">in</span> <span class="n">h</span> <span class="k">else</span> <span class="mi">61</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">]</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"n = </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: optimal route found after </span><span class="si">{</span><span class="n">median</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2"> episodes (median of 100 runs); "</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>          <span class="sa">f</span><span class="s2">"runs on it after 10 episodes: </span><span class="si">{</span><span class="n">mean</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">runs</span><span class="p">)</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">, after 60: </span><span class="si">{</span><span class="n">mean</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">runs</span><span class="p">)</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>n =  0: optimal route found after 32.0 episodes (median of 100 runs); runs on it after 10 episodes: 0%, after 60: 100%
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>n =  5: optimal route found after 10.0 episodes (median of 100 runs); runs on it after 10 episodes: 34%, after 60: 100%
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>n = 50: optimal route found after  7.0 episodes (median of 100 runs); runs on it after 10 episodes: 84%, after 60: 95%
+</code></pre></div>
+<p>And a compact MCTS for tic-tac-toe. The "model" is just the rules (<code>play</code>, <code>moves</code>, <code>winner</code>); <code>minimax</code> checks the answer by searching the whole game tree:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">LINES</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"top-left"</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">,</span> <span class="s2">"top-right"</span><span class="p">,</span> <span class="s2">"left"</span><span class="p">,</span> <span class="s2">"centre"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">,</span> <span class="s2">"bottom-left"</span><span class="p">,</span> <span class="s2">"bottom"</span><span class="p">,</span> <span class="s2">"bottom-right"</span><span class="p">]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># ---- The model: the rules of tic-tac-toe. A board is a 9-character string like "..O..XX.O".</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">winner</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">LINES</span><span class="p">:</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"."</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>            <span class="k">return</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">return</span> <span class="kc">None</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">to_move</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="k">return</span> <span class="s2">"X"</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"O"</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"O"</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">moves</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="k">return</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">winner</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"."</span><span class="p">]</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="k">return</span> <span class="n">b</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">to_move</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">move</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">move</span> <span class="o">=</span> <span class="n">board</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">move</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">untried</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">moves</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span>          <span class="c1"># visit count, total value (for the player who moved INTO this node)</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="k">def</span><span class="w"> </span><span class="nf">uct</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)):</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>    <span class="k">return</span> <span class="n">child</span><span class="o">.</span><span class="n">W</span> <span class="o">/</span> <span class="n">child</span><span class="o">.</span><span class="n">N</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">child</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="k">def</span><span class="w"> </span><span class="nf">mcts</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">simulations</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>    <span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">simulations</span><span class="p">):</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>        <span class="n">node</span> <span class="o">=</span> <span class="n">root</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>        <span class="c1"># 1. Selection: walk down the tree, always taking the child with the highest UCT score</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">untried</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>            <span class="n">node</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">uct</span><span class="p">)</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>        <span class="c1"># 2. Expansion: add one new child for a move we have never tried here</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">untried</span><span class="p">:</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>            <span class="n">m</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">untried</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">untried</span><span class="p">)))</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>            <span class="n">child</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">play</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">board</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">node</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>            <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>            <span class="n">node</span> <span class="o">=</span> <span class="n">child</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>        <span class="c1"># 3. Simulation: play random moves until the game ends</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>        <span class="n">b</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">board</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>        <span class="k">while</span> <span class="n">moves</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>            <span class="n">b</span> <span class="o">=</span> <span class="n">play</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">moves</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>        <span class="n">w</span> <span class="o">=</span> <span class="n">winner</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>        <span class="c1"># 4. Backup: every node on the path gets +1 / 0 / -1 from the view of the player who moved into it</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>        <span class="k">while</span> <span class="n">node</span><span class="p">:</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>            <span class="n">mover</span> <span class="o">=</span> <span class="s2">"O"</span> <span class="k">if</span> <span class="n">to_move</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">board</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"X"</span> <span class="k">else</span> <span class="s2">"X"</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>            <span class="n">node</span><span class="o">.</span><span class="n">N</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>            <span class="n">node</span><span class="o">.</span><span class="n">W</span> <span class="o">+=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="n">mover</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>    <span class="k">return</span> <span class="n">root</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a><span class="k">def</span><span class="w"> </span><span class="nf">minimax</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a><span class="w">    </span><span class="sd">"""Exact value for the player to move (+1 win, 0 draw, -1 loss). Fine for a game this small."""</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>    <span class="k">if</span> <span class="n">winner</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>                        <span class="c1"># the previous player just won</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">moves</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>        <span class="k">return</span> <span class="mi">0</span>
+<a id="__codelineno-2-69" name="__codelineno-2-69" href="#__codelineno-2-69"></a>    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="n">minimax</span><span class="p">(</span><span class="n">play</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<a id="__codelineno-2-70" name="__codelineno-2-70" href="#__codelineno-2-70"></a>
+<a id="__codelineno-2-71" name="__codelineno-2-71" href="#__codelineno-2-71"></a>
+<a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a><span class="n">board</span> <span class="o">=</span> <span class="s2">"..O..XX.O"</span>                      <span class="c1"># X to move</span>
+<a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"minimax:"</span><span class="p">,</span> <span class="p">{</span><span class="n">NAMES</span><span class="p">[</span><span class="n">m</span><span class="p">]:</span> <span class="o">-</span><span class="n">minimax</span><span class="p">(</span><span class="n">play</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">(</span><span class="n">board</span><span class="p">)})</span>
+<a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a><span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]:</span>
+<a id="__codelineno-2-75" name="__codelineno-2-75" href="#__codelineno-2-75"></a>    <span class="n">root</span> <span class="o">=</span> <span class="n">mcts</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<a id="__codelineno-2-76" name="__codelineno-2-76" href="#__codelineno-2-76"></a>    <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">ch</span><span class="p">:</span> <span class="n">ch</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+<a id="__codelineno-2-77" name="__codelineno-2-77" href="#__codelineno-2-77"></a>    <span class="n">stats</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">NAMES</span><span class="p">[</span><span class="n">ch</span><span class="o">.</span><span class="n">move</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">ch</span><span class="o">.</span><span class="n">N</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">ch</span><span class="o">.</span><span class="n">W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ch</span><span class="o">.</span><span class="n">N</span><span class="si">:</span><span class="s2">+.2f</span><span class="si">}</span><span class="s2">)"</span>
+<a id="__codelineno-2-78" name="__codelineno-2-78" href="#__codelineno-2-78"></a>                      <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">ch</span><span class="p">:</span> <span class="n">ch</span><span class="o">.</span><span class="n">move</span><span class="p">))</span>
+<a id="__codelineno-2-79" name="__codelineno-2-79" href="#__codelineno-2-79"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"K=</span><span class="si">{</span><span class="n">K</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">: plays </span><span class="si">{</span><span class="n">NAMES</span><span class="p">[</span><span class="n">best</span><span class="o">.</span><span class="n">move</span><span class="p">]</span><span class="si">:</span><span class="s2">7s</span><span class="si">}</span><span class="s2"> share </span><span class="si">{</span><span class="n">best</span><span class="o">.</span><span class="n">N</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">K</span><span class="si">:</span><span class="s2">4.0%</span><span class="si">}</span><span class="s2"> | N (W/N): </span><span class="si">{</span><span class="n">stats</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-80" name="__codelineno-2-80" href="#__codelineno-2-80"></a>
+<a id="__codelineno-2-81" name="__codelineno-2-81" href="#__codelineno-2-81"></a><span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">]:</span>
+<a id="__codelineno-2-82" name="__codelineno-2-82" href="#__codelineno-2-82"></a>    <span class="n">right</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">mcts</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">ch</span><span class="p">:</span> <span class="n">ch</span><span class="o">.</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">move</span> <span class="o">==</span> <span class="mi">3</span>
+<a id="__codelineno-2-83" name="__codelineno-2-83" href="#__codelineno-2-83"></a>                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<a id="__codelineno-2-84" name="__codelineno-2-84" href="#__codelineno-2-84"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"K=</span><span class="si">{</span><span class="n">K</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">: picks the winning move in </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">/100 runs"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>minimax: {'top-left': 0, 'top': 0, 'left': 1, 'centre': 0, 'bottom': -1}
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>K=  25: plays top-left share  28% | N (W/N): top-left 7 (+0.43), top 6 (+0.33), left 4 (+0.00), centre 4 (+0.00), bottom 4 (+0.25)
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>K= 100: plays centre  share  31% | N (W/N): top-left 21 (+0.33), top 16 (+0.25), left 20 (+0.40), centre 31 (+0.45), bottom 12 (+0.08)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>K= 400: plays left    share  80% | N (W/N): top-left 21 (+0.33), top 17 (+0.24), left 319 (+0.91), centre 31 (+0.45), bottom 12 (+0.08)
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>K=1000: plays left    share  91% | N (W/N): top-left 23 (+0.30), top 23 (+0.26), left 907 (+0.96), centre 34 (+0.44), bottom 13 (+0.00)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>K= 25: picks the winning move in 23/100 runs
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>K= 50: picks the winning move in 36/100 runs
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>K=100: picks the winning move in 67/100 runs
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>K=200: picks the winning move in 97/100 runs
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>K=400: picks the winning move in 100/100 runs
+</code></pre></div>
+<p>To go from here to AlphaZero, replace the random play-out with a call to a value network, add the network's prior <span class="arithmatex">\(P(s, a)\)</span> to the selection score (the PUCT rule), and train the network on the visit counts and game results from self-play. Open-source versions to read: <a href="https://github.com/suragnair/alpha-zero-general"><code>alpha-zero-general</code></a> (small and readable) and DeepMind's <a href="https://github.com/google-deepmind/mctx"><code>mctx</code></a> (MCTS for AlphaZero and MuZero in JAX).</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"Model-based means the agent is given the rules.\"</p>
+<p>Sometimes it is (MCTS and AlphaZero use the game rules), but often the model is <strong>learned</strong> from experience, as in Dyna and MuZero. "Model-based" only means the agent has <em>some</em> model of <span class="arithmatex">\(p(s', r \mid s, a)\)</span> and uses it to plan.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"More planning is always better.\"</p>
+<p>Planning is only as good as the model. With a learned model, extra planning can make the agent <em>more</em> confident in the model's mistakes, as in the stuck Dyna runs and the "safe" cliff edge of Step 2. The gain from more planning also shrinks fast (0 → 5 steps helped more than 5 → 50).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"MCTS picks the move with the highest average value.\"</p>
+<p>The usual choice is the <strong>most-visited</strong> child. Visits are a more robust signal: a move can have a high average from only a few lucky play-outs, but it only collects many visits if it kept looking good as the search looked deeper.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"AlphaZero is just a very good neural network.\"</p>
+<p>The raw network is much weaker than network + search. The search improves on the network at every move, and the network is trained to imitate those improved choices. Take the search away and both the play and the training signal get worse.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. What does a model of the environment predict, and how would you learn one in a small grid world?</summary>
+<p>It predicts what happens after taking action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span>: the next state <span class="arithmatex">\(s'\)</span> and the reward <span class="arithmatex">\(r\)</span> (or their probabilities <span class="arithmatex">\(\hat p(s', r \mid s, a)\)</span>). In a small grid world you count: every real transition adds 1 to <span class="arithmatex">\(n(s, a, s', r)\)</span>, and <span class="arithmatex">\(\hat p = n(s, a, s', r) / n(s, a)\)</span>.</p>
+</details>
+<details class="question">
+<summary>2. Dyna-Q with n = 0 is which algorithm? What does n &gt; 0 add, and what does it cost?</summary>
+<p>With <span class="arithmatex">\(n = 0\)</span> it is plain <strong>Q-learning</strong>. With <span class="arithmatex">\(n &gt; 0\)</span> every real step is followed by <span class="arithmatex">\(n\)</span> Q-learning updates on transitions imagined by the model. It costs extra computation per step, but it saves real experience: on the cliff world, <span class="arithmatex">\(n = 50\)</span> found the optimal route after a median of 129 real steps versus about 840 for <span class="arithmatex">\(n = 0\)</span>.</p>
+</details>
+<details class="question">
+<summary>3. In the UCT formula, what happens to a child that has been visited very few times? Why is that useful?</summary>
+<p>Its exploration bonus <span class="arithmatex">\(c\sqrt{\ln N_{\text{parent}} / N}\)</span> is large, so it gets selected again even if its average looks poor. That stops the search from writing off a move after a few unlucky random play-outs. In the tic-tac-toe example, the winning move <em>left</em> had an average of 0.00 after 25 simulations and only became the favourite once the search kept revisiting it.</p>
+</details>
+<details class="question">
+<summary>4. In AlphaZero, what are the training targets for the policy head and the value head?</summary>
+<p>The <strong>policy head</strong> is trained towards the MCTS visit-count distribution <span class="arithmatex">\(\pi\)</span> at each position (what the search preferred). The <strong>value head</strong> is trained towards the final game result <span class="arithmatex">\(z\)</span> (+1, 0 or −1 from the view of the player to move).</p>
+</details>
+<details class="question">
+<summary>5. Why do errors in a learned model hurt more on long imagined rollouts than on short ones?</summary>
+<p>Each imagined step starts from the model's previous prediction, so errors compound. If each step is right with probability 0.95, a 10-step rollout is all correct with probability about 0.60 and a 50-step one only about 0.08. That's why methods like MBPO use short model rollouts that start from real states.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Richard Sutton &amp; Andrew Barto, <a href="http://incompleteideas.net/book/the-book-2nd.html"><em>Reinforcement Learning: An Introduction</em></a> (2nd ed.), Chapter 8: <em>Planning and Learning with Tabular Methods</em> (Dyna, Dyna-Q+, MCTS).</li>
+<li>Browne et al., <a href="https://ieeexplore.ieee.org/document/6145622"><em>A Survey of Monte Carlo Tree Search Methods</em></a> (2012), the standard overview of MCTS and UCT.</li>
+<li>Silver et al., <a href="https://www.nature.com/articles/nature24270"><em>Mastering the game of Go without human knowledge</em></a> (AlphaGo Zero, Nature 2017) and <a href="https://www.science.org/doi/10.1126/science.aar6404"><em>A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play</em></a> (AlphaZero, Science 2018).</li>
+<li>Schrittwieser et al., <a href="https://arxiv.org/abs/1911.08265"><em>Mastering Atari, Go, chess and shogi by planning with a learned model</em></a> (MuZero, 2019).</li>
+<li>Janner et al., <a href="https://arxiv.org/abs/1906.08253"><em>When to Trust Your Model: Model-Based Policy Optimization</em></a> (MBPO, 2019), on short model rollouts and compounding errors.</li>
+<li>David Silver, <a href="https://www.davidsilver.uk/teaching/"><em>UCL Course on RL</em></a>, Lecture 8: Integrating Learning and Planning.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../offline-rl-imitation/">Offline RL &amp; imitation</a></p>
+<script src="viz/model-based-rl.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../actor-critic/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Actor-critic">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Actor-critic
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../offline-rl-imitation/" class="md-footer__link md-footer__link--next" aria-label="Next: Offline RL &amp; imitation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Offline RL & imitation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2273 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/deep-q-networks/">
+      
+      
+        <link rel="prev" href="../q-learning-sarsa/">
+      
+      
+        <link rel="next" href="../policy-gradients/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Deep Q-Networks - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deep-q-networks-dqn" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deep Q-Networks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-why-q-tables-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Why Q-tables break
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-q-network-one-output-per-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — The Q-network: one output per action
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-turning-q-learning-into-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Turning Q-learning into regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-problem-1-consecutive-samples-are-correlated-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Problem 1: consecutive samples are correlated → experience replay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-problem-2-chasing-a-moving-target-the-target-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Problem 2: chasing a moving target → the target network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-exploration-an-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Exploration: an ε schedule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-improvements-double-dqn-dueling-networks-prioritised-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Improvements: Double DQN, dueling networks, prioritised replay
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 7 — Improvements: Double DQN, dueling networks, prioritised replay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#double-dqn-the-max-is-too-optimistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double DQN: the max is too optimistic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dueling-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dueling networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prioritised-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prioritised experience replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-why-q-tables-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Why Q-tables break
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-q-network-one-output-per-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — The Q-network: one output per action
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-turning-q-learning-into-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Turning Q-learning into regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-problem-1-consecutive-samples-are-correlated-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Problem 1: consecutive samples are correlated → experience replay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-problem-2-chasing-a-moving-target-the-target-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Problem 2: chasing a moving target → the target network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-exploration-an-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Exploration: an ε schedule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-improvements-double-dqn-dueling-networks-prioritised-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Improvements: Double DQN, dueling networks, prioritised replay
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 7 — Improvements: Double DQN, dueling networks, prioritised replay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#double-dqn-the-max-is-too-optimistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double DQN: the max is too optimistic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dueling-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dueling networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prioritised-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prioritised experience replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="deep-q-networks-dqn">Deep Q-Networks (DQN)<a class="headerlink" href="#deep-q-networks-dqn" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A <strong>Deep Q-Network</strong> replaces the Q-table of Q-learning with a <strong>neural network</strong> <span class="arithmatex">\(Q(s, a; \theta)\)</span> that takes a state and outputs one Q-value per action. Training it is ordinary <strong>regression</strong>: push <span class="arithmatex">\(Q(s,a;\theta)\)</span> towards the target <span class="arithmatex">\(r + \gamma \max_{a'} Q(s', a'; \theta^-)\)</span> with gradient descent. Two tricks made this stable enough to learn Atari games from pixels (2015): an <strong>experience replay buffer</strong>, so the network learns from random, decorrelated mini-batches of old experience, and a <strong>target network</strong> <span class="arithmatex">\(\theta^-\)</span>, a frozen copy that keeps the target still while the network chases it.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../q-learning-sarsa/">Q-learning &amp; SARSA</a>, <a href="../gradient-descent/">Gradient Descent</a></p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>In 2015, a team at DeepMind published <em>Human-level control through deep reinforcement learning</em> in <em>Nature</em>. One agent, with <strong>the same network, the same algorithm and the same settings</strong>, learned to play 49 different Atari games from nothing but the screen pixels and the score. On many of them it played about as well as a professional human tester. Before that, RL with neural networks was known to be unstable, and most successes used hand-made features.</p>
+<p>The algorithm was <strong>DQN</strong>. It is Q-learning from the <a href="../q-learning-sarsa/">previous lesson</a> plus a neural network plus two stabilising tricks. Those tricks, a replay buffer and a target network, are still inside many modern RL methods, and the overestimation problem DQN ran into explains design choices you will meet again in actor-critic methods like SAC.</p>
+<hr />
+<h2 id="step-1-why-q-tables-break">Step 1 — Why Q-tables break<a class="headerlink" href="#step-1-why-q-tables-break" title="Permanent link">&para;</a></h2>
+<p>Tabular Q-learning keeps one number <span class="arithmatex">\(Q(s, a)\)</span> for every state–action pair. On the cliff world that is a table of at most <span class="arithmatex">\(24 \times 4 = 96\)</span> numbers, and each entry is learned separately. That stops working for two reasons.</p>
+<p><strong>1. There are far too many states.</strong> DQN's Atari input is the last 4 screen frames, shrunk to <span class="arithmatex">\(84 \times 84\)</span> grey pixels with 256 shades each. That is <span class="arithmatex">\(84 \times 84 \times 4 = 28{,}224\)</span> pixels, so the number of possible inputs is <span class="arithmatex">\(256^{28224}\)</span>, roughly <span class="arithmatex">\(10^{67970}\)</span>. No table can hold that, and the agent will never see the same screen twice anyway.</p>
+<p><strong>2. States can be continuous.</strong> In <strong>CartPole</strong>, the task we will solve at the end, a cart must keep a pole balanced by pushing left or right. The state is four real numbers: cart position, cart speed, pole angle and pole angular speed. There are infinitely many states.</p>
+<p>What we really need is <strong>generalisation</strong>: if the agent learned that "pole tilting right, falling fast" is bad, it should assume that a <em>slightly different</em> tilt is also bad, without having visited it. A table cannot do this. A function with shared parameters can, because changing its parameters for one state also changes its output for similar states. That is exactly what neural networks are good at.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Q-table</th>
+<th>Q-network</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stores</td>
+<td>one number per <span class="arithmatex">\((s, a)\)</span></td>
+<td>weights <span class="arithmatex">\(\theta\)</span> shared by all states</td>
+</tr>
+<tr>
+<td>Unseen state</td>
+<td>knows nothing</td>
+<td>guesses from similar states</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>grows with the number of states</td>
+<td>fixed (4,610 weights for our CartPole network)</td>
+</tr>
+<tr>
+<td>Update one state</td>
+<td>changes only that entry</td>
+<td>changes the outputs for many states</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the blessing <em>and</em> the curse of this lesson. Generalisation is why DQN works; it is also why naive training is unstable (Steps 4 and 5).</p>
+<hr />
+<h2 id="step-2-the-q-network-one-output-per-action">Step 2 — The Q-network: one output per action<a class="headerlink" href="#step-2-the-q-network-one-output-per-action" title="Permanent link">&para;</a></h2>
+<p>We approximate the optimal action-value function with a network: <span class="arithmatex">\(Q(s, a; \theta) \approx Q^*(s, a)\)</span>, where <span class="arithmatex">\(\theta\)</span> are the weights.</p>
+<p>There are two ways to feed a network. You could give it <span class="arithmatex">\((s, a)\)</span> and get back one number, but then choosing an action needs one forward pass per action. DQN instead takes <strong>only the state</strong> as input and has <strong>one output per action</strong>. A single forward pass gives all the Q-values, and acting greedily is just "pick the biggest output".</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧠 A Q-network for CartPole",
+  "cols": 4,
+  "rows": 2,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "s", "col": 0, "row": 0.5, "icon": "🛒", "label": "<b>State s</b>", "sub": "4 numbers for CartPole", "role": "data", "note": "Cart position x and speed ẋ, pole angle θ and angular speed θ̇. For Atari it is a stack of 4 screen frames."},
+    {"id": "net", "col": 1, "row": 0.5, "icon": "🧠", "label": "<b>Network θ</b>", "sub": "2 hidden layers, 64 ReLU units", "role": "model", "note": "For Atari, DQN used 3 convolutional layers and one fully connected layer of 512 units before the outputs."},
+    {"id": "ql", "col": 2, "row": 0, "label": "Q(s, ← ; θ)", "sub": "value of pushing left", "role": "loss"},
+    {"id": "qr", "col": 2, "row": 1, "label": "Q(s, → ; θ)", "sub": "value of pushing right", "role": "loss"},
+    {"id": "act", "col": 3, "row": 0.5, "icon": "🎯", "label": "<b>Greedy action</b>", "sub": "argmax over the outputs", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "s", "to": "net"},
+    {"from": "net", "to": "ql"},
+    {"from": "net", "to": "qr"},
+    {"from": "ql", "to": "act"},
+    {"from": "qr", "to": "act"}
+  ],
+  "steps": [
+    {"show": ["s"], "text": "The input is the <b>state only</b>: here 4 numbers, for Atari 4 stacked frames of 84×84 pixels."},
+    {"show": ["s>net", "net"], "text": "The network mixes them through hidden layers. The same weights θ are used for every state, which is what lets it generalise."},
+    {"show": ["net>ql", "net>qr", "ql", "qr"], "text": "The output layer has <b>one unit per action</b>. One forward pass gives Q(s, a; θ) for every action a."},
+    {"show": ["ql>act", "qr>act", "act"], "text": "Acting greedily is just picking the largest output. With ε-greedy we sometimes pick at random instead."}
+  ],
+  "narrow": {"cols": 2, "rows": 3.4, "rowHeight": 90, "pos": {"s": [0, 0], "net": [1, 0], "ql": [0, 1.2], "qr": [1, 1.2], "act": [0.5, 2.4]}}
+}
+</script>
+</div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The number of outputs is fixed by the number of actions (2 for CartPole, up to 18 for Atari). This is why DQN only works for <strong>discrete</strong> actions: with a continuous action like "steering angle", there is no finite list of outputs to take the max over. Continuous control needs the actor-critic methods of a later lesson.</li>
+<li>Nothing about the network is special to RL. It is a plain regression network. All the RL lives in <strong>what we train it towards</strong>, which is the next step.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-turning-q-learning-into-regression">Step 3 — Turning Q-learning into regression<a class="headerlink" href="#step-3-turning-q-learning-into-regression" title="Permanent link">&para;</a></h2>
+<p>Recall the tabular Q-learning update from the previous lesson:</p>
+<div class="arithmatex">\[
+Q(s,a) \leftarrow Q(s,a) + \alpha \Big[\underbrace{r + \gamma \max_{a'} Q(s', a')}_{\text{target}} - Q(s,a)\Big]
+\]</div>
+<p>Read it as "move the estimate a little towards the target". With a network we cannot overwrite one entry, but we can do the next best thing: treat the target as a <strong>label</strong> and take a gradient step that moves <span class="arithmatex">\(Q(s,a;\theta)\)</span> towards it. For one transition <span class="arithmatex">\((s, a, r, s')\)</span>:</p>
+<div class="arithmatex">\[
+y = \begin{cases} r &amp; \text{if } s' \text{ is terminal} \\ r + \gamma \max_{a'} Q(s', a'; \theta^-) &amp; \text{otherwise} \end{cases}
+\qquad
+L(\theta) = \big(y - Q(s, a; \theta)\big)^2
+\]</div>
+<p>and then, exactly as in <a href="../gradient-descent/">Gradient Descent</a>, step downhill:</p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta - \eta\, \nabla_\theta L(\theta) = \theta + 2\eta\, \big(y - Q(s,a;\theta)\big)\, \nabla_\theta Q(s,a;\theta)
+\]</div>
+<p>The bracket <span class="arithmatex">\(y - Q(s,a;\theta)\)</span> is the TD error <span class="arithmatex">\(\delta\)</span> from earlier lessons. For now read <span class="arithmatex">\(\theta^-\)</span> as "the same weights <span class="arithmatex">\(\theta\)</span>"; Step 5 explains why DQN uses a separate copy.</p>
+<p>Three details matter:</p>
+<ul>
+<li><strong>The target is treated as a constant.</strong> We do not backpropagate through <span class="arithmatex">\(y\)</span>, even though it depends on the network too. (In code: compute <span class="arithmatex">\(y\)</span> under <code>torch.no_grad()</code>.) This is called a <strong>semi-gradient</strong> method. Differentiating through <span class="arithmatex">\(y\)</span> as well is a different, usually worse, algorithm.</li>
+<li><strong>It is still Q-learning.</strong> If the "network" were a table with one weight per <span class="arithmatex">\((s,a)\)</span>, this gradient step would be the tabular update above, with step size <span class="arithmatex">\(2\eta\)</span>.</li>
+<li><strong>It is off-policy.</strong> The target uses <span class="arithmatex">\(\max_{a'}\)</span>, the greedy action, no matter which action the agent actually took next. So the transition can come from <em>any</em> behaviour, including old versions of the agent. That is what makes the replay buffer of Step 4 legal.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Huber loss</p>
+<p>DQN on Atari clipped the TD error to <span class="arithmatex">\([-1, 1]\)</span> in the gradient, which is the same as using the <strong>Huber loss</strong> (squared for small errors, linear for large ones). It stops a single surprising transition from producing a huge gradient. Our CartPole code uses the plain squared error, to match the formula above.</p>
+</div>
+<hr />
+<h2 id="step-4-problem-1-consecutive-samples-are-correlated-experience-replay">Step 4 — Problem 1: consecutive samples are correlated → experience replay<a class="headerlink" href="#step-4-problem-1-consecutive-samples-are-correlated-experience-replay" title="Permanent link">&para;</a></h2>
+<p>The naive way to train is <strong>online</strong>: take one step in the environment, do one gradient step on that transition, repeat. This breaks an assumption that <a href="../gradient-descent/#step-6-real-data-is-big-stochastic-gradient-descent-sgd">stochastic gradient descent</a> relies on: that each mini-batch is a fair, random sample of the data.</p>
+<p>Consecutive transitions are nearly identical (frame 1001 of a game looks almost exactly like frame 1000). Training on them in order is like fitting a regression line using only the points from one corner of the plot, then only from another corner. The network over-fits to whatever it saw last and forgets the rest. Worse, the data depends on the network: if it learns "always go left", it only sees left-hand states, which reinforces the habit.</p>
+<p><strong>Experience replay</strong> fixes this. Every transition <span class="arithmatex">\((s, a, r, s', \text{done})\)</span> goes into a big <strong>replay buffer</strong> (DQN on Atari kept the last 1 million). For each gradient step, we sample a <strong>random mini-batch</strong> from the buffer.</p>
+<p><strong>Try it:</strong> the buffer below fills with real CartPole transitions from a random policy. Sample a mini-batch of 12 "in a row" (the last 12 steps, as online learning would see them) and "at random", and compare where they land in the state plot.</p>
+<div id="viz-replay" class="viz"><div class="viz-title">🗃️ Interactive: a replay buffer</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The 12 transitions in a row come from one or two episodes and trace <strong>one short, smooth path</strong> in the state plot: a single swing of the pole. Each one is almost a copy of its neighbour. A gradient step on them only teaches the network about that corner of the state space.</li>
+<li>A random batch comes from several episodes, and its orange line <strong>zigzags across the whole cloud</strong>. It is much closer to an independent, representative sample, which is what SGD expects.</li>
+<li>Every transition stays in the buffer for a long time and gets sampled many times. Experience is <strong>reused</strong>, which matters when collecting it is slow (a robot) or expensive (an Atari emulator running for days).</li>
+</ul>
+</div>
+<p>Replay only works because Q-learning is off-policy (Step 3). The old transitions were collected by older, worse versions of the policy, but the Q-learning target doesn't care who chose the action.</p>
+<hr />
+<h2 id="step-5-problem-2-chasing-a-moving-target-the-target-network">Step 5 — Problem 2: chasing a moving target → the target network<a class="headerlink" href="#step-5-problem-2-chasing-a-moving-target-the-target-network" title="Permanent link">&para;</a></h2>
+<p>Look at the target again: <span class="arithmatex">\(y = r + \gamma \max_{a'} Q(s', a'; \theta)\)</span>. It is computed <strong>with the same network we are training</strong>. In a table that is harmless: updating <span class="arithmatex">\(Q(s, a)\)</span> doesn't change <span class="arithmatex">\(Q(s', \cdot)\)</span>. With a network it is not, because of generalisation. A gradient step that raises <span class="arithmatex">\(Q(s, a)\)</span> also raises <span class="arithmatex">\(Q\)</span> for similar states, and <span class="arithmatex">\(s'\)</span> is usually very similar to <span class="arithmatex">\(s\)</span> (it is the next frame). So the target <strong>moves every time you step towards it</strong>, like a dog chasing its tail. Errors can feed on themselves and grow.</p>
+<p>DQN's fix is a second network, the <strong>target network</strong> with weights <span class="arithmatex">\(\theta^-\)</span>. It is a copy of the online network that is only updated every <span class="arithmatex">\(C\)</span> steps (<span class="arithmatex">\(\theta^- \leftarrow \theta\)</span>) and <strong>frozen</strong> in between. For <span class="arithmatex">\(C\)</span> steps, the targets <span class="arithmatex">\(y\)</span> are fixed numbers, and learning is plain supervised regression towards fixed labels. Then the labels are refreshed. (DQN on Atari used <span class="arithmatex">\(C = 10{,}000\)</span> updates.)</p>
+<p><strong>Try it:</strong> a tiny example with three states. From states A and B the agent gets reward +1 and moves to state C, which loops back to itself with reward 0 forever. With <span class="arithmatex">\(\gamma = 0.9\)</span> the true values are <span class="arithmatex">\(Q(A) = Q(B) = 1\)</span> and <span class="arithmatex">\(Q(C) = 0\)</span> (green dashed lines). The "network" is linear with only <strong>two weights</strong> shared by all three states (<span class="arithmatex">\(Q(A) = w_1\)</span>, <span class="arithmatex">\(Q(B) = 2w_1 + w_2\)</span>, <span class="arithmatex">\(Q(C) = 2w_1 + 2w_2\)</span>), so it can generalise and it can represent the true values exactly. The buffer holds A and B three times as often as C, and each step is one gradient step on the average squared TD error over the buffer. The slider <span class="arithmatex">\(C\)</span> sets how often the target is synced; <span class="arithmatex">\(C = 1\)</span> means the target is live.</p>
+<div id="viz-target" class="viz"><div class="viz-title">🎯 Interactive: live target vs frozen target</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Live target (<span class="arithmatex">\(C = 1\)</span>): it spirals out of control.</strong> With <span class="arithmatex">\(\alpha = 0.3\)</span>, after 300 steps the estimates are around <span class="arithmatex">\(-10^9\)</span>. A smaller step size does not save it: in this example the error grows by a constant factor every step for <em>any</em> <span class="arithmatex">\(\alpha\)</span> (about 1.068 per step at <span class="arithmatex">\(\alpha = 0.3\)</span>, 1.002 at <span class="arithmatex">\(\alpha = 0.01\)</span>), so a smaller <span class="arithmatex">\(\alpha\)</span> only makes the explosion slower.</li>
+<li><strong>Frozen target: it converges.</strong> With <span class="arithmatex">\(\alpha = 0.3\)</span> and <span class="arithmatex">\(C = 10\)</span>, all three estimates are within 0.01 of the truth after 300 steps. With <span class="arithmatex">\(C = 3\)</span> the syncs are too frequent and it is still off by about 4.</li>
+<li><strong>Look at the staircase.</strong> Between syncs, each line glides towards a fixed label, then jumps when the target is refreshed. Each phase is an ordinary, well-behaved regression problem.</li>
+<li><strong>There is a price.</strong> With a small step size (<span class="arithmatex">\(\alpha = 0.05\)</span>), even <span class="arithmatex">\(C = 100\)</span> is still off by about 0.5 after 300 steps: values travel through the target only once per sync, so a large <span class="arithmatex">\(C\)</span> learns slowly.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">No guarantees, just much better odds</p>
+<p>The divergence here is an instance of what Sutton and Barto call the <strong>deadly triad</strong>: function approximation + bootstrapping (targets built from your own estimates) + off-policy data. Any two are fine; all three together can diverge. DQN has all three. The target network and replay buffer don't remove the triad, and you can build examples where DQN still diverges. In practice they make it stable enough to work across dozens of games.</p>
+</div>
+<hr />
+<h2 id="step-6-exploration-an-schedule">Step 6 — Exploration: an ε schedule<a class="headerlink" href="#step-6-exploration-an-schedule" title="Permanent link">&para;</a></h2>
+<p>DQN acts <strong>ε-greedily</strong> with respect to its own Q-network, like tabular Q-learning. The difference is that ε is <strong>annealed</strong>: at the start, the network's outputs are meaningless, so the agent explores a lot; later it mostly exploits what it has learned.</p>
+<ul>
+<li>DQN on Atari: ε falls linearly from 1.0 to 0.1 over the first million frames, then stays at 0.1.</li>
+<li>Our CartPole code: ε falls from 1.0 to 0.05 over the first 10,000 steps.</li>
+</ul>
+<p>It also waits until the buffer has some data (1,000 transitions in our code) before the first gradient step, so the first mini-batches are not all from the same episode.</p>
+<p>The Atari agent used a few more engineering tricks that are worth knowing by name: it stacked the last <strong>4 frames</strong> as the state (one frame can't show which way the ball is moving), repeated each action for 4 frames (<strong>frame skipping</strong>), and <strong>clipped rewards</strong> to <span class="arithmatex">\(-1, 0, +1\)</span> so one set of hyperparameters worked for games with very different score scales.</p>
+<hr />
+<h2 id="step-7-improvements-double-dqn-dueling-networks-prioritised-replay">Step 7 — Improvements: Double DQN, dueling networks, prioritised replay<a class="headerlink" href="#step-7-improvements-double-dqn-dueling-networks-prioritised-replay" title="Permanent link">&para;</a></h2>
+<p>DQN started a long line of improvements. Three are especially common.</p>
+<h3 id="double-dqn-the-max-is-too-optimistic">Double DQN: the max is too optimistic<a class="headerlink" href="#double-dqn-the-max-is-too-optimistic" title="Permanent link">&para;</a></h3>
+<p>The target uses <span class="arithmatex">\(\max_{a'} Q(s', a')\)</span>. If the estimates are noisy, the max tends to pick an action whose estimate happens to be <strong>too high</strong>. So even when the noise averages out to zero for each action, the max is biased <strong>upwards</strong>. The bias feeds into the targets, then into other estimates through bootstrapping, and DQN's Q-values can end up far higher than the returns the agent really gets.</p>
+<p><strong>Try it:</strong> every action below is truly worth 0. Each draw gives two independent noisy estimates of all actions (blue and purple). DQN's target takes the max of the blue estimates. <strong>Double DQN</strong> uses the blue estimates only to <strong>choose</strong> the action, then reads that action's value from the purple estimate.</p>
+<div id="viz-overest" class="viz"><div class="viz-title">📈 Interactive: why the max overestimates</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The max of the blue estimates is almost always positive, although every true value is 0. In a simulation with 200,000 draws and noise <span class="arithmatex">\(\sigma = 1\)</span>, the average of the max was 0.57 with 2 actions, 1.03 with 4 and 1.54 with 10. More actions → more chances to be lucky → more overestimation.</li>
+<li>The Double estimate averages about 0 (to within 0.003 in the same simulation), whatever the number of actions. Choosing with one estimate and judging with an independent one removes the "winner was lucky" bias.</li>
+</ul>
+</div>
+<p>DQN already has a second network, so Double DQN costs one line. The target becomes</p>
+<div class="arithmatex">\[
+y = r + \gamma\, Q\big(s',\ \underbrace{\arg\max_{a'} Q(s', a'; \theta)}_{\text{online net chooses}};\ \theta^-\big) \quad (\text{target net evaluates})
+\]</div>
+<h3 id="dueling-networks">Dueling networks<a class="headerlink" href="#dueling-networks" title="Permanent link">&para;</a></h3>
+<p>Split the last layer into two streams: one estimates the state value <span class="arithmatex">\(V(s)\)</span>, one estimates how much better each action is than average, the <strong>advantage</strong> <span class="arithmatex">\(A(s, a)\)</span>. They are recombined as <span class="arithmatex">\(Q(s,a) = V(s) + A(s,a) - \tfrac{1}{|\mathcal{A}|}\sum_{a'} A(s,a')\)</span>. In many states the action barely matters (nothing is happening on screen), and the <span class="arithmatex">\(V\)</span> stream can learn that without learning every action separately.</p>
+<h3 id="prioritised-experience-replay">Prioritised experience replay<a class="headerlink" href="#prioritised-experience-replay" title="Permanent link">&para;</a></h3>
+<p>Sample transitions with large TD error <span class="arithmatex">\(|\delta|\)</span> more often, because that is where the network is most wrong and has the most to learn. Importance-sampling weights correct the bias this introduces.</p>
+<p><strong>Rainbow</strong> (2018) combined these with three more ideas (multi-step targets, distributional values, noisy networks) and beat each of them alone on Atari.</p>
+<div class="admonition note">
+<p class="admonition-title">What DQN can't do</p>
+<p>DQN needs a lot of data (the Atari agents trained on 50 million frames per game, about 38 days of play), it only handles discrete actions, and it can be brittle: results vary a lot between random seeds, as you'll see below. Policy-gradient and actor-critic methods (the next lessons) address the continuous-action problem; model-based methods address data efficiency.</p>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The DQN training loop",
+  "cols": 4,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0, "icon": "👀", "label": "Observe state s", "role": "data"},
+    {"id": "act", "col": 1, "row": 0, "icon": "🎲", "label": "ε-greedy action", "sub": "from Q(s, ·; θ)", "role": "model"},
+    {"id": "env", "col": 2, "row": 0, "icon": "🌍", "label": "Environment", "sub": "returns r, s′", "role": "data"},
+    {"id": "store", "col": 3, "row": 0, "icon": "🗃️", "label": "Replay buffer", "sub": "store (s, a, r, s′)", "role": "data", "note": "Keeps the last N transitions (1 million on Atari, 50,000 in our code). The oldest are overwritten."},
+    {"id": "sample", "col": 3, "row": 1, "icon": "🎰", "label": "Random mini-batch", "sub": "e.g. 64 old transitions", "role": "data"},
+    {"id": "target", "col": 2, "row": 1, "icon": "🎯", "label": "Targets y", "sub": "from target net θ⁻", "role": "loss", "note": "Computed with the frozen target network θ⁻ and treated as fixed labels (no gradient)."},
+    {"id": "update", "col": 1, "row": 1, "icon": "👣", "label": "Gradient step on θ", "sub": "loss (y − Q)²", "role": "grad"},
+    {"id": "sync", "col": 0, "row": 1, "icon": "📋", "label": "Every C steps", "sub": "copy θ⁻ ← θ", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "obs", "to": "act"},
+    {"from": "act", "to": "env"},
+    {"from": "env", "to": "store"},
+    {"from": "store", "to": "sample"},
+    {"from": "sample", "to": "target"},
+    {"from": "target", "to": "update"},
+    {"from": "update", "to": "sync"},
+    {"from": "sync", "to": "obs", "label": "next step"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "The agent looks at the current state s (4 numbers for CartPole, 4 stacked frames for Atari)."},
+    {"show": ["obs>act", "act"], "text": "It runs the online network once and acts ε-greedily: usually the action with the largest Q-value, sometimes a random one."},
+    {"show": ["act>env", "env"], "text": "The environment returns a reward r and the next state s′."},
+    {"show": ["env>store", "store"], "text": "The transition goes into the <b>replay buffer</b>. Nothing is learned from it yet."},
+    {"show": ["store>sample", "sample"], "text": "Learning uses a <b>random</b> mini-batch of old transitions, not the one that just happened. Problem 1 solved: the batch is decorrelated."},
+    {"show": ["sample>target", "target"], "text": "For each transition the target y = r + γ max<sub>a′</sub> Q(s′, a′; θ⁻) is computed with the frozen <b>target network</b> θ⁻ (y = r if s′ is terminal). Problem 2 solved: the labels hold still."},
+    {"show": ["target>update", "update"], "text": "One gradient-descent step makes Q(s, a; θ) closer to y on this batch. This is ordinary regression."},
+    {"show": ["update>sync", "sync"], "text": "Every C steps the target network is refreshed with a copy of the online weights."},
+    {"show": ["sync>obs", "obs"], "text": "Then on to the next environment step. Acting and learning interleave: one gradient step per environment step."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 100, "pos": {"obs": [0, 0], "act": [1, 0], "env": [1, 1], "store": [1, 2], "sample": [1, 3], "target": [0, 3], "update": [0, 2], "sync": [0, 1]}}
+}
+</script>
+</div>
+
+<p>Here is a complete DQN in PyTorch. CartPole is written out in plain Python with the standard physics (it is Gym's <code>CartPole-v1</code>: reward +1 for every step the pole stays up, episodes end when it falls or after 500 steps). The two flags <code>use_replay</code> and <code>use_target</code> let us switch the two tricks off.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span><span class="o">,</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">CartPole</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="sd">"""The classic cart-pole task (same physics as Gym's CartPole-v1). Reward +1 per step, max 500 steps."""</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>     <span class="c1"># cart position, cart speed, pole angle, pole speed</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>                                  <span class="c1"># 0 = push left, 1 = push right</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">x</span><span class="p">,</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">force</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mf">10.0</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">force</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_dot</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.1</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">th_acc</span> <span class="o">=</span> <span class="p">(</span><span class="mf">9.8</span> <span class="o">*</span> <span class="n">sin</span> <span class="o">-</span> <span class="n">cos</span> <span class="o">*</span> <span class="n">temp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">cos</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">1.1</span><span class="p">))</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="n">x_acc</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_acc</span> <span class="o">*</span> <span class="n">cos</span> <span class="o">/</span> <span class="mf">1.1</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">x_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_acc</span><span class="p">,</span> <span class="n">th</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_dot</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_acc</span><span class="p">])</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="n">fell</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">2.4</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">fell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">500</span>   <span class="c1"># s', r, terminal?, time limit?</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">def</span><span class="w"> </span><span class="nf">q_network</span><span class="p">():</span>                                             <span class="c1"># Q(s, ·; θ): 4 numbers in, one Q-value per action out</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="k">def</span><span class="w"> </span><span class="nf">greedy_test</span><span class="p">(</span><span class="n">q_net</span><span class="p">,</span> <span class="n">episodes</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>                         <span class="c1"># play with ε = 0, return the average episode length</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="n">env</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">CartPole</span><span class="p">(),</span> <span class="p">[]</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">episodes</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="kc">False</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>                <span class="n">a</span> <span class="o">=</span> <span class="n">q_net</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>            <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">trunc</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>            <span class="n">done</span> <span class="o">=</span> <span class="n">term</span> <span class="ow">or</span> <span class="n">trunc</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="k">def</span><span class="w"> </span><span class="nf">train_dqn</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_steps</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">sync_every</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>              <span class="n">use_replay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_target</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span> <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="n">env</span> <span class="o">=</span> <span class="n">CartPole</span><span class="p">()</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="n">q_net</span><span class="p">,</span> <span class="n">target_net</span> <span class="o">=</span> <span class="n">q_network</span><span class="p">(),</span> <span class="n">q_network</span><span class="p">()</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    <span class="n">target_net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">q_net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>            <span class="c1"># θ⁻ ← θ</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">q_net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    <span class="n">buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">50_000</span> <span class="k">if</span> <span class="n">use_replay</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>        <span class="c1"># no replay = learn from the newest transition only</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    <span class="n">untrained_score</span> <span class="o">=</span> <span class="n">greedy_test</span><span class="p">(</span><span class="n">q_net</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>    <span class="n">lengths</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="n">total_steps</span><span class="p">:</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="kc">False</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>            <span class="c1"># 1. act ε-greedily; ε falls from 1.0 to 0.05 over the first 10,000 steps</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>            <span class="n">eps</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">step</span> <span class="o">/</span> <span class="mi">10_000</span><span class="p">)</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">:</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>                <span class="n">a</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>                    <span class="n">a</span> <span class="o">=</span> <span class="n">q_net</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>            <span class="n">s2</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">terminal</span><span class="p">,</span> <span class="n">truncated</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>            <span class="c1"># 2. store the transition in the replay buffer</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>            <span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">terminal</span><span class="p">))</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>            <span class="n">s</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">s2</span><span class="p">,</span> <span class="n">terminal</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>            <span class="c1"># 3. learn from a random mini-batch of old transitions</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">1_000</span> <span class="k">if</span> <span class="n">use_replay</span> <span class="k">else</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>                <span class="n">batch</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffer</span><span class="p">)))</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>                <span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">S2</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">))</span>
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>                                         <span class="c1"># the target is a fixed label</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>                    <span class="n">net</span> <span class="o">=</span> <span class="n">target_net</span> <span class="k">if</span> <span class="n">use_target</span> <span class="k">else</span> <span class="n">q_net</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>                    <span class="n">y</span> <span class="o">=</span> <span class="n">R</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">net</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>      <span class="c1"># y = r + γ max_a' Q(s', a'; θ⁻)</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>                <span class="n">q</span> <span class="o">=</span> <span class="n">q_net</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">long</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># Q(s, a; θ)</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>                <span class="n">loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">q</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                                  <span class="c1"># (y − Q(s, a; θ))²</span>
+<a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>                <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>                <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>                <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>                                              <span class="c1"># one gradient step on θ</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>
+<a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>            <span class="c1"># 4. every C steps, copy the online network into the target network</span>
+<a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>            <span class="k">if</span> <span class="n">use_target</span> <span class="ow">and</span> <span class="n">step</span> <span class="o">%</span> <span class="n">sync_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>                <span class="n">target_net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">q_net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+<a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>        <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>
+<a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>    <span class="k">return</span> <span class="n">untrained_score</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">greedy_test</span><span class="p">(</span><span class="n">q_net</span><span class="p">)</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>
+<a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>
+<a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a>    <span class="n">before</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">train_dqn</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"episodes played: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span> <span class="o">-</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-0-100" name="__codelineno-0-100" href="#__codelineno-0-100"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  episodes </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">lengths</span><span class="p">))</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">: average length </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="p">])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"average length, first 20 training episodes: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-102" name="__codelineno-0-102" href="#__codelineno-0-102"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"average length, last 20 training episodes:  </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103" href="#__codelineno-0-103"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"greedy test (20 episodes), untrained network: </span><span class="si">{</span><span class="n">before</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-104" name="__codelineno-0-104" href="#__codelineno-0-104"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"greedy test (20 episodes), trained network:   </span><span class="si">{</span><span class="n">after</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">   (500 = never fell)"</span><span class="p">)</span>
+</code></pre></div>
+<p>On one CPU core this takes about 70 seconds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>episodes played: 503
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  episodes   1-100: average length   22.2
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  episodes 101-200: average length   64.8
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  episodes 201-300: average length  128.6
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  episodes 301-400: average length  130.8
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  episodes 401-500: average length  149.1
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>average length, first 20 training episodes:   27.1
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>average length, last 20 training episodes:   145.5
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>greedy test (20 episodes), untrained network:    9.3
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>greedy test (20 episodes), trained network:    136.7   (500 = never fell)
+</code></pre></div>
+<p>The untrained network drops the pole after about 9 steps; the trained one keeps it up for 137 steps on average with no exploration, and the training episodes grew from about 22 steps to about 150. It learns, but it doesn't reach the maximum of 500 within 50,000 steps on this seed.</p>
+<p><strong>Ablation.</strong> Same code, three random seeds each, switching off one trick at a time (average length of the last 20 training episodes, and of 20 greedy test episodes, one number per seed). The script below imports <code>train_dqn</code> from the code above (saved as <code>dqn_cartpole.py</code>) and runs the nine trainings in parallel:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dqn_cartpole</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_dqn</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">CONFIGS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"full DQN"</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">"no target network"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"use_target"</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>           <span class="s2">"no replay buffer"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"use_replay"</span><span class="p">:</span> <span class="kc">False</span><span class="p">}}</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">job</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">name</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">args</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">_</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">train_dqn</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="o">**</span><span class="n">CONFIGS</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:]),</span> <span class="n">after</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">CONFIGS</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="k">with</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">))</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">jobs</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">CONFIGS</span><span class="p">:</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>        <span class="n">last</span> <span class="o">=</span> <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>        <span class="n">test</span> <span class="o">=</span> <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">18s</span><span class="si">}</span><span class="s2"> last 20 episodes: </span><span class="si">{</span><span class="n">last</span><span class="si">}</span><span class="s2">   greedy test: </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>full DQN           last 20 episodes: 145.5  412.4  223.3   greedy test: 136.7  215.4  357.5
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>no target network  last 20 episodes: 213.4  228.3  457.7   greedy test: 234.8  148.8  181.3
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>no replay buffer   last 20 episodes:  36.1   17.8   69.9   greedy test:   9.7  125.8   69.8
+</code></pre></div>
+<p>What this shows, and what it doesn't:</p>
+<ul>
+<li><strong>Seeds matter a lot.</strong> The full DQN ended between 145 and 412 depending only on the random seed. DQN is famous for this; always run several seeds before believing a comparison.</li>
+<li><strong>Replay mattered clearly.</strong> Learning from each transition once, in order, ended far lower on every seed (18 to 70 steps in training).</li>
+<li><strong>The target network didn't help on CartPole</strong> in these runs: without it, the results were similar or even better. CartPole is tiny and its values are smooth, so the chasing effect of Step 5 didn't hurt here. On Atari it was different: the DQN paper's ablation on five games shows the score dropping on every game without the target network, and dropping much further without replay. Tricks that are essential at scale can be invisible on a toy problem, and the other way round.</li>
+</ul>
+<p>The DQN paper's own network for Atari is the same idea with convolutions in front:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">atari_q_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>                       <span class="c1"># input: 4 stacked 84×84 grey frames</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">),</span>                     <span class="c1"># one Q-value per joystick action</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">)</span>
+</code></pre></div>
+<p>For real projects, use a tested implementation such as <a href="https://docs.cleanrl.dev/rl-algorithms/dqn/">CleanRL's <code>dqn.py</code></a> or <a href="https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html">Stable-Baselines3's <code>DQN</code></a> with Gymnasium environments.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"DQN is a new learning rule.\"</p>
+<p>It is Q-learning. The update target <span class="arithmatex">\(r + \gamma \max_{a'} Q(s',a')\)</span> is the same; only the way the Q-function is stored (a network instead of a table) and two stabilisers (replay, target network) are new.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The target network is a second network that is trained too.\"</p>
+<p>It is never trained. It is a periodic <strong>copy</strong> of the online network, used only to compute targets. All gradient steps go into <span class="arithmatex">\(\theta\)</span>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Experience replay works with any RL algorithm.\"</p>
+<p>Only with <strong>off-policy</strong> methods. Replayed transitions were chosen by an older policy. Q-learning's target doesn't care (it uses the max), but on-policy methods like SARSA or vanilla policy gradients assume the data comes from the <em>current</em> policy, and naive replay breaks them.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Higher Q-values mean the agent is doing better.\"</p>
+<p>Not necessarily. Because of the max in the target, DQN's Q-values tend to <strong>overestimate</strong> the real returns. Judge an agent by the returns it actually collects, not by its own value estimates.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"With a target network, DQN is guaranteed to converge.\"</p>
+<p>No. Function approximation, bootstrapping and off-policy data together (the deadly triad) can still diverge. The tricks make training stable in practice, not in theory.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. Why does a DQN have one output per action instead of taking the action as an input?</summary>
+<p>So that one forward pass gives <span class="arithmatex">\(Q(s, a)\)</span> for <strong>all</strong> actions. Both acting greedily and computing the target <span class="arithmatex">\(\max_{a'} Q(s', a')\)</span> need every action's value, and with the action as input that would take one forward pass per action.</p>
+</details>
+<details class="question">
+<summary>2. A transition ends the episode (the pole fell). What is its target y, and why?</summary>
+<p><span class="arithmatex">\(y = r\)</span>. There is no next state to bootstrap from: the return after a terminal state is 0. In the code this is the <code>(1 - T)</code> factor. Forgetting it makes the agent believe falling is followed by more reward.</p>
+</details>
+<details class="question">
+<summary>3. Which of DQN's two tricks addresses which problem?</summary>
+<p><strong>Experience replay</strong> addresses correlated, non-stationary training data: random mini-batches from a large buffer are close to independent samples, and each transition is reused many times. The <strong>target network</strong> addresses the moving target: freezing <span class="arithmatex">\(\theta^-\)</span> for <span class="arithmatex">\(C\)</span> steps makes the labels fixed, so each phase is ordinary regression.</p>
+</details>
+<details class="question">
+<summary>4. In the moving-target widget, why does the live target diverge even though the network can represent the true values exactly?</summary>
+<p>The weights are shared. A step that fixes the error at A or B also changes <span class="arithmatex">\(Q(C)\)</span>, which is the target for A and B. With the target live, the update keeps chasing its own effect, and here the errors grow by a fixed factor each step for every step size. Freezing the target for enough steps lets each regression phase finish before the target moves.</p>
+</details>
+<details class="question">
+<summary>5. What does Double DQN change, and what problem does it fix?</summary>
+<p>The target action is <strong>chosen</strong> by the online network but <strong>evaluated</strong> by the target network: <span class="arithmatex">\(y = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-)\)</span>. Taking a max over noisy estimates is biased upwards (overestimation); using one estimate to choose and an independent one to evaluate removes most of that bias.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Volodymyr Mnih et al., <a href="https://www.nature.com/articles/nature14236"><em>Human-level control through deep reinforcement learning</em></a>, Nature 2015. The DQN paper, with the target network and the Atari results. The earlier workshop version is <a href="https://arxiv.org/abs/1312.5602"><em>Playing Atari with Deep Reinforcement Learning</em></a> (2013).</li>
+<li>Hado van Hasselt, Arthur Guez &amp; David Silver, <a href="https://arxiv.org/abs/1509.06461"><em>Deep Reinforcement Learning with Double Q-learning</em></a>, 2016.</li>
+<li>Ziyu Wang et al., <a href="https://arxiv.org/abs/1511.06581"><em>Dueling Network Architectures for Deep RL</em></a>, 2016, and Tom Schaul et al., <a href="https://arxiv.org/abs/1511.05952"><em>Prioritized Experience Replay</em></a>, 2016.</li>
+<li>Matteo Hessel et al., <a href="https://arxiv.org/abs/1710.02298"><em>Rainbow: Combining Improvements in Deep RL</em></a>, 2018.</li>
+<li>Richard Sutton &amp; Andrew Barto, <a href="http://incompleteideas.net/book/the-book-2nd.html"><em>Reinforcement Learning: An Introduction</em></a>, Chapter 9 (function approximation) and Section 11.3 (the deadly triad).</li>
+<li>PyTorch, <a href="https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html"><em>Reinforcement Learning (DQN) Tutorial</em></a>, a DQN on Gymnasium's CartPole.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../policy-gradients/">Policy gradients</a></p>
+<script src="viz/deep-q-networks.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../q-learning-sarsa/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Q-learning &amp; SARSA">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Q-learning & SARSA
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../policy-gradients/" class="md-footer__link md-footer__link--next" aria-label="Next: Policy gradients">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Policy gradients
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

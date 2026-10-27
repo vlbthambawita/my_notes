@@ -1,0 +1,2358 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/tsetlin-machine-classification/">
+      
+      
+        <link rel="prev" href="../tsetlin-machine-feedback/">
+      
+      
+        <link rel="next" href="../convolutional-tsetlin-machine/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Classification by voting - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#many-rules-voting-classification-with-a-tsetlin-machine" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Classification by voting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-one-rule-is-not-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — One rule is not enough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-rules-vote-the-vote-sum-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Rules vote: the vote sum v
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-voting-margin-t-how-much-feedback-does-an-example-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The Voting Margin T: how much feedback does an example get?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-complete-learning-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — The complete learning algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-why-the-margin-matters-two-rules-one-or-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Why the margin matters: two rules, one OR pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-the-full-run-breast-cancer-recurrence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — The full run: breast-cancer recurrence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6 — The full run: breast-cancer recurrence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-good-is-that-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How good is that, honestly?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-reading-the-model-as-plain-english" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Reading the model as plain English
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-more-than-two-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — More than two classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-one-rule-is-not-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — One rule is not enough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-rules-vote-the-vote-sum-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Rules vote: the vote sum v
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-voting-margin-t-how-much-feedback-does-an-example-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The Voting Margin T: how much feedback does an example get?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-complete-learning-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — The complete learning algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-why-the-margin-matters-two-rules-one-or-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Why the margin matters: two rules, one OR pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-the-full-run-breast-cancer-recurrence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — The full run: breast-cancer recurrence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6 — The full run: breast-cancer recurrence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-good-is-that-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How good is that, honestly?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-reading-the-model-as-plain-english" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Reading the model as plain English
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-more-than-two-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — More than two classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="many-rules-voting-classification-with-a-tsetlin-machine">Many Rules Voting: Classification with a Tsetlin Machine<a class="headerlink" href="#many-rules-voting-classification-with-a-tsetlin-machine" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>One AND-rule can describe only one kind of patient. A <strong>Tsetlin machine</strong> therefore uses a whole team of rules: some vote <strong>for</strong> a class, some vote <strong>against</strong> it. Each rule whose condition is True casts one vote, and the <strong>vote sum</strong> <span class="arithmatex">\(v\)</span> (votes for minus votes against) decides the class. During training, a single number, the <strong>Voting Margin</strong> <span class="arithmatex">\(T\)</span>, decides how much feedback each example hands out: examples the team already gets right by a margin of <span class="arithmatex">\(T\)</span> votes give no feedback at all, and examples it gets wrong give a lot. That simple rule makes the rules spread out over different sub-patterns instead of all learning the same one. This lesson builds the complete machine, extends it to many classes, and runs it end to end on the breast-cancer recurrence data, with an honest look at the accuracy.</p>
+</div>
+<p><strong>Level:</strong> beginner–intermediate · <strong>Prerequisites:</strong> <a href="../tsetlin-machine-feedback/">Recognize, Erase &amp; Reject feedback</a> (how a single rule learns). Fractions and a sum are all the math you need.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>In the last lesson a single rule learned a single pattern, such as <em>"if Deg-malig 3 and not Menopause lt40 then Recurrence"</em>. Real classes are rarely that tidy:</p>
+<ul>
+<li><strong>Patients recur for different reasons.</strong> In the breast-cancer data, some recurrences come with a highly malignant tumour, others with many affected lymph nodes, and a rule demanding <em>both</em> misses everyone who has only one of them.</li>
+<li><strong>Evidence should add up.</strong> A clinician weighs several findings, some pointing towards recurrence and some away from it. A sum of votes does the same thing, and you can still read every vote as a plain rule.</li>
+<li><strong>This is the whole machine.</strong> Everything from the earlier lessons (literals, the graded memory, the three kinds of feedback) comes together here. After this lesson you can write a working Tsetlin machine in about 70 lines of numpy and read what it learned.</li>
+</ul>
+<p>The ideas follow Granmo, <em>An Introduction to Tsetlin Machines</em>, Ch. 1, §1.5–1.7, and Ch. 2, §2.3. The visuals and code are redrawn and rewritten for this site.</p>
+<hr />
+<h2 id="step-1-one-rule-is-not-enough">Step 1 — One rule is not enough<a class="headerlink" href="#step-1-one-rule-is-not-enough" title="Permanent link">&para;</a></h2>
+<p>A rule in a Tsetlin machine is an <strong>AND</strong> of literals: <em>every</em> memorized literal must be True for the rule to fire. That makes each rule a description of <strong>one kind</strong> of object. But a class often contains several kinds.</p>
+<p>Look at the 85 patients with a recurrence in the UCI breast-cancer data (286 patients in total; we count "3 or more involved lymph nodes" as <em>not Inv-nodes 0-2</em>):</p>
+<table>
+<thead>
+<tr>
+<th>Recurrence patients (85)</th>
+<th>how many</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deg-malig 3 <strong>and</strong> 3+ involved nodes</td>
+<td>27</td>
+</tr>
+<tr>
+<td>Deg-malig 3 only</td>
+<td>18</td>
+</tr>
+<tr>
+<td>3+ involved nodes only</td>
+<td>12</td>
+</tr>
+<tr>
+<td>neither</td>
+<td>28</td>
+</tr>
+</tbody>
+</table>
+<p>And how often patients with each profile recur, out of everyone with that profile:</p>
+<table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>recurred</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deg-malig 3 and 3+ nodes</td>
+<td>27 of 37 (73%)</td>
+</tr>
+<tr>
+<td>Deg-malig 3 only</td>
+<td>18 of 48 (38%)</td>
+</tr>
+<tr>
+<td>3+ nodes only</td>
+<td>12 of 36 (33%)</td>
+</tr>
+<tr>
+<td>neither</td>
+<td>28 of 165 (17%)</td>
+</tr>
+</tbody>
+</table>
+<p>There are (at least) <strong>two recurrence profiles</strong>: a highly malignant tumour, and spread to the lymph nodes. The single rule <em>"Deg-malig 3 AND not Inv-nodes 0-2"</em> only catches the 27 patients who have both. To also catch the 18 + 12 who have just one of them, you need an <strong>OR</strong>: <em>"Deg-malig 3"</em> <strong>or</strong> <em>"not Inv-nodes 0-2"</em>. An AND-rule cannot express an OR, but <strong>two rules</strong> can: one for each profile.</p>
+<p>This is the general recipe. Any yes/no pattern can be written as an OR of AND-rules (logicians call it <em>disjunctive normal form</em>), so a team of AND-rules can describe any class, as long as the team is big enough and its members <strong>learn different things</strong>. Making them learn different things is the main topic of this lesson.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>One AND-rule = one sub-pattern (one "profile"). Several sub-patterns need several rules.</li>
+<li>None of the profiles is certain: even the strongest one recurs in only 73% of cases, and 28 of the 85 recurrences fit neither profile. Keep this in mind when we measure accuracy in Step 6.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-rules-vote-the-vote-sum-v">Step 2 — Rules vote: the vote sum v<a class="headerlink" href="#step-2-rules-vote-the-vote-sum-v" title="Permanent link">&para;</a></h2>
+<p>A Tsetlin machine for two classes has two groups of rules:</p>
+<ul>
+<li>rules that vote <strong>for</strong> the class (here: <em>Recurrence</em>),</li>
+<li>rules that vote <strong>against</strong> it (they vote for <em>No recurrence</em>).</li>
+</ul>
+<p>To classify a patient, every rule checks its condition on the patient's literals. Each rule whose condition is True casts <strong>one vote</strong>. Then</p>
+<div class="arithmatex">\[
+v \;=\; \underbrace{\#\{\text{rules for Recurrence that fire}\}}_{\text{votes for}} \;-\; \underbrace{\#\{\text{rules against that fire}\}}_{\text{votes against}}
+\]</div>
+<p>and the machine predicts <em>Recurrence</em> if <span class="arithmatex">\(v &gt; 0\)</span> and <em>No recurrence</em> otherwise. A tie (<span class="arithmatex">\(v = 0\)</span>) has to go one way or the other; here it goes to the more common class, <em>No recurrence</em> (the book's notebook sends ties to the first class instead, and the <a href="../convolutional-tsetlin-machine/">convolutional lesson</a> follows the notebook). (In the research papers the two groups are the <em>positive</em> and <em>negative polarity clauses</em> <span class="arithmatex">\(C^+_j\)</span> and <span class="arithmatex">\(C^-_j\)</span>, and <span class="arithmatex">\(v = \sum_j C^+_j - \sum_j C^-_j\)</span>.) An empty rule, one with no literals memorized, stays silent when classifying.</p>
+<p>The book's first example uses the six patients from the earlier lessons and three rules: R1 and R2 are the <em>same</em> rule, <em>"Deg-malig 3 and not Menopause lt40"</em>, voting for Recurrence, and R3, <em>"Inv-nodes 0-2"</em>, votes against. Pick the book's patients in the widget below:</p>
+<div id="viz-vote" class="viz"><div class="viz-title">🗳️ Interactive: rules vote on a patient</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Patient #1</strong> (ge40, 3-5 nodes, Deg-malig 3): R1 and R2 fire, R3 does not, so <span class="arithmatex">\(v = +2\)</span> → Recurrence. Correct.</li>
+<li><strong>Patient #5</strong> (premeno, 0-2 nodes, Deg-malig 3) fires <strong>all three</strong> rules: R3 votes against because of the 0-2 nodes. The duplicate R1 + R2 still win, <span class="arithmatex">\(v = 2 - 1 = +1\)</span>. A lone rule would have been out-voted to a tie. Duplicated rules act as a <strong>weight</strong>.</li>
+<li>The vote sums for the six patients are <span class="arithmatex">\(+2, -1, +2, -1, +1, -1\)</span>: all six correct.</li>
+<li>Switch to <strong>"learned from 200 patients"</strong> to see the 20 rules the machine learns in Step 6, written in plain English. Hover a rule to see its raw literals.</li>
+</ul>
+</div>
+<p>This is what the book means by unifying <strong>rule-based</strong> and <strong>summation-based</strong> decisions: each vote is a readable rule, like a branch of a decision tree, and the decision is a sum, like logistic regression with all weights equal to 1.</p>
+<hr />
+<h2 id="step-3-the-voting-margin-t-how-much-feedback-does-an-example-get">Step 3 — The Voting Margin T: how much feedback does an example get?<a class="headerlink" href="#step-3-the-voting-margin-t-how-much-feedback-does-an-example-get" title="Permanent link">&para;</a></h2>
+<p>Training has to decide, for every example, <strong>which rules learn from it</strong>. A naive answer is "all of them, every time". Then every rule for Recurrence sees the same stream of examples and the same feedback, and they all drift towards the same, most frequent pattern. You get ten copies of one rule.</p>
+<p>The Tsetlin machine instead asks: <em>how far is this example from being safely classified?</em> You choose a <strong>Voting Margin</strong> <span class="arithmatex">\(T\)</span>, a whole number of votes. For a training example:</p>
+<ol>
+<li>Compute the vote sum <strong>from the example's own point of view</strong>: votes for its true class minus votes for the other class. (Empty rules count as True during training, so a fresh machine has something to work on.)</li>
+<li>Clip it to the range <span class="arithmatex">\([-T, T]\)</span>.</li>
+<li>Give <strong>each rule</strong>, independently, feedback with probability</li>
+</ol>
+<div class="arithmatex">\[
+p \;=\; \frac{T - v}{2T}.
+\]</div>
+<p>The book's example uses <span class="arithmatex">\(T = 2\)</span>, so <span class="arithmatex">\(p = (2 - v)/4\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>vote sum <span class="arithmatex">\(v\)</span> (own class − other)</th>
+<th><span class="arithmatex">\(-2\)</span> or less</th>
+<th><span class="arithmatex">\(-1\)</span></th>
+<th><span class="arithmatex">\(0\)</span></th>
+<th><span class="arithmatex">\(+1\)</span></th>
+<th><span class="arithmatex">\(+2\)</span> or more</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>feedback probability <span class="arithmatex">\(p\)</span></td>
+<td>1</td>
+<td>0.75</td>
+<td>0.5</td>
+<td>0.25</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>If the team already wins by <span class="arithmatex">\(T\)</span> votes, nobody learns from this example: the job is done, and those rules are free to work on other examples. If the team is losing badly, every rule gets feedback.</p>
+<p>The <strong>kind</strong> of feedback is the same as in the previous lesson. A rule of the example's own class gets <strong>Recognize Feedback</strong> if it fired and <strong>Erase Feedback</strong> if it did not. A rule of the other class gets <strong>Reject Feedback</strong> if it fired (it voted wrongly) and nothing otherwise.</p>
+<div id="viz-margin" class="viz"><div class="viz-title">🎚️ Interactive: how the Voting Margin hands out feedback</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Two mirror-image lines.</strong> The chart's <span class="arithmatex">\(v\)</span> counts votes <em>for Recurrence</em>. For a patient with recurrence that is "own minus other"; for a patient without, it is the reverse. So the two kinds of patients want <span class="arithmatex">\(v\)</span> pushed in opposite directions.</li>
+<li><strong>Outside the purple band nothing changes.</strong> Once <span class="arithmatex">\(v \ge T\)</span> for a recurrence patient (or <span class="arithmatex">\(v \le -T\)</span> for a non-recurrence patient), the probability is 0. Raising <span class="arithmatex">\(T\)</span> widens the band: the team must win by more votes before it stops learning.</li>
+<li><strong>The book's prioritisation example</strong> (<span class="arithmatex">\(T = 2\)</span>, rules <em>"Deg-malig 3 and not lt40"</em> and <em>"Deg-malig 3"</em> for, <em>"Inv-nodes 0-2"</em> against): patients #1 and #3 reach <span class="arithmatex">\(v = +2\)</span> and give no feedback; #4, #5 and #6 are one vote short and give feedback a quarter of the time; patient #2 (no recurrence, but both rules for Recurrence fire) ends in a tie, <span class="arithmatex">\(v = 0\)</span>, and gives feedback half of the time. The examples that need it most get the most attention.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-the-complete-learning-algorithm">Step 4 — The complete learning algorithm<a class="headerlink" href="#step-4-the-complete-learning-algorithm" title="Permanent link">&para;</a></h2>
+<p>Put the pieces together and you have the whole training procedure. Every rule starts <strong>empty</strong>, with all its literals at the top of the Forgotten half of its memory. Then, for each training example in turn:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 One learning step of a Tsetlin machine",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 120,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0, "icon": "🧾", "label": "Observe an example and its class", "sub": "literals x<sub>k</sub> and ¬x<sub>k</sub>", "role": "data", "note": "The example's Boolean features and their negations, plus its true class."},
+    {"id": "eval", "col": 1, "row": 0, "icon": "🧩", "label": "Evaluate every rule", "sub": "True if all its memorized literals are True", "role": "model", "note": "While training, an empty rule counts as True."},
+    {"id": "vote", "col": 2, "row": 0, "icon": "🗳️", "label": "Vote sum v, clipped to [−T, T]", "sub": "own class − other class", "role": "loss", "note": "Votes from firing rules of the example's own class, minus votes from firing rules of the other class."},
+    {"id": "prob", "col": 2, "row": 1, "icon": "🎲", "label": "Pick each rule with probability (T − v) / 2T", "role": "loss", "note": "Independent coin flip per rule. v = T: nobody is picked. v = −T: everybody is."},
+    {"id": "own", "col": 1, "row": 1, "icon": "✅", "label": "Own-class rules: Recognize or Erase", "sub": "Recognize if it fired, Erase if not", "role": "opt", "note": "Recognize: memorize True literals (Memorize Value), forget False ones (Forget Value). Erase: forget all literals (Forget Value)."},
+    {"id": "rej", "col": 0, "row": 1, "icon": "⛔", "label": "Other-class rules that fired: Reject", "sub": "memorize Forgotten False literals", "role": "grad", "note": "Pushes a literal that is False for this example into the rule, so the rule stops firing on it."}
+  ],
+  "edges": [
+    {"from": "obs", "to": "eval"},
+    {"from": "eval", "to": "vote"},
+    {"from": "vote", "to": "prob"},
+    {"from": "prob", "to": "own"},
+    {"from": "own", "to": "rej", "label": "and"},
+    {"from": "rej", "to": "obs", "label": "next"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "Take the next training example: its literals (each feature and its negation) and its true class."},
+    {"show": ["obs>eval", "eval"], "text": "Every rule checks its condition. While training, an empty rule counts as True, so fresh rules have something to learn from."},
+    {"show": ["eval>vote", "vote"], "text": "Add the votes of firing rules of the example's own class, subtract those of the other class, and clip the result to [−T, T]."},
+    {"show": ["vote>prob", "prob"], "text": "Each rule independently gets feedback with probability <b>(T − v) / 2T</b>: zero when the example already wins by T votes, one when it loses by T."},
+    {"show": ["prob>own", "own"], "text": "Picked rules of the example's own class get <b>Recognize Feedback</b> if they fired, <b>Erase Feedback</b> if they did not."},
+    {"show": ["own>rej", "rej"], "text": "Picked rules of the other class that fired voted wrongly: they get <b>Reject Feedback</b>. Picked rules of the other class that did not fire are left alone."},
+    {"show": ["rej>obs", "obs"], "text": "On to the next example. One pass through the training set is an <b>epoch</b>; repeat for many epochs."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "rowHeight": 120, "pos": {"obs": [0, 0], "eval": [1, 0], "vote": [1, 1], "prob": [1, 2], "own": [0, 2], "rej": [0, 1]}}
+}
+</script>
+</div>
+
+<p>That is the entire algorithm. There is no gradient, no loss function and no global optimiser. Each rule only ever sees its own condition, the example, and one coin flip. The coordination between rules comes <strong>entirely</strong> from the shared vote sum inside <span class="arithmatex">\(p\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Why it coordinates the rules (the book's argument)</p>
+<ul>
+<li><strong>Reject Feedback is targeted.</strong> Only rules that fired <em>and</em> voted for the wrong class receive it. Rules that voted correctly are shielded.</li>
+<li><strong>Useful rules learn fastest.</strong> A rule that matches many examples of its class and never votes wrongly gets the most Recognize Feedback and no Reject Feedback, so its literals sink deepest into memory.</li>
+<li><strong>Satisfied examples stop pulling.</strong> Once a sub-pattern is covered by enough votes, its examples hand out no more feedback. The remaining feedback comes from examples that are <em>not</em> yet covered, so idle or weak rules drift towards those. The book calls this a <strong>resource-allocation</strong> effect.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-why-the-margin-matters-two-rules-one-or-pattern">Step 5 — Why the margin matters: two rules, one OR pattern<a class="headerlink" href="#step-5-why-the-margin-matters-two-rules-one-or-pattern" title="Permanent link">&para;</a></h2>
+<p>Chapter 2 of the book makes this precise with the smallest interesting case. The class is <span class="arithmatex">\(Y = x_1 \text{ OR } x_2\)</span> (with 10% of the labels flipped as noise). There are <strong>two rules</strong>, both voting for <span class="arithmatex">\(Y\)</span>, and each rule can memorize <span class="arithmatex">\(x_1\)</span>, <span class="arithmatex">\(x_2\)</span>, both, or neither. Of the 16 possible pairs of rules, only two solve the problem: one rule <em>"if <span class="arithmatex">\(x_1\)</span> then Y"</em> and the other <em>"if <span class="arithmatex">\(x_2\)</span> then Y"</em>.</p>
+<p>A tempting wrong answer is <em>"if <span class="arithmatex">\(x_1\)</span> AND <span class="arithmatex">\(x_2\)</span> then Y"</em>: it is very precise when it fires, but it misses every example where only one of them is True. Two copies of it are a <strong>sub-optimal configuration</strong> (a <em>local optimum</em>): no single rule can improve things by changing alone.</p>
+<p>In this game there are no rules voting against <span class="arithmatex">\(Y\)</span>, so <span class="arithmatex">\(v\)</span> is just the number of firing rules. With margin <span class="arithmatex">\(T\)</span>, a <span class="arithmatex">\(Y\)</span> example gives each rule feedback with probability <span class="arithmatex">\((T - v)/T\)</span>, and a not-<span class="arithmatex">\(Y\)</span> example with probability <span class="arithmatex">\(v/T\)</span> (with <span class="arithmatex">\(v\)</span> capped at <span class="arithmatex">\(T\)</span>). With <span class="arithmatex">\(T = 2\)</span>: a <span class="arithmatex">\(Y\)</span> example with one rule firing gives feedback half of the time; with both firing, never.</p>
+<div id="viz-orgame" class="viz"><div class="viz-title">🤝 Interactive: two rules learning x<sub>1</sub> OR x<sub>2</sub></div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Without a margin</strong> (every rule gets feedback every time), fast-forward to 200,000 steps: the pair spends <strong>60.7%</strong> of the time as two copies of <em>"x1 AND x2"</em>, and only <strong>7.1%</strong> in the correct OR solution. Both rules chase the same, most precise pattern.</li>
+<li><strong>With <span class="arithmatex">\(T = 2\)</span></strong> the picture flips: <strong>81.4%</strong> of the time in the OR solution, and only <strong>0.3%</strong> as two AND-copies. As soon as one rule covers <span class="arithmatex">\(x_1\)</span>, examples it handles no longer push the other rule, which is left to pick up <span class="arithmatex">\(x_2\)</span>.</li>
+<li><strong><span class="arithmatex">\(T\)</span> must fit the team.</strong> With <span class="arithmatex">\(T = 1\)</span> (one vote is "enough") the second rule rarely gets feedback and only <strong>28.6%</strong> of the time is spent in the solution. With <span class="arithmatex">\(T = 3\)</span> or <span class="arithmatex">\(T = 4\)</span> the team can never reach the margin (two rules give at most two votes), so feedback never fully stops: <strong>26.4%</strong> and <strong>18.1%</strong>, and with <span class="arithmatex">\(T = 4\)</span> the two AND-copies are back at <strong>25.4%</strong>.</li>
+<li>These are time shares from one seeded run (seed 42, Forget Value <span class="arithmatex">\(1/s\)</span> with <span class="arithmatex">\(s = 4\)</span>, Memorize Value 1.0, memory depth 4), computed in Python and reproduced exactly by the widget. The book computes the exact long-run probabilities with a Markov chain instead and finds the same story: without the margin the AND-copies are the most likely outcome; with <span class="arithmatex">\(T = 2\)</span> any configuration involving them has essentially zero probability.</li>
+</ul>
+</div>
+<p>The lesson generalises: <strong>the Voting Margin should be roughly the number of votes you expect a well-covered example to collect</strong>. Too small, and rules stop learning before every sub-pattern has a rule. Too large, and feedback never switches off, so rules keep crowding onto the most common pattern.</p>
+<hr />
+<h2 id="step-6-the-full-run-breast-cancer-recurrence">Step 6 — The full run: breast-cancer recurrence<a class="headerlink" href="#step-6-the-full-run-breast-cancer-recurrence" title="Permanent link">&para;</a></h2>
+<p>Now the real thing. The data is the public <strong>UCI Breast Cancer</strong> dataset (University Medical Centre, Ljubljana, donated by M. Zwitter and M. Soklic): 286 patients, 85 of whom (29.7%) had a recurrence. Like the book's chapter, we use three properties, <strong>Menopause</strong>, <strong>Inv-nodes</strong> and <strong>Deg-malig</strong>, and Booleanize them with one feature per value: 3 + 7 + 3 = <strong>13 Boolean features</strong>, so <strong>26 literals</strong>.</p>
+<p>The setup, fixed in advance:</p>
+<ul>
+<li>shuffle the patients with seed 1; <strong>200 for training, 86 for testing</strong> (23 of the test patients had a recurrence);</li>
+<li><strong>10 rules for</strong> and <strong>10 rules against</strong> Recurrence, Voting Margin <span class="arithmatex">\(T = 10\)</span>;</li>
+<li>Forget Value <span class="arithmatex">\(1/s\)</span> with <span class="arithmatex">\(s = 3\)</span> (so Memorize Value <span class="arithmatex">\(2/3\)</span>);</li>
+<li>memory depth 200 (positions 1–200; Memorized above 100). The book's toy examples use depth 10; a deeper memory makes the rules steadier on noisy data;</li>
+<li>60 epochs; a tie (<span class="arithmatex">\(v = 0\)</span>) is predicted as <em>No recurrence</em>.</li>
+</ul>
+<p>The widget trains exactly this machine in your browser. Change the knobs and it retrains in a second or two.</p>
+<div id="viz-train" class="viz"><div class="viz-title">🏋️ Interactive: train a Tsetlin machine on breast-cancer data</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>With the defaults</strong> the machine ends at <strong>75.0%</strong> training and <strong>74.4%</strong> test accuracy (64 of 86 test patients right). That sounds fine until you see the dashed line: always answering <em>"no recurrence"</em> scores <strong>73.3%</strong> on the same test set. The machine is one patient better than the trivial answer.</li>
+<li><strong>It catches some recurrences.</strong> It flags 15 test patients, 8 of them correctly, so it finds 8 of the 23 recurrences, with 7 false alarms among the 63 others. The trivial answer finds none.</li>
+<li><strong>The test curve jumps around.</strong> Between epochs 11 and 60 the test accuracy moves between 68.6% and 76.7%. With 86 test patients, one patient is 1.2 percentage points, so a single lucky or unlucky epoch says little.</li>
+<li><strong>The rules for Recurrence spread out.</strong> Look at the learned rules: one broad rule, <em>"Inv-nodes is not 0-2"</em>, matches 29 recurrence and 26 non-recurrence training patients; the rest specialise on small groups (6-8, 12-14, 15-17 or 24-26 nodes, or Menopause lt40). That is the resource allocation of Step 4 at work: once the common cases are covered, idle rules move to patients nobody has covered yet. On noisy data that also means <strong>chasing rare individuals</strong>: four identical rules memorized <em>"Inv-nodes 24-26"</em>, which matches a single training patient.</li>
+<li><strong>Try <span class="arithmatex">\(T = 1\)</span> or <span class="arithmatex">\(T = 2\)</span>, or 1 rule per class.</strong> With one rule per class and <span class="arithmatex">\(T = 1\)</span> the machine never predicts Recurrence on this split. Change the seed to get a different train/test split and watch the accuracy move by several points.</li>
+</ul>
+</div>
+<h3 id="how-good-is-that-honestly">How good is that, honestly?<a class="headerlink" href="#how-good-is-that-honestly" title="Permanent link">&para;</a></h3>
+<p>One split is not enough to judge a model on 86 test patients. So we repeated the run on <strong>10 different random splits</strong> (seeds 1–10, same settings) and compared with simple baselines on the same splits and the same 13 features:</p>
+<table>
+<thead>
+<tr>
+<th>Method (10 random 200/86 splits)</th>
+<th>test accuracy, mean ± sd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Always "no recurrence"</td>
+<td>70.7% ± 3.1</td>
+</tr>
+<tr>
+<td>The book's single rule <em>"Deg-malig 3 and not Menopause lt40"</em></td>
+<td>71.2% ± 3.8</td>
+</tr>
+<tr>
+<td><strong>Tsetlin machine</strong> (10 + 10 rules, <span class="arithmatex">\(T = 10\)</span>, <span class="arithmatex">\(s = 3\)</span>)</td>
+<td><strong>71.3% ± 3.7</strong> (range 64.0–75.6%)</td>
+</tr>
+<tr>
+<td>Logistic regression (scikit-learn defaults)</td>
+<td>72.7% ± 3.5</td>
+</tr>
+<tr>
+<td>Decision tree, depth 3</td>
+<td>72.9% ± 3.7</td>
+</tr>
+</tbody>
+</table>
+<p>All of these are within about one standard deviation of each other and of the trivial baseline. Using all nine properties of the dataset instead of three gave the same Tsetlin-machine accuracy (71.3% ± 2.9). Sweeping the margin over the same 10 splits: <span class="arithmatex">\(T = 1\)</span> and <span class="arithmatex">\(T = 2\)</span> were worse (69.1% each, with larger spread), and <span class="arithmatex">\(T = 5\)</span>, 10, 20, 50 and 10000 all landed between 70.8% and 72.4%.</p>
+<div class="admonition warning">
+<p class="admonition-title">What this tells you about the data, not just the model</p>
+<p>These three properties (and even all nine) simply do not contain enough information to predict recurrence well: remember from Step 1 that 28 of the 85 recurrences fit neither risk profile. No method in the table escapes that. What the Tsetlin machine adds is not accuracy but <strong>transparency</strong>: every vote it casts is a rule you can read and check against clinical knowledge. With a test set of 86 patients, a difference of a few points between methods, or between one split and another, is noise. Lesson 1 of this series reports 76.7% against a 70.9% baseline on a different split (seed 42) with a different set of 11 features; our 10-split range of 64.0–75.6% shows how much a single split can move.</p>
+</div>
+<hr />
+<h2 id="step-7-reading-the-model-as-plain-english">Step 7 — Reading the model as plain English<a class="headerlink" href="#step-7-reading-the-model-as-plain-english" title="Permanent link">&para;</a></h2>
+<p>A learned rule is a list of memorized literals, for example (from the default run above):</p>
+<blockquote>
+<p>NOT Inv-nodes 6-8 AND NOT Inv-nodes 24-26 AND NOT Deg-malig 3 → <em>against</em> Recurrence</p>
+</blockquote>
+<p>Literals that mention the same property can be merged, the way the book simplifies <em>"Deg-malig 3 and not Deg-malig 1 and not Deg-malig 2"</em> to <em>"Deg-malig 3"</em>:</p>
+<blockquote>
+<p><strong>IF</strong> Inv-nodes is not 6-8 or 24-26 <strong>AND</strong> Deg-malig is not 3 <strong>then</strong> vote against Recurrence.</p>
+</blockquote>
+<p>This rule matches 108 of the 138 non-recurrence training patients and 25 of the 62 recurrence patients. The widgets in Step 2 and Step 6 do this merging automatically. A few habits make a learned model easy to read:</p>
+<ul>
+<li><strong>Count duplicates.</strong> Rules that say the same thing are one rule with a bigger weight: +4 means four votes. (Two rules can list slightly different literals and still be equivalent, such as <em>"Deg-malig 2"</em> and <em>"Deg-malig 2 AND NOT Deg-malig 1"</em>; the widgets merge them.)</li>
+<li><strong>Check each rule's coverage</strong>, the number of training patients of each class it matches. A rule matching 1 patient is an anecdote, not a pattern.</li>
+<li><strong>Spot rules that can never fire.</strong> Reject Feedback sometimes leaves a rule demanding two values of the same property at once (<em>"Inv-nodes 9-11 AND Inv-nodes 12-14"</em>). It is harmless dead weight.</li>
+<li><strong>Read the vote for one patient.</strong> In the Step 2 widget, pick book patient #5 with the learned rules: no rule fires on either side, <span class="arithmatex">\(v = 0\)</span>, so it is predicted as <em>No recurrence</em> even though it recurred. You can see exactly <em>why</em> the model got it wrong: no learned rule describes "premeno, 0-2 nodes, Deg-malig 3".</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Interpretable is not the same as correct</p>
+<p>Readable rules let you <strong>audit</strong> a model: you can see that four rules memorized a single patient with 24-26 nodes, and decide that this is overfitting. They do not make the model right. The breast-cancer machine above is honest about its uncertainty only because you can look inside it.</p>
+</div>
+<hr />
+<h2 id="step-8-more-than-two-classes">Step 8 — More than two classes<a class="headerlink" href="#step-8-more-than-two-classes" title="Permanent link">&para;</a></h2>
+<p>So far one team of rules decided between two classes. For <span class="arithmatex">\(m\)</span> classes (say Car, Plane and Boat), the standard Tsetlin machine (Granmo, 2018) gives <strong>every class its own team</strong>, each with rules voting for and against <em>that</em> class. Each team computes its own vote sum <span class="arithmatex">\(v_i\)</span>, and the class with the <strong>highest vote sum wins</strong>.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🏁 A multi-class Tsetlin machine: one team per class",
+  "cols": 3,
+  "rows": 3,
+  "rowHeight": 100,
+  "nodes": [
+    {"id": "in", "col": 1, "row": 0, "icon": "🧾", "label": "Object's literals", "role": "data", "note": "The same literals go to every team."},
+    {"id": "car", "col": 0, "row": 1, "icon": "🚗", "label": "Car team", "sub": "v<sub>Car</sub> = for − against", "role": "model", "note": "Rules voting for Car and rules voting against Car."},
+    {"id": "plane", "col": 1, "row": 1, "icon": "✈️", "label": "Plane team", "sub": "v<sub>Plane</sub>", "role": "model", "note": "Rules voting for Plane and rules voting against Plane."},
+    {"id": "boat", "col": 2, "row": 1, "icon": "🚢", "label": "Boat team", "sub": "v<sub>Boat</sub>", "role": "model", "note": "Rules voting for Boat and rules voting against Boat."},
+    {"id": "max", "col": 1, "row": 2, "icon": "🏆", "label": "Highest v wins", "shape": "pill", "role": "loss", "note": "The predicted class is the one whose team has the largest vote sum."}
+  ],
+  "edges": [
+    {"from": "in", "to": "car"},
+    {"from": "in", "to": "plane"},
+    {"from": "in", "to": "boat"},
+    {"from": "car", "to": "max"},
+    {"from": "plane", "to": "max"},
+    {"from": "boat", "to": "max"}
+  ],
+  "steps": [
+    {"show": ["in"], "text": "Booleanize the object as before: one literal per feature and one per negated feature."},
+    {"show": ["in>car", "in>plane", "in>boat", "car", "plane", "boat"], "text": "Every team evaluates its own rules on the same literals and computes its own vote sum: votes for its class minus votes against it."},
+    {"show": ["car>max", "plane>max", "boat>max", "max"], "text": "The class whose team has the <b>highest vote sum</b> is the prediction."},
+    {"show": ["car", "plane"], "text": "Training on a Car: the <b>Car team</b> learns it as an example of its class (aim: v<sub>Car</sub> ≥ T). <b>One randomly chosen other team</b>, here Plane, learns it as an example of 'not my class' (aim: v<sub>Plane</sub> ≤ −T). Both use the same feedback probability rule as before."}
+  ],
+  "narrow": {"cols": 3, "rows": 3, "rowHeight": 90, "hideSub": true}
+}
+</script>
+</div>
+
+<p>Training each example updates two teams: its <strong>own team</strong>, exactly as in Step 4 with the example counted as "own class", and <strong>one other team chosen at random</strong>, with the example counted as "other class" for that team. Updating just one other team, rather than all of them, keeps the cost the same however many classes there are. The two-class machine of this lesson is the special case with a single team: rules for Recurrence and rules against it.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Each team is a two-class Tsetlin machine of its own: "this class" against "everything else".</li>
+<li>The output is still readable: for any prediction you can list the firing rules in the winning team and in its closest rival.</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧠 The complete Tsetlin machine, from record to prediction",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "raw", "col": 0, "row": 0, "icon": "🧾", "label": "Patient record", "sub": "ge40 · 3-5 nodes · Deg-malig 3", "role": "data"},
+    {"id": "bool", "col": 1, "row": 0, "icon": "🔢", "label": "Booleanize", "sub": "13 features → 26 literals", "role": "data", "note": "One feature per value, plus the negation of every feature."},
+    {"id": "rules", "col": 2, "row": 0, "icon": "🧩", "label": "20 rules check their conditions", "sub": "10 for, 10 against", "role": "model", "note": "Each rule is an AND of the literals in the Memorized half of its memory."},
+    {"id": "vote", "col": 2, "row": 1, "icon": "🗳️", "label": "Vote sum v = for − against", "role": "loss"},
+    {"id": "out", "col": 1, "row": 1, "icon": "🏷️", "label": "Recurrence if v > 0", "shape": "pill", "role": "opt"},
+    {"id": "learn", "col": 0, "row": 1, "icon": "🎲", "label": "Training: feedback", "sub": "probability (T − v) / 2T", "role": "grad", "note": "Recognize / Erase for rules of the true class, Reject for wrongly firing rules of the other class."}
+  ],
+  "edges": [
+    {"from": "raw", "to": "bool"},
+    {"from": "bool", "to": "rules"},
+    {"from": "rules", "to": "vote"},
+    {"from": "vote", "to": "out"},
+    {"from": "out", "to": "learn"},
+    {"from": "learn", "to": "raw", "label": "next"}
+  ],
+  "steps": [
+    {"show": ["raw"], "text": "Start from a patient record with multi-valued properties."},
+    {"show": ["raw>bool", "bool"], "text": "Booleanize: one True/False feature per value, and add the negation of each feature. These are the literals."},
+    {"show": ["bool>rules", "rules"], "text": "Each rule fires if all its memorized literals are True (Lesson 1 and Lesson 2: the graded memory)."},
+    {"show": ["rules>vote", "vote"], "text": "Firing rules vote: +1 for Recurrence or −1 against. Their sum is the vote sum v."},
+    {"show": ["vote>out", "out"], "text": "Classification is just the sign of v. That is all a trained machine does."},
+    {"show": ["out>learn", "learn"], "text": "During training, compare with the true label and pick rules for feedback with probability (T − v)/2T: Recognize, Erase or Reject (Lesson 3)."},
+    {"show": ["learn>raw", "raw"], "text": "Move on to the next patient, for many epochs. The Voting Margin makes the rules divide the patients between them."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "rowHeight": 115, "pos": {"raw": [0, 0], "bool": [1, 0], "rules": [1, 1], "vote": [1, 2], "out": [0, 2], "learn": [0, 1]}}
+}
+</script>
+</div>
+
+<p>Here is the complete two-class machine in numpy, about 70 lines, trained on the same three properties. It follows the algorithm of Step 4 line by line, but vectorised over rules and literals. It uses numpy's random numbers and its own train/test shuffle, so its numbers differ a little from the widget's.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># ---- 1. Booleanize: one feature per value of Menopause, Inv-nodes and Deg-malig (UCI Breast Cancer data)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">VALUES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"menopause"</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s2">"lt40"</span><span class="p">,</span> <span class="s2">"ge40"</span><span class="p">,</span> <span class="s2">"premeno"</span><span class="p">]),</span>             <span class="c1"># (column after the label, values)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>          <span class="s2">"inv-nodes"</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">"0-2"</span><span class="p">,</span> <span class="s2">"3-5"</span><span class="p">,</span> <span class="s2">"6-8"</span><span class="p">,</span> <span class="s2">"9-11"</span><span class="p">,</span> <span class="s2">"12-14"</span><span class="p">,</span> <span class="s2">"15-17"</span><span class="p">,</span> <span class="s2">"24-26"</span><span class="p">]),</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>          <span class="s2">"deg-malig"</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">])}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"data/breast-cancer.data"</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">r</span><span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">VALUES</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"recurrence-events"</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span> <span class="ow">in</span> <span class="n">VALUES</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">class</span><span class="w"> </span><span class="nc">TsetlinMachine</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="sd">"""Two classes. memory[c, j, k] = position (1 … depth) of literal k in rule j of class c."""</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># top of Forgotten</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fires</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lits</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="sd">"""Which rules fire? A rule fires when every memorized literal is True."""</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="n">memorized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span>                        <span class="c1"># (2, rules, literals)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="n">ok</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">memorized</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">training</span><span class="p">:</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>            <span class="n">ok</span> <span class="o">&amp;=</span> <span class="n">memorized</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>                            <span class="c1"># empty rules stay silent when classifying</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="k">return</span> <span class="n">ok</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fires</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">]))</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>                    <span class="c1"># vote sum v &gt; 0 → class 1</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="n">lits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">])</span>                          <span class="c1"># literals: x_k, then NOT x_k</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fires</span><span class="p">(</span><span class="n">lits</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="n">v</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>                            <span class="c1"># votes for own class − votes against</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>                            <span class="c1"># Voting Margin: feedback probability</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="n">_</span><span class="p">,</span> <span class="n">n_rules</span><span class="p">,</span> <span class="n">n_lits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">shape</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_rules</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">p</span>                <span class="c1"># which rules get feedback this time</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_rules</span><span class="p">,</span> <span class="n">n_lits</span><span class="p">))</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>        <span class="n">own</span><span class="p">,</span> <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span>            <span class="c1"># views: changes go into self.memory</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="c1"># Recognize Feedback (own-class rules that fire): memorize True literals, forget False ones</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">rec</span> <span class="o">=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="n">own</span> <span class="o">+=</span> <span class="n">rec</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="n">own</span> <span class="o">-=</span> <span class="n">rec</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>        <span class="c1"># Erase Feedback (own-class rules that don't fire): forget every literal</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>        <span class="n">era</span> <span class="o">=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        <span class="n">own</span> <span class="o">-=</span> <span class="n">era</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>        <span class="c1"># Reject Feedback (other-class rules that fire): memorize Forgotten False literals</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>        <span class="n">rej</span> <span class="o">=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>        <span class="n">other</span> <span class="o">+=</span> <span class="n">rej</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">other</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>        <span class="k">return</span> <span class="bp">self</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>        <span class="n">lits</span> <span class="o">=</span> <span class="n">names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"NOT "</span> <span class="o">+</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">" AND "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lits</span><span class="p">,</span> <span class="n">rule</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">"(empty)"</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>              <span class="c1"># 200 patients to train on, 86 to test</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="mi">200</span><span class="p">],</span> <span class="n">order</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="n">tm</span> <span class="o">=</span> <span class="n">TsetlinMachine</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">rules_per_class</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="n">acc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">idx</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">])</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"train accuracy </span><span class="si">{</span><span class="n">acc</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> · test accuracy </span><span class="si">{</span><span class="n">acc</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> · always 'no recurrence' on test </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"Recurrence"</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"No recurrence"</span><span class="p">)):</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>    <span class="k">for</span> <span class="n">rule</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">rules</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> × IF </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2"> THEN </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>train accuracy 0.775 · test accuracy 0.744 · always 'no recurrence' on test 0.698
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>5 × IF inv-nodes 24-26 THEN Recurrence
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2 × IF inv-nodes 9-11 THEN Recurrence
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>3 × IF inv-nodes 0-2 AND NOT menopause lt40 AND NOT inv-nodes 3-5 AND NOT inv-nodes 6-8 AND NOT inv-nodes 9-11 AND NOT inv-nodes 12-14 AND NOT inv-nodes 15-17 AND NOT inv-nodes 24-26 AND NOT deg-malig 3 THEN No recurrence
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>1 × IF inv-nodes 0-2 AND NOT menopause lt40 AND NOT inv-nodes 6-8 AND NOT inv-nodes 9-11 AND NOT inv-nodes 12-14 AND NOT deg-malig 1 AND NOT deg-malig 2 THEN No recurrence
+</code></pre></div>
+<p>Download <code>breast-cancer.data</code> from the <a href="https://archive.ics.uci.edu/dataset/14/breast+cancer">UCI repository</a> first. On this split the machine beats the trivial answer by more (74.4% vs 69.8%), and again five rules spent themselves on the only patient in the whole dataset with 24-26 nodes. The first No-recurrence rule simplifies to <em>"Inv-nodes 0-2 and Menopause is not lt40 and Deg-malig is 1 or 2"</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it does</th>
+<th>Book term (research term)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rule</td>
+<td>AND of memorized literals; votes when True</td>
+<td>rule (clause <span class="arithmatex">\(C_j\)</span>)</td>
+</tr>
+<tr>
+<td>Rules for / against</td>
+<td>+1 / −1 votes for the class</td>
+<td>(positive / negative polarity clauses)</td>
+</tr>
+<tr>
+<td>Vote sum <span class="arithmatex">\(v\)</span></td>
+<td>votes for − votes against; the sign is the prediction</td>
+<td>vote sum (<span class="arithmatex">\(\sum C^+_j - \sum C^-_j\)</span>)</td>
+</tr>
+<tr>
+<td>Voting Margin <span class="arithmatex">\(T\)</span></td>
+<td>feedback probability <span class="arithmatex">\((T - v)/2T\)</span> during training</td>
+<td>Voting Margin (threshold / target <span class="arithmatex">\(T\)</span>)</td>
+</tr>
+<tr>
+<td>Recognize, Erase, Reject</td>
+<td>how a picked rule changes its memory</td>
+<td>(Type Ia, Type Ib, Type II feedback)</td>
+</tr>
+<tr>
+<td>One team per class</td>
+<td>multi-class: the highest vote sum wins</td>
+<td>(multi-class Tsetlin machine)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"The Voting Margin is a decision threshold.\"</p>
+<p>No. Classification only looks at the <strong>sign</strong> of <span class="arithmatex">\(v\)</span>. The Voting Margin <span class="arithmatex">\(T\)</span> is used <strong>only during training</strong>, to decide how likely each rule is to get feedback. A trained machine never looks at <span class="arithmatex">\(T\)</span>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"More feedback is better, so always give every rule feedback.\"</p>
+<p>In the OR game, feedback on every step left the two rules as copies of <em>"x1 AND x2"</em> for 60.7% of the time, and in the correct OR solution only 7.1% of the time. With <span class="arithmatex">\(T = 2\)</span> the solution held 81.4% of the time. Switching feedback <strong>off</strong> for examples that are already safe is what lets rules specialise.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Rules know about each other.\"</p>
+<p>They don't. Each rule only sees its own condition, the example and one random number. The only shared quantity is the vote sum <span class="arithmatex">\(v\)</span>, which sets the feedback probability for everyone. Coordination emerges from that single number.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"74% test accuracy means the model works.\"</p>
+<p>On this dataset, answering "no recurrence" for everyone already scores 70.7% on average over 10 splits, and the Tsetlin machine averaged 71.3%. Always compare with the trivial baseline, use more than one split, and look at what the model gets right (here: 8 of 23 recurrences on the default split).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Duplicate rules are wasted.\"</p>
+<p>Partly true and partly not. Duplicates act as <strong>weights</strong>: in the book's example, the duplicated R1 + R2 out-vote R3 for patient #5. But four copies of a rule that matches a single patient is wasted capacity, and a sign of overfitting.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. With T = 2, three rules for Recurrence fire and one rule against fires on a patient with recurrence. What is the feedback probability?</summary>
+<p>Own class minus other: <span class="arithmatex">\(v = 3 - 1 = 2\)</span>, which is already at the margin. $p = (2 - 2)/4 = $ <strong>0</strong>: no rule learns from this patient.</p>
+</details>
+<details class="question">
+<summary>2. Same rules, but the patient did NOT have a recurrence. What happens?</summary>
+<p>From the patient's point of view <span class="arithmatex">\(v = 1 - 3 = -2\)</span>, so $p = (2 - (-2))/4 = $ <strong>1</strong>: every rule is picked. The rules against Recurrence get Recognize (the one that fired) or Erase (the others). The three rules for Recurrence that fired voted wrongly and get <strong>Reject Feedback</strong>, which pushes a False literal of this patient into each of them.</p>
+</details>
+<details class="question">
+<summary>3. Why does a Tsetlin machine predict with the sign of v, but train with (T − v)/2T?</summary>
+<p>Prediction only needs to know which side wins. Training also wants a <strong>safety margin</strong>: an example won by a single vote is fragile, so it keeps asking for feedback until it wins by <span class="arithmatex">\(T\)</span> votes. And examples won by <span class="arithmatex">\(T\)</span> votes or more stop asking, which frees the rules to cover other sub-patterns.</p>
+</details>
+<details class="question">
+<summary>4. You have 4 rules for a class whose examples come in 4 clearly different sub-patterns. Is T = 1 or T = 20 the better choice?</summary>
+<p>Neither. With <span class="arithmatex">\(T = 1\)</span> one firing rule is enough, so a second sub-pattern covered by the "wrong" rule stops the learning early, and there is little pressure to fill every niche. With <span class="arithmatex">\(T = 20\)</span> the margin can never be reached (4 rules give at most 4 votes), so feedback never switches off and the rules crowd onto the most frequent sub-pattern. A margin around the number of votes a well-covered example can collect (here a few) works best, as the OR game showed with <span class="arithmatex">\(T = 2\)</span> for two rules.</p>
+</details>
+<details class="question">
+<summary>5. The learned model predicts 'No recurrence' for book patient #5 (premeno, 0-2 nodes, Deg-malig 3), who did recur. How would you find out why?</summary>
+<p>Read the votes. In the Step 2 widget with the learned rules, <strong>no rule fires on either side</strong>, so <span class="arithmatex">\(v = 0\)</span> and the tie goes to No recurrence. No learned rule describes this profile, and the data explains why: Deg-malig 3 without lymph-node spread recurred in only 38% of patients. A black-box model would give you the same wrong answer without the explanation.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a> (free online), Ch. 1, §1.5–1.7 (voting, the Voting Margin and the complete algorithm) and Ch. 2, §2.3 (rule interaction and the OR example with its Markov-chain analysis). This lesson follows those sections.</li>
+<li>Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/1804.01508"><em>The Tsetlin Machine – A Game Theoretic Bandit Driven Approach to Optimal Pattern Recognition with Propositional Logic</em></a> (2018). The original paper, including the multi-class machine and the clause/threshold terminology.</li>
+<li>M. Zwitter and M. Soklic, <a href="https://archive.ics.uci.edu/dataset/14/breast+cancer">Breast Cancer dataset</a>, UCI Machine Learning Repository. The data used in Step 6.</li>
+<li><a href="../tsetlin-automaton/">The Tsetlin automaton</a> and <a href="../tsetlin-machine-feedback/">Recognize, Erase &amp; Reject feedback</a>: the memory and the feedback this lesson builds on.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../convolutional-tsetlin-machine/">Convolutional Tsetlin machines</a></p>
+<script src="viz/tsetlin-machine-classification.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tsetlin-machine-feedback/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Recognize, Erase &amp; Reject feedback">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Recognize, Erase & Reject feedback
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../convolutional-tsetlin-machine/" class="md-footer__link md-footer__link--next" aria-label="Next: Convolutional Tsetlin machines">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Convolutional Tsetlin machines
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

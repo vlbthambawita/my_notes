@@ -1,0 +1,2191 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/policy-gradients/">
+      
+      
+        <link rel="prev" href="../deep-q-networks/">
+      
+      
+        <link rel="next" href="../actor-critic/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Policy gradients - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#policy-gradients-and-reinforce" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Policy gradients
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-why-learn-the-policy-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Why learn the policy directly?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-a-policy-with-knobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — A policy with knobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-goal-climb-the-expected-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The goal: climb the expected return
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-policy-gradient-make-good-actions-more-likely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — The policy gradient: make good actions more likely
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-reinforce-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — REINFORCE: the algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-taming-the-noise-baselines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Taming the noise: baselines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-the-price-on-policy-and-sample-hungry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — The price: on-policy and sample-hungry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-why-learn-the-policy-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Why learn the policy directly?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-a-policy-with-knobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — A policy with knobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-goal-climb-the-expected-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The goal: climb the expected return
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-policy-gradient-make-good-actions-more-likely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — The policy gradient: make good actions more likely
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-reinforce-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — REINFORCE: the algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-taming-the-noise-baselines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Taming the noise: baselines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-the-price-on-policy-and-sample-hungry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — The price: on-policy and sample-hungry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="policy-gradients-and-reinforce">Policy Gradients and REINFORCE<a class="headerlink" href="#policy-gradients-and-reinforce" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>Instead of learning how good each action is and then picking the best one, a <strong>policy-gradient</strong> method learns the <strong>policy itself</strong>: a network with weights <span class="arithmatex">\(\theta\)</span> that outputs action probabilities <span class="arithmatex">\(\pi_\theta(a \mid s)\)</span>. It plays episodes and then nudges <span class="arithmatex">\(\theta\)</span> by <strong>gradient ascent</strong> so that actions followed by a high return become <strong>more likely</strong>, and actions followed by a low return become less likely. <strong>REINFORCE</strong> is the simplest version. Subtracting a <strong>baseline</strong> (the return you expected anyway) keeps it correct and makes it far less noisy.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../deep-q-networks/">Deep Q-Networks</a>, <a href="../gradient-descent/">Gradient Descent</a></p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Value-based methods like Q-learning and DQN answer "how good is each action?" and then act greedily. That works brilliantly for Atari, where there are a handful of buttons. But:</p>
+<ul>
+<li><strong>A robot arm has continuous actions</strong> (a torque for every joint). You can't take an <span class="arithmatex">\(\arg\max\)</span> over infinitely many actions at every step.</li>
+<li><strong>Sometimes the best policy is random.</strong> In rock–paper–scissors any predictable strategy loses. Greedy action selection can only ever produce deterministic policies.</li>
+<li><strong>RLHF fine-tunes language models with policy gradients.</strong> The "policy" is the chatbot, the "action" is the next word, and PPO (the next lesson) is a policy-gradient method. Everything in that pipeline starts with the idea in this lesson.</li>
+</ul>
+<p>Policy gradients are the foundation of almost every modern deep-RL algorithm for control and for language models: A2C, PPO, SAC, and the RL step of RLHF.</p>
+<hr />
+<h2 id="step-1-why-learn-the-policy-directly">Step 1 — Why learn the policy directly?<a class="headerlink" href="#step-1-why-learn-the-policy-directly" title="Permanent link">&para;</a></h2>
+<p>Recall from <a href="../reinforcement-learning-intro/#step-4-the-agents-strategy-the-policy">lesson 1</a> that a policy can be <strong>deterministic</strong> (one action per state) or <strong>stochastic</strong> (a probability for each action). A value-based agent like DQN learns <span class="arithmatex">\(Q(s, a)\)</span> and then picks <span class="arithmatex">\(\arg\max_a Q(s, a)\)</span>, plus some <span class="arithmatex">\(\varepsilon\)</span>-greedy randomness for exploration. Its policy is a by-product of the values.</p>
+<p>A <strong>policy-based</strong> agent skips the middleman. It has a policy with adjustable knobs and tunes those knobs directly to get more reward.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Value-based (Q-learning, DQN)</th>
+<th><strong>Policy-based</strong> (REINFORCE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is learned</td>
+<td><span class="arithmatex">\(Q(s,a)\)</span>, then act greedily</td>
+<td><span class="arithmatex">\(\pi_\theta(a \mid s)\)</span> directly</td>
+</tr>
+<tr>
+<td>Kind of policy</td>
+<td>deterministic (+ ε for exploring)</td>
+<td>naturally stochastic</td>
+</tr>
+<tr>
+<td>Continuous actions</td>
+<td>hard: needs <span class="arithmatex">\(\arg\max\)</span> over all actions</td>
+<td>easy: output a distribution (e.g. a Gaussian)</td>
+</tr>
+<tr>
+<td>Small change in parameters</td>
+<td>can flip the <span class="arithmatex">\(\arg\max\)</span> and change behaviour abruptly</td>
+<td>changes probabilities smoothly</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>can reuse old experience (replay buffer)</td>
+<td>needs fresh episodes from the current policy</td>
+</tr>
+</tbody>
+</table>
+<p>Here is a tiny world where the value-based approach gets stuck. In Sutton &amp; Barto's <strong>short corridor</strong>, every step costs −1 and the episode ends at the goal on the right. The catch: in the second cell the actions are <strong>reversed</strong> ("right" moves left), and the agent <strong>can't tell the cells apart</strong> (it sees the same observation in all three). So its only choice is one number: <span class="arithmatex">\(p\)</span>, the probability of pressing "right".</p>
+<p><strong>Try it:</strong> drag <span class="arithmatex">\(p\)</span> and watch the value <span class="arithmatex">\(J(p)\)</span> of the policy (the average total reward from the start). Play a few episodes at different <span class="arithmatex">\(p\)</span>.</p>
+<div id="viz-corridor" class="viz"><div class="viz-title">🚪 Interactive: the short corridor, where the best policy is random</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Both deterministic policies fail forever.</strong> Always "right" bounces between the first two cells; always "left" never leaves the start. <span class="arithmatex">\(J = -\infty\)</span>.</li>
+<li><strong>ε-greedy is not much better.</strong> With <span class="arithmatex">\(\varepsilon = 0.1\)</span> and two actions, the greedy action gets probability 0.95. That gives <span class="arithmatex">\(J = -82.1\)</span> (greedy = left) or <span class="arithmatex">\(J = -44.2\)</span> (greedy = right).</li>
+<li><strong>The best policy flips a biased coin</strong>: <span class="arithmatex">\(p = 2 - \sqrt{2} \approx 0.59\)</span>, worth <span class="arithmatex">\(J \approx -11.66\)</span>. Only a method that can learn <em>probabilities</em> can find it.</li>
+<li>The purple curve is smooth. If we could compute its slope, we could simply <strong>climb it</strong>. That is exactly what a policy gradient does.</li>
+</ul>
+</div>
+<details class="note">
+<summary>Where does the curve come from?</summary>
+<p>Write <span class="arithmatex">\(V_0, V_1, V_2\)</span> for the values of the three cells under the policy. Each is "−1 for this step, plus the value of where you land":
+<span class="arithmatex">\(V_0 = -1 + pV_1 + (1-p)V_0\)</span>, <span class="arithmatex">\(\;V_1 = -1 + pV_0 + (1-p)V_2\)</span>, <span class="arithmatex">\(\;V_2 = -1 + (1-p)V_1\)</span> (the goal is worth 0).
+Solving these three equations gives</p>
+<div class="arithmatex">\[J(p) = V_0 = -\frac{2(2-p)}{p(1-p)},\]</div>
+<p>which is largest at <span class="arithmatex">\(p = 2-\sqrt{2}\)</span>, where <span class="arithmatex">\(J = -(6+4\sqrt{2}) \approx -11.66\)</span>. We checked this by solving the equations numerically on a fine grid of <span class="arithmatex">\(p\)</span> values: the best grid point is <span class="arithmatex">\(p = 0.58579\)</span> with <span class="arithmatex">\(J = -11.6569\)</span>.</p>
+</details>
+<hr />
+<h2 id="step-2-a-policy-with-knobs">Step 2 — A policy with knobs<a class="headerlink" href="#step-2-a-policy-with-knobs" title="Permanent link">&para;</a></h2>
+<p>A <strong>parameterised policy</strong> is a function with weights <span class="arithmatex">\(\theta\)</span> that takes a state and returns a probability for every action. For discrete actions the standard recipe is:</p>
+<ol>
+<li>A network (any network) turns the state into one score per action, called an <strong>action preference</strong> <span class="arithmatex">\(h_\theta(s, a)\)</span>.</li>
+<li>A <strong>softmax</strong> turns the scores into probabilities:</li>
+</ol>
+<div class="arithmatex">\[
+\pi_\theta(a \mid s) = \frac{e^{h_\theta(s,a)}}{\sum_{b} e^{h_\theta(s,b)}}
+\]</div>
+<p>Higher preference → higher probability, all probabilities are positive, and they add up to 1. The agent then <strong>samples</strong> its action from these probabilities, so it explores automatically.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧭 A softmax policy network",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "s", "col": 0, "row": 0, "icon": "👀", "label": "State s", "sub": "e.g. pole angle", "role": "data", "note": "Whatever the agent observes: positions, pixels, the conversation so far."},
+    {"id": "net", "col": 1, "row": 0, "icon": "🧠", "label": "Network with weights θ", "role": "model", "note": "Any network: a small MLP for CartPole, a CNN for pixels, a transformer for text."},
+    {"id": "h", "col": 2, "row": 0, "icon": "📊", "label": "Preferences h(s, a)", "sub": "one score per action", "role": "model", "note": "Raw scores (logits). They can be any real number."},
+    {"id": "soft", "col": 2, "row": 1, "icon": "🔀", "label": "Softmax", "sub": "e<sup>h</sup> / Σ e<sup>h</sup>", "note": "Exponentiate and normalise, so the scores become positive and add up to 1."},
+    {"id": "pi", "col": 1, "row": 1, "icon": "🎲", "label": "Probabilities π<sub>θ</sub>(a | s)", "role": "model", "note": "For example 0.2 / 0.5 / 0.3 over three actions."},
+    {"id": "a", "col": 0, "row": 1, "icon": "🎯", "label": "Sample action a", "shape": "pill", "role": "model", "note": "Random, not argmax: that is what makes the policy explore by itself."}
+  ],
+  "edges": [
+    {"from": "s", "to": "net"},
+    {"from": "net", "to": "h"},
+    {"from": "h", "to": "soft"},
+    {"from": "soft", "to": "pi"},
+    {"from": "pi", "to": "a"}
+  ],
+  "steps": [
+    {"show": ["s"], "text": "The agent observes the state s."},
+    {"show": ["s>net", "net"], "text": "A network with weights θ processes it. θ are the knobs that learning will turn."},
+    {"show": ["net>h", "h"], "text": "It outputs one <b>preference</b> per action: a raw score that can be any number."},
+    {"show": ["h>soft", "soft"], "text": "The softmax exponentiates and normalises the scores."},
+    {"show": ["soft>pi", "pi"], "text": "Now we have a proper probability distribution π<sub>θ</sub>(a | s) over the actions."},
+    {"show": ["pi>a", "a"], "text": "The agent <b>samples</b> its action. Changing θ a little changes these probabilities a little: no sudden jumps."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"s": [0, 0], "net": [1, 0], "h": [1, 1], "soft": [0, 1], "pi": [0, 2], "a": [1, 2]}}
+}
+</script>
+</div>
+
+<p>For <strong>continuous actions</strong> (a torque, a steering angle) the network instead outputs the mean <span class="arithmatex">\(\mu_\theta(s)\)</span> (and often the spread <span class="arithmatex">\(\sigma\)</span>) of a <strong>Gaussian</strong>, and the action is sampled from it: <span class="arithmatex">\(a \sim \mathcal{N}(\mu_\theta(s), \sigma^2)\)</span>. Everything below works the same way; only the formula for <span class="arithmatex">\(\ln \pi\)</span> changes.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The policy is <strong>stochastic by design</strong>: even with fixed <span class="arithmatex">\(\theta\)</span>, the same state can lead to different actions. Exploration is built in, no <span class="arithmatex">\(\varepsilon\)</span> needed.</li>
+<li>The probabilities are a <strong>smooth</strong> function of <span class="arithmatex">\(\theta\)</span>. That is what will let us use gradients.</li>
+<li>In the short corridor, the "network" is just two numbers, <span class="arithmatex">\(h(\text{right})\)</span> and <span class="arithmatex">\(h(\text{left})\)</span>, and <span class="arithmatex">\(p = \pi(\text{right})\)</span> is their softmax.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-the-goal-climb-the-expected-return">Step 3 — The goal: climb the expected return<a class="headerlink" href="#step-3-the-goal-climb-the-expected-return" title="Permanent link">&para;</a></h2>
+<p>We want the policy whose episodes collect the most reward on average. So the <strong>objective</strong> is the expected return from the start:</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{\pi_\theta}\left[\, G_0 \,\right]
+\]</div>
+<p>This is the value of the start state, <span class="arithmatex">\(V^{\pi_\theta}(s_0)\)</span>, seen as a function of the weights. In the short corridor it was the purple curve in Step 1.</p>
+<p>To make <span class="arithmatex">\(J\)</span> <strong>bigger</strong>, use the update from the <a href="../gradient-descent/#step-4-taking-the-step-the-update-rule">Gradient Descent</a> lesson with the sign flipped. This is <strong>gradient ascent</strong>: walk <em>uphill</em>.</p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha\, \nabla_\theta J(\theta)
+\]</div>
+<p>The problem: how do we compute <span class="arithmatex">\(\nabla_\theta J\)</span>? <span class="arithmatex">\(J\)</span> depends on <span class="arithmatex">\(\theta\)</span> through the actions the policy picks, and on the environment through what happens next. We don't know the environment's rules (they might be a physics engine or the real world), so we can't differentiate through them. We can only <strong>play episodes and look at the returns</strong>. The next step shows that this is enough.</p>
+<hr />
+<h2 id="step-4-the-policy-gradient-make-good-actions-more-likely">Step 4 — The policy gradient: make good actions more likely<a class="headerlink" href="#step-4-the-policy-gradient-make-good-actions-more-likely" title="Permanent link">&para;</a></h2>
+<p>Here is the key result, the <strong>policy gradient theorem</strong>:</p>
+<div class="arithmatex">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}\left[\, \sum_{t} G_t \, \nabla_\theta \ln \pi_\theta(a_t \mid s_t) \right]
+\]</div>
+<p>Read it in words, piece by piece:</p>
+<ul>
+<li><span class="arithmatex">\(\nabla_\theta \ln \pi_\theta(a_t \mid s_t)\)</span> is the direction in weight space that makes the action we actually took, <span class="arithmatex">\(a_t\)</span>, <strong>more likely</strong> in state <span class="arithmatex">\(s_t\)</span>.</li>
+<li><span class="arithmatex">\(G_t\)</span> is the return that followed that action: how well things went from then on.</li>
+<li>So the gradient says: <strong>push up the log-probability of each action in proportion to the return that followed it.</strong> Good outcome: take a big step towards repeating it. Bad outcome: a smaller step, or (if <span class="arithmatex">\(G_t\)</span> is negative) a step away from it.</li>
+<li>The expectation means we can <strong>estimate it by sampling</strong>: play an episode with the current policy and compute the sum. No model of the environment needed.</li>
+</ul>
+<p>Why the log? The <strong>log-derivative trick</strong>: <span class="arithmatex">\(\nabla_\theta \pi = \pi\, \nabla_\theta \ln \pi\)</span>. Dividing by <span class="arithmatex">\(\pi\)</span> means that actions the policy already picks often (which therefore show up often in our samples) don't get an unfair head start; rare actions that turn out well get a bigger push per sample.</p>
+<p>For a softmax policy the gradient with respect to the preferences is very simple:</p>
+<div class="arithmatex">\[
+\frac{\partial \ln \pi(a \mid s)}{\partial h(s, b)} = \mathbb{1}[a = b] - \pi(b \mid s)
+\]</div>
+<p>The sampled action's preference goes <strong>up</strong> by <span class="arithmatex">\(1 - \pi(a)\)</span>; every other action's goes <strong>down</strong> by its probability. Example: <span class="arithmatex">\(\pi = (0.2, 0.5, 0.3)\)</span>, we sampled the middle action and got return <span class="arithmatex">\(G = +2\)</span>, with <span class="arithmatex">\(\alpha = 0.1\)</span>. The update is <span class="arithmatex">\(\Delta h = 0.1 \cdot 2 \cdot (-0.2,\, 0.5,\, -0.3) = (-0.04,\, +0.10,\, -0.06)\)</span>. (PyTorch's autograd gives the same gradient, <span class="arithmatex">\((-0.2, 0.5, -0.3)\)</span>.)</p>
+<details class="note">
+<summary>Where does the theorem come from? (a short derivation)</summary>
+<p>Write <span class="arithmatex">\(\tau = (s_0, a_0, r_1, s_1, a_1, \dots)\)</span> for a whole episode and <span class="arithmatex">\(R(\tau)\)</span> for its return. Then <span class="arithmatex">\(J(\theta) = \sum_\tau P_\theta(\tau)\, R(\tau)\)</span>, and</p>
+<div class="arithmatex">\[
+\nabla_\theta J = \sum_\tau \nabla_\theta P_\theta(\tau)\, R(\tau) = \sum_\tau P_\theta(\tau)\, \nabla_\theta \ln P_\theta(\tau)\, R(\tau) = \mathbb{E}\left[ R(\tau)\, \nabla_\theta \ln P_\theta(\tau) \right].
+\]</div>
+<p>The probability of an episode is a product: start state × policy choices × environment transitions, so its log is a sum:</p>
+<div class="arithmatex">\[
+\ln P_\theta(\tau) = \ln p(s_0) + \sum_t \Big[ \ln \pi_\theta(a_t \mid s_t) + \ln p(s_{t+1} \mid s_t, a_t) \Big].
+\]</div>
+<p>Only the policy terms depend on <span class="arithmatex">\(\theta\)</span>, so the unknown environment <strong>drops out</strong> of the gradient. Finally, an action can't affect rewards that came <em>before</em> it, so <span class="arithmatex">\(R(\tau)\)</span> can be replaced by the reward-to-go <span class="arithmatex">\(G_t\)</span> for each term (this removes noise without changing the expectation). With discounting, the exact theorem has an extra factor <span class="arithmatex">\(\gamma^t\)</span>; practical code almost always drops it.</p>
+</details>
+<p><strong>Try it:</strong> here is a softmax policy over three actions (a one-state problem, like a bandit). Each action pays its mean reward plus a little noise, so <strong>every reward is positive</strong> (around 4 to 6). Press <em>Sample an action &amp; update</em> a few times and read the update in the readout. Then run 100 updates.</p>
+<div id="viz-softmax" class="viz"><div class="viz-title">🎰 Interactive: a REINFORCE update, one sample at a time</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>One update, by hand.</strong> On run 1 the first sample is B with reward 6.60. All three probabilities start at <span class="arithmatex">\(\tfrac13\)</span>, so the update is <span class="arithmatex">\(\Delta h = 0.1 \cdot 6.60 \cdot (-\tfrac13, \tfrac23, -\tfrac13) = (-0.220, +0.440, -0.220)\)</span>: B goes up, the others go down.</li>
+<li><strong>Without a baseline, every sampled action is reinforced</strong>, because every reward is positive. Learning still works <em>on average</em> (better actions get pushed harder), but it is a lottery. Click <strong>New run</strong> (run 2) and then <strong>Run 100 updates</strong>: the policy settles on C, not the best action B (<span class="arithmatex">\(\pi(C) = 0.89\)</span>).</li>
+<li>Now tick <strong>subtract a baseline</strong> (it replays the same run). The weight becomes <span class="arithmatex">\(r - b\)</span>: positive for better-than-average rewards, negative for worse ones. Run 100 updates again: run 2 now ends with <span class="arithmatex">\(\pi(B) = 0.92\)</span>.</li>
+<li><strong>Test 1000 runs</strong> at <span class="arithmatex">\(\alpha = 0.1\)</span>: <span class="arithmatex">\(\pi(B)\)</span> ends above 0.5 in 68.9% of runs without a baseline and 99.8% with one. Step 6 explains why.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-reinforce-the-algorithm">Step 5 — REINFORCE: the algorithm<a class="headerlink" href="#step-5-reinforce-the-algorithm" title="Permanent link">&para;</a></h2>
+<p><strong>REINFORCE</strong> (Williams, 1992) turns the theorem into an algorithm. It is a <strong>Monte Carlo</strong> method, like the Monte Carlo prediction from the earlier lessons: it waits until the episode is over, so that every return <span class="arithmatex">\(G_t\)</span> is known exactly, and then updates.</p>
+<div class="admonition note">
+<p class="admonition-title">REINFORCE</p>
+<p>Repeat for many episodes:</p>
+<ol>
+<li>Play one episode with the current policy <span class="arithmatex">\(\pi_\theta\)</span>: <span class="arithmatex">\(s_0, a_0, r_1, s_1, a_1, r_2, \dots, s_T\)</span>.</li>
+<li>For every time step, compute the return that followed it: <span class="arithmatex">\(G_t = r_{t+1} + \gamma\, r_{t+2} + \dots\)</span></li>
+<li>Update the weights with one gradient-ascent step (the formula below).</li>
+<li>Throw the episode away and start again.</li>
+</ol>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha \sum_{t=0}^{T-1} G_t\, \nabla_\theta \ln \pi_\theta(a_t \mid s_t)
+\]</div>
+</div>
+<p>That's all. No value table, no replay buffer, no target network. In PyTorch you write the sum as a "loss" <span class="arithmatex">\(-\sum_t G_t \ln \pi_\theta(a_t \mid s_t)\)</span> and let the optimiser <em>minimise</em> it, which is the same as gradient ascent on <span class="arithmatex">\(J\)</span>.</p>
+<p><strong>Try it:</strong> run REINFORCE on the short corridor, starting from the bad policy <span class="arithmatex">\(p = 0.05\)</span>. Focus on the <strong>red</strong> curve for now (the green one is Step 6). Each curve is the average of 50 seeded runs. Change the step size <span class="arithmatex">\(\alpha\)</span>.</p>
+<div id="viz-learn" class="viz"><div class="viz-title">📈 Interactive: REINFORCE learns the short corridor</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>It finds the random policy.</strong> At <span class="arithmatex">\(\alpha = 2^{-10}\)</span> the red curve climbs from about <span class="arithmatex">\(-80\)</span> to the dashed line, the best possible <span class="arithmatex">\(-11.66\)</span>. The runs end with an average return of <span class="arithmatex">\(-12.2\)</span> over their last 100 episodes. A value-based method with ε-greedy could never do better than <span class="arithmatex">\(-44.2\)</span> here.</li>
+<li><strong>Small steps are slow.</strong> At <span class="arithmatex">\(2^{-13}\)</span> it still gets there, but only towards the end of the 1000 episodes.</li>
+<li><strong>Big steps are dangerous.</strong> At <span class="arithmatex">\(2^{-8}\)</span>, 2 of the 50 runs get <strong>stuck</strong> off the chart, and at <span class="arithmatex">\(2^{-7}\)</span>, 32 of 50 do. One unlucky, very long episode produces a huge update that pushes <span class="arithmatex">\(p\)</span> almost to 0 or 1, and from there episodes become endless. The strip plot on the right shows every run's final score, so you can see the stragglers.</li>
+<li>This sensitivity is a symptom of <strong>noise</strong>: each update is based on a single episode, and the returns vary wildly from episode to episode.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-taming-the-noise-baselines">Step 6 — Taming the noise: baselines<a class="headerlink" href="#step-6-taming-the-noise-baselines" title="Permanent link">&para;</a></h2>
+<p>REINFORCE is <strong>unbiased</strong>: on average, its update points exactly along the true gradient. But each single estimate is very <strong>noisy</strong> (high <strong>variance</strong>). Look at the update again: every action is weighted by <span class="arithmatex">\(G_t\)</span>. In the short corridor every return is negative, so <em>every</em> action gets pushed down, and only the <em>difference</em> between big and small pushes carries information. In the bandit above every reward was positive, so every action got pushed up. Most of each update is noise that has to cancel out over many episodes.</p>
+<p>The fix is to compare each return with what you <strong>expected</strong> to get, and only react to the surprise. Subtract a <strong>baseline</strong> <span class="arithmatex">\(b(s_t)\)</span>:</p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha \sum_{t} \big(G_t - b(s_t)\big)\, \nabla_\theta \ln \pi_\theta(a_t \mid s_t)
+\]</div>
+<p>Better than expected → positive weight → make the action more likely. Worse than expected → negative weight → make it less likely.</p>
+<p><strong>Why it doesn't break anything:</strong> the baseline does not depend on the action, so its contribution averages to zero:</p>
+<div class="arithmatex">\[
+\mathbb{E}_{a \sim \pi}\big[\, b(s)\, \nabla_\theta \ln \pi_\theta(a \mid s) \big] = b(s) \sum_a \nabla_\theta \pi_\theta(a \mid s) = b(s)\, \nabla_\theta \underbrace{\sum_a \pi_\theta(a \mid s)}_{=\,1} = 0
+\]</div>
+<p>So the update is <strong>still unbiased</strong>, whatever baseline you choose. A good baseline just makes it much less noisy. The natural choice is the state value, <span class="arithmatex">\(b(s) = V^\pi(s)\)</span>, learned by a second network (that's what the code below does).</p>
+<p><strong>Try it:</strong> each histogram shows 2000 single-episode estimates of the gradient for a fixed corridor policy <span class="arithmatex">\(p\)</span>. Left: weight <span class="arithmatex">\(G_t\)</span>. Right: weight <span class="arithmatex">\(G_t - b\)</span>, with <span class="arithmatex">\(b\)</span> the average return <span class="arithmatex">\(J(p)\)</span>. The purple line is the true gradient.</p>
+<div id="viz-variance" class="viz"><div class="viz-title">📊 Interactive: the same gradient, with less noise</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Same centre, narrower spread.</strong> At <span class="arithmatex">\(p = 0.3\)</span> the true gradient is <span class="arithmatex">\(8.48\)</span>. The estimates average <span class="arithmatex">\(7.16\)</span> without a baseline and <span class="arithmatex">\(7.73\)</span> with one (both are within sampling noise of the truth), but the spread drops from <span class="arithmatex">\(36.0\)</span> to <span class="arithmatex">\(21.0\)</span>, <strong>42% less</strong>.</li>
+<li>Positive gradient means "increase <span class="arithmatex">\(p\)</span>" (at <span class="arithmatex">\(p = 0.3\)</span> we are left of the optimum). Move the slider past 0.59 and the true gradient turns negative.</li>
+<li>Now scroll back to the <strong>learning curves</strong> in Step 5 and look at the <strong>green</strong> curve. At <span class="arithmatex">\(\alpha = 2^{-8}\)</span> the baseline version has no stuck runs (average <span class="arithmatex">\(-12.3\)</span> over the last 100 episodes, against <span class="arithmatex">\(-53.0\)</span> for plain REINFORCE), and at <span class="arithmatex">\(2^{-7}\)</span> only 1 of 50 runs gets stuck instead of 32. Less noise lets you take bigger steps safely.</li>
+<li>The baseline is not magic: at very small step sizes it doesn't help here (at <span class="arithmatex">\(2^{-13}\)</span> it even starts a little slower, because our learned baseline begins at 0 and has to catch up).</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">From baselines to advantages</p>
+<p>With <span class="arithmatex">\(b(s) = V^\pi(s)\)</span>, the weight <span class="arithmatex">\(G_t - V^\pi(s_t)\)</span> is a sample estimate of the <strong>advantage</strong></p>
+<div class="arithmatex">\[A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s),\]</div>
+<p>how much better action <span class="arithmatex">\(a\)</span> was than the policy's average behaviour in state <span class="arithmatex">\(s\)</span>. If we also use the learned <span class="arithmatex">\(V\)</span> to estimate the return itself (instead of waiting for the episode to end), we get <strong>actor-critic</strong> methods, the topic of the next lesson.</p>
+</div>
+<hr />
+<h2 id="step-7-the-price-on-policy-and-sample-hungry">Step 7 — The price: on-policy and sample-hungry<a class="headerlink" href="#step-7-the-price-on-policy-and-sample-hungry" title="Permanent link">&para;</a></h2>
+<p>The policy gradient is an expectation over episodes played <strong>by the current policy</strong>. As soon as we update <span class="arithmatex">\(\theta\)</span>, the old episodes come from a different policy and no longer give a correct estimate. So REINFORCE is <strong>on-policy</strong>: it uses each episode for one update and throws it away. Compare DQN, which stores experience in a replay buffer and learns from each transition many times.</p>
+<p>Together with the high variance, that makes vanilla REINFORCE <strong>sample-hungry</strong>: it often needs many thousands of episodes. Most of what comes next is about fixing this:</p>
+<ul>
+<li><strong>Actor-critic</strong> (A2C) learns a value function to cut the variance further and updates during the episode.</li>
+<li><strong>PPO</strong> reuses each batch of episodes for several careful updates, keeping the new policy close to the old one.</li>
+<li><strong>SAC</strong> brings back a replay buffer for continuous control.</li>
+</ul>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 REINFORCE with a baseline",
+  "cols": 3,
+  "rows": 5.15,
+  "rowHeight": 100,
+  "groups": [
+    {"id": "loop", "label": "Repeat for many episodes", "col": 0, "row": 1.15, "cols": 3, "rows": 2.6}
+  ],
+  "nodes": [
+    {"id": "init", "col": 1, "row": 0, "icon": "🎲", "label": "Random policy weights θ, baseline weights w", "shape": "pill", "maxWidth": 230},
+    {"id": "play", "col": 0, "row": 1.6, "icon": "🎮", "label": "Play an episode with π<sub>θ</sub>", "role": "model", "note": "Sample every action from the current policy until the episode ends."},
+    {"id": "ret", "col": 1, "row": 1.6, "icon": "🧮", "label": "Returns G<sub>t</sub>", "sub": "for every step t", "role": "data", "note": "G_t = r_{t+1} + γ r_{t+2} + …, computed backwards from the end of the episode."},
+    {"id": "adv", "col": 2, "row": 1.6, "icon": "⚖️", "label": "G<sub>t</sub> − b(s<sub>t</sub>)", "sub": "better than expected?", "role": "loss", "note": "Positive: the action did better than the baseline expected. Negative: worse."},
+    {"id": "pol", "col": 2, "row": 2.75, "icon": "⬆️", "label": "Policy step", "sub": "θ += α Σ weight · ∇ln π", "role": "opt", "note": "Gradient ascent: make better-than-expected actions more likely, worse ones less likely."},
+    {"id": "base", "col": 0, "row": 2.75, "icon": "📏", "label": "Fit baseline b(s) to G<sub>t</sub>", "role": "loss", "note": "Regression: move the value network's prediction V_w(s_t) towards the observed G_t."},
+    {"id": "done", "col": 1, "row": 4.15, "icon": "🏁", "label": "Trained policy", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "init", "to": "loop"},
+    {"from": "play", "to": "ret"},
+    {"from": "ret", "to": "adv"},
+    {"from": "adv", "to": "pol"},
+    {"from": "pol", "to": "base"},
+    {"from": "base", "to": "play", "label": "next episode"},
+    {"from": "loop", "to": "done", "label": "return is high"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Start with a random policy network θ (and, for the baseline, a value network w)."},
+    {"show": ["init>loop", "loop", "play"], "text": "Play one whole episode, <b>sampling</b> every action from the current policy."},
+    {"show": ["play>ret", "ret"], "text": "Go backwards through the episode and compute the return G<sub>t</sub> that followed each action."},
+    {"show": ["ret>adv", "adv"], "text": "Subtract the baseline: was each return better or worse than expected from that state?"},
+    {"show": ["adv>pol", "pol"], "text": "One gradient-ascent step on Σ<sub>t</sub> (G<sub>t</sub> − b(s<sub>t</sub>)) ln π<sub>θ</sub>(a<sub>t</sub> | s<sub>t</sub>). Without a baseline, the weight is just G<sub>t</sub>."},
+    {"show": ["pol>base", "base"], "text": "Improve the baseline: regress V<sub>w</sub>(s<sub>t</sub>) towards the observed returns."},
+    {"show": ["base>play", "play"], "text": "Throw the episode away (it came from the old policy) and play a fresh one."},
+    {"show": ["loop>done", "done"], "text": "After enough episodes the average return stops improving: that's the trained policy."}
+  ],
+  "narrow": {"cols": 2, "rows": 6.35, "pos": {"init": [0.5, 0], "loop": [0, 1.15, 2, 3.8], "play": [0, 1.6], "ret": [1, 1.6], "adv": [1, 2.75], "pol": [1, 3.9], "base": [0, 3.9], "done": [0.5, 5.35]}}
+}
+</script>
+</div>
+
+<p>Here is REINFORCE, with and without a learned baseline, on <strong>CartPole</strong>: push a cart left or right to keep a pole upright, +1 for every step it stays up, at most 500 steps. The environment is written out in plain Python (it's the standard CartPole physics), so you only need PyTorch.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span><span class="o">,</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">CartPole</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""The classic pole-balancing task: +1 per step, at most 500 steps."""</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>   <span class="c1"># cart pos, cart vel, pole angle, pole ang. vel</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>                               <span class="c1"># action 0 = push left, 1 = push right</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">x</span><span class="p">,</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">force</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mf">10.0</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">force</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_dot</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.1</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">th_acc</span> <span class="o">=</span> <span class="p">(</span><span class="mf">9.8</span> <span class="o">*</span> <span class="n">sin</span> <span class="o">-</span> <span class="n">cos</span> <span class="o">*</span> <span class="n">temp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">cos</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">1.1</span><span class="p">))</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">x_acc</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_acc</span> <span class="o">*</span> <span class="n">cos</span> <span class="o">/</span> <span class="mf">1.1</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">x_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_acc</span><span class="p">,</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                           <span class="n">th</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_dot</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_acc</span><span class="p">])</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="n">fell</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">2.4</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.2095</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">fell</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">500</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">returns_to_go</span><span class="p">(</span><span class="n">rewards</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="n">G</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="p">[]</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">rewards</span><span class="p">):</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">G</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">G</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">out</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">use_baseline</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">episodes</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span> <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="n">env</span> <span class="o">=</span> <span class="n">CartPole</span><span class="p">()</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="n">policy</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>   <span class="c1"># state -&gt; action preferences</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="n">value</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>    <span class="c1"># baseline b(s) = V(s)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="n">opt_pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">policy</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>    <span class="n">opt_v</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">episodes</span><span class="p">):</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="c1"># 1. play one episode with the current policy</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="kc">False</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>                <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">policy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">s</span><span class="p">)),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>            <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>            <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>            <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>        <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">rewards</span><span class="p">))</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>        <span class="c1"># 2. the return G_t from every time step</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>        <span class="n">S</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">states</span><span class="p">))</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>        <span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>        <span class="n">G</span> <span class="o">=</span> <span class="n">returns_to_go</span><span class="p">(</span><span class="n">rewards</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>        <span class="c1"># 3. weight for each log-probability: G_t, or G_t - b(s_t)</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>        <span class="k">if</span> <span class="n">use_baseline</span><span class="p">:</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>            <span class="n">V</span> <span class="o">=</span> <span class="n">value</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>            <span class="n">weight</span> <span class="o">=</span> <span class="n">G</span> <span class="o">-</span> <span class="n">V</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>            <span class="n">opt_v</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="p">((</span><span class="n">G</span> <span class="o">-</span> <span class="n">V</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt_v</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>            <span class="n">weight</span> <span class="o">=</span> <span class="n">G</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>        <span class="c1"># 4. gradient ASCENT on  sum_t weight_t * log pi(a_t | s_t)</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>        <span class="n">log_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">policy</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)),</span> <span class="n">A</span><span class="p">]</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">weight</span> <span class="o">*</span> <span class="n">log_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>              <span class="c1"># minus sign: optimisers minimise</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>        <span class="n">opt_pi</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt_pi</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="k">return</span> <span class="n">history</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a><span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a><span class="k">for</span> <span class="n">use_baseline</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]:</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    <span class="n">history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">use_baseline</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"baseline=</span><span class="si">{</span><span class="n">use_baseline</span><span class="si">!s:</span><span class="s2">5</span><span class="si">}</span><span class="s2">  average return: first 100 episodes </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">history</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">, "</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>          <span class="sa">f</span><span class="s2">"last 100 episodes </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:])</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>baseline=False  average return: first 100 episodes  38.4, last 100 episodes 348.1
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>baseline=True   average return: first 100 episodes  35.2, last 100 episodes 483.4
+</code></pre></div>
+<p>Both versions learn to balance the pole (a random policy lasts only 22 steps on average), and both runs together take about 35 seconds on one CPU core. One seed can be lucky, so we also trained each version with 10 different seeds. Averaged over the last 100 episodes, plain REINFORCE reached <strong>376.8</strong> (worst seed 163.1) and REINFORCE with a baseline <strong>439.4</strong> (worst seed 347.0). The baseline won on 8 of the 10 seeds.</p>
+<div class="admonition note">
+<p class="admonition-title">Notes on the code</p>
+<ul>
+<li><code>V.detach()</code>: the baseline only <em>scales</em> the policy update. Without <code>detach()</code>, the policy loss would also try to change the value network.</li>
+<li>The "loss" is not a measure of how good the policy is: its value can go up while the policy improves. Only its <strong>gradient</strong> means something.</li>
+<li>Real implementations add a few tricks: normalising the weights in each batch, batching several episodes per update, and an entropy bonus that keeps the policy from becoming deterministic too early.</li>
+</ul>
+</div>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"The PyTorch loss in REINFORCE is a loss like in supervised learning.\"</p>
+<p>It is a trick to get the right gradient out of autograd. Its value depends on the sampled episode and the size of the returns, and it doesn't go down steadily as the agent improves. Track the <strong>average return</strong> instead.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Subtracting a baseline changes what the algorithm learns.\"</p>
+<p>It doesn't: the baseline term averages to exactly zero (Step 6), so the expected update is the same. It only reduces the noise. That is why any reasonable baseline is allowed, even a bad one.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"If every reward is positive, every action gets reinforced, so the agent can't learn.\"</p>
+<p>Every <em>sampled</em> action is pushed up, but better actions are pushed up <em>more</em>, so on average the policy still improves. It is just very noisy and can lock onto a worse action, as in run 2 of the bandit widget. A baseline fixes that.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Stochastic policies are only for exploration; the best policy is always deterministic.\"</p>
+<p>That is true in a fully observed MDP, but not when the agent can't see everything (the short corridor) or in games against opponents (rock–paper–scissors). Policy-gradient methods can represent and find the best random policy.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Policy gradient finds the best policy.\"</p>
+<p>It is gradient ascent, so it finds a <strong>local</strong> optimum of <span class="arithmatex">\(J(\theta)\)</span>. With neural networks, <span class="arithmatex">\(J\)</span> has many hills, and an unlucky run can settle on a mediocre one.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. A softmax policy has π = (0.2, 0.5, 0.3). You sample the second action and the return is G = +2. With α = 0.1, how do the three preferences change?</summary>
+<p>$\Delta h = \alpha\, G\, (\mathbb{1}[a=b] - \pi(b)) = 0.1 \cdot 2 \cdot (-0.2,\, 0.5,\, -0.3) = $ <strong>(−0.04, +0.10, −0.06)</strong>. The sampled action goes up, the other two go down.</p>
+</details>
+<details class="question">
+<summary>2. Why can't you just take the gradient of the return through the environment, as you would through a loss function?</summary>
+<p>The return depends on what the environment does after each action, and we don't have a differentiable formula for that (it may be a physics engine, a game or the real world). The policy gradient theorem avoids this: after taking the log, the environment's transition probabilities drop out, and only <span class="arithmatex">\(\nabla_\theta \ln \pi_\theta(a_t \mid s_t)\)</span> remains, which we <em>can</em> differentiate.</p>
+</details>
+<details class="question">
+<summary>3. Show that subtracting a baseline b(s) doesn't change the expected update.</summary>
+<p><span class="arithmatex">\(\mathbb{E}_{a\sim\pi}[b(s)\nabla_\theta \ln \pi_\theta(a\mid s)] = b(s)\sum_a \pi_\theta(a\mid s)\frac{\nabla_\theta \pi_\theta(a\mid s)}{\pi_\theta(a\mid s)} = b(s)\,\nabla_\theta \sum_a \pi_\theta(a \mid s) = b(s)\,\nabla_\theta 1 = 0\)</span>. It works because <span class="arithmatex">\(b\)</span> doesn't depend on the action. A "baseline" that depends on the action taken would bias the update.</p>
+</details>
+<details class="question">
+<summary>4. Why can't REINFORCE learn from a replay buffer of old episodes, like DQN does?</summary>
+<p>The policy gradient is an average over episodes played <strong>by the current policy</strong> <span class="arithmatex">\(\pi_\theta\)</span>. Old episodes were played by older policies, so they over-represent actions the current policy no longer likes, and the estimate is wrong. REINFORCE is on-policy. (PPO and other methods correct for this with importance weights, within limits.)</p>
+</details>
+<details class="question">
+<summary>5. A Gaussian policy for a continuous action has mean μ = 0.5 and σ = 0.2. It samples a = 0.8, and the outcome is better than expected. Which way does the update move μ?</summary>
+<p>For a Gaussian, <span class="arithmatex">\(\frac{\partial \ln \pi(a)}{\partial \mu} = \frac{a - \mu}{\sigma^2} = \frac{0.3}{0.04} = 7.5\)</span> (autograd agrees). The weight <span class="arithmatex">\(G_t - b\)</span> is positive, so μ moves <strong>up, towards 0.8</strong>: the policy shifts towards the action that worked well.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Richard Sutton &amp; Andrew Barto, <a href="http://incompleteideas.net/book/the-book-2nd.html"><em>Reinforcement Learning: An Introduction</em></a> (2nd ed.), Chapter 13: Policy Gradient Methods. The short corridor is Example 13.1.</li>
+<li>Ronald Williams, <a href="https://link.springer.com/article/10.1007/BF00992696"><em>Simple statistical gradient-following algorithms for connectionist reinforcement learning</em></a>, Machine Learning (1992). The original REINFORCE paper.</li>
+<li>Richard Sutton et al., <a href="https://papers.nips.cc/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html"><em>Policy Gradient Methods for Reinforcement Learning with Function Approximation</em></a> (NeurIPS 1999). The policy gradient theorem.</li>
+<li>OpenAI, <a href="https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"><em>Spinning Up: Intro to Policy Optimization</em></a>, a clear derivation with a minimal PyTorch implementation.</li>
+<li>Andrej Karpathy, <a href="https://karpathy.github.io/2016/05/31/rl/"><em>Deep Reinforcement Learning: Pong from Pixels</em></a>, policy gradients explained through a game.</li>
+<li>Lilian Weng, <a href="https://lilianweng.github.io/posts/2018-04-08-policy-gradient/"><em>Policy Gradient Algorithms</em></a>, a tour from REINFORCE to modern methods.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../actor-critic/">Actor-critic methods: A2C, PPO and SAC</a></p>
+<script src="viz/policy-gradients.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../deep-q-networks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Deep Q-Networks">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Deep Q-Networks
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../actor-critic/" class="md-footer__link md-footer__link--next" aria-label="Next: Actor-critic">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Actor-critic
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

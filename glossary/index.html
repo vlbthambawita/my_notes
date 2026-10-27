@@ -1,0 +1,1574 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/glossary/">
+      
+      
+        <link rel="prev" href="../papers/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Glossary - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#glossary" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Glossary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../topics/gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../topics/gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../topics/reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../topics/tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="glossary">Glossary<a class="headerlink" href="#glossary" title="Permanent link">&para;</a></h1>
+<p>Every term used on this site, in one sentence. Terms link to the lesson where they're explained.</p>
+<p><strong>10-armed testbed</strong>: the standard benchmark from Sutton &amp; Barto, made of many random 10-armed bandits with <span class="arithmatex">\(q_*(a) \sim \mathcal{N}(0,1)\)</span> and unit-variance reward noise, used to compare exploration methods. (<a href="../topics/multi-armed-bandits/#step-4-greedy-vs-greedy">Multi-armed bandits</a>)</p>
+<p><strong>1-D convolution</strong>: convolution over a sequence such as an ECG, where the window slides only along time. (<a href="../topics/convolutional-tsetlin-machine/#step-2-looking-through-a-window-patches-and-patch-features">Convolutional Tsetlin machines</a>)</p>
+<p><strong>A2C (advantage actor-critic)</strong>: an actor-critic algorithm that collects short rollouts from several parallel environments and takes one gradient step per batch on an advantage-weighted policy loss plus a value loss and an entropy bonus. (<a href="../topics/actor-critic/#step-4-a2c-batches-parallel-workers-and-gae">Actor-critic</a>)</p>
+<p><strong>Action</strong> (<span class="arithmatex">\(a\)</span>): a choice the agent makes at one time step, such as moving left or pressing a button. (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>Action preference</strong> (h(s, a)): the raw score a policy network gives each action; a softmax turns these scores into probabilities. (<a href="../topics/policy-gradients/#step-2-a-policy-with-knobs">Policy gradients</a>)</p>
+<p><strong>Actor-critic</strong>: a family of RL methods that pairs a policy (the actor) with a learned value function (the critic), whose TD error tells the actor whether an action was better or worse than expected. (<a href="../topics/actor-critic/#step-3-the-actor-critic-loop">Actor-critic</a>)</p>
+<p><strong>Advantage</strong> (A^π(s,a) = Q^π(s,a) − V^π(s)): how much better an action is than the policy's average behaviour in that state; G_t − V(s_t) is a sample estimate of it. (<a href="../topics/policy-gradients/#step-6-taming-the-noise-baselines">Policy gradients</a>)</p>
+<p><strong>Agent</strong>: in reinforcement learning, the learner and decision-maker that observes states, takes actions and receives rewards. (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>AlphaZero</strong>: A game-playing agent that guides Monte Carlo Tree Search with a policy-and-value network and trains that network by self-play on the search's results. (<a href="../topics/model-based-rl/#step-6-alphago-alphazero-and-muzero-search-deep-learning">Model-based RL &amp; planning</a>)</p>
+<p><strong>Backup</strong> (backup diagram): computing a state's value from the rewards and values one step ahead, drawn as a tree of action branches then outcome branches. (<a href="../topics/mdp-bellman-equations/#step-4-the-bellman-expectation-equation-for-vpi">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Baseline</strong> (b(s)): a value subtracted from the return in a policy-gradient update; it does not depend on the action, so the update stays unbiased while its variance drops. (<a href="../topics/policy-gradients/#step-6-taming-the-noise-baselines">Policy gradients</a>)</p>
+<p><strong>Batch gradient descent</strong>: gradient descent where each step uses the gradient computed from <em>all</em> training examples. (<a href="../topics/gradient-descent/#step-6-real-data-is-big-stochastic-gradient-descent-sgd">Gradient Descent</a>)</p>
+<p><strong>Behaviour cloning</strong> (BC): imitation learning done as plain supervised learning, mapping each recorded state to the expert's action. (<a href="../topics/offline-rl-imitation/#step-2-imitation-learning-behaviour-cloning-is-supervised-learning">Offline RL &amp; imitation</a>)</p>
+<p><strong>Behaviour policy</strong>: the policy that actually chooses the agent's actions and so generates its experience, e.g. ε-greedy. (<a href="../topics/q-learning-sarsa/#step-6-on-policy-versus-off-policy">Q-learning &amp; SARSA</a>)</p>
+<p><strong>Bellman expectation equation</strong>: <span class="arithmatex">\(V^\pi(s) = \sum_a \pi(a \mid s) \sum_{s',r} p(s', r \mid s, a)\,[r + \gamma V^\pi(s')]\)</span>; the value of a state equals the expected one-step reward plus the discounted value of the next state. (<a href="../topics/mdp-bellman-equations/#step-4-the-bellman-expectation-equation-for-vpi">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Bellman optimality equation</strong>: the Bellman equation with the average over actions replaced by a max, <span class="arithmatex">\(V^*(s) = \max_a \sum_{s',r} p(s', r \mid s, a)\,[r + \gamma V^*(s')]\)</span>, satisfied only by the optimal values. (<a href="../topics/mdp-bellman-equations/#step-6-the-bellman-optimality-equations">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Bellman residual</strong>: the gap between a value estimate and the right-hand side of its Bellman equation; it is zero for the true values. (<a href="../topics/mdp-bellman-equations/#step-4-the-bellman-expectation-equation-for-vpi">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Boolean feature</strong> (<span class="arithmatex">\(x_k\)</span>): a property of an object that is either True (1) or False (0), such as "has wings" or "tumour ≥ 20 mm"; the only kind of input a Tsetlin machine reads. (<a href="../topics/tsetlin-machine-intro/#step-1-objects-described-by-yesno-facts">What is a Tsetlin machine?</a>)</p>
+<p><strong>Booleanisation</strong>: turning raw data into Boolean features, for example one feature per category value or one per threshold on a number. (<a href="../topics/tsetlin-machine-intro/#step-2-booleanising-real-data">What is a Tsetlin machine?</a>)</p>
+<p><strong>Bootstrapping</strong>: updating an estimate toward a target that contains another estimate, such as <span class="arithmatex">\(V(s')\)</span>: "learning a guess from a guess". (<a href="../topics/monte-carlo-td-learning/#step-3-td0-learn-a-guess-from-a-guess">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Bradley–Terry model</strong>: A model of pairwise choices where the probability that A beats B is σ(r_A − r_B), so only score differences matter. (<a href="../topics/rlhf-dpo/#step-4-learning-a-reward-from-comparisons-bradleyterry">RLHF &amp; DPO</a>)</p>
+<p><strong>Clipped objective</strong> (<span class="arithmatex">\(L^{\text{CLIP}}\)</span>): PPO's policy objective <span class="arithmatex">\(\min(r_t \hat{A}_t, \text{clip}(r_t, 1-\varepsilon, 1+\varepsilon)\hat{A}_t)\)</span>, which gives no extra credit for moving an action's probability ratio outside <span class="arithmatex">\([1-\varepsilon, 1+\varepsilon]\)</span>. (<a href="../topics/actor-critic/#step-5-ppo-dont-move-the-policy-too-far">Actor-critic</a>)</p>
+<p><strong>Composite vote sum</strong>: the sum of the normalised vote sums of all Tsetlin machines in a composite; its sign decides the class (argmax per class for multi-class) and its size is the composite's confidence. (<a href="../topics/tsetlin-machine-confidence/#step-7-normalisation-one-scale-for-every-machine">Confidence &amp; composites</a>)</p>
+<p><strong>Compounding errors</strong>: in imitation learning, small mistakes lead the learner to unfamiliar states where it makes more mistakes, so the error can grow like <span class="arithmatex">\(\varepsilon T^2\)</span> instead of <span class="arithmatex">\(\varepsilon T\)</span>. (<a href="../topics/offline-rl-imitation/#step-3-why-copying-drifts-compounding-errors">Offline RL &amp; imitation</a>)</p>
+<p><strong>Confidence</strong> (|v|): how sure a Tsetlin machine is about a prediction, measured by the size of its vote sum (for multi-class, the largest class vote sum). (<a href="../topics/tsetlin-machine-confidence/#step-1-confidence-is-the-size-of-the-vote-sum">Confidence &amp; composites</a>)</p>
+<p><strong>Conservative Q-Learning</strong> (CQL): an offline RL method that adds a loss term pushing Q-values down on all actions and up on the dataset's actions, so unseen actions are never overestimated. (<a href="../topics/offline-rl-imitation/#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen">Offline RL &amp; imitation</a>)</p>
+<p><strong>Contextual bandit</strong>: a bandit where the agent sees a context (such as a user profile) before choosing, and the best arm depends on that context. (<a href="../topics/multi-armed-bandits/#putting-it-all-together">Multi-armed bandits</a>)</p>
+<p><strong>Convex function</strong>: a bowl-shaped function with a single minimum; gradient descent with a suitable learning rate is guaranteed to find it.</p>
+<p><strong>Convolution window</strong>: a small rectangle, such as 3×3 pixels, placed at every position of an image so that a rule sees one piece of the image at a time. (<a href="../topics/convolutional-tsetlin-machine/#step-2-looking-through-a-window-patches-and-patch-features">Convolutional Tsetlin machines</a>)</p>
+<p><strong>Convolutional Tsetlin machine</strong>: a Tsetlin machine whose rules are matched against every window patch of the input and fire if they match anywhere, so one rule recognises a pattern wherever it appears. (<a href="../topics/convolutional-tsetlin-machine/#step-3-evaluating-a-rule-match-every-patch-then-or">Convolutional Tsetlin machines</a>)</p>
+<p><strong>Coverage</strong>: the fraction of a class's examples that a rule matches. (<a href="../topics/tsetlin-machine-feedback/#step-8-train-one-rule-yourself">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Coverage/accuracy trade-off</strong>: answering only cases whose confidence reaches a threshold raises accuracy on the answered cases but leaves more cases to refer to a human. (<a href="../topics/tsetlin-machine-confidence/#step-3-confidence-on-real-patients">Confidence &amp; composites</a>)</p>
+<p><strong>Credit assignment problem</strong>: working out which of many earlier actions deserve the credit (or blame) for a reward that arrives later. (<a href="../topics/reinforcement-learning-intro/#step-1-learning-from-consequences-not-from-answers">What is RL?</a>)</p>
+<p><strong>Curse of dimensionality</strong>: the number of states grows exponentially with the number of variables describing a state, so sweeping over all of them quickly becomes impossible. (<a href="../topics/dynamic-programming/#step-6-the-catch-you-need-the-model-and-you-need-every-state">Dynamic programming</a>)</p>
+<p><strong>DAgger</strong> (Dataset Aggregation): imitation learning that runs the learner, has the expert label the states the learner visits, adds them to the dataset and retrains. (<a href="../topics/offline-rl-imitation/#step-4-dagger-ask-the-expert-about-your-own-mistakes">Offline RL &amp; imitation</a>)</p>
+<p><strong>Deadly triad</strong>: Function approximation, bootstrapping and off-policy data together, a combination that can make value learning diverge. (<a href="../topics/deep-q-networks/#step-5-problem-2-chasing-a-moving-target-the-target-network">Deep Q-Networks</a>)</p>
+<p><strong>Decision-time planning</strong>: planning focused on the current state at the moment an action must be chosen, for example by growing a search tree, rather than improving values for all states in the background. (<a href="../topics/model-based-rl/#step-5-planning-at-decision-time-monte-carlo-tree-search">Model-based RL &amp; planning</a>)</p>
+<p><strong>Deep Q-Network</strong> (DQN): Q-learning with a neural network as the Q-function, made stable with an experience replay buffer and a target network. (<a href="../topics/deep-q-networks/#step-2-the-q-network-one-output-per-action">Deep Q-Networks</a>)</p>
+<p><strong>Direct Preference Optimization (DPO)</strong>: trains a policy directly on preference pairs with the loss −log σ(β log π_θ(y_w)/π_ref(y_w) − β log π_θ(y_l)/π_ref(y_l)), with no reward model or RL loop. (<a href="../topics/rlhf-dpo/#step-6-dpo-skip-the-reward-model-and-the-rl-loop">RLHF &amp; DPO</a>)</p>
+<p><strong>Discount factor</strong> (<span class="arithmatex">\(\gamma\)</span>): a number between 0 and 1 that makes rewards further in the future count for less in the return. (<a href="../topics/reinforcement-learning-intro/#step-3-what-does-best-mean-the-return-and-discounting">What is RL?</a>)</p>
+<p><strong>Distribution shift</strong>: when the states a policy meets at test time differ from the states it was trained on, for example because its own actions lead it elsewhere. (<a href="../topics/offline-rl-imitation/#step-3-why-copying-drifts-compounding-errors">Offline RL &amp; imitation</a>)</p>
+<p><strong>Divergence</strong>: when the learning rate is too large and each update overshoots further, so the loss grows instead of shrinking. (<a href="../topics/gradient-descent/#step-4-taking-the-step-the-update-rule">Gradient Descent</a>)</p>
+<p><strong>Double DQN</strong>: A DQN variant whose target picks the next action with the online network but scores it with the target network, removing most of the overestimation bias. (<a href="../topics/deep-q-networks/#step-7-improvements-double-dqn-dueling-networks-prioritised-replay">Deep Q-Networks</a>)</p>
+<p><strong>Dueling network</strong>: A Q-network whose last layer splits into a state-value stream V(s) and an advantage stream A(s, a) that are recombined into Q(s, a). (<a href="../topics/deep-q-networks/#step-7-improvements-double-dqn-dueling-networks-prioritised-replay">Deep Q-Networks</a>)</p>
+<p><strong>Dynamic programming (DP)</strong>: computing optimal policies from a known model p(s′, r | s, a) by turning the Bellman equations into update rules applied to every state. (<a href="../topics/dynamic-programming/#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation">Dynamic programming</a>)</p>
+<p><strong>Dynamics function</strong> (<span class="arithmatex">\(p(s', r \mid s, a)\)</span>): the probability of landing in state <span class="arithmatex">\(s'\)</span> with reward <span class="arithmatex">\(r\)</span> after taking action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span>; the "rules of the game" of an MDP. (<a href="../topics/mdp-bellman-equations/#step-2-the-markov-decision-process">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Dyna-Q</strong>: Q-learning plus a learned model: after every real step it makes n extra Q-learning updates on transitions imagined by the model. (<a href="../topics/model-based-rl/#step-3-dyna-q-learn-model-plan">Model-based RL &amp; planning</a>)</p>
+<p><strong>Entropy bonus</strong>: a term added to the loss that rewards the policy for keeping its action probabilities spread out, so it keeps exploring. (<a href="../topics/actor-critic/#step-4-a2c-batches-parallel-workers-and-gae">Actor-critic</a>)</p>
+<p><strong>Environment</strong>: everything outside the agent; it responds to each action with a new state and a reward. (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>Episode</strong>: one run of agent–environment interaction, from a starting state to a terminal state (e.g. one game). (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>Epoch</strong>: one full pass over the entire training dataset.</p>
+<p><strong>ε-greedy (epsilon-greedy)</strong>: a policy that usually takes the best-known action but, with small probability ε, takes a random one to explore. (<a href="../topics/reinforcement-learning-intro/#step-6-explore-or-exploit">What is RL?</a>)</p>
+<p><strong>Erase Feedback</strong> (Type Ib): when a rule fails to match an example of its own class, every literal is forgotten one step with probability equal to the Forget Value. (<a href="../topics/tsetlin-machine-feedback/#step-4-erase-feedback-loosen-a-rule-that-is-too-picky">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Expected SARSA</strong>: A variant of SARSA whose TD target averages Q(s′, a′) over the policy's action probabilities instead of using one sampled next action, which gives less noisy updates. (<a href="../topics/q-learning-sarsa/#step-6-on-policy-versus-off-policy">Q-learning &amp; SARSA</a>)</p>
+<p><strong>Experience replay</strong> (replay buffer): storing past transitions (s, a, r, s′) in a buffer and training on random mini-batches from it, which decorrelates the data and reuses experience. (<a href="../topics/deep-q-networks/#step-4-problem-1-consecutive-samples-are-correlated-experience-replay">Deep Q-Networks</a>)</p>
+<p><strong>Exploration vs. exploitation</strong>: the trade-off between trying new actions to learn more (explore) and choosing the best-known action to collect reward (exploit). (<a href="../topics/reinforcement-learning-intro/#step-6-explore-or-exploit">What is RL?</a>)</p>
+<p><strong>Extrapolation error</strong>: in offline RL, the error from bootstrapping on Q-values of actions that never appear in the data; the max picks them when they are too high, causing overestimation. (<a href="../topics/offline-rl-imitation/#step-5-offline-rl-and-why-plain-q-learning-breaks">Offline RL &amp; imitation</a>)</p>
+<p><strong>First-visit Monte Carlo</strong>: A Monte Carlo method that uses only the return after the first visit to a state in each episode. (<a href="../topics/monte-carlo-td-learning/#step-2-monte-carlo-average-the-returns-you-actually-got">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Forget Value</strong> (1/s): the probability that a forgetting step (a decrement) actually happens; it also acts as the frequency threshold a literal must beat to stay in a rule. (<a href="../topics/tsetlin-machine-feedback/#step-6-recognize-erase-find-frequent-patterns">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Frequent pattern</strong>: a combination of literals that is True for most examples of a class, found by Recognize and Erase Feedback. (<a href="../topics/tsetlin-machine-feedback/#step-6-recognize-erase-find-frequent-patterns">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Function approximation</strong>: representing a value function or policy with a parameterised function, such as a neural network, instead of a table, so it can generalise to unseen states. (<a href="../topics/deep-q-networks/#step-1-why-q-tables-break">Deep Q-Networks</a>)</p>
+<p><strong>Gaussian policy</strong> (a ~ N(μ_θ(s), σ²)): a policy for continuous actions whose network outputs the mean (and often the spread) of a normal distribution that actions are sampled from. (<a href="../topics/policy-gradients/#step-2-a-policy-with-knobs">Policy gradients</a>)</p>
+<p><strong>Generalized Advantage Estimation (GAE)</strong> (<span class="arithmatex">\(\lambda\)</span>): an advantage estimate that blends multi-step TD errors, <span class="arithmatex">\(\hat{A}_t = \sum_k (\gamma\lambda)^k \delta_{t+k}\)</span>, trading bias (<span class="arithmatex">\(\lambda=0\)</span>) against variance (<span class="arithmatex">\(\lambda=1\)</span>). (<a href="../topics/actor-critic/#step-4-a2c-batches-parallel-workers-and-gae">Actor-critic</a>)</p>
+<p><strong>Generalized policy iteration (GPI)</strong>: the general pattern of interleaving policy evaluation and policy improvement, which almost every RL method follows. (<a href="../topics/dynamic-programming/#step-5-the-big-picture-generalized-policy-iteration">Dynamic programming</a>)</p>
+<p><strong>Gradient</strong> (<span class="arithmatex">\(\nabla L\)</span>): the list of slopes of the loss with respect to each parameter; it points in the direction of steepest increase. (<a href="../topics/gradient-descent/#step-3-which-way-is-downhill-the-gradient">Gradient Descent</a>)</p>
+<p><strong>Gradient descent</strong>: an algorithm that repeatedly moves parameters a small step opposite to the gradient, to reduce the loss. (<a href="../topics/gradient-descent/">Gradient Descent</a>)</p>
+<p><strong>Greedy action</strong>: the action with the highest current value estimate, <span class="arithmatex">\(\arg\max_a Q_t(a)\)</span>; choosing it is exploiting. (<a href="../topics/multi-armed-bandits/#step-2-action-values-what-is-each-arm-worth">Multi-armed bandits</a>)</p>
+<p><strong>Greedy policy</strong> (<span class="arithmatex">\(\pi^*(s) = \arg\max_a Q^*(s,a)\)</span>): a policy that always picks the action with the highest action-value; greedy with respect to <span class="arithmatex">\(Q^*\)</span> is optimal. (<a href="../topics/mdp-bellman-equations/#step-6-the-bellman-optimality-equations">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Image patch</strong> (patch features <span class="arithmatex">\(x_{i,j}\)</span>): the pixels inside the convolution window at one position; their truth values are the patch features, which mean the same thing at every position. (<a href="../topics/convolutional-tsetlin-machine/#step-2-looking-through-a-window-patches-and-patch-features">Convolutional Tsetlin machines</a>)</p>
+<p><strong>Imitation learning</strong>: learning a policy from an expert's demonstrations (states and actions) instead of from rewards. (<a href="../topics/offline-rl-imitation/#step-1-three-ways-to-get-experience-online-off-policy-offline">Offline RL &amp; imitation</a>)</p>
+<p><strong>Implicit Q-Learning</strong> (IQL): an offline RL method that never queries unseen actions; it learns values only on dataset actions and extracts a policy by advantage-weighted behaviour cloning. (<a href="../topics/offline-rl-imitation/#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen">Offline RL &amp; imitation</a>)</p>
+<p><strong>Incremental update</strong>: updating an estimate one sample at a time as new estimate = old estimate + step size × (target − old estimate). (<a href="../topics/multi-armed-bandits/#step-3-learning-incrementally-new-estimate-old-estimate-step-error">Multi-armed bandits</a>)</p>
+<p><strong>Interpretability</strong>: the property of a model whose reasoning a person can read and check directly, as with a Tsetlin machine's AND-rules; it does not by itself make the model accurate. (<a href="../topics/tsetlin-machine-intro/#why-should-i-care">What is a Tsetlin machine?</a>)</p>
+<p><strong>Iterative policy evaluation</strong>: computing V^π by repeatedly applying the Bellman expectation equation as an assignment until the values stop changing. (<a href="../topics/dynamic-programming/#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation">Dynamic programming</a>)</p>
+<p><strong>KL penalty</strong> (β): A term −β·KL(π‖π_ref) added to the RLHF objective that keeps the fine-tuned policy close to the reference model. (<a href="../topics/rlhf-dpo/#step-5-rl-fine-tuning-with-a-kl-leash">RLHF &amp; DPO</a>)</p>
+<p><strong>Learning rate</strong> (<span class="arithmatex">\(\eta\)</span>): the number that controls how big each gradient-descent step is. (<a href="../topics/gradient-descent/#step-4-taking-the-step-the-update-rule">Gradient Descent</a>)</p>
+<p><strong>Literal</strong> (<span class="arithmatex">\(x_k\)</span>, <span class="arithmatex">\(\lnot x_k\)</span>): a Boolean feature or its negation; with <span class="arithmatex">\(o\)</span> features there are <span class="arithmatex">\(2o\)</span> literals, and exactly half are True for any object. (<a href="../topics/tsetlin-machine-intro/#step-3-literals-a-feature-or-its-opposite">What is a Tsetlin machine?</a>)</p>
+<p><strong>Literal game</strong>: the two literals of a rule seen as players that each choose Memorized or Forgotten without communicating; each one's feedback depends on the other's choice. (<a href="../topics/tsetlin-machine-feedback/#step-9-two-literals-one-rule-a-game-without-talking">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Log-derivative trick</strong> (∇π = π ∇ln π): the identity that turns the gradient of an expectation into an expectation you can estimate by sampling, so the environment's unknown dynamics drop out. (<a href="../topics/policy-gradients/#step-4-the-policy-gradient-make-good-actions-more-likely">Policy gradients</a>)</p>
+<p><strong>Loss (loss function)</strong>: a single number that measures how wrong a model's predictions are; training tries to make it small. (<a href="../topics/gradient-descent/#step-2-what-are-we-trying-to-make-small-the-loss">Gradient Descent</a>)</p>
+<p><strong>Markov chain</strong>: a random process whose next state depends only on the current state, like a literal's memory position moving one step per training example. (<a href="../topics/tsetlin-automaton/#step-4-one-literal-one-class-a-random-walk">The Tsetlin automaton</a>)</p>
+<p><strong>Markov decision process</strong> (MDP): the formal model of an RL problem: states, actions, dynamics <span class="arithmatex">\(p(s', r \mid s, a)\)</span> and a discount <span class="arithmatex">\(\gamma\)</span>. (<a href="../topics/mdp-bellman-equations/#step-2-the-markov-decision-process">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Markov property</strong>: the next state and reward depend only on the current state and action, not on the earlier history. (<a href="../topics/mdp-bellman-equations/#step-1-the-markov-property-the-state-is-all-you-need">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Match map</strong>: the grid of True/False results of one rule at every window position, the Boolean version of a CNN feature map, which the OR collapses to one bit. (<a href="../topics/convolutional-tsetlin-machine/#step-3-evaluating-a-rule-match-every-patch-then-or">Convolutional Tsetlin machines</a>)</p>
+<p><strong>Maximum-entropy RL</strong> (<span class="arithmatex">\(\alpha\)</span>): an objective that maximises reward plus the policy's entropy weighted by a temperature <span class="arithmatex">\(\alpha\)</span>, as used by SAC. (<a href="../topics/actor-critic/#step-6-sac-off-policy-continuous-actions-maximum-entropy">Actor-critic</a>)</p>
+<p><strong>Mean squared error (MSE)</strong>: a loss that averages the squared differences between predictions and true values.</p>
+<p><strong>Memorize Value</strong> ((s−1)/s): the probability that a memorizing step (an increment) under Recognize Feedback actually happens; usually Memorize Value + Forget Value = 1. (<a href="../topics/tsetlin-machine-feedback/#step-3-recognize-feedback-become-more-like-this-example">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Memorized / Forgotten</strong>: the upper and lower halves of a literal's memory; only Memorized literals take part in the rule's AND. (<a href="../topics/tsetlin-automaton/#step-3-from-actions-to-memory-one-integer-per-literal">The Tsetlin automaton</a>)</p>
+<p><strong>Memory depth</strong> (D): the number of memory positions per literal (the book's Chapter 1 uses 10), equal to the 2N states of a Tsetlin automaton; deeper memory gives sharper, more decisive but slower-changing outcomes. (<a href="../topics/tsetlin-automaton/#step-6-deeper-memory-sharper-decisions">The Tsetlin automaton</a>)</p>
+<p><strong>Mini-batch</strong>: a small random subset of the training data used to estimate the gradient for one step.</p>
+<p><strong>Model (of the environment)</strong> (<span class="arithmatex">\(\hat p(s', r \mid s, a)\)</span>): the agent's own prediction of what happens after taking action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span>: the next state and the reward, or their probabilities. (<a href="../topics/model-based-rl/#step-1-what-is-a-model">Model-based RL &amp; planning</a>)</p>
+<p><strong>Model-based RL</strong>: reinforcement learning that uses a model of the environment, given or learned, to plan with imagined experience instead of relying only on real experience. (<a href="../topics/model-based-rl/#step-1-what-is-a-model">Model-based RL &amp; planning</a>)</p>
+<p><strong>Model-free</strong>: describes methods that learn values or policies straight from experience, without knowing or learning the transition probabilities <span class="arithmatex">\(p(s', r \mid s, a)\)</span>. (<a href="../topics/monte-carlo-td-learning/#step-1-learning-without-a-model">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Monte Carlo prediction</strong>: estimating <span class="arithmatex">\(V^\pi(s)\)</span> by averaging the complete returns actually observed after visiting <span class="arithmatex">\(s\)</span>. (<a href="../topics/monte-carlo-td-learning/#step-2-monte-carlo-average-the-returns-you-actually-got">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Monte Carlo Tree Search (MCTS)</strong>: A planning method that grows a search tree from the current state, one simulation at a time (selection, expansion, simulation, backup), and then plays the most-visited move. (<a href="../topics/model-based-rl/#step-5-planning-at-decision-time-monte-carlo-tree-search">Model-based RL &amp; planning</a>)</p>
+<p><strong>Multi-armed bandit</strong> (k-armed bandit): the simplest RL problem, with one unchanging state where the agent repeatedly picks one of k actions ("arms"), each paying a random reward from its own hidden distribution. (<a href="../topics/multi-armed-bandits/#step-1-the-k-armed-bandit-one-state-k-actions">Multi-armed bandits</a>)</p>
+<p><strong>Multi-class Tsetlin machine</strong>: one team of rules (for and against) per class; the class whose team has the highest vote sum wins. (<a href="../topics/tsetlin-machine-classification/#step-8-more-than-two-classes">Classification by voting</a>)</p>
+<p><strong>MuZero</strong>: an AlphaZero-style agent that is not given the rules; it learns a model in a hidden state space and runs MCTS inside it. (<a href="../topics/model-based-rl/#step-6-alphago-alphazero-and-muzero-search-deep-learning">Model-based RL &amp; planning</a>)</p>
+<p><strong>Normalised vote sum</strong>: a machine's vote sum divided by the difference between the highest and lowest vote sums it produces on the data, so that machines of different sizes speak on one scale. (<a href="../topics/tsetlin-machine-confidence/#step-7-normalisation-one-scale-for-every-machine">Confidence &amp; composites</a>)</p>
+<p><strong>n-step TD</strong>: A TD method that adds up <span class="arithmatex">\(n\)</span> real rewards and then bootstraps from <span class="arithmatex">\(V(s_{t+n})\)</span>; it sits between TD(0) (<span class="arithmatex">\(n=1\)</span>) and Monte Carlo (<span class="arithmatex">\(n\)</span> = to the end). (<a href="../topics/monte-carlo-td-learning/#step-7-between-the-two-n-step-td-and-backup-diagrams">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Offline RL</strong> (batch RL): reinforcement learning from a fixed, previously logged dataset of <span class="arithmatex">\((s, a, r, s')\)</span> with no interaction with the environment during training. (<a href="../topics/offline-rl-imitation/#step-1-three-ways-to-get-experience-online-off-policy-offline">Offline RL &amp; imitation</a>)</p>
+<p><strong>Off-policy learning</strong>: learning the values of one policy (the target policy, e.g. greedy) from experience generated by a different behaviour policy (e.g. ε-greedy). (<a href="../topics/q-learning-sarsa/#step-6-on-policy-versus-off-policy">Q-learning &amp; SARSA</a>)</p>
+<p><strong>On-policy learning</strong>: learning the values of the same policy that is generating the experience, exploration included. (<a href="../topics/q-learning-sarsa/#step-6-on-policy-versus-off-policy">Q-learning &amp; SARSA</a>)</p>
+<p><strong>Optimal value functions</strong> (<span class="arithmatex">\(V^*\)</span>, <span class="arithmatex">\(Q^*\)</span>): the highest value any policy can reach from each state (or state-action pair). (<a href="../topics/mdp-bellman-equations/#step-6-the-bellman-optimality-equations">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Optimistic initial values</strong>: starting every value estimate far too high, so that even a greedy agent tries every action until reality lowers its estimates. (<a href="../topics/multi-armed-bandits/#step-5-optimistic-initial-values">Multi-armed bandits</a>)</p>
+<p><strong>Overestimation bias</strong>: the upward bias that comes from taking a max over noisy value estimates, as in the Q-learning target. (<a href="../topics/deep-q-networks/#step-7-improvements-double-dqn-dueling-networks-prioritised-replay">Deep Q-Networks</a>)</p>
+<p><strong>Parameterised policy</strong> (π_θ(a | s)): a policy given by a function with adjustable weights θ (usually a neural network) that outputs action probabilities. (<a href="../topics/policy-gradients/#step-2-a-policy-with-knobs">Policy gradients</a>)</p>
+<p><strong>Parameters (weights)</strong>: the adjustable numbers inside a model that training changes.</p>
+<p><strong>Partially observable MDP</strong> (POMDP): a problem where the agent's observation misses information needed to predict the future, so it is not Markov. (<a href="../topics/mdp-bellman-equations/#step-1-the-markov-property-the-state-is-all-you-need">MDPs &amp; Bellman equations</a>)</p>
+<p><strong>Pessimism</strong> (offline RL): the principle of distrusting values for actions the data doesn't support, by constraining or penalising them (BCQ, CQL, IQL). (<a href="../topics/offline-rl-imitation/#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen">Offline RL &amp; imitation</a>)</p>
+<p><strong>Planning</strong>: computing or improving a policy from experience imagined with a model, without acting in the real environment. (<a href="../topics/model-based-rl/#step-1-what-is-a-model">Model-based RL &amp; planning</a>)</p>
+<p><strong>Policy</strong> (<span class="arithmatex">\(\pi\)</span>): the agent's strategy, a rule that gives the action (or a probability for each action) in every state. (<a href="../topics/reinforcement-learning-intro/#step-4-the-agents-strategy-the-policy">What is RL?</a>)</p>
+<p><strong>Policy gradient theorem</strong> (∇_θ J = E[Σ_t G_t ∇_θ ln π_θ(a_t | s_t)]): the result that the gradient of expected return can be estimated from sampled episodes, without a model of the environment. (<a href="../topics/policy-gradients/#step-4-the-policy-gradient-make-good-actions-more-likely">Policy gradients</a>)</p>
+<p><strong>Policy improvement theorem</strong>: acting greedily with respect to V^π gives a policy at least as good as π in every state. (<a href="../topics/dynamic-programming/#step-2-policy-improvement-act-greedily-on-the-values">Dynamic programming</a>)</p>
+<p><strong>Policy iteration</strong>: alternating full policy evaluation and greedy improvement until the policy stops changing, at which point it is optimal. (<a href="../topics/dynamic-programming/#step-3-policy-iteration-evaluate-improve-repeat">Dynamic programming</a>)</p>
+<p><strong>Policy objective</strong> (J(θ)): the expected return of the policy with weights θ, which policy-gradient methods maximise by gradient ascent. (<a href="../topics/policy-gradients/#step-3-the-goal-climb-the-expected-return">Policy gradients</a>)</p>
+<p><strong>Policy-based method</strong>: an RL method that learns the policy directly instead of deriving it from learned values. (<a href="../topics/policy-gradients/#step-1-why-learn-the-policy-directly">Policy gradients</a>)</p>
+<p><strong>Position encoding</strong>: adding each patch's window coordinates as extra Boolean features, so a rule can restrict its pattern to a rectangular region. (<a href="../topics/convolutional-tsetlin-machine/#step-6-position-encoding-letting-a-rule-say-where">Convolutional Tsetlin machines</a>)</p>
+<p><strong>PPO (Proximal Policy Optimization)</strong>: an on-policy actor-critic algorithm that runs several epochs of minibatch updates per batch while a clipped objective keeps each policy change small; it is the RL step in classic RLHF. (<a href="../topics/actor-critic/#step-5-ppo-dont-move-the-policy-too-far">Actor-critic</a>)</p>
+<p><strong>Precision</strong> (of a rule): among the examples a rule matches, the fraction that really belong to its class. (<a href="../topics/tsetlin-machine-feedback/#step-8-train-one-rule-yourself">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Prioritised experience replay</strong>: sampling replay transitions in proportion to their TD error, with importance weights to correct the bias this introduces. (<a href="../topics/deep-q-networks/#step-7-improvements-double-dqn-dueling-networks-prioritised-replay">Deep Q-Networks</a>)</p>
+<p><strong>Probability ratio</strong> (<span class="arithmatex">\(r_t(\theta)\)</span>): how much more or less likely the new policy is to take the logged action than the policy that collected the data, <span class="arithmatex">\(\pi_\theta(a_t \mid s_t)/\pi_{\text{old}}(a_t \mid s_t)\)</span>. (<a href="../topics/actor-critic/#step-5-ppo-dont-move-the-policy-too-far">Actor-critic</a>)</p>
+<p><strong>PUCT</strong>: alphaZero's selection rule <span class="arithmatex">\(Q(s,a) + c\,P(s,a)\sqrt{N(s)}/(1+N(s,a))\)</span>, which adds the network's move prior to a UCB-style exploration bonus. (<a href="../topics/model-based-rl/#step-6-alphago-alphazero-and-muzero-search-deep-learning">Model-based RL &amp; planning</a>)</p>
+<p><strong>Q-learning</strong>: A model-free TD control method that updates Q(s, a) towards r + γ max_a′ Q(s′, a′), so it learns the optimal greedy values Q* while behaving ε-greedily. (<a href="../topics/q-learning-sarsa/#step-3-q-learning-learn-about-the-best-move-whatever-you-do-next">Q-learning &amp; SARSA</a>)</p>
+<p><strong>Q-network</strong> (Q(s, a; θ)): A neural network that takes a state and outputs one Q-value per action. (<a href="../topics/deep-q-networks/#step-2-the-q-network-one-output-per-action">Deep Q-Networks</a>)</p>
+<p><strong>Q-value / action-value</strong> (<span class="arithmatex">\(Q^\pi(s,a)\)</span>): the expected return from taking action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span> and following policy <span class="arithmatex">\(\pi\)</span> afterwards. (<a href="../topics/reinforcement-learning-intro/#step-5-how-good-is-a-state-the-value-function">What is RL?</a>)</p>
+<p><strong>Random matching patch</strong>: in convolutional learning, Recognize and Reject Feedback use the literals of one patch picked at random among those the rule matched. (<a href="../topics/convolutional-tsetlin-machine/#step-4-learning-which-patch-does-the-rule-learn-from">Convolutional Tsetlin machines</a>)</p>
+<p><strong>Random walk</strong>: a position that moves up or down one step at a time at random; the memory position of a literal under training is one. (<a href="../topics/tsetlin-automaton/#step-4-one-literal-one-class-a-random-walk">The Tsetlin automaton</a>)</p>
+<p><strong>Recognize Feedback</strong> (Type Ia): when a rule matches an example of its own class, True literals are memorized (Memorize Value) and False literals forgotten (Forget Value). (<a href="../topics/tsetlin-machine-feedback/#step-3-recognize-feedback-become-more-like-this-example">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Reference policy</strong> (π_ref): the frozen starting model (usually the SFT model) that the KL penalty and DPO's log-ratios measure the policy against. (<a href="../topics/rlhf-dpo/#step-3-the-rlhf-recipe-in-three-stages">RLHF &amp; DPO</a>)</p>
+<p><strong>Regret</strong>: the total expected reward lost by not always choosing the best action, <span class="arithmatex">\(\sum_t \big(q_*(a^*) - q_*(a_t)\big)\)</span>. (<a href="../topics/multi-armed-bandits/#step-7-regret-the-yardstick-for-exploration">Multi-armed bandits</a>)</p>
+<p><strong>REINFORCE</strong>: the basic Monte Carlo policy-gradient algorithm: play an episode, then raise the log-probability of each action in proportion to the return that followed it. (<a href="../topics/policy-gradients/#step-5-reinforce-the-algorithm">Policy gradients</a>)</p>
+<p><strong>Reinforcement learning from human feedback (RLHF)</strong>: aligning a model by learning a reward from human comparisons and then optimising the model against it with RL (typically PPO). (<a href="../topics/rlhf-dpo/#step-3-the-rlhf-recipe-in-three-stages">RLHF &amp; DPO</a>)</p>
+<p><strong>Reinforcement learning (RL)</strong>: learning to act by trial and error, using rewards instead of correct answers, to maximise total future reward. (<a href="../topics/reinforcement-learning-intro/">What is RL?</a>)</p>
+<p><strong>Reject Feedback</strong> (Type II): when a rule matches an example of another class, every Forgotten literal that is False for that example moves one step towards memorized, always, so the rule stops matching it. (<a href="../topics/tsetlin-machine-feedback/#step-7-frequent-is-not-enough-reject-feedback">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>Reliability diagram</strong>: a plot of how often the positive class really occurs at each confidence level (here, each vote sum), used to check whether confidence can be read as a probability. (<a href="../topics/tsetlin-machine-confidence/#step-5-an-honest-look-at-calibration">Confidence &amp; composites</a>)</p>
+<p><strong>Resource allocation</strong>: the effect of the Voting Margin that sends feedback mostly to examples not yet won by T votes, so idle rules move to sub-patterns no rule covers yet. (<a href="../topics/tsetlin-machine-classification/#step-4-the-complete-learning-algorithm">Classification by voting</a>)</p>
+<p><strong>Return</strong> (<span class="arithmatex">\(G_t\)</span>): the (discounted) sum of all rewards from time step <span class="arithmatex">\(t\)</span> until the end of the episode; the quantity an RL agent tries to maximise. (<a href="../topics/reinforcement-learning-intro/#step-3-what-does-best-mean-the-return-and-discounting">What is RL?</a>)</p>
+<p><strong>Reward</strong> (<span class="arithmatex">\(r\)</span>): the number the environment sends back after each action, saying how good the immediate outcome was. (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>Reward hacking (reward over-optimisation)</strong>: when a policy exploits errors in a learned or proxy reward, so its score rises while true quality falls (Goodhart's law). (<a href="../topics/rlhf-dpo/#step-5-rl-fine-tuning-with-a-kl-leash">RLHF &amp; DPO</a>)</p>
+<p><strong>Reward model</strong> (r_φ): A network trained on human preference pairs to output a scalar score for a reply, used as the reward during RL fine-tuning. (<a href="../topics/rlhf-dpo/#step-4-learning-a-reward-from-comparisons-bradleyterry">RLHF &amp; DPO</a>)</p>
+<p><strong>Rule (clause)</strong> (<span class="arithmatex">\(C_j\)</span>): "if condition then class", where the condition is an AND of literals; it matches an object only if every literal is True. (<a href="../topics/tsetlin-machine-intro/#step-4-rules-and-ing-literals-together">What is a Tsetlin machine?</a>)</p>
+<p><strong>Rules for / against a class</strong> (positive / negative polarity clauses): rules whose True condition adds +1 or −1 to the vote sum. (<a href="../topics/tsetlin-machine-classification/#step-2-rules-vote-the-vote-sum-v">Classification by voting</a>)</p>
+<p><strong>SAC (Soft Actor-Critic)</strong>: an off-policy actor-critic for continuous actions that uses a replay buffer, a maximum-entropy objective with an (auto-tuned) temperature, and twin Q critics. (<a href="../topics/actor-critic/#step-6-sac-off-policy-continuous-actions-maximum-entropy">Actor-critic</a>)</p>
+<p><strong>Sample average</strong>: estimating an action's value as the mean of the rewards it has given so far. (<a href="../topics/multi-armed-bandits/#step-2-action-values-what-is-each-arm-worth">Multi-armed bandits</a>)</p>
+<p><strong>SARSA</strong>: an on-policy TD control method that updates Q(s, a) towards r + γ Q(s′, a′) using the next action it really takes; named after the quintuple (s, a, r, s′, a′). (<a href="../topics/q-learning-sarsa/#step-2-sarsa-learn-from-the-move-you-actually-make-next">Q-learning &amp; SARSA</a>)</p>
+<p><strong>Self-play</strong>: training an agent on games it plays against itself, so that it produces its own training data. (<a href="../topics/model-based-rl/#step-6-alphago-alphazero-and-muzero-search-deep-learning">Model-based RL &amp; planning</a>)</p>
+<p><strong>Semi-gradient</strong>: an update that treats the bootstrapped target as a constant and does not differentiate through it. (<a href="../topics/deep-q-networks/#step-3-turning-q-learning-into-regression">Deep Q-Networks</a>)</p>
+<p><strong>Softmax policy</strong>: a policy that turns action preferences into probabilities with π(a|s) = e^{h(s,a)} / Σ_b e^{h(s,b)}. (<a href="../topics/policy-gradients/#step-2-a-policy-with-knobs">Policy gradients</a>)</p>
+<p><strong>Specificity</strong> (s): the papers' single knob, with Forget Value 1/s; a larger s gives longer, more specific rules. (<a href="../topics/tsetlin-machine-feedback/#step-3-recognize-feedback-become-more-like-this-example">Recognize, Erase &amp; Reject feedback</a>)</p>
+<p><strong>State</strong> (<span class="arithmatex">\(s\)</span>): a description of the situation the agent is in at a given time step. (<a href="../topics/reinforcement-learning-intro/#step-2-the-loop-agent-and-environment">What is RL?</a>)</p>
+<p><strong>Stationary distribution</strong> (π): the long-run share of time a Markov chain spends in each state, unchanged by one more step (π = πM); it gives a literal's exact probability of being Memorized. (<a href="../topics/tsetlin-automaton/#step-5-the-exact-learning-outcome">The Tsetlin automaton</a>)</p>
+<p><strong>Step size</strong> (α): how far an incremental update moves the estimate towards the new target; 1/n gives the exact average, and a constant α tracks a changing world. (<a href="../topics/multi-armed-bandits/#step-3-learning-incrementally-new-estimate-old-estimate-step-error">Multi-armed bandits</a>)</p>
+<p><strong>Stochastic gradient descent (SGD)</strong>: gradient descent that estimates the gradient from one random example (or a mini-batch) per step. (<a href="../topics/gradient-descent/#step-6-real-data-is-big-stochastic-gradient-descent-sgd">Gradient Descent</a>)</p>
+<p><strong>Sub-optimal configuration</strong> (local optimum): a set of rules that no single rule can improve by changing alone, such as two copies of "x1 AND x2" for x1 OR x2. (<a href="../topics/tsetlin-machine-classification/#step-5-why-the-margin-matters-two-rules-one-or-pattern">Classification by voting</a>)</p>
+<p><strong>Sub-pattern</strong>: one kind of example inside a class, described by a single AND-rule; a class with several needs several rules. (<a href="../topics/tsetlin-machine-classification/#step-1-one-rule-is-not-enough">Classification by voting</a>)</p>
+<p><strong>Supervised fine-tuning (SFT)</strong>: fine-tuning a pre-trained language model on human-written demonstration answers with the ordinary next-token loss. (<a href="../topics/rlhf-dpo/#step-1-the-problem-a-text-predictor-is-not-an-assistant">RLHF &amp; DPO</a>)</p>
+<p><strong>Sweep</strong>: one pass of updates over every state of an MDP. (<a href="../topics/dynamic-programming/#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation">Dynamic programming</a>)</p>
+<p><strong>Target network</strong> (θ⁻): A periodically synced, frozen copy of the Q-network used only to compute TD targets, so the regression labels hold still. (<a href="../topics/deep-q-networks/#step-5-problem-2-chasing-a-moving-target-the-target-network">Deep Q-Networks</a>)</p>
+<p><strong>Target policy</strong>: the policy whose values an agent is learning about, i.e. the one its TD target assumes will be followed from the next state on. (<a href="../topics/q-learning-sarsa/#step-6-on-policy-versus-off-policy">Q-learning &amp; SARSA</a>)</p>
+<p><strong>TD control</strong>: using temporal-difference updates of action values Q(s, a) to learn a good policy directly from experience, without a model. (<a href="../topics/q-learning-sarsa/#step-1-from-v-to-q-without-a-model-learn-action-values">Q-learning &amp; SARSA</a>)</p>
+<p><strong>TD error</strong> (<span class="arithmatex">\(\delta_t\)</span>): the one-step surprise <span class="arithmatex">\(r_{t+1} + \gamma V(s_{t+1}) - V(s_t)\)</span>, which drives every TD update. (<a href="../topics/monte-carlo-td-learning/#step-3-td0-learn-a-guess-from-a-guess">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>TD target</strong>: the value <span class="arithmatex">\(r_{t+1} + \gamma V(s_{t+1})\)</span> that TD(0) moves <span class="arithmatex">\(V(s_t)\)</span> toward. (<a href="../topics/monte-carlo-td-learning/#step-3-td0-learn-a-guess-from-a-guess">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Temporal-difference (TD) learning</strong> (TD(0)): learning values after every step by moving <span class="arithmatex">\(V(s)\)</span> toward <span class="arithmatex">\(r + \gamma V(s')\)</span>; it samples like Monte Carlo and bootstraps like DP. (<a href="../topics/monte-carlo-td-learning/#step-3-td0-learn-a-guess-from-a-guess">Monte Carlo &amp; TD learning</a>)</p>
+<p><strong>Thermometer encoding</strong>: booleanising a number with features "value ≥ <span class="arithmatex">\(t_1\)</span>", "value ≥ <span class="arithmatex">\(t_2\)</span>", …, so larger values switch on more bits. (<a href="../topics/tsetlin-machine-intro/#step-2-booleanising-real-data">What is a Tsetlin machine?</a>)</p>
+<p><strong>Thompson sampling</strong>: exploring by drawing one sample from your belief about each action's value and taking the action with the highest sample. (<a href="../topics/multi-armed-bandits/#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure">Multi-armed bandits</a>)</p>
+<p><strong>Tipping point</strong> (p* = 1/(s+1)): how often a literal must be True in its class to be Memorized more often than not, when only that class is seen; set by the Forget Value 1/s. (<a href="../topics/tsetlin-automaton/#step-5-the-exact-learning-outcome">The Tsetlin automaton</a>)</p>
+<p><strong>TM composite</strong>: several independently trained Tsetlin machines combined plug-and-play by adding their normalised vote sums (research term: TMComposites). (<a href="../topics/tsetlin-machine-confidence/#step-6-different-machines-different-skills">Confidence &amp; composites</a>)</p>
+<p><strong>Trustworthiness (of confidence)</strong>: confidence that matches performance: the more confident cases are more often correct, as measured on held-out data. (<a href="../topics/tsetlin-machine-confidence/#step-2-trustworthiness-confidence-must-match-performance">Confidence &amp; composites</a>)</p>
+<p><strong>Tsetlin automaton</strong>: M. L. Tsetlin's learning automaton whose whole memory is one integer among 2N states: a reward moves it deeper into its current action, a penalty toward the centre, where it switches action. (<a href="../topics/tsetlin-automaton/#step-1-tsetlins-idea-a-memory-that-is-a-single-integer">The Tsetlin automaton</a>)</p>
+<p><strong>Tsetlin machine</strong>: an interpretable machine-learning model in which many AND-rules over Boolean literals vote for or against a class, each rule learning its literals with Tsetlin-automaton memory. (<a href="../topics/tsetlin-machine-intro/#what-is-a-tsetlin-machine">What is a Tsetlin machine?</a>)</p>
+<p><strong>Twin Q critics</strong>: two Q-networks whose minimum is used in the target, to counter the overestimation of learned Q-values (from TD3, used in SAC). (<a href="../topics/actor-critic/#step-6-sac-off-policy-continuous-actions-maximum-entropy">Actor-critic</a>)</p>
+<p><strong>UCT</strong> (Upper Confidence bounds applied to Trees): MCTS's selection rule <span class="arithmatex">\(W/N + c\sqrt{\ln N_{\text{parent}}/N}\)</span>, the UCB bandit rule applied at every node of the tree. (<a href="../topics/model-based-rl/#step-5-planning-at-decision-time-monte-carlo-tree-search">Model-based RL &amp; planning</a>)</p>
+<p><strong>Upper Confidence Bound (UCB)</strong>: choosing <span class="arithmatex">\(\arg\max_a [Q_t(a) + c\sqrt{\ln t / N_t(a)}]\)</span>, i.e. adding a bonus to actions that have been tried rarely ("optimism in the face of uncertainty"). (<a href="../topics/multi-armed-bandits/#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure">Multi-armed bandits</a>)</p>
+<p><strong>Value function</strong> (<span class="arithmatex">\(V^\pi(s)\)</span>): the expected return when starting in state <span class="arithmatex">\(s\)</span> and following policy <span class="arithmatex">\(\pi\)</span>. (<a href="../topics/reinforcement-learning-intro/#step-5-how-good-is-a-state-the-value-function">What is RL?</a>)</p>
+<p><strong>Value iteration</strong>: repeatedly applying the Bellman optimality equation as an update, V(s) ← max_a Σ p·[r + γV(s′)], then acting greedily on the result. (<a href="../topics/dynamic-programming/#step-4-value-iteration-one-sweep-then-improve">Dynamic programming</a>)</p>
+<p><strong>Vote sum</strong> (v): votes from firing rules for a class minus votes from firing rules against it; its sign is the prediction. (<a href="../topics/tsetlin-machine-classification/#step-2-rules-vote-the-vote-sum-v">Classification by voting</a>)</p>
+<p><strong>Voting Margin</strong> (T; threshold): during training, each rule gets feedback with probability (T − v)/2T, where v is measured for the example's own class and clipped to [−T, T]; examples already won by T votes give no feedback. (<a href="../topics/tsetlin-machine-classification/#step-3-the-voting-margin-t-how-much-feedback-does-an-example-get">Classification by voting</a>)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../papers/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Papers">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Papers
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/js/mathjax-config.js"></script>
+      
+        <script src="../assets/js/viz-common.js"></script>
+      
+        <script src="../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

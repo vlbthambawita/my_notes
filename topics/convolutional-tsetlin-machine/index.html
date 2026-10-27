@@ -1,0 +1,2218 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/convolutional-tsetlin-machine/">
+      
+      
+        <link rel="prev" href="../tsetlin-machine-classification/">
+      
+      
+        <link rel="next" href="../tsetlin-machine-confidence/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Convolutional Tsetlin machines - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#convolutional-tsetlin-machines" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Convolutional Tsetlin machines
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-one-pattern-many-places" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — One pattern, many places
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-looking-through-a-window-patches-and-patch-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Looking through a window: patches and patch features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-evaluating-a-rule-match-every-patch-then-or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Evaluating a rule: match every patch, then OR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-learning-which-patch-does-the-rule-learn-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Learning: which patch does the rule learn from?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-training-a-convolutional-tsetlin-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Training a convolutional Tsetlin machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-position-encoding-letting-a-rule-say-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Position encoding: letting a rule say where
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-the-link-to-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — The link to convolutional neural networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-one-pattern-many-places" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — One pattern, many places
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-looking-through-a-window-patches-and-patch-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Looking through a window: patches and patch features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-evaluating-a-rule-match-every-patch-then-or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Evaluating a rule: match every patch, then OR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-learning-which-patch-does-the-rule-learn-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Learning: which patch does the rule learn from?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-training-a-convolutional-tsetlin-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Training a convolutional Tsetlin machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-position-encoding-letting-a-rule-say-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Position encoding: letting a rule say where
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-the-link-to-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — The link to convolutional neural networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="convolutional-tsetlin-machines">Convolutional Tsetlin Machines<a class="headerlink" href="#convolutional-tsetlin-machines" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A standard Tsetlin machine ties every literal to one fixed pixel, so a pattern seen in one place means nothing in another. A <strong>convolutional Tsetlin machine</strong> fixes this by looking at the image through a small <strong>window</strong> that slides over every position. Each rule is checked against every <strong>patch</strong> the window sees, and the rule's output for the whole image is the <strong>OR</strong> of those checks: it fires if the pattern is there <em>anywhere</em>. Learning is the same Recognize, Erase and Reject Feedback as before, with one new choice: when several patches match, the rule learns from <strong>one of them, picked at random</strong>. To let rules also say <em>where</em> a pattern may appear, each patch gets its window position as extra features, <strong>thermometer-coded</strong> so a rule can express a range like "in the upper half". The idea is the same sliding filter as a convolutional neural network, but each filter is a small picture you can read.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../tsetlin-machine-classification/">Classification by voting</a> (rules voting for and against a class, the vote sum <span class="arithmatex">\(v\)</span>, the Voting Margin <span class="arithmatex">\(T\)</span>, and how feedback is allocated). The math needs nothing beyond AND, OR and counting.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Many interesting patterns can turn up anywhere:</p>
+<ul>
+<li><strong>Heart disease in an ECG.</strong> A recording holds many heartbeats. One abnormal waveform may reveal disease, but you don't know <em>which</em> beat it is (Granmo, <em>An Introduction to Tsetlin Machines</em>, Ch. 4, §4.1). The model must find the waveform and learn what it looks like at the same time.</li>
+<li><strong>Objects in images.</strong> A flower, a lesion on a skin photo, a nodule on an X-ray: the same thing can sit in the corner or the centre.</li>
+<li><strong>Two problems in one.</strong> To learn what the pattern looks like you need to know where it is, and to find it you need to know what it looks like. Convolution solves both together.</li>
+</ul>
+<p>A standard Tsetlin machine (the previous lessons) would have to learn one rule for every place the pattern can appear. A convolutional one learns the pattern <strong>once</strong> and recognises it everywhere. And unlike the filters of a convolutional neural network, every learned filter is a small black-and-white picture that you can read and check.</p>
+<hr />
+<h2 id="step-1-one-pattern-many-places">Step 1 — One pattern, many places<a class="headerlink" href="#step-1-one-pattern-many-places" title="Permanent link">&para;</a></h2>
+<p>The chapter's running example is tiny on purpose: eight black-and-white images of <span class="arithmatex">\(4 \times 4\)</span> pixels, from two classes, <strong>Circle</strong> (four black pixels around a white centre) and <strong>Cross</strong> (the same four plus a black centre). Each shape appears in four different places (Granmo, Ch. 4, §4.2, Table 4.1).</p>
+<p>As in <a href="../tsetlin-machine-intro/">lesson 1</a>, each pixel becomes one Boolean feature: True for black, False for white. Name them <span class="arithmatex">\(x_{i,j}\)</span>, with <span class="arithmatex">\(i\)</span> the row and <span class="arithmatex">\(j\)</span> the column, so a <span class="arithmatex">\(4 \times 4\)</span> image has 16 features (32 literals with their negations).</p>
+<p>A standard Tsetlin machine needs a separate rule for each position, because "the pixel at row 2, column 1 is black" is a different literal from "the pixel at row 3, column 2 is black". The chapter's rule for a Circle in the top-left corner is</p>
+<div class="arithmatex">\[
+R_1: \quad \text{if } x_{1,2} \wedge x_{2,1} \wedge \lnot x_{2,2} \wedge x_{2,3} \wedge x_{3,2} \text{ then Circle,}
+\]</div>
+<p>and a Circle one pixel to the right needs a different rule, <span class="arithmatex">\(R_2\)</span>, with every index shifted. Four positions times two shapes gives <strong>eight rules</strong>, and a bigger image would need even more.</p>
+<p><strong>Try it:</strong> switch between the two views.</p>
+<div id="viz-shapes" class="viz"><div class="viz-title">🔍 Interactive: eight position-specific rules, or two window rules</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Without a window</strong>, the eight rule pictures are the same shape moved around. The machine would have to discover the same pattern four times, from a quarter of the examples each time.</li>
+<li><strong>With a 3×3 window</strong>, two rules cover all eight images. The window is placed wherever the shape is, and the rule only describes what is <em>inside</em> the window.</li>
+<li>The window rules use the same five literals as <span class="arithmatex">\(R_1\)</span> (<span class="arithmatex">\(R_5\)</span> for Circle), with <span class="arithmatex">\(x_{i,j}\)</span> now meaning "row <span class="arithmatex">\(i\)</span>, column <span class="arithmatex">\(j\)</span> <strong>of the window</strong>", not of the image.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-looking-through-a-window-patches-and-patch-features">Step 2 — Looking through a window: patches and patch features<a class="headerlink" href="#step-2-looking-through-a-window-patches-and-patch-features" title="Permanent link">&para;</a></h2>
+<p>The fix is to give the Tsetlin machine a <strong>local view</strong>. Put a rectangular <strong>convolution window</strong> on the image, say <span class="arithmatex">\(3 \times 3\)</span> pixels, and use only the pixels inside it as features. The pixels the window covers form an <strong>image patch</strong>, and their truth values are the <strong>patch features</strong> <span class="arithmatex">\(x_{1,1}, \dots, x_{3,3}\)</span> (Granmo, Ch. 4, §4.2).</p>
+<p>Now slide the window to every position where it fits. Name each position by the column <span class="arithmatex">\(x\)</span> and row <span class="arithmatex">\(y\)</span> of the window's top-left corner, counting from 0. A <span class="arithmatex">\(4 \times 4\)</span> image has room for a <span class="arithmatex">\(3 \times 3\)</span> window at four positions: <span class="arithmatex">\((0,0)\)</span>, <span class="arithmatex">\((1,0)\)</span>, <span class="arithmatex">\((0,1)\)</span> and <span class="arithmatex">\((1,1)\)</span>. In general, a window of <span class="arithmatex">\(w \times w\)</span> on an image of <span class="arithmatex">\(W \times H\)</span> pixels has</p>
+<div class="arithmatex">\[
+(W - w + 1) \times (H - w + 1)
+\]</div>
+<p>positions, so a <span class="arithmatex">\(6 \times 6\)</span> image gives 16 patches.</p>
+<p>The key property: <strong>every patch has the same nine features</strong>, whatever its position. Patch feature <span class="arithmatex">\(x_{2,2}\)</span> always means "the centre of the window", whether the window is in the top-left corner or the bottom-right. So a rule written in patch features is automatically position-free, and the chapter's two rules</p>
+<div class="arithmatex">\[
+\begin{aligned}
+R_5 &amp;: \text{ if } x_{1,2} \wedge x_{2,1} \wedge \lnot x_{2,2} \wedge x_{2,3} \wedge x_{3,2} \text{ then Circle} \\
+R_6 &amp;: \text{ if } x_{1,2} \wedge x_{2,1} \wedge x_{2,2} \wedge x_{2,3} \wedge x_{3,2} \text{ then Cross}
+\end{aligned}
+\]</div>
+<p>replace all eight. Making the image bigger only adds window positions; the rules stay the same.</p>
+<div class="admonition note">
+<p class="admonition-title">Time series: 1-D convolution</p>
+<p>An ECG is a sequence, not an image. Describe each moment in time by a few features (one column per time step), and slide the window <strong>only along time</strong>. That is 1-D convolution: the same idea, with the window moving in one direction (Granmo, Ch. 4, §4.2). The next widget has a "1-D sequence" image of 3 features × 8 time steps, where the window can only move sideways.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The window gives the machine a way to <strong>direct its attention</strong>: it looks at one piece of the image at a time.</li>
+<li>A <span class="arithmatex">\(3 \times 3\)</span> window has 9 patch features, so every rule chooses from 18 literals, however large the image is. A standard Tsetlin machine on a <span class="arithmatex">\(6 \times 6\)</span> image would have 72 literals per rule.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-evaluating-a-rule-match-every-patch-then-or">Step 3 — Evaluating a rule: match every patch, then OR<a class="headerlink" href="#step-3-evaluating-a-rule-match-every-patch-then-or" title="Permanent link">&para;</a></h2>
+<p>With several patches per image, a rule no longer gives one truth value directly. The chapter's procedure (Granmo, Ch. 4, §4.3, Figure 4.3) is:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🪟 Evaluating one rule on one image",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "img", "col": 0, "row": 0, "icon": "🖼️", "label": "Input image", "sub": "one Boolean feature per pixel", "role": "data", "note": "Black pixel = True, white pixel = False."},
+    {"id": "win", "col": 1, "row": 0, "icon": "🪟", "label": "Slide the window", "sub": "every position (x, y)", "role": "data", "note": "A 3×3 window on a 4×4 image fits at (0,0), (1,0), (0,1) and (1,1)."},
+    {"id": "feat", "col": 2, "row": 0, "icon": "🔢", "label": "Patch features", "sub": "x<sub>1,1</sub> … x<sub>3,3</sub> per patch", "role": "data", "note": "The same nine features for every patch, whatever its position."},
+    {"id": "match", "col": 2, "row": 1, "icon": "✅", "label": "Match the rule", "sub": "True or False per patch", "role": "model", "note": "A patch matches if every memorized literal of the rule is True in that patch."},
+    {"id": "or", "col": 1, "row": 1, "icon": "∨", "label": "OR over patches", "sub": "True if any patch matches", "role": "model", "note": "False OR False OR True OR False = True."},
+    {"id": "vote", "col": 0, "row": 1, "icon": "🗳️", "label": "One output per rule", "sub": "then vote as before", "role": "loss", "note": "From here on, classification is exactly the voting from the previous lesson."}
+  ],
+  "edges": [
+    {"from": "img", "to": "win"},
+    {"from": "win", "to": "feat"},
+    {"from": "feat", "to": "match"},
+    {"from": "match", "to": "or"},
+    {"from": "or", "to": "vote"}
+  ],
+  "steps": [
+    {"show": ["img"], "text": "Start from the image as Boolean features: True for black, False for white."},
+    {"show": ["img>win", "win"], "text": "Place the <b>convolution window</b> at every position where it fits. Each position cuts out one <b>image patch</b>."},
+    {"show": ["win>feat", "feat"], "text": "Turn each patch into <b>patch features</b> x<sub>1,1</sub> … x<sub>3,3</sub>. They mean the same thing for every patch."},
+    {"show": ["feat>match", "match"], "text": "<b>Match</b> the rule against each patch separately: one True or False per patch."},
+    {"show": ["match>or", "or"], "text": "Combine the matches with <b>OR</b>: the rule is True for the image if it matches <b>at least one</b> patch."},
+    {"show": ["or>vote", "vote"], "text": "Each rule now has <b>one</b> truth value for the image, so the vote sum and the classification work exactly as in a standard Tsetlin machine."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"img": [0, 0], "win": [1, 0], "feat": [1, 1], "match": [0, 1], "or": [0, 2], "vote": [1, 2]}}
+}
+</script>
+</div>
+
+<p>Write <span class="arithmatex">\(I_j\)</span> for the set of literals that rule <span class="arithmatex">\(C_j\)</span> has memorized, and <span class="arithmatex">\(l_k^{(p)}\)</span> for the truth value of literal <span class="arithmatex">\(l_k\)</span> in patch <span class="arithmatex">\(p\)</span>. Then the rule's output for the image is</p>
+<div class="arithmatex">\[
+C_j(\text{image}) \;=\; \bigvee_{p=1}^{P} \;\bigwedge_{k \in I_j} l_k^{(p)} ,
+\]</div>
+<p>an AND inside each patch (as before) and an OR across the <span class="arithmatex">\(P\)</span> patches (new). An empty rule (nothing memorized) matches every patch, so it is True, just as an empty rule was always True in a standard Tsetlin machine.</p>
+<p><strong>Try it:</strong> the widget starts with the chapter's example image and rule <span class="arithmatex">\(R_5\)</span>. Step the window through the four positions, then paint your own images and rules.</p>
+<div id="viz-slide" class="viz"><div class="viz-title">🪟 Interactive: slide the window, match the rule, OR the results</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The chapter's example.</strong> <span class="arithmatex">\(R_5\)</span> fails at <span class="arithmatex">\((0,0)\)</span>, <span class="arithmatex">\((1,0)\)</span> and <span class="arithmatex">\((1,1)\)</span> and matches at <span class="arithmatex">\((0,1)\)</span>, where the window sits exactly on the Circle. So the rule is False OR False OR True OR False = <strong>True</strong> for the image (we checked this in Python too).</li>
+<li><strong>Many matches still give one vote.</strong> Load the bigger image: <span class="arithmatex">\(R_5\)</span> matches once and <span class="arithmatex">\(R_6\)</span> matches once. Paint a second Circle somewhere: the match map shows two Ts, but the rule's output is still a single True. A rule says "the pattern is present", not "how many times".</li>
+<li><strong>The match map is a feature map.</strong> The grid of Ts and Fs, one cell per window position, is exactly what a convolutional neural network calls a <em>feature map</em>. The OR squeezes it into one bit.</li>
+<li><strong>1-D sequence:</strong> the window can only move sideways, and the Circle (left) and Cross (right) are found at different time steps by the same rules.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-learning-which-patch-does-the-rule-learn-from">Step 4 — Learning: which patch does the rule learn from?<a class="headerlink" href="#step-4-learning-which-patch-does-the-rule-learn-from" title="Permanent link">&para;</a></h2>
+<p>Learning uses the same three kinds of feedback as before (<a href="../tsetlin-machine-feedback/">Recognize, Erase &amp; Reject feedback</a>), and the same rule for <em>how often</em>: with vote sum <span class="arithmatex">\(v\)</span> for the image's true class, clipped to <span class="arithmatex">\([-T, T]\)</span>, each rule is selected for feedback with probability</p>
+<div class="arithmatex">\[
+\frac{T - v}{2T}.
+\]</div>
+<p>What changes is one detail. Recognize and Reject Feedback update the memory <strong>using the truth values of the literals</strong>: memorize the True ones, forget (or, for Reject, memorize) the False ones. With convolution, the rule saw many patches, and their literals disagree. Which patch's literals should it use?</p>
+<p>The chapter's answer (Granmo, Ch. 4, §4.4, Figure 4.5) is <strong>random selection among the patches the rule matched</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Rule's output on this image</th>
+<th>Rule belongs to the image's class</th>
+<th>Rule belongs to the other class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>True</strong> (matches at least one patch)</td>
+<td><strong>Recognize Feedback</strong>, using the literals of <strong>one matching patch picked at random</strong></td>
+<td><strong>Reject Feedback</strong>, using <strong>one matching patch picked at random</strong></td>
+</tr>
+<tr>
+<td><strong>False</strong> (matches no patch)</td>
+<td><strong>Erase Feedback</strong>: forget literals at random; no patch needed</td>
+<td>no feedback</td>
+</tr>
+</tbody>
+</table>
+<p>Why a <em>matching</em> patch? Recognize Feedback should make the rule more like what it already recognised, so it must learn from a patch where it fired. Reject Feedback should stop the rule firing on the wrong class, so it must learn from a patch where it fired wrongly. Why <em>random</em>? Every matching patch is equally good evidence, and picking at random lets the rule, over many images, drift towards what all its matches have in common. Erase Feedback never looks at truth values, so it needs no patch at all.</p>
+<div class="admonition note">
+<p class="admonition-title">How a pattern gets found from nothing</p>
+<p>At the very start every rule is empty, so it matches <strong>every</strong> patch, including empty background. Recognize Feedback then learns from a random patch, often background. But Erase and Reject Feedback keep knocking out literals that don't help, and only patches that contain the shape show up again and again in images of one class. In the next widget, the first step of seed 1 shows it: all 8 rules fire on the first image, so <span class="arithmatex">\(v = 4 - 4 = 0\)</span>, each rule is selected with probability <span class="arithmatex">\(\tfrac{4 - 0}{8} = 0.5\)</span>, and the selected rules each learn from 1 of the 16 patches, picked at random.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The <strong>only</strong> new ingredient in learning is "pick one matching patch at random". Everything else (the vote sum, the Voting Margin, the selection probability, the three feedback types) is unchanged.</li>
+<li>Because rules can now specialise in different kinds of patches, it helps to let <strong>more rules work together</strong> on each image. The chapter does this with a Voting Margin <span class="arithmatex">\(T\)</span> larger than 2: the vote sum must reach <span class="arithmatex">\(T\)</span>, so more rules are recruited (Granmo, Ch. 4, §4.4, Remark).</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-training-a-convolutional-tsetlin-machine">Step 5 — Training a convolutional Tsetlin machine<a class="headerlink" href="#step-5-training-a-convolutional-tsetlin-machine" title="Permanent link">&para;</a></h2>
+<p>Let's make the chapter's task harder. Each image is now <span class="arithmatex">\(6 \times 6\)</span> with <strong>one Circle or Cross anywhere</strong> (16 possible places) plus <strong>two random black noise pixels</strong> outside the shape. There are 300 training images and 300 test images. The machine has 4 rules per class, Voting Margin <span class="arithmatex">\(T = 4\)</span>, Forget Value 0.7 (so Memorize Value 0.3), and the book's memory depth of 10 positions per literal (Memorized = positions 6 to 10). Everything is seeded, and the widget runs exactly the same code as our Python check, so it shows the numbers below.</p>
+<p><strong>Try it:</strong> press <em>Train to 20 epochs</em>, then click the rule pictures. Use <em>Step: one image</em> (after <em>Reset</em>) to watch individual updates.</p>
+<div id="viz-learn" class="viz"><div class="viz-title">🧠 Interactive: train a convolutional Tsetlin machine on Circle vs Cross</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>It learns fast.</strong> With seed 1, test accuracy is <strong>90.7%</strong> after one epoch and <strong>100%</strong> after two. It wobbles slightly on the way (98.7% at epoch 10) and ends at <strong>100%</strong>. Seeds 1 to 10 all end at 100% test accuracy.</li>
+<li><strong>The rules are readable.</strong> All four Circle rules learned the same picture: the four black pixels of a Circle, a white centre, and <strong>white corners</strong>. That is the chapter's <span class="arithmatex">\(R_5\)</span> plus four extra "must be white" literals. Two Cross rules learned <span class="arithmatex">\(R_6\)</span> plus white corners. Each of these fires on all 147 test Circles (or all 153 test Crosses) and on none of the other class.</li>
+<li><strong>Not every rule is useful.</strong> One Cross rule ended up as a single black pixel: it fires on all 300 test images, so it adds the same vote to every image and changes nothing. Another, "two black pixels side by side", fires on 117 of the 153 Crosses but also on 13 Circles (where a noise pixel lands next to the shape). The clean rules outvote it.</li>
+<li><strong>Switch to a 6×6 window.</strong> A 6×6 window on a 6×6 image has one position, so this <em>is</em> a standard Tsetlin machine with 72 literals per rule. With the same settings it reaches only <strong>54.7%</strong> test accuracy (seed 1), and <strong>51.8%</strong> on average over seeds 1 to 10: barely better than guessing. Even with 32 rules per class, <span class="arithmatex">\(T = 16\)</span>, Forget Value 0.1 and 30 epochs, our Python runs only reached 62.7% to 65.7% (seeds 1 to 3). It would need a rule per shape <em>and</em> per position, and about 9 training images per shape and place is too few to learn them.</li>
+<li><strong>Train on the left half only.</strong> Now training shapes appear only in the left half, and the test shapes only in the right half, in places the machine has never seen a shape. The convolutional machine still scores <strong>100%</strong> (all 10 seeds): its rules never mention where. The standard one drops to <strong>49.0%</strong> (seed 1; 48.6% on average), a coin flip.</li>
+</ul>
+</div>
+<p>In the chapter's example of a truck photo (Granmo, Ch. 4, Figure 4.4), six different rules match different parts of the image: one captures the dark parts of the truck, another the ground beneath it. That is the same effect at a larger scale: each rule specialises in one kind of patch, and the vote combines them.</p>
+<hr />
+<h2 id="step-6-position-encoding-letting-a-rule-say-where">Step 6 — Position encoding: letting a rule say <em>where</em><a class="headerlink" href="#step-6-position-encoding-letting-a-rule-say-where" title="Permanent link">&para;</a></h2>
+<p>Sometimes position <strong>does</strong> matter. In a handwritten 7, a horizontal stroke at the <strong>top</strong> is a strong clue, while the same stroke at the bottom belongs to a 2 (Granmo, Ch. 4, §4.5, Figure 4.6). A pure convolutional rule can't tell them apart: it fires wherever the stroke is. We want rules that <em>may</em> restrict a pattern to a region, without being forced to.</p>
+<p>The fix: add the <strong>window's position</strong> to each patch's features. The chapter uses <strong>thermometer encoding</strong>. An integer from 0 to 3 is written with 3 Boolean features, by switching on features from the bottom up, like the mercury in a thermometer:</p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th><span class="arithmatex">\(X_{\ge 1}\)</span></th>
+<th><span class="arithmatex">\(X_{\ge 2}\)</span></th>
+<th><span class="arithmatex">\(X_{\ge 3}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>T</strong></td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>T</strong></td>
+<td><strong>T</strong></td>
+<td>F</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>T</strong></td>
+<td><strong>T</strong></td>
+<td><strong>T</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Feature <span class="arithmatex">\(X_{\ge t}\)</span> simply means "the value is at least <span class="arithmatex">\(t\)</span>". That makes ranges easy to write with literals:</p>
+<ul>
+<li><span class="arithmatex">\(X_{\ge 1}\)</span> alone means "1 or more".</li>
+<li><span class="arithmatex">\(\lnot X_{\ge 3}\)</span> means "less than 3".</li>
+<li><span class="arithmatex">\(X_{\ge 1} \wedge \lnot X_{\ge 3}\)</span> means "1 or 2": a range, in a single rule.</li>
+</ul>
+<p>Ordinary binary encoding would need only 2 bits for 4 values, and could say things like "even" in one literal. But a range like "1 to 2" would no longer be a single AND, and ranges are what you need to describe a <strong>rectangular region</strong> of an image (Granmo, Ch. 4, §4.5).</p>
+<p>Each patch now gets two thermometers, one for its window column <span class="arithmatex">\(x\)</span> and one for its row <span class="arithmatex">\(y\)</span> (Granmo, Ch. 4, Figure 4.8). On a <span class="arithmatex">\(6 \times 6\)</span> image with a <span class="arithmatex">\(3 \times 3\)</span> window, <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(y\)</span> run from 0 to 3, so that is 3 + 3 = 6 position features, and each patch has 9 + 6 = 15 features, or 30 literals. A rule that forgets all position literals is still position-free; a rule that memorizes some of them only matches patches <strong>in a rectangle</strong> of window positions.</p>
+<p><strong>Try it:</strong> set the allowed region, then click pixels to move the Circle in and out of it. Then press <em>Learn</em> to train a machine on a task where position is the whole point.</p>
+<div id="viz-position" class="viz"><div class="viz-title">🌡️ Interactive: thermometer-coded positions make a rule location-sensitive</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Same pattern, different answer.</strong> With <em>Upper half</em> (<span class="arithmatex">\(\lnot Y_{\ge 2}\)</span>, so window row 0 or 1), the rule fires for a Circle in the top rows and stays False when you move the same Circle down. The pattern part matched both times (✓ or ✗ in the grid); only the position literals changed.</li>
+<li><strong>The learning task.</strong> "Is the Circle in the upper or the lower half?" (6×6 images, 2 noise pixels, same settings as Step 5). Without position literals, the machine can only reach <strong>73.3%</strong> test accuracy (seed 1; <strong>61.0%</strong> on average over seeds 1 to 10). It does a little better than a coin flip only through quirks of the data, such as where the noise pixels can fall. With position literals it reaches <strong>100%</strong> (seed 1; <strong>98.9%</strong> on average).</li>
+<li><strong>The learned rules say exactly what we'd hope.</strong> With seed 1, two "upper" rules learned the full Circle picture plus <span class="arithmatex">\(\lnot Y_{\ge 2} \wedge \lnot Y_{\ge 3}\)</span>, i.e. "a Circle with its window in row 0 or 1". Each fires on all 152 upper-half test images and on none of the 148 lower-half ones. Some other rules learned partial Circles with looser regions, which also work.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-the-link-to-convolutional-neural-networks">Step 7 — The link to convolutional neural networks<a class="headerlink" href="#step-7-the-link-to-convolutional-neural-networks" title="Permanent link">&para;</a></h2>
+<p>If you have met <strong>convolutional neural networks</strong> (CNNs), all of this should look familiar. The two share the sliding-window idea; they differ in what slides.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Convolutional neural network</th>
+<th>Convolutional Tsetlin machine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What slides over the image</td>
+<td>a <strong>filter</strong>: a small grid of real-valued weights</td>
+<td>a <strong>rule</strong>: an AND of literals on the patch features</td>
+</tr>
+<tr>
+<td>Result at one position</td>
+<td>a weighted sum, then a non-linearity (a number)</td>
+<td>match or no match (one bit)</td>
+</tr>
+<tr>
+<td>Result over all positions</td>
+<td>a feature map</td>
+<td>a match map (Step 3 widget)</td>
+</tr>
+<tr>
+<td>Squeezing the map to one value</td>
+<td>(global) <strong>max pooling</strong></td>
+<td><strong>OR</strong>, which is exactly the max of a map of 0s and 1s</td>
+</tr>
+<tr>
+<td>Learning signal goes to</td>
+<td>the position that won the max (back-propagation through max pooling)</td>
+<td><strong>one matching patch, picked at random</strong></td>
+</tr>
+<tr>
+<td>Reading the learned filter</td>
+<td>a grid of numbers; needs visualisation tools</td>
+<td>a picture of must-be-black, must-be-white and don't-care pixels</td>
+</tr>
+<tr>
+<td>Position</td>
+<td>mostly discarded by pooling; can be added (e.g. extra coordinate channels)</td>
+<td>thermometer-coded position literals the rule may use or ignore</td>
+</tr>
+</tbody>
+</table>
+<p>So a convolutional Tsetlin machine is roughly "one convolutional layer plus global max pooling, with logic rules as filters". A CNN stacks many layers, so it can build large patterns from small ones; the chapter's Tsetlin machine has one layer of rules over the patches. What you gain is that every filter is a statement you can check by eye: "a Circle is four black pixels around a white centre, with white corners".</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>OR is max pooling for Booleans.</strong> Both throw away <em>where</em> the pattern was found and keep <em>whether</em> it was found. That is what makes both of them position-free.</li>
+<li>Both also send the learning signal through <strong>one</strong> position. A CNN chooses the position with the highest response; the Tsetlin machine picks at random among the positions that matched, because all matches are equally "high" (they are all True).</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>The complete learning loop (Granmo, Ch. 4, §4.4) is the standard Tsetlin machine loop from the <a href="../tsetlin-machine-classification/">previous lesson</a> with two convolution steps added.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 How a convolutional Tsetlin machine learns",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0, "icon": "🖼️", "label": "Observe an image and its class", "role": "data"},
+    {"id": "patch", "col": 1, "row": 0, "icon": "🪟", "label": "Cut it into patches", "sub": "Booleanize; add position", "role": "data", "note": "Slide the window over the image; each patch gives its pixel features and (optionally) thermometer-coded x and y."},
+    {"id": "eval", "col": 2, "row": 0, "icon": "∨", "label": "Evaluate every rule", "sub": "match each patch, then OR", "role": "model", "note": "A rule is True for the image if it matches at least one patch."},
+    {"id": "vote", "col": 2, "row": 1, "icon": "🗳️", "label": "Vote sum v", "sub": "clipped to [−T, T]", "role": "loss", "note": "Rules of the image's class that are True add 1; rules of the other class that are True subtract 1."},
+    {"id": "sel", "col": 1, "row": 1, "icon": "🎲", "label": "Select rules", "sub": "probability (T − v) / 2T", "role": "loss", "note": "Far from the Voting Margin: many rules learn. At or beyond it: none do."},
+    {"id": "fb", "col": 0, "row": 1, "icon": "✏️", "label": "Feedback", "sub": "using 1 random matching patch", "role": "opt", "note": "Own class, True: Recognize. Own class, False: Erase (no patch). Other class, True: Reject. Other class, False: nothing."}
+  ],
+  "edges": [
+    {"from": "obs", "to": "patch"},
+    {"from": "patch", "to": "eval"},
+    {"from": "eval", "to": "vote"},
+    {"from": "vote", "to": "sel"},
+    {"from": "sel", "to": "fb"},
+    {"from": "fb", "to": "obs", "label": "next image"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "Take a training image and its class."},
+    {"show": ["obs>patch", "patch"], "text": "<b>New:</b> slide the window over it. Each position gives a patch with the same patch features, plus thermometer-coded x and y if you use position encoding."},
+    {"show": ["patch>eval", "eval"], "text": "<b>New:</b> each rule is matched against every patch, and the matches are OR-ed into one truth value."},
+    {"show": ["eval>vote", "vote"], "text": "As before: add the votes for the image's class, subtract the votes for the other class, clip to the Voting Margin T."},
+    {"show": ["vote>sel", "sel"], "text": "As before: each rule is selected for feedback with probability (T − v) / 2T."},
+    {"show": ["sel>fb", "fb"], "text": "<b>New detail:</b> Recognize and Reject Feedback use the literals of <b>one matching patch, picked at random</b>. Erase Feedback needs no patch."},
+    {"show": ["fb>obs", "obs"], "text": "Repeat for the next image, epoch after epoch."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"obs": [0, 0], "patch": [1, 0], "eval": [1, 1], "vote": [1, 2], "sel": [0, 2], "fb": [0, 1]}}
+}
+</script>
+</div>
+
+<p>Here is a complete convolutional Tsetlin machine in numpy, on the Step 5 task. It is shorter than the widget's code, and uses numpy's random numbers, so its exact numbers differ from the widget's.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">CIRCLE</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>          <span class="c1"># the chapter's two shapes (offsets from the centre)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">CROSS</span> <span class="o">=</span> <span class="n">CIRCLE</span> <span class="o">+</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">make_image</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="sd">"""A 6x6 image: a Circle (0) or Cross (1) at a random place, plus 2 random noise pixels."""</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="nb">bool</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="p">(</span><span class="n">CIRCLE</span><span class="p">,</span> <span class="n">CROSS</span><span class="p">)[</span><span class="bp">cls</span><span class="p">]:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="n">img</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="k">while</span> <span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">((</span><span class="n">CIRCLE</span><span class="p">,</span> <span class="n">CROSS</span><span class="p">)[</span><span class="bp">cls</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">rr</span><span class="p">,</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rr</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cc</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>            <span class="n">img</span><span class="p">[</span><span class="n">rr</span><span class="p">,</span> <span class="n">cc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">return</span> <span class="n">img</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">patches</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="sd">"""Slide a w x w window over the image; each patch -&gt; its literals [x_1..x_9, NOT x_1..NOT x_9]."""</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">img</span><span class="p">[</span><span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>                  <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">P</span><span class="p">])</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="k">class</span><span class="w"> </span><span class="nc">ConvTM</span><span class="p">:</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_literals</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">forget</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">half</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span>                                            <span class="c1"># memory positions 1 .. depth;</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rules_per_class</span><span class="p">,</span> <span class="n">n_literals</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span><span class="p">)</span>  <span class="c1"># start just below Memorized</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rules_per_class</span><span class="p">)</span>                     <span class="c1"># which class each rule votes for</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">forget</span><span class="p">,</span> <span class="n">depth</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">        </span><span class="sd">"""(rules x patches): a rule matches a patch if none of its memorized literals is False there."""</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="n">memorized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="k">return</span> <span class="o">~</span><span class="p">(</span><span class="n">memorized</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">P</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="n">fires</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                                 <span class="c1"># OR over all patches</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">else</span> <span class="mi">1</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="n">fires</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">!=</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)):</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>            <span class="k">if</span> <span class="n">fires</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>                <span class="n">p</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">]))]</span>                  <span class="c1"># ONE matching patch, at random</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>                                      <span class="c1"># Recognize Feedback</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>                    <span class="n">up</span> <span class="o">=</span> <span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>                    <span class="n">down</span> <span class="o">=</span> <span class="o">~</span><span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>                    <span class="n">s</span> <span class="o">+=</span> <span class="n">up</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>                    <span class="n">s</span> <span class="o">-=</span> <span class="n">down</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>                <span class="k">else</span><span class="p">:</span>                                                     <span class="c1"># Reject Feedback</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>                    <span class="n">s</span> <span class="o">+=</span> <span class="o">~</span><span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span><span class="p">)</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>                                        <span class="c1"># Erase Feedback (no patch needed)</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>                <span class="n">s</span> <span class="o">-=</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="n">ytr</span><span class="p">,</span> <span class="n">yte</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="n">Ptr</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="p">(</span><span class="n">make_image</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ytr</span><span class="p">]</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="n">Pte</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="p">(</span><span class="n">make_image</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">yte</span><span class="p">]</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="n">tm</span> <span class="o">=</span> <span class="n">ConvTM</span><span class="p">(</span><span class="n">n_literals</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">):</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ptr</span><span class="p">)):</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>        <span class="n">tm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Ptr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ytr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>    <span class="k">if</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>        <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">P</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">Pte</span><span class="p">,</span> <span class="n">yte</span><span class="p">)])</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: test accuracy </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">cls</span><span class="p">)):</span>                                              <span class="c1"># draw each rule as a 3x3 picture</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="n">on</span><span class="p">,</span> <span class="n">off</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tm</span><span class="o">.</span><span class="n">half</span><span class="p">,</span> <span class="n">tm</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">9</span><span class="p">:]</span> <span class="o">&gt;</span> <span class="n">tm</span><span class="o">.</span><span class="n">half</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>    <span class="n">pic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="s2">"#"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">off</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">))</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>    <span class="nb">print</span><span class="p">((</span><span class="s2">"Circle"</span> <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"Cross "</span><span class="p">),</span> <span class="s2">" | "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pic</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>epoch  1: test accuracy 0.990
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>epoch  5: test accuracy 1.000
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>epoch 20: test accuracy 1.000
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Circle o#o | #o# | o#o
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Circle ... | ... | #..
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Circle o#o | #o# | o#o
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Circle ... | ... | ...
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Cross  o#o | ### | o#o
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Cross  o#o | ### | o#o
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Cross  o#o | ### | o#o
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Cross  o#o | ### | o#o
+</code></pre></div>
+<p><code>#</code> = must be black, <code>o</code> = must be white, <code>.</code> = don't care. Again the Circle and Cross pictures appear, each with white corners, plus two Circle rules that ended up (nearly) empty and so fire on (nearly) every image. To add position encoding, append the thermometer features of <code>x</code> and <code>y</code> to each patch in <code>patches</code> before the negations.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"The window makes the machine see less of the image.\"</p>
+<p>The window is placed at <strong>every</strong> position, so every pixel is seen, in every patch that covers it. What the window removes is the pixel's <em>absolute</em> position, which is exactly what makes a rule reusable everywhere.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A rule that matches in three places casts three votes.\"</p>
+<p>No. The matches are combined with OR, so a rule gives <strong>one</strong> truth value per image and at most one vote, however many patches match. In Step 3, painting a second Circle doesn't change <span class="arithmatex">\(R_5\)</span>'s output.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Feedback updates the rule with every matching patch.\"</p>
+<p>Recognize and Reject Feedback use <strong>one</strong> matching patch, chosen at random. Over many images, the random choices average out to what the matching patches have in common.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Position encoding turns it back into a standard Tsetlin machine.\"</p>
+<p>Position literals are optional for each rule. A rule that forgets all of them is as position-free as before; a rule only memorizes them when restricting the region helps (like the upper-half rules in Step 6). And a region is a whole rectangle of window positions, not one fixed pixel.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Binary encoding would be just as good for positions, and shorter.\"</p>
+<p>Two bits can hold the four positions 0 to 3, but then "rows 1 to 2" is not a single AND of literals. Thermometer encoding spends one feature per step so that every range, and so every rectangle, is one AND (Granmo, Ch. 4, §4.5).</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. How many window positions does a 3×3 window have on an 8×8 image? On a 28×28 image with a 10×10 window?</summary>
+<p>$(8 - 3 + 1)^2 = 6^2 = $ <strong>36</strong> positions. $(28 - 10 + 1)^2 = 19^2 = $ <strong>361</strong> positions. Each rule is matched against every one of them, and its output is the OR of all the matches.</p>
+</details>
+<details class="question">
+<summary>2. A Circle rule matches no patch of a Circle image, and is selected for feedback. What happens, and which patch is used?</summary>
+<p>The rule belongs to the image's class and its output is False, so it gets <strong>Erase Feedback</strong>: every literal moves one step towards Forgotten with probability equal to the Forget Value. No patch is used, because Erase Feedback doesn't look at truth values.</p>
+</details>
+<details class="question">
+<summary>3. A Circle rule matches 3 of the 16 patches of a Cross image, and is selected. What happens?</summary>
+<p>The rule fired on the wrong class, so it gets <strong>Reject Feedback</strong>. One of the 3 matching patches is picked at random, and every <em>forgotten</em> literal that is False in that patch moves one step towards Memorized. Once one of them crosses into Memorized, the rule no longer matches that kind of patch.</p>
+</details>
+<details class="question">
+<summary>4. Window column x runs from 0 to 5. How many thermometer features do you need, and how do you write \"x is 2, 3 or 4\"?</summary>
+<p>Five features <span class="arithmatex">\(X_{\ge 1}, \dots, X_{\ge 5}\)</span> (one per step above 0). "At least 2" is <span class="arithmatex">\(X_{\ge 2}\)</span>; "less than 5" is <span class="arithmatex">\(\lnot X_{\ge 5}\)</span>. So the range is <span class="arithmatex">\(X_{\ge 2} \wedge \lnot X_{\ge 5}\)</span>.</p>
+</details>
+<details class="question">
+<summary>5. Why does the standard Tsetlin machine fail when it is trained on shapes in the left half and tested on shapes in the right half?</summary>
+<p>Its literals refer to fixed pixels. In training, the pixels of the right half were only ever background or noise, so no rule learned anything about shapes there. In our run it scored 49.0% (seed 1), a coin flip. The convolutional machine's rules talk about <strong>window</strong> pixels, which are the same wherever the window is, so it scored 100%.</p>
+</details>
+<details class="question">
+<summary>6. In the Step 3 widget, the empty rule is True for every image. Why, and why is such a rule harmless in a trained machine?</summary>
+<p>With nothing memorized, no literal can be False, so it matches every patch, and the OR is True. An always-True rule adds the same vote to every image, so it carries no information about the class: the other rules simply have to outvote it, and the Voting Margin pushes learning to make them do so. In Step 5, the Cross rule that became a single black pixel behaves almost the same way: it fired on all 300 test images, and the machine still scored 100%.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a> (free online), Ch. 4 "Convolution": §4.1 recognizing patterns in time and space, §4.2 input and patterns (the Circle/Cross images, convolution window, 1-D convolution), §4.3 rule evaluation, §4.4 rule learning (random matching patch, Voting Margin above 2), §4.5 position encoding (thermometer encoding). This lesson's diagrams and widgets are redrawn from the chapter's figures; the 6×6 noisy Circle/Cross task is our own extension of its example.</li>
+<li>Ole-Christoffer Granmo, Sondre Glimsdal, Lei Jiao, Morten Goodwin, Christian W. Omlin and Geir Thore Berge, <a href="https://arxiv.org/abs/1905.09688"><em>The Convolutional Tsetlin Machine</em></a> (2019). The research paper, in the literature's terms (clauses, Type I/II feedback), with results on MNIST-style image benchmarks.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../tsetlin-machine-confidence/">Confidence &amp; composites</a>: does a Tsetlin machine know when it is wrong, and how to combine several specialised machines.</p>
+<script src="viz/convolutional-tsetlin-machine.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tsetlin-machine-classification/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Classification by voting">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Classification by voting
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tsetlin-machine-confidence/" class="md-footer__link md-footer__link--next" aria-label="Next: Confidence &amp; composites">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Confidence & composites
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

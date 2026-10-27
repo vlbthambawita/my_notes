@@ -1,0 +1,2260 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/actor-critic/">
+      
+      
+        <link rel="prev" href="../policy-gradients/">
+      
+      
+        <link rel="next" href="../model-based-rl/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Actor-critic - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#actor-critic-methods-a2c-ppo-and-sac" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Actor-critic
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-reinforces-problem-one-noisy-number-per-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — REINFORCE's problem: one noisy number per episode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-critic-and-the-advantage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — The critic and the advantage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-actor-critic-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The actor-critic loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-a2c-batches-parallel-workers-and-gae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — A2C: batches, parallel workers and GAE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-ppo-dont-move-the-policy-too-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — PPO: don't move the policy too far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-sac-off-policy-continuous-actions-maximum-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — SAC: off-policy, continuous actions, maximum entropy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — When to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-reinforces-problem-one-noisy-number-per-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — REINFORCE's problem: one noisy number per episode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-critic-and-the-advantage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — The critic and the advantage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-actor-critic-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — The actor-critic loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-a2c-batches-parallel-workers-and-gae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — A2C: batches, parallel workers and GAE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-ppo-dont-move-the-policy-too-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — PPO: don't move the policy too far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-sac-off-policy-continuous-actions-maximum-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — SAC: off-policy, continuous actions, maximum entropy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — When to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="actor-critic-methods-a2c-ppo-and-sac">Actor-Critic Methods: A2C, PPO and SAC<a class="headerlink" href="#actor-critic-methods-a2c-ppo-and-sac" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>An <strong>actor-critic</strong> agent has two parts. The <strong>actor</strong> is a policy that picks actions. The <strong>critic</strong> is a learned value function that judges them. After every step the critic computes the <strong>TD error</strong> <span class="arithmatex">\(\delta\)</span>: "was that better or worse than I expected?". The actor then makes that action more likely if <span class="arithmatex">\(\delta &gt; 0\)</span> and less likely if <span class="arithmatex">\(\delta &lt; 0\)</span>. This one idea, with a few safety rails added, gives <strong>A2C</strong>, <strong>PPO</strong> (the algorithm behind RLHF for chatbots) and <strong>SAC</strong> (a favourite for robot control).</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../policy-gradients/">Policy gradients</a>, <a href="../monte-carlo-td-learning/">Monte Carlo &amp; TD learning</a></p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Most deep RL you will meet in practice is actor-critic:</p>
+<ul>
+<li><strong>PPO</strong> (Proximal Policy Optimization) trained OpenAI Five to play Dota 2, trains many simulated robots, and is the RL step in the original <strong>RLHF</strong> recipe used to fine-tune ChatGPT-style assistants.</li>
+<li><strong>SAC</strong> (Soft Actor-Critic) is a go-to algorithm for continuous control: robot arms, legged robots, anything where the action is a vector of motor torques.</li>
+<li><strong>A2C</strong> is the simplest member of the family and the easiest place to see how all the parts fit together.</li>
+</ul>
+<p>In the <a href="../policy-gradients/">policy gradients</a> lesson, REINFORCE learned a policy directly, but slowly and noisily. In the <a href="../monte-carlo-td-learning/">Monte Carlo &amp; TD learning</a> lesson, TD learning estimated values quickly from single steps. Actor-critic methods glue those two lessons together.</p>
+<hr />
+<h2 id="step-1-reinforces-problem-one-noisy-number-per-episode">Step 1 — REINFORCE's problem: one noisy number per episode<a class="headerlink" href="#step-1-reinforces-problem-one-noisy-number-per-episode" title="Permanent link">&para;</a></h2>
+<p>Recall the REINFORCE update. For every step of an episode, it nudges the policy parameters <span class="arithmatex">\(\theta\)</span> in the direction that makes the taken action more likely, scaled by the <strong>return</strong> <span class="arithmatex">\(G_t\)</span> that followed:</p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha\, G_t\, \nabla_\theta \log \pi_\theta(a_t \mid s_t)
+\]</div>
+<p>The trouble is <span class="arithmatex">\(G_t\)</span>. It is the sum of <strong>every</strong> reward until the end of the episode, so it soaks up the randomness of every later action and every later slip of the environment. A good action followed by bad luck gets punished. A bad action followed by good luck gets rewarded. Averaged over many, many episodes this washes out, but each single update is very noisy. In statistics language, the gradient estimate is <strong>unbiased but high-variance</strong>, so learning needs many samples and small steps.</p>
+<p>Here is the size of the effect in the cliff world from <a href="../reinforcement-learning-intro/">lesson 1</a>. Take a policy that follows the safe detour 70% of the time and moves at random 30% of the time (<span class="arithmatex">\(\gamma = 0.95\)</span>). From the top-left corner:</p>
+<table>
+<thead>
+<tr>
+<th>Signal used to judge the first action</th>
+<th>Average</th>
+<th>Standard deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The whole return <span class="arithmatex">\(G_t\)</span> (REINFORCE)</td>
+<td>−3.42</td>
+<td><strong>3.77</strong></td>
+</tr>
+<tr>
+<td>One-step TD error <span class="arithmatex">\(\delta_t = r_{t+1} + \gamma V(s_{t+1}) - V(s_t)\)</span></td>
+<td>≈ 0</td>
+<td><strong>0.68</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The TD error is more than five times less noisy, because it contains the randomness of <strong>one</strong> step only; the critic's value <span class="arithmatex">\(V(s_{t+1})\)</span> stands in for everything after that. (This table uses the <em>true</em> <span class="arithmatex">\(V\)</span>. A learned critic is only an estimate, which brings in some bias; more on that trade-off in Step 4.)</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>The fix for noise is not a better policy, it is a better <strong>yardstick</strong>. Instead of asking "what was the total return?", ask "how much better than expected did this step turn out?". Answering "what did I expect?" needs a value function: the critic.</p>
+</div>
+<hr />
+<h2 id="step-2-the-critic-and-the-advantage">Step 2 — The critic and the advantage<a class="headerlink" href="#step-2-the-critic-and-the-advantage" title="Permanent link">&para;</a></h2>
+<p>The question the actor really wants answered is: <strong>was this action better or worse than what I usually do here?</strong> That quantity has a name, the <strong>advantage</strong>:</p>
+<div class="arithmatex">\[
+A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(A &gt; 0\)</span>: action <span class="arithmatex">\(a\)</span> is better than the policy's average in state <span class="arithmatex">\(s\)</span>. Do it more.</li>
+<li><span class="arithmatex">\(A &lt; 0\)</span>: worse than average. Do it less.</li>
+<li>Subtracting <span class="arithmatex">\(V(s)\)</span> is the <strong>baseline</strong> trick from the policy-gradients lesson. It doesn't change the average gradient, it just centres the signal around zero.</li>
+</ul>
+<p>We don't know <span class="arithmatex">\(Q\)</span> or <span class="arithmatex">\(V\)</span>, so we train a second model, the <strong>critic</strong> <span class="arithmatex">\(V_w(s)\)</span> with parameters <span class="arithmatex">\(w\)</span>, using exactly the TD learning from <a href="../monte-carlo-td-learning/">lesson 5</a>. Then we use the TD error as our advantage estimate:</p>
+<div class="arithmatex">\[
+\delta_t = r_{t+1} + \gamma V_w(s_{t+1}) - V_w(s_t) \;\approx\; A(s_t, a_t)
+\]</div>
+<p>Why does this work? On average, <span class="arithmatex">\(r_{t+1} + \gamma V(s_{t+1})\)</span> after taking <span class="arithmatex">\(a_t\)</span> is exactly <span class="arithmatex">\(Q(s_t, a_t)\)</span>. Subtract <span class="arithmatex">\(V(s_t)\)</span> and you get the advantage. So <strong>one number, <span class="arithmatex">\(\delta_t\)</span>, does two jobs</strong>: it is the critic's learning signal (make <span class="arithmatex">\(V(s_t)\)</span> closer to the target) and the actor's learning signal (how good was <span class="arithmatex">\(a_t\)</span>?).</p>
+<div class="admonition note">
+<p class="admonition-title">Actor and critic, side by side</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Actor</th>
+<th>Critic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>the policy <span class="arithmatex">\(\pi_\theta(a \mid s)\)</span></td>
+<td>a value function <span class="arithmatex">\(V_w(s)\)</span></td>
+</tr>
+<tr>
+<td>What it outputs</td>
+<td>action probabilities (or a Gaussian for continuous actions)</td>
+<td>one number: expected return from <span class="arithmatex">\(s\)</span></td>
+</tr>
+<tr>
+<td>How it learns</td>
+<td>policy gradient, weighted by <span class="arithmatex">\(\delta\)</span></td>
+<td>TD learning: move <span class="arithmatex">\(V_w(s)\)</span> toward <span class="arithmatex">\(r + \gamma V_w(s')\)</span></td>
+</tr>
+<tr>
+<td>Lesson it comes from</td>
+<td><a href="../policy-gradients/">Policy gradients</a></td>
+<td><a href="../monte-carlo-td-learning/">Monte Carlo &amp; TD learning</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="step-3-the-actor-critic-loop">Step 3 — The actor-critic loop<a class="headerlink" href="#step-3-the-actor-critic-loop" title="Permanent link">&para;</a></h2>
+<p>Put the two together and you get the basic <strong>one-step actor-critic</strong> algorithm. Every single step:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🎭 One step of actor-critic",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0, "icon": "👀", "label": "Observe state s", "role": "data"},
+    {"id": "act", "col": 1, "row": 0, "icon": "🎭", "label": "<b>Actor</b> samples a ~ π<sub>θ</sub>(·|s)", "role": "model", "note": "The policy is stochastic, so it explores by itself: no ε-greedy needed."},
+    {"id": "env", "col": 2, "row": 0, "icon": "🌍", "label": "Environment returns r and s′", "role": "data"},
+    {"id": "td", "col": 2, "row": 1, "icon": "⚖️", "label": "<b>Critic</b> computes δ", "sub": "δ = r + γV(s′) − V(s)", "role": "loss", "note": "Better or worse than expected? If s′ is terminal, V(s′) = 0."},
+    {"id": "cupd", "col": 1, "row": 1, "icon": "📏", "label": "Critic update", "sub": "w ← w + α<sub>w</sub> δ ∇V(s)", "role": "loss", "note": "Plain TD(0): move V(s) toward the target r + γV(s′)."},
+    {"id": "aupd", "col": 0, "row": 1, "icon": "🎯", "label": "Actor update", "sub": "θ ← θ + α<sub>θ</sub> δ ∇log π(a|s)", "role": "model", "note": "δ > 0: make a more likely in s. δ < 0: make it less likely."}
+  ],
+  "edges": [
+    {"from": "obs", "to": "act"},
+    {"from": "act", "to": "env"},
+    {"from": "env", "to": "td"},
+    {"from": "td", "to": "cupd", "label": "δ"},
+    {"from": "cupd", "to": "aupd"},
+    {"from": "aupd", "to": "obs", "label": "s ← s′"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "The agent is in state s."},
+    {"show": ["obs>act", "act"], "text": "<b>Act:</b> the actor samples an action from its policy π<sub>θ</sub>(a|s)."},
+    {"show": ["act>env", "env"], "text": "The environment answers with a reward r and the next state s′."},
+    {"show": ["env>td", "td"], "text": "<b>Critic computes δ:</b> the TD error compares what happened (r + γV(s′)) with what the critic expected (V(s))."},
+    {"show": ["td>cupd", "cupd"], "text": "<b>Critic update:</b> nudge V(s) toward r + γV(s′), so next time its expectation is a bit more accurate."},
+    {"show": ["cupd>aupd", "aupd"], "text": "<b>Actor update:</b> the same δ scales the policy gradient. Positive δ: action a becomes more likely in s. Negative: less likely."},
+    {"show": ["aupd>obs", "obs"], "text": "Move to s′ and repeat. No need to wait for the end of the episode: the agent learns after every step."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"obs": [0, 0], "act": [1, 0], "env": [1, 1], "td": [1, 2], "cupd": [0, 2], "aupd": [0, 1]}}
+}
+</script>
+</div>
+
+<div class="arithmatex">\[
+\begin{aligned}
+\delta_t &amp;= r_{t+1} + \gamma V_w(s_{t+1}) - V_w(s_t) &amp;&amp; \text{(critic: surprise)}\\
+w &amp;\leftarrow w + \alpha_w\, \delta_t\, \nabla_w V_w(s_t) &amp;&amp; \text{(critic update)}\\
+\theta &amp;\leftarrow \theta + \alpha_\theta\, \delta_t\, \nabla_\theta \log \pi_\theta(a_t \mid s_t) &amp;&amp; \text{(actor update)}
+\end{aligned}
+\]</div>
+<p>A worked first step in the cliff world. The critic starts at <span class="arithmatex">\(V = 0\)</span> everywhere, the actor picks each direction with probability 0.25. From the start cell the actor samples <strong>→</strong> and falls straight into the cliff (<span class="arithmatex">\(r = -20\)</span>, episode over, so <span class="arithmatex">\(V(s') = 0\)</span>):</p>
+<ul>
+<li><span class="arithmatex">\(\delta = -20 + 0 - 0 = -20\)</span></li>
+<li>Critic (<span class="arithmatex">\(\alpha_w = 0.1\)</span>): <span class="arithmatex">\(V(\text{start})\)</span> becomes <span class="arithmatex">\(0 + 0.1 \times (-20) = -2.0\)</span></li>
+<li>Actor (<span class="arithmatex">\(\alpha_\theta = 0.1\)</span>, a softmax over four action preferences): π(→ | start) drops from 0.25 to <strong>0.043</strong>, and the other three rise to 0.319 each.</li>
+</ul>
+<p>Had it sampled <strong>↑</strong> instead (<span class="arithmatex">\(r = -1\)</span>), <span class="arithmatex">\(\delta\)</span> would be only <span class="arithmatex">\(-1\)</span>, <span class="arithmatex">\(V(\text{start})\)</span> would become <span class="arithmatex">\(-0.1\)</span>, and π(↑) would dip just slightly, from 0.25 to 0.232. A big surprise means a big update.</p>
+<p><strong>Try it:</strong> watch a tabular actor-critic learn the cliff world, one transition at a time. Press <strong>1 step</strong> a few times and read the numbers, then press <strong>20 episodes</strong> a few times.</p>
+<div id="viz-ac-trace" class="viz"><div class="viz-title">🎭 Interactive: actor and critic learning the cliff world</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Every step updates both parts.</strong> The readout shows <span class="arithmatex">\(\delta\)</span> being computed, then the critic's <span class="arithmatex">\(V(s)\)</span> moving, then the actor's <span class="arithmatex">\(\pi(a \mid s)\)</span> moving in the direction of <span class="arithmatex">\(\delta\)</span>'s sign.</li>
+<li><strong>Early on, the critic is wrong, and that's fine.</strong> The first few <span class="arithmatex">\(\delta\)</span>'s are mostly the raw reward. As values spread backwards from the goal, <span class="arithmatex">\(\delta\)</span> becomes a much more informative "better or worse than expected" signal.</li>
+<li><strong>It learns fast.</strong> We ran this exact algorithm in Python (20 seeds, <span class="arithmatex">\(\alpha_w = \alpha_\theta = 0.1\)</span>, no slip). In episodes 1–10 only 21% of episodes reached the goal and 69% fell off the cliff. In episodes 11–50 it was 92% goal, and from episode 51 on 99%. After 300 episodes, 16 of the 20 runs had learned the 7-step path along the cliff edge.</li>
+<li>The widget uses <code>Math.random()</code>, so your run will differ from ours. Press <strong>Reset</strong> and try again; also try big step sizes (0.5) and see learning become jumpier.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-a2c-batches-parallel-workers-and-gae">Step 4 — A2C: batches, parallel workers and GAE<a class="headerlink" href="#step-4-a2c-batches-parallel-workers-and-gae" title="Permanent link">&para;</a></h2>
+<p>Updating after every single step with a neural network is unstable: consecutive states are almost identical, so the gradients all point the same way. <strong>A2C</strong> (Advantage Actor-Critic) fixes this with batching:</p>
+<ol>
+<li>Run <span class="arithmatex">\(N\)</span> copies of the environment <strong>in parallel</strong> (say 8), each for <span class="arithmatex">\(n\)</span> steps (say 5). That gives a batch of <span class="arithmatex">\(N \times n\)</span> transitions from many different situations.</li>
+<li>Compute an advantage <span class="arithmatex">\(\hat{A}_t\)</span> for every transition.</li>
+<li>Take <strong>one</strong> gradient step on a combined loss, then throw the batch away and collect a fresh one.</li>
+</ol>
+<p>The combined loss has three parts:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+L(\theta, w) = &amp;-\frac{1}{B}\sum_t \hat{A}_t \log \pi_\theta(a_t \mid s_t) &amp;&amp; \text{(actor: policy gradient)}\\
+&amp;+ c_v\,\frac{1}{B}\sum_t \big(V_w(s_t) - \hat{G}_t\big)^2 &amp;&amp; \text{(critic: value regression)}\\
+&amp;- c_e\,\frac{1}{B}\sum_t \mathcal{H}\big(\pi_\theta(\cdot \mid s_t)\big) &amp;&amp; \text{(entropy bonus)}
+\end{aligned}
+\]</div>
+<p>where <span class="arithmatex">\(B\)</span> is the batch size, <span class="arithmatex">\(\hat{G}_t = \hat{A}_t + V_w(s_t)\)</span> is the critic's target, <span class="arithmatex">\(c_v\)</span> and <span class="arithmatex">\(c_e\)</span> are small weights (0.5 and 0.01 in the code below), and <span class="arithmatex">\(\mathcal{H}\)</span> is the policy's entropy (how spread out its probabilities are; Step 6 has a widget). The <strong>entropy bonus</strong> rewards the actor for not becoming certain too early, which keeps it exploring. Actor and critic often share the first layers of one network.</p>
+<p><strong>How far to look ahead? GAE.</strong> The one-step <span class="arithmatex">\(\delta_t\)</span> is low-variance but leans heavily on the critic, which may be wrong (bias). The full return <span class="arithmatex">\(G_t\)</span> has no critic bias but is noisy. <strong>Generalized Advantage Estimation</strong> (GAE) blends all the in-between options with one knob <span class="arithmatex">\(\lambda \in [0, 1]\)</span>:</p>
+<div class="arithmatex">\[
+\hat{A}_t = \delta_t + (\gamma\lambda)\,\delta_{t+1} + (\gamma\lambda)^2\,\delta_{t+2} + \dots
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\lambda = 0\)</span>: just <span class="arithmatex">\(\delta_t\)</span>, the one-step TD error. Low variance, most bias.</li>
+<li><span class="arithmatex">\(\lambda = 1\)</span>: the sum telescopes to <span class="arithmatex">\(G_t - V(s_t)\)</span>, the Monte Carlo advantage. No critic bias, high variance.</li>
+<li><span class="arithmatex">\(\lambda \approx 0.95\)</span> is the usual compromise. It is the same bias–variance dial as TD(λ) in <a href="../monte-carlo-td-learning/">lesson 5</a>.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<p>"A2C" names three ideas you have already met: the <strong>advantage</strong> (Step 2) weights the policy gradient, a <strong>critic</strong> supplies it, and many parallel environments make the batch diverse. Its asynchronous older sibling, <strong>A3C</strong> (2016), ran the workers on separate CPU threads that each updated a shared network; the synchronous A2C version turned out to work just as well and is simpler.</p>
+</div>
+<hr />
+<h2 id="step-5-ppo-dont-move-the-policy-too-far">Step 5 — PPO: don't move the policy too far<a class="headerlink" href="#step-5-ppo-dont-move-the-policy-too-far" title="Permanent link">&para;</a></h2>
+<p>A2C has a fragile spot: the step size. A policy-gradient step that is a little too big can wreck the policy. If the actor suddenly makes a bad action very likely, the next batch is collected with that bad policy, the data gets worse, and learning can collapse and never recover. This is different from supervised learning, where a bad step is just a bad step: in RL, <strong>the policy decides what data you see next</strong>.</p>
+<p>Also, collecting data is expensive, yet A2C uses each batch for a single gradient step. It would be nice to take several steps on the same batch, but after the first step the batch was collected by an <em>older</em> policy.</p>
+<p><strong>PPO</strong> (Proximal Policy Optimization, Schulman et al. 2017) solves both problems with one trick. Call the policy that collected the batch <span class="arithmatex">\(\pi_{\text{old}}\)</span>. For each sample, compute the <strong>probability ratio</strong></p>
+<div class="arithmatex">\[
+r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\text{old}}(a_t \mid s_t)}
+\]</div>
+<p><span class="arithmatex">\(r_t = 1\)</span> means the new policy is just as likely to take <span class="arithmatex">\(a_t\)</span> as the old one; <span class="arithmatex">\(r_t = 1.5\)</span> means 50% more likely. Weighting the advantage by this ratio corrects for the policy having changed (an <em>importance sampling</em> correction). Then PPO <strong>clips</strong> it:</p>
+<div class="arithmatex">\[
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t\Big[\min\big(r_t(\theta)\,\hat{A}_t,\; \text{clip}(r_t(\theta),\, 1-\varepsilon,\, 1+\varepsilon)\,\hat{A}_t\big)\Big]
+\]</div>
+<p>with a typical <span class="arithmatex">\(\varepsilon = 0.2\)</span>. In words: <strong>improve the objective, but get no extra credit for moving the ratio outside <span class="arithmatex">\([1-\varepsilon, 1+\varepsilon]\)</span>.</strong> Once an action has been made 20% more (or less) likely, that sample stops pushing. This lets PPO safely run several epochs of minibatch updates on every batch.</p>
+<p><strong>Try it:</strong> drag the ratio point and change <span class="arithmatex">\(\varepsilon\)</span>.</p>
+<div id="viz-ppo-clip" class="viz"><div class="viz-title">✂️ Interactive: the PPO clipped objective</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Good action (<span class="arithmatex">\(A = +1\)</span>, <span class="arithmatex">\(\varepsilon = 0.2\)</span>):</strong> the objective rises with <span class="arithmatex">\(r\)</span> until <span class="arithmatex">\(r = 1.2\)</span>, then goes flat. At <span class="arithmatex">\(r = 1.5\)</span> it is <span class="arithmatex">\(\min(1.5, 1.2) = 1.2\)</span> and its gradient is <strong>0</strong>: the action is already 20% more likely, so this sample stops pushing.</li>
+<li><strong>Bad action (<span class="arithmatex">\(A = -1\)</span>):</strong> the flat part is on the <strong>left</strong>. At <span class="arithmatex">\(r = 0.5\)</span> the objective is <span class="arithmatex">\(\min(-0.5, -0.8) = -0.8\)</span>, gradient 0: the action has already been made less likely enough.</li>
+<li><strong>The clip is one-sided.</strong> For <span class="arithmatex">\(A = -1\)</span> at <span class="arithmatex">\(r = 1.5\)</span>, the objective is <span class="arithmatex">\(-1.5\)</span> and the gradient is still active (slope −1). If an update accidentally made a <em>bad</em> action <em>more</em> likely, PPO keeps pulling it back. The <span class="arithmatex">\(\min\)</span> makes the objective a pessimistic bound: it ignores improvements beyond the trust region but never ignores mistakes.</li>
+<li>A smaller <span class="arithmatex">\(\varepsilon\)</span> means a narrower band around <span class="arithmatex">\(r = 1\)</span>: smaller, safer policy steps.</li>
+</ul>
+</div>
+<p>The full PPO loss is the A2C loss with the actor term swapped for <span class="arithmatex">\(L^{\text{CLIP}}\)</span>: clipped policy objective, plus a critic loss, plus an <strong>entropy bonus</strong> to keep exploring. That is all of PPO. Its popularity comes from being simple, robust to hyperparameters, and good enough almost everywhere. In <strong>RLHF</strong>, the "environment" is a prompt, the action is the model's reply (one token at a time), the reward comes from a learned reward model, and PPO is what nudges the language model toward higher-reward replies (with an extra penalty for drifting far from the original model). The <a href="../rlhf-dpo/">RLHF &amp; DPO</a> lesson covers that in detail.</p>
+<hr />
+<h2 id="step-6-sac-off-policy-continuous-actions-maximum-entropy">Step 6 — SAC: off-policy, continuous actions, maximum entropy<a class="headerlink" href="#step-6-sac-off-policy-continuous-actions-maximum-entropy" title="Permanent link">&para;</a></h2>
+<p>A2C and PPO are <strong>on-policy</strong>: each batch must come from the current policy, is used briefly, and is then thrown away. For a real robot, where every sample costs time and wear, that is wasteful. <strong>SAC</strong> (Soft Actor-Critic, Haarnoja et al. 2018) is <strong>off-policy</strong>: like <a href="../deep-q-networks/">DQN</a>, it stores every transition in a <strong>replay buffer</strong> and learns from old data again and again.</p>
+<p>SAC is built around three ideas:</p>
+<p><strong>1. Maximum-entropy objective.</strong> SAC's agent maximises reward <strong>plus</strong> the entropy of its own policy, weighted by a <strong>temperature</strong> <span class="arithmatex">\(\alpha\)</span>:</p>
+<div class="arithmatex">\[
+J(\pi) = \mathbb{E}\Big[\sum_t \gamma^t \big(r_{t+1} + \alpha\, \mathcal{H}(\pi(\cdot \mid s_t))\big)\Big]
+\]</div>
+<p>The agent is paid to stay random wherever being random costs little. That gives built-in exploration, robustness (it learns many ways to succeed, not one brittle way), and smoother learning. The best policy under this objective is a <strong>softmax over Q-values</strong> with temperature <span class="arithmatex">\(\alpha\)</span>: <span class="arithmatex">\(\pi(a \mid s) \propto \exp\big(Q(s,a)/\alpha\big)\)</span>.</p>
+<p><strong>Try it:</strong> four actions with Q-values 3, 2.5, 1 and 0. Slide the temperature and watch the policy and its entropy.</p>
+<div id="viz-entropy" class="viz"><div class="viz-title">🌡️ Interactive: temperature, softmax policy and entropy</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong><span class="arithmatex">\(\alpha = 0.1\)</span>:</strong> almost greedy. The best action gets probability 0.993 and the entropy is only 0.040 nats.</li>
+<li><strong><span class="arithmatex">\(\alpha = 1\)</span>:</strong> the policy is [0.558, 0.339, 0.076, 0.028], entropy 0.987. The close runner-up (<span class="arithmatex">\(Q = 2.5\)</span>) still gets a third of the choices.</li>
+<li><strong><span class="arithmatex">\(\alpha = 10\)</span>:</strong> nearly uniform ([0.285, 0.271, 0.233, 0.211]), entropy 1.379, close to the maximum <span class="arithmatex">\(\ln 4 = 1.386\)</span> for four actions.</li>
+<li>Actions with similar Q-values get similar probabilities; clearly bad actions fade first. Modern SAC <strong>tunes <span class="arithmatex">\(\alpha\)</span> automatically</strong> to hit a target entropy, so you rarely set it by hand.</li>
+<li>PPO's entropy bonus (<span class="arithmatex">\(c_e\)</span> in Step 4) is the same idea in a milder form: a small reward for keeping the policy spread out.</li>
+</ul>
+</div>
+<p><strong>2. Continuous actions.</strong> The actor outputs the mean and standard deviation of a Gaussian, samples an action, and squashes it with <span class="arithmatex">\(\tanh\)</span> into the allowed range (e.g. torques in <span class="arithmatex">\([-1, 1]\)</span>). Because the sample is written as <span class="arithmatex">\(a = \tanh(\mu_\theta(s) + \sigma_\theta(s)\,\xi)\)</span> with random noise <span class="arithmatex">\(\xi\)</span> (the <em>reparameterisation trick</em>), gradients flow straight from the critic's <span class="arithmatex">\(Q\)</span> into the actor's parameters. The actor minimises <span class="arithmatex">\(\mathbb{E}\big[\alpha \log \pi_\theta(a \mid s) - Q(s, a)\big]\)</span>: pick high-Q actions, but stay random.</p>
+<p><strong>3. Twin Q critics.</strong> SAC's critic learns <span class="arithmatex">\(Q(s, a)\)</span> rather than <span class="arithmatex">\(V(s)\)</span>. Like Q-learning, a learned Q tends to <strong>overestimate</strong>: the actor seeks out actions whose Q happens to be too high, and errors snowball. SAC trains <strong>two</strong> Q-networks and uses the smaller of the two in its target (an idea from the TD3 algorithm), with slowly-updated target networks <span class="arithmatex">\(\theta^-\)</span> like DQN:</p>
+<div class="arithmatex">\[
+y = r + \gamma \Big(\min_{j=1,2} Q_{\theta_j^-}(s', a') - \alpha \log \pi(a' \mid s')\Big), \qquad a' \sim \pi(\cdot \mid s')
+\]</div>
+<hr />
+<h2 id="step-7-when-to-use-which">Step 7 — When to use which<a class="headerlink" href="#step-7-when-to-use-which" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A2C</th>
+<th>PPO</th>
+<th>SAC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>On- or off-policy</td>
+<td>on-policy</td>
+<td>on-policy</td>
+<td><strong>off-policy</strong> (replay buffer)</td>
+</tr>
+<tr>
+<td>Actions</td>
+<td>discrete or continuous</td>
+<td>discrete or continuous</td>
+<td><strong>continuous</strong> (discrete variants exist)</td>
+</tr>
+<tr>
+<td>Critic</td>
+<td><span class="arithmatex">\(V(s)\)</span></td>
+<td><span class="arithmatex">\(V(s)\)</span></td>
+<td>two <span class="arithmatex">\(Q(s,a)\)</span> + target networks</td>
+</tr>
+<tr>
+<td>Keeps updates safe by</td>
+<td>small learning rate</td>
+<td><strong>clipped ratio</strong></td>
+<td>soft (slow) target updates</td>
+</tr>
+<tr>
+<td>Exploration from</td>
+<td>stochastic policy + entropy bonus</td>
+<td>stochastic policy + entropy bonus</td>
+<td><strong>maximum entropy</strong>, auto-tuned <span class="arithmatex">\(\alpha\)</span></td>
+</tr>
+<tr>
+<td>Sample efficiency</td>
+<td>low</td>
+<td>medium</td>
+<td><strong>high</strong></td>
+</tr>
+<tr>
+<td>Wall-clock with a fast simulator</td>
+<td>fast</td>
+<td>fast, very robust</td>
+<td>slower per sample</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>teaching, quick baselines</td>
+<td>games, simulated robots, <strong>RLHF</strong></td>
+<td>real or simulated robot control</td>
+</tr>
+</tbody>
+</table>
+<p>A practical rule of thumb: <strong>start with PPO.</strong> It works for almost anything and forgives imperfect hyperparameters. If your actions are continuous and samples are expensive (a real robot, a slow simulator), try <strong>SAC</strong>.</p>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>All three algorithms share the same skeleton: an actor that acts, a critic that judges, and an update that uses the critic's verdict. Here is PPO's version, the one you are most likely to use:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The PPO training loop",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0, "icon": "🎲", "label": "Initialise actor π<sub>θ</sub> and critic V<sub>w</sub>", "shape": "pill"},
+    {"id": "roll", "col": 1, "row": 0, "icon": "🌍", "label": "Collect a batch with π<sub>old</sub>", "sub": "N envs × T steps", "role": "data", "note": "Store s, a, r, log π_old(a|s) and V(s) for every step."},
+    {"id": "adv", "col": 2, "row": 0, "icon": "⚖️", "label": "Advantages with GAE", "sub": "Â = δ + γλÂ′", "role": "loss", "note": "Run backwards through the batch. Critic targets: Ĝ = Â + V(s)."},
+    {"id": "upd", "col": 2, "row": 1, "icon": "✂️", "label": "K epochs of minibatch updates", "sub": "clipped loss + value loss − entropy", "role": "model", "note": "Each minibatch: ratio r = π_θ/π_old, clipped objective, critic regression, entropy bonus."},
+    {"id": "sync", "col": 1, "row": 1, "icon": "🔄", "label": "π<sub>old</sub> ← π<sub>θ</sub>", "sub": "discard the batch", "role": "opt", "note": "On-policy: the old batch no longer matches the policy, so it is thrown away."}
+  ],
+  "edges": [
+    {"from": "init", "to": "roll"},
+    {"from": "roll", "to": "adv"},
+    {"from": "adv", "to": "upd"},
+    {"from": "upd", "to": "sync"},
+    {"from": "sync", "to": "roll", "label": "repeat"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Start with a random actor network and a random critic network (often two heads on one body)."},
+    {"show": ["init>roll", "roll"], "text": "Run the current policy (now called π<sub>old</sub>) in several environments for T steps each. Remember the log-probability of every action taken."},
+    {"show": ["roll>adv", "adv"], "text": "Compute TD errors δ with the critic, and blend them into advantages with GAE(λ)."},
+    {"show": ["adv>upd", "upd"], "text": "Several passes (epochs) over the batch in minibatches: maximise the clipped objective, regress the critic toward its targets, add an entropy bonus. The clip stops the policy from moving too far."},
+    {"show": ["upd>sync", "sync"], "text": "The improved policy becomes the new π<sub>old</sub>. The batch is thrown away."},
+    {"show": ["sync>roll", "roll"], "text": "Collect a fresh batch and repeat."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"init": [0, 0], "roll": [0, 1], "adv": [1, 1], "upd": [1, 2], "sync": [0, 2]}}
+}
+</script>
+</div>
+
+<p>Here is a complete PPO in PyTorch, on a home-made CartPole (balance a pole on a cart by pushing left or right; +1 reward per step, up to 500 steps). The three numbered blocks match the diagram. It runs in about a minute on one CPU core:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span><span class="o">,</span><span class="w"> </span><span class="nn">random</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">CartPole</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""The classic cart-pole: push the cart left or right to keep the pole upright. +1 per step, max 500."""</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>   <span class="c1"># x, x_dot, theta, theta_dot</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">x</span><span class="p">,</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">force</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mf">10.0</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">tmp</span> <span class="o">=</span> <span class="p">(</span><span class="n">force</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_dot</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.1</span>      <span class="c1"># 0.05 = pole mass × half-length, 1.1 = total mass</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">th_acc</span> <span class="o">=</span> <span class="p">(</span><span class="mf">9.8</span> <span class="o">*</span> <span class="n">sin</span> <span class="o">-</span> <span class="n">cos</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">cos</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">1.1</span><span class="p">))</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">x_acc</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">th_acc</span> <span class="o">*</span> <span class="n">cos</span> <span class="o">/</span> <span class="mf">1.1</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">x</span><span class="p">,</span> <span class="n">x_dot</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">x_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">x_acc</span>  <span class="c1"># Euler step, 20 ms</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="n">th</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">=</span> <span class="n">th</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_dot</span><span class="p">,</span> <span class="n">th_dot</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">th_acc</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">th_dot</span><span class="p">])</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="n">fell</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.4</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">fell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">500</span>     <span class="c1"># state, reward, terminated, truncated</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">class</span><span class="w"> </span><span class="nc">ActorCritic</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">actor</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>   <span class="c1"># action logits</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">critic</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># V(s)</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                               <span class="c1"># tiny networks: one CPU thread is fastest</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="n">env</span><span class="p">,</span> <span class="n">net</span> <span class="o">=</span> <span class="n">CartPole</span><span class="p">(),</span> <span class="n">ActorCritic</span><span class="p">()</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">3e-4</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="n">GAMMA</span><span class="p">,</span> <span class="n">LAM</span><span class="p">,</span> <span class="n">CLIP</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">EPOCHS</span><span class="p">,</span> <span class="n">BATCH</span> <span class="o">=</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">64</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="n">s</span><span class="p">,</span> <span class="n">ep_len</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[]</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>    <span class="c1"># 1. Collect T steps with the current ("old") policy</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">LOGP</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>            <span class="n">st</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>            <span class="n">d</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>            <span class="n">S</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">st</span><span class="p">);</span> <span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="n">LOGP</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">a</span><span class="p">));</span> <span class="n">V</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">critic</span><span class="p">(</span><span class="n">st</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>        <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">trunc</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>        <span class="n">R</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">);</span> <span class="n">D</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span> <span class="ow">or</span> <span class="n">trunc</span><span class="p">)</span>     <span class="c1"># (treating the 500-step time-out as an ending, for simplicity)</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>        <span class="n">ep_len</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>        <span class="k">if</span> <span class="n">term</span> <span class="ow">or</span> <span class="n">trunc</span><span class="p">:</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>            <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ep_len</span><span class="p">)</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>            <span class="n">s</span><span class="p">,</span> <span class="n">ep_len</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="mi">0</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>        <span class="n">last_v</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">critic</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>    <span class="c1"># 2. Advantages with GAE(λ): A_t = δ_t + γλ A_{t+1}</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    <span class="n">adv</span><span class="p">,</span> <span class="n">gae</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>        <span class="n">next_v</span> <span class="o">=</span> <span class="n">last_v</span> <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">T</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">V</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>        <span class="k">if</span> <span class="n">D</span><span class="p">[</span><span class="n">t</span><span class="p">]:</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>            <span class="n">next_v</span><span class="p">,</span> <span class="n">gae</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>        <span class="n">delta</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">GAMMA</span> <span class="o">*</span> <span class="n">next_v</span> <span class="o">-</span> <span class="n">V</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>        <span class="n">gae</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">+</span> <span class="n">GAMMA</span> <span class="o">*</span> <span class="n">LAM</span> <span class="o">*</span> <span class="n">gae</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>        <span class="n">adv</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">gae</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">LOGP</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">LOGP</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>    <span class="n">returns</span> <span class="o">=</span> <span class="n">adv</span> <span class="o">+</span> <span class="n">V</span>                                   <span class="c1"># targets for the critic</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>    <span class="c1"># 3. Several epochs of minibatch updates on the clipped objective</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">BATCH</span><span class="p">):</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>            <span class="n">d</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>            <span class="n">ratio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="o">-</span> <span class="n">LOGP</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>          <span class="c1"># r_t(θ) = π_θ / π_old</span>
+<a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>            <span class="n">a_n</span> <span class="o">=</span> <span class="p">(</span><span class="n">adv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">adv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">adv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+<a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>            <span class="n">actor_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ratio</span> <span class="o">*</span> <span class="n">a_n</span><span class="p">,</span> <span class="n">ratio</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">CLIP</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">CLIP</span><span class="p">)</span> <span class="o">*</span> <span class="n">a_n</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>            <span class="n">critic_loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">critic</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">returns</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>            <span class="n">entropy</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>            <span class="n">loss</span> <span class="o">=</span> <span class="n">actor_loss</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">critic_loss</span> <span class="o">-</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">entropy</span>
+<a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>            <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>
+<a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>    <span class="k">if</span> <span class="n">iteration</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+<a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"iteration </span><span class="si">{</span><span class="n">iteration</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">  steps </span><span class="si">{</span><span class="n">T</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">iteration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2">  "</span>
+<a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>              <span class="sa">f</span><span class="s2">"avg episode length (last 20) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"time: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">s;  last 20 episodes that reached 500 steps: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>iteration  0  steps   2048  avg episode length (last 20) =   20.4
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>iteration  4  steps  10240  avg episode length (last 20) =   71.9
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>iteration  9  steps  20480  avg episode length (last 20) =  207.3
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>iteration 14  steps  30720  avg episode length (last 20) =  316.4
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>iteration 19  steps  40960  avg episode length (last 20) =  404.2
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>iteration 24  steps  51200  avg episode length (last 20) =  404.8
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>iteration 29  steps  61440  avg episode length (last 20) =  473.8
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>iteration 34  steps  71680  avg episode length (last 20) =  450.5
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>iteration 39  steps  81920  avg episode length (last 20) =  468.1
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>time: 57s;  last 20 episodes that reached 500 steps: 17
+</code></pre></div>
+<p>The random policy keeps the pole up for about 20 steps. After about 82,000 steps of experience the average over the last 20 episodes is 468 steps, and 17 of those 20 episodes hit the 500-step maximum. Notice that the curve is not monotonic (404.8 → 473.8 → 450.5): even PPO's learning is noisy, which is why RL papers report averages over several seeds.</p>
+<p>A few details worth pointing out in the code:</p>
+<ul>
+<li><strong>Advantage normalisation</strong> (<code>a_n</code>): advantages are rescaled to mean 0, standard deviation 1 within each minibatch. It is a standard PPO trick that makes one learning rate work across problems with very different reward scales.</li>
+<li><strong>To turn this into A2C</strong>, set <code>EPOCHS = 1</code>, use the whole batch at once, and replace the clipped term with <code>-(d.log_prob(A) * a_n).mean()</code>.</li>
+<li><strong>Separate actor and critic networks</strong> here; sharing a body is also common.</li>
+</ul>
+<p>For real projects, use a tested library such as <a href="https://stable-baselines3.readthedocs.io/">Stable-Baselines3</a> or <a href="https://docs.cleanrl.dev/">CleanRL</a> (single-file implementations, great for reading). With Gymnasium installed, the whole thing is a few lines:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gym</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PPO</span>   <span class="c1"># also: A2C, SAC (SAC needs continuous actions, e.g. "Pendulum-v1")</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">model</span> <span class="o">=</span> <span class="n">PPO</span><span class="p">(</span><span class="s2">"MlpPolicy"</span><span class="p">,</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">"CartPole-v1"</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"The critic picks the actions.\"</p>
+<p>Only the actor acts. In A2C and PPO the critic outputs <span class="arithmatex">\(V(s)\)</span>, which has no actions in it at all; it only supplies the yardstick <span class="arithmatex">\(\delta\)</span> that tells the actor how to change. (In SAC the critic is a <span class="arithmatex">\(Q(s, a)\)</span>, but the actor still does the choosing; the critic only grades its choices.)</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"PPO's clip limits the size of the parameter update.\"</p>
+<p>It limits how much the policy's <strong>action probabilities</strong> change on the samples in the batch, by zeroing the gradient of samples whose ratio has left <span class="arithmatex">\([1-\varepsilon, 1+\varepsilon]\)</span>. The weights can still move a lot, and policies can still drift beyond the band over many epochs. That is why implementations also watch the KL divergence and use modest learning rates and epoch counts.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Adding a critic makes the gradient unbiased and better in every way.\"</p>
+<p>Subtracting a baseline <span class="arithmatex">\(V(s)\)</span> never adds bias. But <strong>bootstrapping</strong>, using <span class="arithmatex">\(r + \gamma V(s')\)</span> in place of the true return, does: if the critic is wrong, the advantage is wrong. Actor-critic methods trade a little bias for a lot less variance, and GAE's <span class="arithmatex">\(\lambda\)</span> is the dial for that trade.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Maximum entropy just means acting randomly.\"</p>
+<p>SAC's policy is random only where randomness is cheap. Where one action is clearly better, the softmax over Q-values puts almost all the probability on it (try <span class="arithmatex">\(\alpha = 0.1\)</span> in the widget). The temperature sets the exchange rate between reward and randomness.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. The critic predicts V(s) = 4. The agent takes action a, gets reward r = 2 and lands in s′ with V(s′) = 3. With γ = 0.9, what is δ, and what does the actor do?</summary>
+<p><span class="arithmatex">\(\delta = 2 + 0.9 \times 3 - 4 = 0.7\)</span>. It is positive: the outcome was better than the critic expected, so the actor makes <span class="arithmatex">\(a\)</span> <strong>more likely</strong> in <span class="arithmatex">\(s\)</span> (and the critic raises <span class="arithmatex">\(V(s)\)</span> toward <span class="arithmatex">\(4.7\)</span>).</p>
+</details>
+<details class="question">
+<summary>2. Why does A2C run several environments in parallel instead of updating after every step of one environment?</summary>
+<p>Consecutive steps from one environment are strongly correlated (nearly identical states), so the gradients all point the same way and learning becomes unstable. Parallel environments give a batch of diverse, less correlated transitions, and the batch also averages out noise. It plays the role that the replay buffer plays in DQN, without leaving on-policy learning.</p>
+</details>
+<details class="question">
+<summary>3. In PPO with ε = 0.2, a sample has A = +1 and ratio r = 1.3. What is its clipped objective, and does it contribute a gradient? What if A = −1?</summary>
+<p>With <span class="arithmatex">\(A = +1\)</span>: <span class="arithmatex">\(\min(1.3, 1.2) = 1.2\)</span>. The clipped term wins and is constant in <span class="arithmatex">\(\theta\)</span>, so the gradient is <strong>zero</strong>. With <span class="arithmatex">\(A = -1\)</span>: <span class="arithmatex">\(\min(-1.3, -1.2) = -1.3\)</span>, the unclipped term wins, so the gradient is <strong>active</strong>: PPO keeps pushing this bad action's probability back down.</p>
+</details>
+<details class="question">
+<summary>4. What do λ = 0 and λ = 1 mean in GAE?</summary>
+<p><span class="arithmatex">\(\lambda = 0\)</span> gives the one-step TD error <span class="arithmatex">\(\delta_t\)</span> (low variance, but biased if the critic is wrong). <span class="arithmatex">\(\lambda = 1\)</span> gives <span class="arithmatex">\(G_t - V(s_t)\)</span>, the Monte Carlo return minus a baseline (no bootstrapping bias, but high variance). Values in between blend the two; 0.95 is a common default.</p>
+</details>
+<details class="question">
+<summary>5. Name two things SAC does that PPO doesn't, and why each helps.</summary>
+<p>(1) It is <strong>off-policy</strong> with a replay buffer, so every sample is reused many times: much better sample efficiency. (2) It maximises reward <strong>plus entropy</strong> with a tuned temperature α: built-in exploration and more robust policies. (3) It uses <strong>twin Q critics</strong> and takes the minimum, which counters the overestimation bias of learned Q-values. Any two of these.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Richard Sutton &amp; Andrew Barto, <a href="http://incompleteideas.net/book/the-book-2nd.html"><em>Reinforcement Learning: An Introduction</em></a>, Chapter 13.5 (actor-critic methods)</li>
+<li>Mnih et al., <a href="https://arxiv.org/abs/1602.01783"><em>Asynchronous Methods for Deep Reinforcement Learning</em></a> (2016), the A3C paper</li>
+<li>Schulman et al., <a href="https://arxiv.org/abs/1506.02438"><em>High-Dimensional Continuous Control Using Generalized Advantage Estimation</em></a> (2015), GAE</li>
+<li>Schulman et al., <a href="https://arxiv.org/abs/1707.06347"><em>Proximal Policy Optimization Algorithms</em></a> (2017), PPO</li>
+<li>Haarnoja et al., <a href="https://arxiv.org/abs/1801.01290"><em>Soft Actor-Critic</em></a> (2018) and <a href="https://arxiv.org/abs/1812.05905"><em>Soft Actor-Critic Algorithms and Applications</em></a> (2018, automatic temperature)</li>
+<li>Huang et al., <a href="https://iclr-blog-track.github.io/2022/03/25/ppo-implementation-details/"><em>The 37 Implementation Details of Proximal Policy Optimization</em></a> (ICLR blog track, 2022): everything the paper leaves out</li>
+<li>OpenAI, <a href="https://spinningup.openai.com/en/latest/algorithms/ppo.html"><em>Spinning Up: PPO</em></a> and <a href="https://spinningup.openai.com/en/latest/algorithms/sac.html"><em>SAC</em></a>, clear write-ups with pseudocode</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../model-based-rl/">Model-based RL &amp; planning</a> · <a href="../rlhf-dpo/">RL from human feedback (RLHF) and DPO</a></p>
+<script src="viz/actor-critic.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../policy-gradients/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Policy gradients">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Policy gradients
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../model-based-rl/" class="md-footer__link md-footer__link--next" aria-label="Next: Model-based RL &amp; planning">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Model-based RL & planning
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
