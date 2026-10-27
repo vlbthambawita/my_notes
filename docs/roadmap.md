@@ -63,6 +63,23 @@
 | Explainability (saliency maps, SHAP) | 📝 |
 | Bias, fairness, and robustness | 📝 |
 
+### Tsetlin machines
+Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines*](https://tsetlinmachine.org/).
+
+| Topic | Status |
+|---|---|
+| What is a Tsetlin machine? Learning readable logic rules | 📝 |
+| The Tsetlin automaton: learning by reward and penalty | 📝 |
+| Clauses, literals and voting: classification | 📝 |
+| Training: Type I and Type II feedback | 📝 |
+| Regression with Tsetlin machines | 📝 |
+| Convolutional Tsetlin machines | 📝 |
+| Weighted clauses and clause sharing | 📝 |
+| Tsetlin machine autoencoders | 📝 |
+| Confidence, trustworthiness and composites | 📝 |
+| Hierarchical and graph Tsetlin machines | 📝 |
+| Tsetlin machines for language and images | 📝 |
+
 ## Papers
 
 No paper walkthroughs yet.
