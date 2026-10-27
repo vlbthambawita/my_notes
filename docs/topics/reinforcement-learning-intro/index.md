@@ -171,7 +171,7 @@ $$
     5. **One bad arrow ripples backwards.** Choose *Safe detour* and click the top-right cell once, so it points left. The agent now bounces between two cells forever, and every cell that leads there turns red.
 
 !!! note "Two kinds of value"
-    $V^\pi(s)$ answers "how good is it to be **in** state $s$?" A close relative, the **action-value** $Q^\pi(s, a)$, answers "how good is it to take action $a$ in state $s$, then follow $\pi$?" If you know $Q$, choosing well is easy: in each state, pick the action with the highest $Q$. That idea is the heart of **Q-learning** (a later lesson).
+    $V^\pi(s)$ answers "how good is it to be **in** state $s$?" A close relative, the **action-value** $Q^\pi(s, a)$, answers "how good is it to take action $a$ in state $s$, then follow $\pi$?" If you know $Q$, choosing well is easy: in each state, pick the action with the highest $Q$. That idea is the heart of **Q-learning** (see [Q-learning and SARSA](../q-learning-sarsa/index.md)).
 
 ---
 
@@ -184,7 +184,7 @@ There is one more challenge that supervised learning never faces. Because the ag
 
 Think of choosing a restaurant. Going to your favourite is exploiting. Trying the new place down the street is exploring. Exploit always and you may never find something better; explore always and you eat a lot of bad meals.
 
-An RL agent that only exploits could take the safe route on its first lucky episode and never discover the shorter one. The simplest fix is **ε-greedy** (epsilon-greedy): most of the time take the best-known action, but with a small probability $\varepsilon$ (say 10%), take a random one. The *Multi-armed bandits* lesson explores this trade-off in depth.
+An RL agent that only exploits could take the safe route on its first lucky episode and never discover the shorter one. The simplest fix is **ε-greedy** (epsilon-greedy): most of the time take the best-known action, but with a small probability $\varepsilon$ (say 10%), take a random one. The [Multi-armed bandits](../multi-armed-bandits/index.md) lesson explores this trade-off in depth.
 
 ---
 
@@ -410,6 +410,6 @@ print("return:", total)
 - Andrej Karpathy, [*Deep Reinforcement Learning: Pong from Pixels*](https://karpathy.github.io/2016/05/31/rl/), a fun walk-through of learning a game end to end
 - OpenAI, [*Faulty Reward Functions in the Wild*](https://openai.com/index/faulty-reward-functions/), the boat-racing example
 
-**Next lessons:** Multi-armed bandits · Markov decision processes (MDPs) and Bellman equations
+**Next lessons:** [Multi-armed bandits](../multi-armed-bandits/index.md) · [Markov decision processes and the Bellman equations](../mdp-bellman-equations/index.md)
 
 <script src="viz/reinforcement-learning-intro.js"></script>

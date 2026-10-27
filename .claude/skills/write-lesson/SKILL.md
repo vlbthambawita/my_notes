@@ -54,10 +54,27 @@ Copy the pattern from `docs/topics/gradient-descent/viz/gradient-descent.js` or
 - SVG text is muted by default (`.viz svg text`); use `style: "fill: var(--viz-text)"` for emphasised text.
 - Must work in dark mode and at phone width (~390px).
 
+### Widget pitfalls (found while writing the RL series)
+
+- **Simulations must be seeded and reproducible.** Use a small seeded RNG (e.g. mulberry32) and port it to the
+  Python check script, so the widget readout and the numbers in the prose agree exactly. Long simulations can
+  still differ between browsers because `Math.exp`/`Math.log` aren't bit-identical everywhere. If a quoted number
+  depends on a long run, either build those functions from + − × ÷ or quote the Python number and say the widget
+  may differ slightly.
+- **Heavy simulations** (thousands of runs) run in chunks with `setTimeout`, and only start when the widget scrolls into
+  view (`IntersectionObserver`), so the page stays responsive.
+- **SVG text shrinks on phones.** A 600px-wide viewBox scaled to 360px makes 11px text about 7px. Below ~480px switch to a
+  narrower viewBox or layout instead of just scaling.
+- **Tables inside widgets** pick up Material's table styles; give them their own class.
+- **Display math inside admonitions or list items** needs blank lines around `$$ … $$`, or it won't render.
+- **Long inline equations overflow phones.** Split them into aligned display lines.
+- **Readouts:** separate items with " · ". Collapsed whitespace otherwise runs them together.
+- **Avoid values like "-0.0" and "+∞" in readouts.** Format them as 0.0 and "new".
+
 ## Verify before finishing
 
 1. `mkdocs build --strict -d <scratchpad>/site` must have no warnings.
-2. `node scripts/check_diagrams.mjs <scratchpad>/site` must print "All diagrams look clean." It measures every
+2. `node scripts/check_diagrams.mjs <scratchpad>/site [topics/<slug>/]` must print "All diagrams look clean." It measures every
    diagram at 1440/1100/820/390px for overlaps, arrows through boxes, broken words and misalignment.
    Fix the layout (see the rules in [diagrams.md](diagrams.md)) rather than ignoring a finding.
 3. Look at the page in headless Chromium at **1440px** (both sidebars, narrowest desktop content) **and 390px**, in **light and dark** mode

@@ -150,7 +150,7 @@ const send = (method, params = {}) => new Promise((r) => { const id = ++seq; wai
 await send("Page.enable");
 
 let problems = 0;
-for (const file of pages(siteDir).filter((p) => p.includes(filter))) {
+for (const file of pages(siteDir).filter((p) => relative(siteDir, p).includes(filter))) {
   for (const width of WIDTHS) {
     await send("Emulation.setDeviceMetricsOverride", { width, height: 900, deviceScaleFactor: 1, mobile: width < 600 });
     await send("Page.navigate", { url: "file://" + file });

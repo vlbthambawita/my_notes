@@ -79,5 +79,16 @@ nav:
           - Gradient Descent: topics/gradient-descent/index.md
       - Reinforcement learning:
           - What is RL?: topics/reinforcement-learning-intro/index.md
+          - "Multi-armed bandits": topics/multi-armed-bandits/index.md
+          - "MDPs & Bellman equations": topics/mdp-bellman-equations/index.md
+          - "Dynamic programming": topics/dynamic-programming/index.md
+          - "Monte Carlo & TD learning": topics/monte-carlo-td-learning/index.md
+          - "Q-learning & SARSA": topics/q-learning-sarsa/index.md
+          - "Deep Q-Networks": topics/deep-q-networks/index.md
+          - "Policy gradients": topics/policy-gradients/index.md
+          - "Actor-critic": topics/actor-critic/index.md
+          - "Model-based RL & planning": topics/model-based-rl/index.md
+          - "Offline RL & imitation": topics/offline-rl-imitation/index.md
+          - "RLHF & DPO": topics/rlhf-dpo/index.md
   - Papers: papers/index.md
   - Glossary: glossary.md
