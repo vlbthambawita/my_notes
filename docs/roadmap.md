@@ -34,7 +34,7 @@
 ### Reinforcement learning
 | Topic | Status |
 |---|---|
-| What is reinforcement learning? Agents, environments, rewards | 📝 |
+| [What is reinforcement learning? Agents, environments, rewards](topics/reinforcement-learning-intro/index.md) | ✅ |
 | Multi-armed bandits and exploration vs. exploitation | 📝 |
 | Markov decision processes (MDPs) and Bellman equations | 📝 |
 | Dynamic programming: value and policy iteration | 📝 |

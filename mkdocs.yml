@@ -80,5 +80,7 @@ nav:
   - Topics:
       - Foundations:
           - Gradient Descent: topics/gradient-descent/index.md
+      - Reinforcement learning:
+          - What is RL?: topics/reinforcement-learning-intro/index.md
   - Papers: papers/index.md
   - Glossary: glossary.md
