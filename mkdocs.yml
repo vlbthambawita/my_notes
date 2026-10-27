@@ -90,5 +90,12 @@ nav:
           - "Model-based RL & planning": topics/model-based-rl/index.md
           - "Offline RL & imitation": topics/offline-rl-imitation/index.md
           - "RLHF & DPO": topics/rlhf-dpo/index.md
+      - Tsetlin machines:
+          - "What is a Tsetlin machine?": topics/tsetlin-machine-intro/index.md
+          - "The Tsetlin automaton": topics/tsetlin-automaton/index.md
+          - "Recognize, Erase & Reject feedback": topics/tsetlin-machine-feedback/index.md
+          - "Classification by voting": topics/tsetlin-machine-classification/index.md
+          - "Convolutional Tsetlin machines": topics/convolutional-tsetlin-machine/index.md
+          - "Confidence & composites": topics/tsetlin-machine-confidence/index.md
   - Papers: papers/index.md
   - Glossary: glossary.md

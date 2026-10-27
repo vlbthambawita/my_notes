@@ -68,15 +68,15 @@ Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines
 
 | Topic | Status |
 |---|---|
-| What is a Tsetlin machine? Learning readable logic rules | 📝 |
-| The Tsetlin automaton: learning by reward and penalty | 📝 |
-| Clauses, literals and voting: classification | 📝 |
-| Training: Type I and Type II feedback | 📝 |
+| [What is a Tsetlin machine? Learning readable logic rules](topics/tsetlin-machine-intro/index.md) | ✅ |
+| [The Tsetlin automaton: learning by reward and penalty](topics/tsetlin-automaton/index.md) | ✅ |
+| [Learning rules: Recognize, Erase and Reject feedback (Type I and II)](topics/tsetlin-machine-feedback/index.md) | ✅ |
+| [Many rules voting together: classification](topics/tsetlin-machine-classification/index.md) | ✅ |
 | Regression with Tsetlin machines | 📝 |
-| Convolutional Tsetlin machines | 📝 |
+| [Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md) | ✅ |
 | Weighted clauses and clause sharing | 📝 |
 | Tsetlin machine autoencoders | 📝 |
-| Confidence, trustworthiness and composites | 📝 |
+| [Confidence, trustworthiness and composites](topics/tsetlin-machine-confidence/index.md) | ✅ |
 | Hierarchical and graph Tsetlin machines | 📝 |
 | Tsetlin machines for language and images | 📝 |
 

@@ -200,8 +200,8 @@ Every topic page follows the same structure, so lessons feel familiar:
 **Tsetlin machines** (following [tsetlinmachine.org](https://tsetlinmachine.org/))
 - What is a Tsetlin machine? Learning readable logic rules
 - The Tsetlin automaton: learning by reward and penalty
-- Clauses, literals and voting: classification
-- Training: Type I and Type II feedback
+- Learning rules: Recognize, Erase and Reject feedback (Type I and II)
+- Many rules voting together: classification
 - Regression with Tsetlin machines
 - Convolutional Tsetlin machines
 - Weighted clauses and clause sharing

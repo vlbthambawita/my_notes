@@ -4,6 +4,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **10-armed testbed**: the standard benchmark from Sutton & Barto, made of many random 10-armed bandits with $q_*(a) \sim \mathcal{N}(0,1)$ and unit-variance reward noise, used to compare exploration methods. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-4-greedy-vs-greedy))
 
+**1-D convolution**: convolution over a sequence such as an ECG, where the window slides only along time. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-2-looking-through-a-window-patches-and-patch-features))
+
 **A2C (advantage actor-critic)**: an actor-critic algorithm that collects short rollouts from several parallel environments and takes one gradient step per batch on an advantage-weighted policy loss plus a value loss and an entropy bonus. ([Actor-critic](topics/actor-critic/index.md#step-4-a2c-batches-parallel-workers-and-gae))
 
 **Action** ($a$): a choice the agent makes at one time step, such as moving left or pressing a button. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
@@ -34,19 +36,35 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Bellman residual**: the gap between a value estimate and the right-hand side of its Bellman equation; it is zero for the true values. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-4-the-bellman-expectation-equation-for-vpi))
 
+**Boolean feature** ($x_k$): a property of an object that is either True (1) or False (0), such as "has wings" or "tumour ≥ 20 mm"; the only kind of input a Tsetlin machine reads. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-1-objects-described-by-yesno-facts))
+
+**Booleanisation**: turning raw data into Boolean features, for example one feature per category value or one per threshold on a number. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-2-booleanising-real-data))
+
 **Bootstrapping**: updating an estimate toward a target that contains another estimate, such as $V(s')$: "learning a guess from a guess". ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-3-td0-learn-a-guess-from-a-guess))
 
 **Bradley–Terry model**: A model of pairwise choices where the probability that A beats B is σ(r_A − r_B), so only score differences matter. ([RLHF & DPO](topics/rlhf-dpo/index.md#step-4-learning-a-reward-from-comparisons-bradleyterry))
 
 **Clipped objective** ($L^{\text{CLIP}}$): PPO's policy objective $\min(r_t \hat{A}_t, \text{clip}(r_t, 1-\varepsilon, 1+\varepsilon)\hat{A}_t)$, which gives no extra credit for moving an action's probability ratio outside $[1-\varepsilon, 1+\varepsilon]$. ([Actor-critic](topics/actor-critic/index.md#step-5-ppo-dont-move-the-policy-too-far))
 
+**Composite vote sum**: the sum of the normalised vote sums of all Tsetlin machines in a composite; its sign decides the class (argmax per class for multi-class) and its size is the composite's confidence. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-7-normalisation-one-scale-for-every-machine))
+
 **Compounding errors**: in imitation learning, small mistakes lead the learner to unfamiliar states where it makes more mistakes, so the error can grow like $\varepsilon T^2$ instead of $\varepsilon T$. ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-3-why-copying-drifts-compounding-errors))
+
+**Confidence** (|v|): how sure a Tsetlin machine is about a prediction, measured by the size of its vote sum (for multi-class, the largest class vote sum). ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-1-confidence-is-the-size-of-the-vote-sum))
 
 **Conservative Q-Learning** (CQL): an offline RL method that adds a loss term pushing Q-values down on all actions and up on the dataset's actions, so unseen actions are never overestimated. ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen))
 
 **Contextual bandit**: a bandit where the agent sees a context (such as a user profile) before choosing, and the best arm depends on that context. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#putting-it-all-together))
 
 **Convex function**: a bowl-shaped function with a single minimum; gradient descent with a suitable learning rate is guaranteed to find it.
+
+**Convolution window**: a small rectangle, such as 3×3 pixels, placed at every position of an image so that a rule sees one piece of the image at a time. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-2-looking-through-a-window-patches-and-patch-features))
+
+**Convolutional Tsetlin machine**: a Tsetlin machine whose rules are matched against every window patch of the input and fire if they match anywhere, so one rule recognises a pattern wherever it appears. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-3-evaluating-a-rule-match-every-patch-then-or))
+
+**Coverage**: the fraction of a class's examples that a rule matches. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-8-train-one-rule-yourself))
+
+**Coverage/accuracy trade-off**: answering only cases whose confidence reaches a threshold raises accuracy on the answered cases but leaves more cases to refer to a human. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-3-confidence-on-real-patients))
 
 **Credit assignment problem**: working out which of many earlier actions deserve the credit (or blame) for a reward that arrives later. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-1-learning-from-consequences-not-from-answers))
 
@@ -88,6 +106,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **ε-greedy (epsilon-greedy)**: a policy that usually takes the best-known action but, with small probability ε, takes a random one to explore. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-6-explore-or-exploit))
 
+**Erase Feedback** (Type Ib): when a rule fails to match an example of its own class, every literal is forgotten one step with probability equal to the Forget Value. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-4-erase-feedback-loosen-a-rule-that-is-too-picky))
+
 **Expected SARSA**: A variant of SARSA whose TD target averages Q(s′, a′) over the policy's action probabilities instead of using one sampled next action, which gives less noisy updates. ([Q-learning & SARSA](topics/q-learning-sarsa/index.md#step-6-on-policy-versus-off-policy))
 
 **Experience replay** (replay buffer): storing past transitions (s, a, r, s′) in a buffer and training on random mini-batches from it, which decorrelates the data and reuses experience. ([Deep Q-Networks](topics/deep-q-networks/index.md#step-4-problem-1-consecutive-samples-are-correlated-experience-replay))
@@ -97,6 +117,10 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **Extrapolation error**: in offline RL, the error from bootstrapping on Q-values of actions that never appear in the data; the max picks them when they are too high, causing overestimation. ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-5-offline-rl-and-why-plain-q-learning-breaks))
 
 **First-visit Monte Carlo**: A Monte Carlo method that uses only the return after the first visit to a state in each episode. ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-2-monte-carlo-average-the-returns-you-actually-got))
+
+**Forget Value** (1/s): the probability that a forgetting step (a decrement) actually happens; it also acts as the frequency threshold a literal must beat to stay in a rule. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-6-recognize-erase-find-frequent-patterns))
+
+**Frequent pattern**: a combination of literals that is True for most examples of a class, found by Recognize and Erase Feedback. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-6-recognize-erase-find-frequent-patterns))
 
 **Function approximation**: representing a value function or policy with a parameterised function, such as a neural network, instead of a table, so it can generalise to unseen states. ([Deep Q-Networks](topics/deep-q-networks/index.md#step-1-why-q-tables-break))
 
@@ -114,11 +138,15 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Greedy policy** ($\pi^*(s) = \arg\max_a Q^*(s,a)$): a policy that always picks the action with the highest action-value; greedy with respect to $Q^*$ is optimal. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-6-the-bellman-optimality-equations))
 
+**Image patch** (patch features $x_{i,j}$): the pixels inside the convolution window at one position; their truth values are the patch features, which mean the same thing at every position. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-2-looking-through-a-window-patches-and-patch-features))
+
 **Imitation learning**: learning a policy from an expert's demonstrations (states and actions) instead of from rewards. ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-1-three-ways-to-get-experience-online-off-policy-offline))
 
 **Implicit Q-Learning** (IQL): an offline RL method that never queries unseen actions; it learns values only on dataset actions and extracts a policy by advantage-weighted behaviour cloning. ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen))
 
 **Incremental update**: updating an estimate one sample at a time as new estimate = old estimate + step size × (target − old estimate). ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-3-learning-incrementally-new-estimate-old-estimate-step-error))
+
+**Interpretability**: the property of a model whose reasoning a person can read and check directly, as with a Tsetlin machine's AND-rules; it does not by itself make the model accurate. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#why-should-i-care))
 
 **Iterative policy evaluation**: computing V^π by repeatedly applying the Bellman expectation equation as an assignment until the values stop changing. ([Dynamic programming](topics/dynamic-programming/index.md#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation))
 
@@ -126,17 +154,31 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Learning rate** ($\eta$): the number that controls how big each gradient-descent step is. ([Gradient Descent](topics/gradient-descent/index.md#step-4-taking-the-step-the-update-rule))
 
+**Literal** ($x_k$, $\lnot x_k$): a Boolean feature or its negation; with $o$ features there are $2o$ literals, and exactly half are True for any object. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-3-literals-a-feature-or-its-opposite))
+
+**Literal game**: the two literals of a rule seen as players that each choose Memorized or Forgotten without communicating; each one's feedback depends on the other's choice. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-9-two-literals-one-rule-a-game-without-talking))
+
 **Log-derivative trick** (∇π = π ∇ln π): the identity that turns the gradient of an expectation into an expectation you can estimate by sampling, so the environment's unknown dynamics drop out. ([Policy gradients](topics/policy-gradients/index.md#step-4-the-policy-gradient-make-good-actions-more-likely))
 
 **Loss (loss function)**: a single number that measures how wrong a model's predictions are; training tries to make it small. ([Gradient Descent](topics/gradient-descent/index.md#step-2-what-are-we-trying-to-make-small-the-loss))
+
+**Markov chain**: a random process whose next state depends only on the current state, like a literal's memory position moving one step per training example. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-4-one-literal-one-class-a-random-walk))
 
 **Markov decision process** (MDP): the formal model of an RL problem: states, actions, dynamics $p(s', r \mid s, a)$ and a discount $\gamma$. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-2-the-markov-decision-process))
 
 **Markov property**: the next state and reward depend only on the current state and action, not on the earlier history. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-1-the-markov-property-the-state-is-all-you-need))
 
+**Match map**: the grid of True/False results of one rule at every window position, the Boolean version of a CNN feature map, which the OR collapses to one bit. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-3-evaluating-a-rule-match-every-patch-then-or))
+
 **Maximum-entropy RL** ($\alpha$): an objective that maximises reward plus the policy's entropy weighted by a temperature $\alpha$, as used by SAC. ([Actor-critic](topics/actor-critic/index.md#step-6-sac-off-policy-continuous-actions-maximum-entropy))
 
 **Mean squared error (MSE)**: a loss that averages the squared differences between predictions and true values.
+
+**Memorize Value** ((s−1)/s): the probability that a memorizing step (an increment) under Recognize Feedback actually happens; usually Memorize Value + Forget Value = 1. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-3-recognize-feedback-become-more-like-this-example))
+
+**Memorized / Forgotten**: the upper and lower halves of a literal's memory; only Memorized literals take part in the rule's AND. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-3-from-actions-to-memory-one-integer-per-literal))
+
+**Memory depth** (D): the number of memory positions per literal (the book's Chapter 1 uses 10), equal to the 2N states of a Tsetlin automaton; deeper memory gives sharper, more decisive but slower-changing outcomes. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-6-deeper-memory-sharper-decisions))
 
 **Mini-batch**: a small random subset of the training data used to estimate the gradient for one step.
 
@@ -152,7 +194,11 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Multi-armed bandit** (k-armed bandit): the simplest RL problem, with one unchanging state where the agent repeatedly picks one of k actions ("arms"), each paying a random reward from its own hidden distribution. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-1-the-k-armed-bandit-one-state-k-actions))
 
+**Multi-class Tsetlin machine**: one team of rules (for and against) per class; the class whose team has the highest vote sum wins. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-8-more-than-two-classes))
+
 **MuZero**: an AlphaZero-style agent that is not given the rules; it learns a model in a hidden state space and runs MCTS inside it. ([Model-based RL & planning](topics/model-based-rl/index.md#step-6-alphago-alphazero-and-muzero-search-deep-learning))
+
+**Normalised vote sum**: a machine's vote sum divided by the difference between the highest and lowest vote sums it produces on the data, so that machines of different sizes speak on one scale. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-7-normalisation-one-scale-for-every-machine))
 
 **n-step TD**: A TD method that adds up $n$ real rewards and then bootstraps from $V(s_{t+n})$; it sits between TD(0) ($n=1$) and Monte Carlo ($n$ = to the end). ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-7-between-the-two-n-step-td-and-backup-diagrams))
 
@@ -190,7 +236,11 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Policy-based method**: an RL method that learns the policy directly instead of deriving it from learned values. ([Policy gradients](topics/policy-gradients/index.md#step-1-why-learn-the-policy-directly))
 
+**Position encoding**: adding each patch's window coordinates as extra Boolean features, so a rule can restrict its pattern to a rectangular region. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-6-position-encoding-letting-a-rule-say-where))
+
 **PPO (Proximal Policy Optimization)**: an on-policy actor-critic algorithm that runs several epochs of minibatch updates per batch while a clipped objective keeps each policy change small; it is the RL step in classic RLHF. ([Actor-critic](topics/actor-critic/index.md#step-5-ppo-dont-move-the-policy-too-far))
+
+**Precision** (of a rule): among the examples a rule matches, the fraction that really belong to its class. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-8-train-one-rule-yourself))
 
 **Prioritised experience replay**: sampling replay transitions in proportion to their TD error, with importance weights to correct the bias this introduces. ([Deep Q-Networks](topics/deep-q-networks/index.md#step-7-improvements-double-dqn-dueling-networks-prioritised-replay))
 
@@ -204,6 +254,12 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Q-value / action-value** ($Q^\pi(s,a)$): the expected return from taking action $a$ in state $s$ and following policy $\pi$ afterwards. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-5-how-good-is-a-state-the-value-function))
 
+**Random matching patch**: in convolutional learning, Recognize and Reject Feedback use the literals of one patch picked at random among those the rule matched. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-4-learning-which-patch-does-the-rule-learn-from))
+
+**Random walk**: a position that moves up or down one step at a time at random; the memory position of a literal under training is one. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-4-one-literal-one-class-a-random-walk))
+
+**Recognize Feedback** (Type Ia): when a rule matches an example of its own class, True literals are memorized (Memorize Value) and False literals forgotten (Forget Value). ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-3-recognize-feedback-become-more-like-this-example))
+
 **Reference policy** (π_ref): the frozen starting model (usually the SFT model) that the KL penalty and DPO's log-ratios measure the policy against. ([RLHF & DPO](topics/rlhf-dpo/index.md#step-3-the-rlhf-recipe-in-three-stages))
 
 **Regret**: the total expected reward lost by not always choosing the best action, $\sum_t \big(q_*(a^*) - q_*(a_t)\big)$. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-7-regret-the-yardstick-for-exploration))
@@ -214,6 +270,12 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Reinforcement learning (RL)**: learning to act by trial and error, using rewards instead of correct answers, to maximise total future reward. ([What is RL?](topics/reinforcement-learning-intro/index.md))
 
+**Reject Feedback** (Type II): when a rule matches an example of another class, every Forgotten literal that is False for that example moves one step towards memorized, always, so the rule stops matching it. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-7-frequent-is-not-enough-reject-feedback))
+
+**Reliability diagram**: a plot of how often the positive class really occurs at each confidence level (here, each vote sum), used to check whether confidence can be read as a probability. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-5-an-honest-look-at-calibration))
+
+**Resource allocation**: the effect of the Voting Margin that sends feedback mostly to examples not yet won by T votes, so idle rules move to sub-patterns no rule covers yet. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-4-the-complete-learning-algorithm))
+
 **Return** ($G_t$): the (discounted) sum of all rewards from time step $t$ until the end of the episode; the quantity an RL agent tries to maximise. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-3-what-does-best-mean-the-return-and-discounting))
 
 **Reward** ($r$): the number the environment sends back after each action, saying how good the immediate outcome was. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
@@ -221,6 +283,10 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **Reward hacking (reward over-optimisation)**: when a policy exploits errors in a learned or proxy reward, so its score rises while true quality falls (Goodhart's law). ([RLHF & DPO](topics/rlhf-dpo/index.md#step-5-rl-fine-tuning-with-a-kl-leash))
 
 **Reward model** (r_φ): A network trained on human preference pairs to output a scalar score for a reply, used as the reward during RL fine-tuning. ([RLHF & DPO](topics/rlhf-dpo/index.md#step-4-learning-a-reward-from-comparisons-bradleyterry))
+
+**Rule (clause)** ($C_j$): "if condition then class", where the condition is an AND of literals; it matches an object only if every literal is True. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-4-rules-and-ing-literals-together))
+
+**Rules for / against a class** (positive / negative polarity clauses): rules whose True condition adds +1 or −1 to the vote sum. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-2-rules-vote-the-vote-sum-v))
 
 **SAC (Soft Actor-Critic)**: an off-policy actor-critic for continuous actions that uses a replay buffer, a maximum-entropy objective with an (auto-tuned) temperature, and twin Q critics. ([Actor-critic](topics/actor-critic/index.md#step-6-sac-off-policy-continuous-actions-maximum-entropy))
 
@@ -234,11 +300,19 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Softmax policy**: a policy that turns action preferences into probabilities with π(a|s) = e^{h(s,a)} / Σ_b e^{h(s,b)}. ([Policy gradients](topics/policy-gradients/index.md#step-2-a-policy-with-knobs))
 
+**Specificity** (s): the papers' single knob, with Forget Value 1/s; a larger s gives longer, more specific rules. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-3-recognize-feedback-become-more-like-this-example))
+
 **State** ($s$): a description of the situation the agent is in at a given time step. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
+
+**Stationary distribution** (π): the long-run share of time a Markov chain spends in each state, unchanged by one more step (π = πM); it gives a literal's exact probability of being Memorized. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-5-the-exact-learning-outcome))
 
 **Step size** (α): how far an incremental update moves the estimate towards the new target; 1/n gives the exact average, and a constant α tracks a changing world. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-3-learning-incrementally-new-estimate-old-estimate-step-error))
 
 **Stochastic gradient descent (SGD)**: gradient descent that estimates the gradient from one random example (or a mini-batch) per step. ([Gradient Descent](topics/gradient-descent/index.md#step-6-real-data-is-big-stochastic-gradient-descent-sgd))
+
+**Sub-optimal configuration** (local optimum): a set of rules that no single rule can improve by changing alone, such as two copies of "x1 AND x2" for x1 OR x2. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-5-why-the-margin-matters-two-rules-one-or-pattern))
+
+**Sub-pattern**: one kind of example inside a class, described by a single AND-rule; a class with several needs several rules. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-1-one-rule-is-not-enough))
 
 **Supervised fine-tuning (SFT)**: fine-tuning a pre-trained language model on human-written demonstration answers with the ordinary next-token loss. ([RLHF & DPO](topics/rlhf-dpo/index.md#step-1-the-problem-a-text-predictor-is-not-an-assistant))
 
@@ -256,7 +330,19 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Temporal-difference (TD) learning** (TD(0)): learning values after every step by moving $V(s)$ toward $r + \gamma V(s')$; it samples like Monte Carlo and bootstraps like DP. ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-3-td0-learn-a-guess-from-a-guess))
 
+**Thermometer encoding**: booleanising a number with features "value ≥ $t_1$", "value ≥ $t_2$", …, so larger values switch on more bits. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-2-booleanising-real-data))
+
 **Thompson sampling**: exploring by drawing one sample from your belief about each action's value and taking the action with the highest sample. ([Multi-armed bandits](topics/multi-armed-bandits/index.md#step-6-upper-confidence-bounds-ucb-explore-where-you-are-unsure))
+
+**Tipping point** (p* = 1/(s+1)): how often a literal must be True in its class to be Memorized more often than not, when only that class is seen; set by the Forget Value 1/s. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-5-the-exact-learning-outcome))
+
+**TM composite**: several independently trained Tsetlin machines combined plug-and-play by adding their normalised vote sums (research term: TMComposites). ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-6-different-machines-different-skills))
+
+**Trustworthiness (of confidence)**: confidence that matches performance: the more confident cases are more often correct, as measured on held-out data. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-2-trustworthiness-confidence-must-match-performance))
+
+**Tsetlin automaton**: M. L. Tsetlin's learning automaton whose whole memory is one integer among 2N states: a reward moves it deeper into its current action, a penalty toward the centre, where it switches action. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-1-tsetlins-idea-a-memory-that-is-a-single-integer))
+
+**Tsetlin machine**: an interpretable machine-learning model in which many AND-rules over Boolean literals vote for or against a class, each rule learning its literals with Tsetlin-automaton memory. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#what-is-a-tsetlin-machine))
 
 **Twin Q critics**: two Q-networks whose minimum is used in the target, to counter the overestimation of learned Q-values (from TD3, used in SAC). ([Actor-critic](topics/actor-critic/index.md#step-6-sac-off-policy-continuous-actions-maximum-entropy))
 
@@ -267,3 +353,7 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **Value function** ($V^\pi(s)$): the expected return when starting in state $s$ and following policy $\pi$. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-5-how-good-is-a-state-the-value-function))
 
 **Value iteration**: repeatedly applying the Bellman optimality equation as an update, V(s) ← max_a Σ p·[r + γV(s′)], then acting greedily on the result. ([Dynamic programming](topics/dynamic-programming/index.md#step-4-value-iteration-one-sweep-then-improve))
+
+**Vote sum** (v): votes from firing rules for a class minus votes from firing rules against it; its sign is the prediction. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-2-rules-vote-the-vote-sum-v))
+
+**Voting Margin** (T; threshold): during training, each rule gets feedback with probability (T − v)/2T, where v is measured for the example's own class and clipped to [−T, T]; examples already won by T votes give no feedback. ([Classification by voting](topics/tsetlin-machine-classification/index.md#step-3-the-voting-margin-t-how-much-feedback-does-an-example-get))
