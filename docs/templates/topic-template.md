@@ -17,7 +17,7 @@
 
 <Plain-language explanation.>
 
-<Visual: Mermaid diagram, figure, or `<div id="viz-..." class="viz"></div>` widget.>
+<Visual: HTML diagram (`<div class="viz diagram">` + JSON spec, never Mermaid), figure, or `<div id="viz-..." class="viz"></div>` widget.>
 
 <Math, only once the intuition is there.>
 
@@ -34,7 +34,7 @@
 
 ## Putting it all together
 
-<One diagram showing the full picture + a short code example.>
+<One HTML diagram (with a step-through) showing the full picture + a short code example.>
 
 ---
 

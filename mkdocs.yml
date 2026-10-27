@@ -57,11 +57,7 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.superfences
 
 extra_css:
   - assets/css/viz.css
@@ -69,6 +65,7 @@ extra_css:
 extra_javascript:
   - assets/js/mathjax-config.js
   - assets/js/viz-common.js
+  - assets/js/diagram.js
   - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
 
 plugins:

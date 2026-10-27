@@ -31,14 +31,39 @@ That is the whole algorithm. In AI:
 | Size of your step | The **learning rate** |
 | Bottom of the valley | The best parameters (lowest loss) |
 
-```mermaid
-flowchart LR
-    A["Start with<br/>random parameters"] --> B["Make predictions"]
-    B --> C["Measure the loss<br/>(how wrong?)"]
-    C --> D["Compute the gradient<br/>(which way is downhill?)"]
-    D --> E["Take a small step<br/>downhill"]
-    E --> B
-```
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The gradient-descent loop",
+  "cols": 5,
+  "rows": 2.3,
+  "rowHeight": 95,
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0.15, "icon": "🎲", "label": "Start with random parameters", "shape": "pill", "note": "We don't know the right weights yet, so we start anywhere: you're dropped somewhere on the mountain."},
+    {"id": "pred", "col": 1, "row": 0.15, "icon": "🔮", "label": "Make predictions", "role": "model", "note": "Run the model with the current parameters, e.g. ŷ = w·x."},
+    {"id": "loss", "col": 2, "row": 0.15, "icon": "📏", "label": "Measure the loss", "sub": "how wrong?", "role": "loss", "note": "One number for how wrong the predictions are: the height of the ground where you stand."},
+    {"id": "grad", "col": 3, "row": 0.15, "icon": "🧭", "label": "Compute the gradient", "sub": "which way is downhill?", "role": "grad", "note": "The slope of the loss for every parameter: feeling the ground under your feet."},
+    {"id": "step", "col": 4, "row": 0.15, "icon": "👣", "label": "Take a small step downhill", "role": "opt", "note": "Move each parameter a little against its slope: w ← w − η · dL/dw."}
+  ],
+  "edges": [
+    {"from": "init", "to": "pred"},
+    {"from": "pred", "to": "loss"},
+    {"from": "loss", "to": "grad"},
+    {"from": "grad", "to": "step"},
+    {"from": "step", "to": "pred", "label": "repeat", "curve": 0.42, "narrowCurve": 0}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Pick starting values for the parameters, usually at random."},
+    {"show": ["init>pred", "pred"], "text": "Use the current parameters to make predictions on the data."},
+    {"show": ["pred>loss", "loss"], "text": "Compare predictions with the true answers and squash all the errors into one number: the loss."},
+    {"show": ["loss>grad", "grad"], "text": "Work out the slope of the loss for each parameter. It points uphill."},
+    {"show": ["grad>step", "step"], "text": "Move every parameter a small step the opposite way, downhill. The learning rate η sets the step size."},
+    {"show": ["step>pred", "pred"], "text": "Go round again with the new parameters. Thousands of loops later, the loss is small."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "rowHeight": 95, "pos": {"init": [0.5, 0], "pred": [0, 1], "loss": [1, 1], "grad": [1, 2], "step": [0, 2]}}
+}
+</script>
+</div>
 
 ---
 
@@ -168,19 +193,47 @@ The trick is to **estimate** the gradient from a small random subset of the data
 
 ## Putting it all together
 
-```mermaid
-flowchart TD
-    S["Initialise parameters θ randomly"] --> L1
-    subgraph L1["Repeat for many epochs"]
-        direction TB
-        M["Sample a mini-batch of data"] --> F["Forward pass: predictions ŷ"]
-        F --> Lo["Loss L(ŷ, y)"]
-        Lo --> G["Gradient ∇L (via backpropagation)"]
-        G --> U["Update: θ ← θ − η ∇L"]
-        U --> M
-    end
-    L1 --> D["Trained model"]
-```
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 The full training algorithm",
+  "cols": 7.4,
+  "rows": 2.8,
+  "rowHeight": 95,
+  "groups": [
+    {"id": "loop", "label": "Repeat for many epochs", "col": 1.2, "row": 0, "cols": 5, "rows": 2.8}
+  ],
+  "nodes": [
+    {"id": "init", "col": 0, "row": 0.8, "icon": "🎲", "label": "Initialise parameters θ randomly", "shape": "pill", "span": 1.1},
+    {"id": "batch", "col": 1.8, "row": 0.45, "icon": "🗂️", "label": "Sample a mini-batch", "role": "data", "note": "A small random subset of the training data, e.g. 32–512 examples."},
+    {"id": "fwd", "col": 3.2, "row": 0.45, "icon": "🔮", "label": "Forward pass", "sub": "predictions ŷ", "role": "model", "note": "Run the model on the mini-batch."},
+    {"id": "loss", "col": 4.6, "row": 0.45, "icon": "📏", "label": "Loss L(ŷ, y)", "role": "loss", "span": 1.2, "note": "How wrong the predictions on this mini-batch are."},
+    {"id": "grad", "col": 4.6, "row": 1.85, "icon": "🧭", "label": "Gradient ∇L", "sub": "via backpropagation", "role": "grad", "span": 1.35, "note": "Computed automatically by the library (loss.backward() in PyTorch)."},
+    {"id": "upd", "col": 1.8, "row": 1.85, "icon": "👣", "label": "Update θ ← θ − η∇L", "role": "opt", "span": 1.35, "note": "One small step downhill (optimizer.step() in PyTorch)."},
+    {"id": "done", "col": 6.4, "row": 0.8, "icon": "🏁", "label": "Trained model", "shape": "pill", "role": "opt"}
+  ],
+  "edges": [
+    {"from": "init", "to": "loop"},
+    {"from": "batch", "to": "fwd"},
+    {"from": "fwd", "to": "loss"},
+    {"from": "loss", "to": "grad"},
+    {"from": "grad", "to": "upd"},
+    {"from": "upd", "to": "batch", "label": "next batch"},
+    {"from": "loop", "to": "done", "label": "loss is low"}
+  ],
+  "steps": [
+    {"show": ["init"], "text": "Start from random parameters θ (all the weights of the model)."},
+    {"show": ["init>loop", "loop", "batch"], "text": "Enter the training loop: grab a small random mini-batch of examples."},
+    {"show": ["batch>fwd", "fwd"], "text": "Forward pass: the model makes predictions ŷ for the batch."},
+    {"show": ["fwd>loss", "loss"], "text": "Measure how wrong they are with the loss."},
+    {"show": ["loss>grad", "grad"], "text": "Backpropagation computes the gradient of the loss for every parameter."},
+    {"show": ["grad>upd", "upd"], "text": "Take one step downhill. Then fetch the next batch; one pass over all the data is an epoch."},
+    {"show": ["loop>done", "done"], "text": "After enough epochs the loss stops improving, and the parameters are the trained model."}
+  ],
+  "narrow": {"cols": 2, "rows": 5.8, "rowHeight": 88, "pos": {"init": [0.5, 0], "loop": [0, 0.9, 2, 3.9], "batch": [0, 1.35], "fwd": [1, 1.35], "loss": [1, 2.6], "grad": [1, 3.75], "upd": [0, 3.75], "done": [0.5, 5.05]}}
+}
+</script>
+</div>
 
 Here is the full algorithm from the 2-D widget, in a few lines of NumPy:
 

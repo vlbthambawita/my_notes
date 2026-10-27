@@ -22,7 +22,7 @@ A personal learning site for AI topics and research papers. Each topic is explai
 |---|---|---|
 | Static site generator | **MkDocs + Material for MkDocs** | You write lessons in Markdown and get navigation, search, dark mode and a mobile layout for free |
 | Math | **MathJax** (via `pymdownx.arithmatex`) | Write LaTeX like `$\mathrm{softmax}(x)$` |
-| Diagrams | **Mermaid** (built into Material) | Flowcharts and architecture diagrams written as text in Markdown |
+| Diagrams | **HTML diagrams** (`docs/assets/js/diagram.js`), written as a JSON spec in the Markdown | Rich, theme-aware flow and architecture diagrams with step-through walkthroughs and hover notes. **No Mermaid.** |
 | Interactive visualizations | **Plain JavaScript + D3.js / Plotly.js**, embedded in pages | Sliders, animations, live plots (e.g. "drag the learning rate and watch gradient descent") |
 | Static figures | **Python (matplotlib) scripts** saved as SVG/PNG | Reproducible plots kept in the repo |
 | Code examples | Python snippets (NumPy / PyTorch), optional Colab links | Run the idea yourself |
@@ -57,7 +57,7 @@ my_notes/
 │   │       └── img/
 │   ├── glossary.md            ← every term defined in one sentence
 │   ├── assets/
-│   │   ├── js/                ← shared visualization helpers
+│   │   ├── js/                ← shared visualization helpers + diagram.js (HTML diagrams)
 │   │   └── css/               ← shared styles for widgets
 │   └── templates/             ← lesson & paper templates (copied for new pages)
 └── scripts/                   ← Python scripts that generate figures
@@ -74,10 +74,10 @@ Every topic page follows the same structure, so lessons feel familiar:
 3. **Prerequisites** — links to earlier lessons it builds on.
 4. **Step 1 … Step N** — one idea per step. Each step has:
    - a plain-language explanation,
-   - a **visual** (diagram, figure, or interactive widget),
+   - a **visual** (HTML diagram, figure, or interactive widget),
    - the math, only once the intuition is there,
    - a small code snippet where it helps.
-5. **Putting it together** — one diagram showing the full picture.
+5. **Putting it together** — one HTML diagram showing the full picture.
 6. **Common misconceptions** — what people often get wrong.
 7. **Check yourself** — 3–5 quick questions (answers in collapsible blocks).
 8. **Further reading** — papers, videos, blog posts.
@@ -102,6 +102,7 @@ Every topic page follows the same structure, so lessons feel familiar:
 - **Interactive where it builds intuition**: parameters you can change (learning rate, temperature, number of heads, etc.) and see the effect immediately.
 - **Animate processes** (forward pass, backpropagation, attention, diffusion denoising) step by step with "Next / Previous" buttons.
 - **Consistent colors** across the site (e.g. inputs always one color, weights another, outputs a third) so diagrams are easy to read.
+- **Diagrams are rich HTML, never Mermaid.** Flowcharts, loops and architecture diagrams use the shared HTML diagram renderer: real HTML boxes with icons, colour roles, a Next/Play walkthrough and hover notes, with a separate phone layout. The how-to lives in the `write-lesson` skill (`.claude/skills/write-lesson/`).
 - **Works on phone and in dark mode.**
 - **No heavy builds:** widgets are small, self-contained JS files loaded only on the page that uses them.
 
@@ -127,13 +128,13 @@ Every topic page follows the same structure, so lessons feel familiar:
 ## 8. Implementation phases
 
 ### Phase 0 — Set up the site (first step)
-- [ ] Add `mkdocs.yml` with Material theme, MathJax, Mermaid, search, dark mode
+- [ ] Add `mkdocs.yml` with Material theme, MathJax, search, dark mode
 - [ ] Add `requirements.txt`
 - [ ] Add GitHub Actions workflow to deploy to GitHub Pages
 - [ ] Create home page, roadmap page, glossary page
 - [ ] Create lesson and paper templates
 - [ ] Add shared JS/CSS helpers for visualizations (color palette, step-through animation, slider controls)
-- [ ] Build one **demo lesson** (e.g. "Gradient descent") to test every feature: math, Mermaid, interactive widget, code
+- [ ] Build one **demo lesson** (e.g. "Gradient descent") to test every feature: math, HTML diagrams, interactive widget, code
 - [ ] Enable GitHub Pages in repo settings (Settings → Pages → Deploy from a branch → `gh-pages` / root)
 
 ### Phase 1 — Topics and papers (ongoing, driven by you)

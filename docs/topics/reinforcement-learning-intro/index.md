@@ -48,12 +48,33 @@ Every RL problem has the same two players:
 
 They interact in a loop, one **time step** at a time:
 
-```mermaid
-flowchart LR
-    A["🤖 Agent"] -- "action a<sub>t</sub>" --> E["🌍 Environment"]
-    E -- "new state s<sub>t+1</sub>" --> A
-    E -- "reward r<sub>t+1</sub>" --> A
-```
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔄 The agent–environment loop",
+  "cols": 3,
+  "rows": 2.4,
+  "rowHeight": 100,
+  "nodes": [
+    {"id": "agent", "col": 0, "row": 0.7, "icon": "🤖", "label": "<b>Agent</b>", "sub": "picks actions with its policy π", "role": "model", "note": "The learner: the dog, the game player, the robot's controller."},
+    {"id": "env", "col": 2, "row": 0.7, "icon": "🌍", "label": "<b>Environment</b>", "sub": "the world: rules, physics, game", "role": "data", "note": "Everything outside the agent. It decides what happens next and how much reward to give."}
+  ],
+  "edges": [
+    {"from": "agent", "to": "env", "label": "action a<sub>t</sub>", "curve": 0.3},
+    {"from": "env", "to": "agent", "id": "state", "label": "new state s<sub>t+1</sub>", "curve": 0.1},
+    {"from": "env", "to": "agent", "id": "reward", "label": "reward r<sub>t+1</sub>", "curve": 0.38}
+  ],
+  "steps": [
+    {"show": ["agent"], "text": "The agent observes the current <b>state</b> s<sub>t</sub>: where am I, what does the board look like?"},
+    {"show": ["agent>env", "agent"], "text": "Based on that state, its policy picks an <b>action</b> a<sub>t</sub>: move left, push a button, say a word."},
+    {"show": ["env"], "text": "The environment applies the action. Its own rules (and sometimes chance) decide what happens."},
+    {"show": ["state", "reward", "env"], "text": "It sends back the <b>new state</b> s<sub>t+1</sub> and a <b>reward</b> r<sub>t+1</sub>, a number saying how good that was."},
+    {"show": ["agent", "agent>env"], "text": "Time moves on (t → t+1) and the loop repeats until the episode ends."}
+  ],
+  "narrow": {"rows": 2.2, "rowHeight": 90, "pos": {"agent": [0, 0.6], "env": [2, 0.6]}}
+}
+</script>
+</div>
 
 1. The agent sees the current **state** $s_t$ (where am I? what does the board look like?).
 2. It picks an **action** $a_t$ (move left, push the button, say this word).
@@ -169,28 +190,81 @@ An RL agent that only exploits could take the safe route on its first lucky epis
 
 ## Putting it all together
 
-```mermaid
-flowchart TD
-    S["Agent observes state s"] --> P["Policy π chooses action a<br/>(explore or exploit?)"]
-    P --> E["Environment returns<br/>reward r and next state s'"]
-    E --> L["Learn: update value estimates<br/>and/or the policy"]
-    L --> D{"Episode over?"}
-    D -- no --> S
-    D -- yes --> R["Reset and start a new episode"]
-    R --> S
-```
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 How an RL agent learns, episode after episode",
+  "cols": 4,
+  "rows": 2.75,
+  "rowHeight": 88,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0.6, "icon": "👀", "label": "Observe state s", "role": "data"},
+    {"id": "pol", "col": 1, "row": 0, "icon": "🧭", "label": "Policy π picks action a", "sub": "explore or exploit?", "role": "model"},
+    {"id": "env", "col": 2, "row": 0, "icon": "🌍", "label": "Environment returns r and s′", "role": "data"},
+    {"id": "learn", "col": 3, "row": 0, "icon": "🧠", "label": "Learn", "sub": "update values and/or policy", "role": "loss", "note": "This is where RL algorithms differ: Q-learning, policy gradients, actor-critic… all answer “how do we do this box?”"},
+    {"id": "end", "col": 3, "row": 1.15, "label": "Episode over?", "shape": "decision", "role": "grad"},
+    {"id": "reset", "col": 1.5, "row": 1.85, "icon": "🔁", "label": "Reset: start a new episode", "shape": "pill"}
+  ],
+  "edges": [
+    {"from": "obs", "to": "pol"},
+    {"from": "pol", "to": "env"},
+    {"from": "env", "to": "learn"},
+    {"from": "learn", "to": "end"},
+    {"from": "end", "to": "obs", "label": "no", "narrowCurve": 0.3},
+    {"from": "end", "to": "reset", "label": "yes"},
+    {"from": "reset", "to": "obs"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "The agent looks at the current state."},
+    {"show": ["obs>pol", "pol"], "text": "Its policy chooses an action, usually the best-known one, sometimes a random one to explore."},
+    {"show": ["pol>env", "env"], "text": "The environment responds with a reward and the next state."},
+    {"show": ["env>learn", "learn"], "text": "The agent <b>learns</b> from that experience. Every RL method on the roadmap is a different recipe for this box."},
+    {"show": ["learn>end", "end", "end>obs", "obs"], "text": "If the episode isn't over, carry on from the new state."},
+    {"show": ["end>reset", "reset", "reset>obs"], "text": "If it is over (goal reached, game lost), reset and start a new episode, keeping everything learned so far."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 88, "pos": {"obs": [0, 0], "pol": [1, 0], "env": [1, 1], "learn": [1, 2], "end": [1, 3], "reset": [0, 3]}}
+}
+</script>
+</div>
 
 All the RL methods on the [roadmap](../../roadmap.md#reinforcement-learning) are different answers to one question: **how exactly do we do the "Learn" box?**
 
-```mermaid
-flowchart TD
-    RL["Reinforcement learning"] --> MF["Model-free:<br/>learn from experience only"]
-    RL --> MB["Model-based:<br/>learn how the world works, then plan<br/>(e.g. AlphaZero)"]
-    MF --> VB["Value-based:<br/>learn V or Q, act greedily<br/>(Q-learning, DQN)"]
-    MF --> PB["Policy-based:<br/>adjust the policy directly<br/>(REINFORCE)"]
-    VB --> AC["Actor-critic: both<br/>(A2C, PPO, SAC)"]
-    PB --> AC
-```
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🌳 The family tree of RL methods",
+  "cols": 4,
+  "rows": 4,
+  "rowHeight": 105,
+  "nodes": [
+    {"id": "rl", "col": 1.5, "row": 0, "icon": "🎯", "label": "<b>Reinforcement learning</b>", "span": 1.6, "maxWidth": 240},
+    {"id": "mf", "col": 0.75, "row": 1, "label": "<b>Model-free</b>", "sub": "learn from experience only", "role": "data", "note": "Never builds a model of how the world works; learns directly what to do or how good things are."},
+    {"id": "mb", "col": 2.6, "row": 1, "label": "<b>Model-based</b>", "sub": "learn how the world works, then plan", "role": "loss", "note": "Learns (or is given) a model of the environment and plans ahead with it, e.g. AlphaZero's tree search."},
+    {"id": "vb", "col": 0, "row": 2, "label": "<b>Value-based</b>", "sub": "learn V or Q, act greedily", "role": "opt", "note": "Q-learning, SARSA, Deep Q-Networks (DQN)."},
+    {"id": "pb", "col": 1.5, "row": 2, "label": "<b>Policy-based</b>", "sub": "adjust the policy directly", "role": "model", "note": "Policy gradients, e.g. REINFORCE."},
+    {"id": "ac", "col": 0.75, "row": 3, "label": "<b>Actor-critic</b>", "sub": "both: a policy + a value", "role": "grad", "note": "The actor (policy) acts, the critic (value) judges. A2C, PPO and SAC; PPO is also used for RLHF."},
+    {"id": "plan", "col": 2.6, "row": 2, "label": "Planning", "sub": "MCTS, AlphaZero", "role": "loss"}
+  ],
+  "edges": [
+    {"from": "rl", "to": "mf"},
+    {"from": "rl", "to": "mb"},
+    {"from": "mf", "to": "vb"},
+    {"from": "mf", "to": "pb"},
+    {"from": "vb", "to": "ac"},
+    {"from": "pb", "to": "ac"},
+    {"from": "mb", "to": "plan"}
+  ],
+  "steps": [
+    {"show": ["rl", "rl>mf", "rl>mb", "mf", "mb"], "text": "First split: does the agent learn a <b>model</b> of how the environment works, or not?"},
+    {"show": ["mb", "mb>plan", "plan"], "text": "<b>Model-based</b> agents use their model to look ahead and plan, like AlphaZero searching through future moves."},
+    {"show": ["mf", "mf>vb", "vb"], "text": "<b>Value-based</b> methods learn how good each action is (Q) and pick the best one. Q-learning and DQN live here."},
+    {"show": ["mf", "mf>pb", "pb"], "text": "<b>Policy-based</b> methods skip values and tune the policy directly to make good actions more likely."},
+    {"show": ["vb>ac", "pb>ac", "ac"], "text": "<b>Actor-critic</b> methods combine the two: a policy that acts and a value function that critiques it. PPO, used in RLHF, is one."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "rowHeight": 90, "pos": {"rl": [0, 0], "mb": [1, 0], "mf": [0, 1], "plan": [1, 1], "vb": [0, 2], "pb": [1, 2], "ac": [0.5, 3]}}
+}
+</script>
+</div>
 
 Here is the grid world from this lesson in plain Python. It uses the same `reset()` / `step()` interface as most RL libraries:
 

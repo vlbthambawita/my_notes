@@ -117,3 +117,185 @@
   fill: var(--viz-muted);
   font-size: 11px;
 }
+
+/* ------------------------------------------------------------------ Diagrams
+   HTML flow diagrams drawn by assets/js/diagram.js (used instead of Mermaid).
+   Node roles reuse the widget colours: data, model, loss, grad, opt, neutral. */
+
+.dg-stage {
+  position: relative;
+  margin: 4px 0;
+}
+
+/* `.viz .dg-arrows` outranks the generic `.viz svg` panel look */
+.viz .dg-arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+.dg-edge {
+  fill: none;
+  stroke: var(--viz-muted);
+  stroke-width: 2;
+  transition: stroke 0.25s, stroke-width 0.25s, opacity 0.25s;
+}
+
+.dg-edge.dg-dashed {
+  stroke-dasharray: 6 5;
+}
+
+.dg-head-base {
+  fill: var(--viz-muted);
+}
+
+.dg-head-active {
+  fill: var(--viz-model);
+}
+
+.dg-edge.dg-active {
+  stroke: var(--viz-model);
+  stroke-width: 3;
+  stroke-dasharray: 8 6;
+  animation: dg-flow 0.6s linear infinite;
+}
+
+@keyframes dg-flow {
+  to { stroke-dashoffset: -14; }
+}
+
+.dg-node {
+  --role: var(--viz-muted);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 2px solid var(--role);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--role) 12%, var(--viz-bg));
+  color: var(--viz-text);
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+  transition: transform 0.25s, box-shadow 0.25s, opacity 0.25s;
+}
+
+.dg-node[data-role="data"] { --role: var(--viz-data); }
+.dg-node[data-role="model"] { --role: var(--viz-model); }
+.dg-node[data-role="loss"] { --role: var(--viz-loss); }
+.dg-node[data-role="grad"] { --role: var(--viz-grad); }
+.dg-node[data-role="opt"] { --role: var(--viz-opt); }
+
+.dg-node[data-shape="pill"] { border-radius: 999px; }
+.dg-node[data-shape="decision"] { border-style: dashed; border-radius: 999px; font-weight: 600; }
+
+.dg-node.dg-has-note { cursor: help; }
+
+.dg-icon {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.dg-label b { color: var(--role); }
+
+.dg-sub {
+  color: var(--viz-muted);
+  font-size: 0.62rem;
+  margin-top: 2px;
+}
+
+.dg-group {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px dashed var(--viz-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--viz-loss) 4%, transparent);
+  transition: border-color 0.25s;
+}
+
+.dg-group-label {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--viz-muted);
+}
+
+.dg-edge-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--viz-panel);
+  color: var(--viz-muted);
+  font-size: 0.64rem;
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+
+.dg-edge-label.dg-active {
+  color: var(--viz-model);
+  font-weight: 700;
+}
+
+/* walkthrough: dim everything except the active parts */
+.dg-stepping .dg-node,
+.dg-stepping .dg-edge-label { opacity: 0.4; }
+.dg-stepping .dg-edge { opacity: 0.35; }
+.dg-stepping .dg-node.dg-active,
+.dg-stepping .dg-edge-label.dg-active,
+.dg-stepping .dg-edge.dg-active { opacity: 1; }
+
+.dg-node.dg-active {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--role) 30%, transparent), 0 4px 14px rgb(0 0 0 / 0.15);
+}
+
+.dg-group.dg-active { border-color: var(--viz-model); }
+
+.dg-compact .dg-node { font-size: 0.6rem; padding: 5px 5px; }
+.dg-compact .dg-sub { font-size: 0.56rem; }
+.dg-compact .dg-icon,
+.dg-compact .dg-label { display: inline; }
+.dg-compact .dg-icon { font-size: 0.95rem; margin-right: 4px; vertical-align: -2px; }
+
+.dg-caption {
+  min-height: 2.8em;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--viz-model);
+  border-radius: 4px;
+  background: var(--viz-bg);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.dg-step-no {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--viz-model);
+  color: var(--viz-bg);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.dg-counter {
+  color: var(--viz-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-edge.dg-active { animation: none; }
+  .dg-node, .dg-edge { transition: none; }
+}
