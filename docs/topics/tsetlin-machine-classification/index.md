@@ -477,6 +477,6 @@ Download `breast-cancer.data` from the [UCI repository](https://archive.ics.uci.
 - M. Zwitter and M. Soklic, [Breast Cancer dataset](https://archive.ics.uci.edu/dataset/14/breast+cancer), UCI Machine Learning Repository. The data used in Step 6.
 - [The Tsetlin automaton](../tsetlin-automaton/index.md) and [Recognize, Erase & Reject feedback](../tsetlin-machine-feedback/index.md): the memory and the feedback this lesson builds on.
 
-**Next lessons:** [Convolutional Tsetlin machines](../convolutional-tsetlin-machine/index.md)
+**Next lessons:** [Regression](../tsetlin-machine-regression/index.md): the same rules, voting for a number instead of a class. Then [Convolutional Tsetlin machines](../convolutional-tsetlin-machine/index.md).
 
 <script src="viz/tsetlin-machine-classification.js"></script>

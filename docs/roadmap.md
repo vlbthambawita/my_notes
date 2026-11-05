@@ -64,7 +64,7 @@
 | Bias, fairness, and robustness | 📝 |
 
 ### Tsetlin machines
-Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines*](https://tsetlinmachine.org/).
+Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines*](https://tsetlinmachine.org/). Topics whose book chapter isn't published yet (regression, weighted clauses, autoencoders, hierarchical/graph, language and images) are based on the research papers.
 
 | Topic | Status |
 |---|---|
@@ -72,13 +72,13 @@ Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines
 | [The Tsetlin automaton: learning by reward and penalty](topics/tsetlin-automaton/index.md) | ✅ |
 | [Learning rules: Recognize, Erase and Reject feedback (Type I and II)](topics/tsetlin-machine-feedback/index.md) | ✅ |
 | [Many rules voting together: classification](topics/tsetlin-machine-classification/index.md) | ✅ |
-| Regression with Tsetlin machines | 📝 |
+| [Regression with Tsetlin machines](topics/tsetlin-machine-regression/index.md) | ✅ |
 | [Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md) | ✅ |
-| Weighted clauses and clause sharing | 📝 |
-| Tsetlin machine autoencoders | 📝 |
+| [Weighted clauses and clause sharing](topics/weighted-tsetlin-machine/index.md) | ✅ |
+| [Tsetlin machine autoencoders and word embeddings](topics/tsetlin-machine-autoencoder/index.md) | ✅ |
 | [Confidence, trustworthiness and composites](topics/tsetlin-machine-confidence/index.md) | ✅ |
-| Hierarchical and graph Tsetlin machines | 📝 |
-| Tsetlin machines for language and images | 📝 |
+| [Hierarchical and graph Tsetlin machines](topics/graph-tsetlin-machine/index.md) | ✅ |
+| [Tsetlin machines for language and images](topics/tsetlin-machine-language-images/index.md) | ✅ |
 
 ## Papers
 

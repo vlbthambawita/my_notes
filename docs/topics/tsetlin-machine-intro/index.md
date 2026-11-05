@@ -359,14 +359,19 @@ Everything here was written by hand. The interesting part, how a machine **finds
 
 ## The series
 
-This lesson is the first of six that follow the published chapters of Granmo's book:
+This lesson is the first of eleven. Lessons 1–4, 6 and 9 follow the published chapters of Granmo's book; the others cover chapters that are only announced so far, and are based on the research papers instead:
 
 1. **What is a Tsetlin machine?** (this lesson): Boolean features, literals, AND-rules and voting at a glance.
 2. [The Tsetlin automaton: a memory that learns](../tsetlin-automaton/index.md): the graded memory behind every literal, and its roots in the two-armed bandit.
 3. [Learning rules: Recognize, Erase and Reject feedback](../tsetlin-machine-feedback/index.md): how a rule learns frequent patterns, and how it learns to tell classes apart.
 4. [Many rules voting: classification with a Tsetlin machine](../tsetlin-machine-classification/index.md): the vote sum, the Voting Margin and the complete learning algorithm, on the breast-cancer data.
-5. [Convolutional Tsetlin machines](../convolutional-tsetlin-machine/index.md): finding patterns anywhere in an image or a sequence.
-6. [Confidence, trustworthiness and composites](../tsetlin-machine-confidence/index.md): when to trust a Tsetlin machine, and how to combine several.
+5. [Regression with Tsetlin machines](../tsetlin-machine-regression/index.md): rules that vote for a number, and the staircase they build.
+6. [Convolutional Tsetlin machines](../convolutional-tsetlin-machine/index.md): finding patterns anywhere in an image or a sequence.
+7. [Weighted clauses and clause sharing](../weighted-tsetlin-machine/index.md): one weighted rule instead of many copies, and one pool of rules for all classes.
+8. [Autoencoders and word embeddings](../tsetlin-machine-autoencoder/index.md): learning without labels by predicting a hidden word from the others.
+9. [Confidence, trustworthiness and composites](../tsetlin-machine-confidence/index.md): when to trust a Tsetlin machine, and how to combine several.
+10. [Hierarchical and graph Tsetlin machines](../graph-tsetlin-machine/index.md): rules that pass messages along a graph, and rules built from rules.
+11. [Tsetlin machines for language and images](../tsetlin-machine-language-images/index.md): reading the rules of text and image classifiers.
 
 **Next lesson:** [The Tsetlin automaton: a memory that learns](../tsetlin-automaton/index.md)
 

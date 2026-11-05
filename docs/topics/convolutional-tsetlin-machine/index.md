@@ -425,6 +425,6 @@ Cross  o#o | ### | o#o
 - Ole-Christoffer Granmo, [*An Introduction to Tsetlin Machines*](https://tsetlinmachine.org/) (free online), Ch. 4 "Convolution": §4.1 recognizing patterns in time and space, §4.2 input and patterns (the Circle/Cross images, convolution window, 1-D convolution), §4.3 rule evaluation, §4.4 rule learning (random matching patch, Voting Margin above 2), §4.5 position encoding (thermometer encoding). This lesson's diagrams and widgets are redrawn from the chapter's figures; the 6×6 noisy Circle/Cross task is our own extension of its example.
 - Ole-Christoffer Granmo, Sondre Glimsdal, Lei Jiao, Morten Goodwin, Christian W. Omlin and Geir Thore Berge, [*The Convolutional Tsetlin Machine*](https://arxiv.org/abs/1905.09688) (2019). The research paper, in the literature's terms (clauses, Type I/II feedback), with results on MNIST-style image benchmarks.
 
-**Next lessons:** [Confidence & composites](../tsetlin-machine-confidence/index.md): does a Tsetlin machine know when it is wrong, and how to combine several specialised machines.
+**Next lessons:** [Weighted clauses & sharing](../weighted-tsetlin-machine/index.md): one weighted rule instead of many copies, and one pool of rules shared by all classes.
 
 <script src="viz/convolutional-tsetlin-machine.js"></script>

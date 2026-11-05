@@ -95,7 +95,12 @@ nav:
           - "The Tsetlin automaton": topics/tsetlin-automaton/index.md
           - "Recognize, Erase & Reject feedback": topics/tsetlin-machine-feedback/index.md
           - "Classification by voting": topics/tsetlin-machine-classification/index.md
+          - "Regression": topics/tsetlin-machine-regression/index.md
           - "Convolutional Tsetlin machines": topics/convolutional-tsetlin-machine/index.md
+          - "Weighted clauses & sharing": topics/weighted-tsetlin-machine/index.md
+          - "Autoencoders & embeddings": topics/tsetlin-machine-autoencoder/index.md
           - "Confidence & composites": topics/tsetlin-machine-confidence/index.md
+          - "Hierarchical & graph TMs": topics/graph-tsetlin-machine/index.md
+          - "Language & images": topics/tsetlin-machine-language-images/index.md
   - Papers: papers/index.md
   - Glossary: glossary.md

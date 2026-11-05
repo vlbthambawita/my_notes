@@ -468,6 +468,6 @@ Each literal's memory here has a depth of 200 positions (1 to 200, memorized abo
 - Yonatan Geifman & Ran El-Yaniv, [*Selective Classification for Deep Neural Networks*](https://arxiv.org/abs/1705.08500) (2017). The coverage/accuracy trade-off ("selective prediction") in general.
 - Data: W. N. Street, W. H. Wolberg & O. L. Mangasarian (1993), the [Wisconsin Diagnostic Breast Cancer data](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic); M. Zwitter & M. Soklic, the [UCI Breast Cancer (recurrence) data](https://archive.ics.uci.edu/dataset/14/breast+cancer), University Medical Centre, Institute of Oncology, Ljubljana.
 
-**Next lessons:** This is the last published chapter of the book so far. See the [Tsetlin machines section of the roadmap](../../roadmap.md#tsetlin-machines) for what comes next; later chapters (for example on image understanding) will be added when they are published.
+**Next lessons:** [Hierarchical & graph TMs](../graph-tsetlin-machine/index.md): rules that pass messages along the edges of a graph, so they can see structure that flat features miss.
 
 <script src="viz/tsetlin-machine-confidence.js"></script>
