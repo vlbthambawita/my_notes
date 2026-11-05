@@ -81,7 +81,9 @@
     function layout() {
       const w = stage.clientWidth;
       if (!w) return;
-      const narrow = spec.narrow && w < NARROW;
+      // Must be a real boolean: classList.toggle(cls, undefined) flips the class instead of removing it,
+      // which made diagrams without a `narrow` layout re-layout forever (flickering) via the ResizeObserver.
+      const narrow = !!spec.narrow && w < NARROW;
       const L = narrow ? { ...spec, ...spec.narrow } : spec;
       const pos = (narrow && spec.narrow.pos) || {};
       const cellW = w / L.cols;

@@ -6,7 +6,8 @@
 // measures each diagram for: overlapping / touching boxes, boxes outside the stage, edge labels sitting on
 // boxes or on other labels, arrows passing through boxes or under other labels, arrows too short to see,
 // words broken mid-word, text overflowing its box, and boxes or arrows that are *almost* aligned
-// (a few pixels off a row/column, or a few degrees off horizontal/vertical).
+// (a few pixels off a row/column, or a few degrees off horizontal/vertical), and diagrams that keep
+// re-rendering while idle (a resize feedback loop, seen as flicker).
 // Exits with code 1 if anything is found. Needs Node 22+ (built-in WebSocket) and Playwright's Chromium,
 // or set CHROME=/path/to/chrome.
 import { spawn } from "node:child_process";
@@ -40,6 +41,25 @@ function pages(dir) {
     else if (e.name === "index.html" && readFileSync(p, "utf8").includes('class="viz diagram"')) out.push(p);
   }
   return out;
+}
+
+// Runs inside the page. An idle diagram must not change: one that keeps re-laying itself out flickers.
+function stability() {
+  return new Promise((res) => {
+    const seen = new Map();
+    const mo = new MutationObserver((ms) => {
+      for (const m of ms) {
+        const d = (m.target.nodeType === 1 ? m.target : m.target.parentElement)?.closest(".diagram");
+        if (d) seen.set(d, (seen.get(d) || 0) + 1);
+      }
+    });
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, characterData: true });
+    setTimeout(() => {
+      mo.disconnect();
+      res([...seen].map(([d, n]) => `[${(d.querySelector(".viz-title")?.textContent || "diagram").trim().slice(0, 50)}] ` +
+        `keeps re-rendering while idle (${n} DOM changes in 0.6s): it flickers`));
+    }, 600);
+  });
 }
 
 // Runs inside the page. Returns a list of human-readable problems.
@@ -155,8 +175,10 @@ for (const file of pages(siteDir).filter((p) => relative(siteDir, p).includes(fi
     await send("Emulation.setDeviceMetricsOverride", { width, height: 900, deviceScaleFactor: 1, mobile: width < 600 });
     await send("Page.navigate", { url: "file://" + file });
     await sleep(1800);                                    // fonts + layout
+    const s = await send("Runtime.evaluate", { expression: `(${stability})()`, awaitPromise: true, returnByValue: true });
     const r = await send("Runtime.evaluate", { expression: `(${audit})()`, returnByValue: true });
-    const found = r.result?.result?.value ?? [`checker crashed: ${r.result?.exceptionDetails?.exception?.description}`];
+    const found = [...(s.result?.result?.value ?? []),
+      ...(r.result?.result?.value ?? [`checker crashed: ${r.result?.exceptionDetails?.exception?.description}`])];
     for (const f of found) console.log(`${relative(siteDir, file)} @${width}px  ${f}`);
     problems += found.length;
   }

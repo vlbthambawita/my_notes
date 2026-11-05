@@ -132,6 +132,12 @@ mkdocs build -q -d <scratchpad>/site && node scripts/check_diagrams.mjs <scratch
 It loads each page in headless Chromium at 1440, 1100, 820 and 390px and reports, per diagram, overlapping
 or touching boxes, boxes sticking out of the stage, labels on boxes or on other labels, arrows through boxes
 or under other labels, arrows too short to see (< 22px), words broken mid-word, text overflowing its box,
-and boxes or arrows that are *nearly* aligned. It exits non-zero on any problem. The checker can't judge
+boxes or arrows that are *nearly* aligned, and diagrams that **keep re-rendering while idle** (flicker).
+It exits non-zero on any problem.
+
+Flicker comes from a resize feedback loop: `layout()` sets the stage height, the `ResizeObserver` fires, and
+`layout()` runs again. That is harmless only if the second pass produces exactly the same result. So `layout()`
+must be deterministic: never pass a possibly-`undefined` value to `classList.toggle(cls, force)`
+(`undefined` *flips* the class), and never make box sizes depend on the stage height. The checker can't judge
 looks, so still take a screenshot at 1440px and 390px (light and dark) and look at it: is anything cramped,
 lopsided, or leaving big empty bands?
