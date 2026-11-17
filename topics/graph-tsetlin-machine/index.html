@@ -1,0 +1,2520 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/graph-tsetlin-machine/">
+      
+      
+        <link rel="prev" href="../tsetlin-machine-confidence/">
+      
+      
+        <link rel="next" href="../tsetlin-machine-language-images/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Hierarchical & graph TMs - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hierarchical-and-graph-tsetlin-machines" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hierarchical & graph TMs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weighted-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weighted clauses & sharing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-autoencoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autoencoders & embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hierarchical & graph TMs
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hierarchical & graph TMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-what-flat-features-cannot-say" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — What flat features cannot say
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-inputs-as-graphs-nodes-properties-and-typed-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Inputs as graphs: nodes, properties and typed edges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-rules-that-look-at-one-node-part-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Rules that look at one node: part 0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-messages-rules-tell-the-neighbours-what-they-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Messages: rules tell the neighbours what they found
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-depth-is-hierarchy-seeing-further-one-round-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Depth is hierarchy: seeing further, one round at a time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-learning-same-feedback-at-one-matching-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Learning: same feedback, at one matching node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-training-a-graph-tsetlin-machine-on-toy-molecules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Training a graph Tsetlin machine on toy molecules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-another-kind-of-depth-stacking-tsetlin-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Another kind of depth: stacking Tsetlin machines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-language-images/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language & images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../ising-model/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Energy-based models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Energy-based models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-what-flat-features-cannot-say" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — What flat features cannot say
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-inputs-as-graphs-nodes-properties-and-typed-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Inputs as graphs: nodes, properties and typed edges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-rules-that-look-at-one-node-part-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Rules that look at one node: part 0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-messages-rules-tell-the-neighbours-what-they-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Messages: rules tell the neighbours what they found
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-depth-is-hierarchy-seeing-further-one-round-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Depth is hierarchy: seeing further, one round at a time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-learning-same-feedback-at-one-matching-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Learning: same feedback, at one matching node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-training-a-graph-tsetlin-machine-on-toy-molecules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Training a graph Tsetlin machine on toy molecules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-another-kind-of-depth-stacking-tsetlin-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Another kind of depth: stacking Tsetlin machines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="hierarchical-and-graph-tsetlin-machines">Hierarchical and Graph Tsetlin Machines<a class="headerlink" href="#hierarchical-and-graph-tsetlin-machines" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A standard Tsetlin machine reads a flat list of Boolean features, so it cannot say "an atom <strong>with property A, bonded to</strong> an atom with property B": the list says <em>what</em> is there, not <em>what is connected to what</em>. A <strong>graph Tsetlin machine</strong> takes a <strong>graph</strong> as input: <strong>nodes</strong> with <strong>properties</strong> (symbols such as "N" or "O"), joined by <strong>edges</strong> that may have <strong>types</strong> (such as "left" and "right"). Each rule is split into <strong>parts, one per layer</strong>. Part 0 checks a node's own properties, exactly like a convolutional rule checks a patch. Wherever a rule's part matches, the node <strong>sends a message</strong> (the rule's name) to its neighbours, and part 1 of every rule can then ask "did a neighbour send me R1?". More layers see further: after <span class="arithmatex">\(D-1\)</span> rounds of messages, a rule can describe a node's surroundings up to <span class="arithmatex">\(D-1\)</span> steps away, built from <strong>rules over rules</strong>. That is the <strong>hierarchy</strong>: small patterns (an O) feed bigger ones (a C next to an O), which feed bigger ones again. A rule is True for the graph if it matches at <strong>some node</strong> (OR over nodes), and learning is the same Recognize, Erase and Reject Feedback as before, applied at <strong>one matching node, picked at random</strong>. In our toy molecules, flat features and depth-1 rules stay at chance level (about 51%), while depth-2 rules reach <strong>100%</strong> and read like chemistry: "an N bonded to an O".</p>
+</div>
+<p><strong>Level:</strong> intermediate–advanced · <strong>Prerequisites:</strong> <a href="../convolutional-tsetlin-machine/">Convolutional Tsetlin machines</a> (patches, the OR over positions, feedback on one random matching patch). It builds on <a href="../tsetlin-machine-classification/">Classification by voting</a> (the vote sum <span class="arithmatex">\(v\)</span> and the Voting Margin <span class="arithmatex">\(T\)</span>). The math needs nothing beyond AND, OR and counting steps along a path.</p>
+<div class="admonition note">
+<p class="admonition-title">Beyond the book</p>
+<p>Granmo's book <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a> announces Ch. 8, "Hierarchical Representation", and Ch. 9, "Graphs", but they are not published yet. This lesson is therefore based on the research papers listed in <a href="#further-reading">Further reading</a>, mainly Granmo et al. (2025), <em>The Tsetlin Machine Goes Deep</em>, and the <code>GraphTsetlinMachine</code> code it describes. We use the book's vocabulary (rules, Memorize/Forget, Recognize/Erase/Reject Feedback) and give the research term once, in brackets. All experiments are our own toy runs; numbers that come from the papers are marked as quotes.</p>
+</div>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Much of the data in medicine is about <strong>relations</strong>, not just lists of facts:</p>
+<ul>
+<li><strong>Molecules.</strong> Whether a drug is toxic often depends on which atoms are <em>bonded</em> to which, not on how many atoms of each element it contains. Two molecules with exactly the same atoms can behave very differently.</li>
+<li><strong>Sequences.</strong> In DNA or in an ECG, <em>order</em> matters: "three A's in a row" is not the same as "three A's somewhere".</li>
+<li><strong>Patient records.</strong> A hospital record links a patient to tests, diagnoses, drugs and notes. The README of the <code>GraphTsetlinMachine</code> code sketches exactly this use case: nodes for ECGs and clinical notes, and edges of different types, such as <em>Measurement</em> edges from tests to a patient and <em>Condition</em> edges from diseases to patients.</li>
+</ul>
+<p>A flat feature list loses the links. You could add one feature per possible link ("atom 3 is bonded to atom 5"), but then a rule must name exact slots, and you need one rule per slot combination, the same problem the <a href="../convolutional-tsetlin-machine/">convolutional lesson</a> had with positions. A graph Tsetlin machine solves it the same way convolution did: rules look at <strong>one node at a time</strong>, and the node's <strong>neighbours tell it what they are</strong> through messages.</p>
+<hr />
+<h2 id="step-1-what-flat-features-cannot-say">Step 1 — What flat features cannot say<a class="headerlink" href="#step-1-what-flat-features-cannot-say" title="Permanent link">&para;</a></h2>
+<p>Take two small toy "molecules" (tree-shaped, made up for this lesson; not real chemistry). Both have <strong>four carbons, one nitrogen and one oxygen</strong>. In molecule A, the N is bonded to the O. In molecule B, the N and the O sit three bonds apart.</p>
+<p>A standard Tsetlin machine needs a fixed list of Boolean features. The natural ones are "contains N", "contains at least 2 C", and so on (thermometer-coded counts, as in the <a href="../tsetlin-machine-classification/">classification lesson</a>). For A and B these features are <strong>identical</strong>, so every rule, and therefore the whole machine, must give A and B the <strong>same</strong> answer. If the question is "is the N bonded to the O?", it is bound to be wrong on one of them.</p>
+<p><strong>Try it:</strong> click atoms to change their element, or press <em>Random pair</em>.</p>
+<div id="viz-flat" class="viz"><div class="viz-title">🧪 Interactive: same atoms, different bonds</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>In the starting pair, the counts are C × 4, N × 1, O × 1 for <strong>both</strong> molecules, yet the graph rule "an N with an O neighbour" is True for A and False for B.</li>
+<li>Change an atom and the counts may differ, but then a flat rule can only tell the molecules apart by <strong>counting</strong>, never by looking at the bonds.</li>
+<li>You <em>could</em> give a standard machine one feature per pair of atom slots ("slot 3 is N, slot 5 is O, and they are bonded"). With up to 8 atoms, "N bonded to O" alone then needs a rule for each ordered pair of slots: <span class="arithmatex">\(8 \times 7 = 56\)</span> rules, and the slot numbers mean nothing chemically. The graph rule says it <strong>once</strong>.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-inputs-as-graphs-nodes-properties-and-typed-edges">Step 2 — Inputs as graphs: nodes, properties and typed edges<a class="headerlink" href="#step-2-inputs-as-graphs-nodes-properties-and-typed-edges" title="Permanent link">&para;</a></h2>
+<p>A graph Tsetlin machine takes as input a graph (Granmo et al. 2025, §2):</p>
+<ul>
+<li><strong>Nodes</strong>, each with a set of <strong>properties</strong>: symbols such as "C", "A", "pixel (3, 5) is white" or "the word <em>pain</em>". A property is a Boolean feature of the node, so the node's literals are its properties and their negations, exactly as before.</li>
+<li><strong>Edges</strong> between nodes, each with a <strong>type</strong>: "bond", "left", "right", "Measurement", … Edges are directed; an undirected bond is two edges, one each way.</li>
+</ul>
+<p>The same input format covers many kinds of data:</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Nodes</th>
+<th>Properties</th>
+<th>Edges (types)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Our toy molecules</td>
+<td>atoms</td>
+<td>the element: C, N or O</td>
+<td>bonds (one type)</td>
+</tr>
+<tr>
+<td>A sequence such as <code>BAAAE</code></td>
+<td>positions</td>
+<td>the letter</td>
+<td>to the neighbour on the left / right (two types)</td>
+</tr>
+<tr>
+<td>An image, split into patches</td>
+<td>patches</td>
+<td>the pixels and the patch position</td>
+<td><strong>none</strong></td>
+</tr>
+<tr>
+<td>A tabular patient record</td>
+<td>one node</td>
+<td>all the features</td>
+<td>none</td>
+</tr>
+<tr>
+<td>A hospital record</td>
+<td>patient, tests, notes, diagnoses</td>
+<td>values, words, codes</td>
+<td><em>Measurement</em>, <em>Condition</em>, …</td>
+</tr>
+</tbody>
+</table>
+<p>The last two rows show that the earlier machines are special cases. A graph with <strong>one node</strong> is a standard Tsetlin machine. A graph of <strong>patches without edges</strong> is a convolutional Tsetlin machine: the paper checks this and reports test accuracies close to those of a convolutional machine on MNIST (98.42% vs 98.93%) and Fashion-MNIST (89.49% vs 91.05%) (Granmo et al. 2025, Table 3, quoted).</p>
+<div class="admonition note">
+<p class="admonition-title">Hypervectors: how the real code stores symbols</p>
+<p>With thousands of possible symbols (all the words of a language, say), one Boolean feature per symbol becomes large. The <code>GraphTsetlinMachine</code> code therefore stores each node's properties in a <strong>hypervector</strong>: a fixed-length bit vector in which every symbol is given a few random bit positions, and a node's bits are the OR of its symbols' bits. Its README example uses vectors of 32 bits with 2 bits per symbol, which gives <span class="arithmatex">\(32 \cdot 31 / 2 = 496\)</span> different bit pairs (quoted from the README). Rules then memorize <em>bits</em>, and a learned rule is read back by checking which symbols' bits it contains. Two symbols can share a bit by accident, which adds a little noise. This lesson skips hypervectors and gives <strong>every symbol its own feature</strong> (the code also has such a one-hot option). Nothing else changes.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Edge <strong>types</strong> matter. In the sequence <code>BAAAE</code>, a node that only knows "a neighbour is an A" can't tell left from right; with <em>left</em> and <em>right</em> edges it can (the README makes this remark for its sequence demo).</li>
+<li>The graph can have <strong>any size</strong>. A rule never names a node number, so molecules of 6 atoms and of 8 atoms are handled by the same rules.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-rules-that-look-at-one-node-part-0">Step 3 — Rules that look at one node: part 0<a class="headerlink" href="#step-3-rules-that-look-at-one-node-part-0" title="Permanent link">&para;</a></h2>
+<p>Start with the simplest graph rule: an AND of <strong>property literals</strong>, checked at <strong>every node</strong>, with an OR over the nodes. "O" matches every oxygen atom; "¬C" matches every atom that isn't carbon. The rule is True for the molecule if it matches at <strong>one node or more</strong>.</p>
+<p>This is word for word the convolutional machine, with <strong>nodes in place of patches</strong>:</p>
+<div class="arithmatex">\[
+C_j(\text{graph}) \;=\; \bigvee_{v \in \text{nodes}} \; \bigwedge_{k \in I_j} l_k^{(v)} ,
+\]</div>
+<p>where <span class="arithmatex">\(I_j\)</span> is the set of literals rule <span class="arithmatex">\(C_j\)</span> has memorized and <span class="arithmatex">\(l_k^{(v)}\)</span> is the truth value of literal <span class="arithmatex">\(l_k\)</span> at node <span class="arithmatex">\(v\)</span>. A rule like this can say "there is an N" and "there is an O", but not "the N is next to the O": it sees one node at a time, and the OR throws away <em>which</em> nodes matched. That is why, in Step 7, a graph machine with only this one part (depth 1) is stuck at chance level on the bonding task, just like the flat machine.</p>
+<p>In the paper's terms, this is the <strong>layer-0 component</strong> <span class="arithmatex">\(C^0_j\)</span> of a clause (Granmo et al. 2025, §2). To see more than one node, the rule needs more parts, and the parts need a way to talk.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Part 0 of a rule is a <strong>pattern detector for single nodes</strong>: "an O", "an N", "an atom that is N or O".</li>
+<li>On its own it is a convolutional machine whose "patches" are nodes. Everything new in this lesson is about what happens <strong>between</strong> nodes.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-messages-rules-tell-the-neighbours-what-they-found">Step 4 — Messages: rules tell the neighbours what they found<a class="headerlink" href="#step-4-messages-rules-tell-the-neighbours-what-they-found" title="Permanent link">&para;</a></h2>
+<p>Here is the key idea of the graph Tsetlin machine (Granmo et al. 2025, §2, "Messages" and "Message Submission"):</p>
+<ol>
+<li>Evaluate <strong>part 0</strong> of every rule at every node.</li>
+<li>Wherever part 0 of rule <span class="arithmatex">\(R_k\)</span> matches, the node <strong>sends the message "<span class="arithmatex">\(R_k\)</span>"</strong> along all its outgoing edges (bound to the edge's type, when there are several types).</li>
+<li>Every node collects what it receives in its <strong>inbox</strong>. The inbox gives the node new Boolean features: "<strong>a neighbour sent <span class="arithmatex">\(R_k\)</span></strong>", one per rule (and per edge type).</li>
+<li><strong>Part 1</strong> of each rule is an AND of these <strong>message literals</strong>. A rule matches at a node in layer 1 only if part 0 <strong>and</strong> part 1 both match there.</li>
+<li>Finally, OR over the nodes, and vote, exactly as before.</li>
+</ol>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "📨 One round of message passing",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "props", "col": 0, "row": 0, "icon": "⚛️", "label": "Node properties", "sub": "C, N, O … per node", "role": "data", "note": "Each node's own Boolean features and their negations."},
+    {"id": "p0", "col": 1, "row": 0, "icon": "🔍", "label": "Part 0 of each rule", "sub": "match at every node", "role": "model", "note": "An AND of property literals, checked node by node."},
+    {"id": "send", "col": 2, "row": 0, "icon": "📨", "label": "Send messages", "sub": "R<sub>k</sub> along every edge", "role": "model", "note": "Where part 0 of rule R_k matches, the node sends 'R_k' to its neighbours (bound to the edge type)."},
+    {"id": "inbox", "col": 2, "row": 1, "icon": "📥", "label": "Inbox", "sub": "\"a neighbour sent R<sub>k</sub>\"", "role": "data", "note": "One new Boolean feature per rule (and edge type): the message literals."},
+    {"id": "p1", "col": 1, "row": 1, "icon": "🔍", "label": "Part 1 of each rule", "sub": "parts 0 AND 1 must match", "role": "model", "note": "An AND of message literals, checked at each node together with part 0."},
+    {"id": "or", "col": 0, "row": 1, "icon": "∨", "label": "OR over nodes", "sub": "then vote as before", "role": "loss", "note": "A rule is True for the graph if all its parts match at one node or more."}
+  ],
+  "edges": [
+    {"from": "props", "to": "p0"},
+    {"from": "p0", "to": "send"},
+    {"from": "send", "to": "inbox", "label": "along edges"},
+    {"from": "inbox", "to": "p1"},
+    {"from": "p1", "to": "or"}
+  ],
+  "steps": [
+    {"show": ["props"], "text": "Each node starts with its own <b>properties</b>: here, the element of an atom."},
+    {"show": ["props>p0", "p0"], "text": "<b>Part 0</b> of every rule is checked at every node, using only that node's properties."},
+    {"show": ["p0>send", "send"], "text": "Wherever part 0 of rule R<sub>k</sub> matches, the node <b>sends the message R<sub>k</sub></b> to its neighbours."},
+    {"show": ["send>inbox", "inbox"], "text": "Each node's <b>inbox</b> collects the messages. They become new literals: \"a neighbour sent R<sub>k</sub>\"."},
+    {"show": ["inbox>p1", "p1"], "text": "<b>Part 1</b> of every rule checks the inbox. A rule matches at a node only if parts 0 and 1 both match there. With more layers, the rules that matched send again, and part 2 reads the next inbox."},
+    {"show": ["p1>or", "or"], "text": "A rule is True for the graph if it matches at <b>some node</b>. From here on, voting and classification are the same as in a standard Tsetlin machine."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"props": [0, 0], "p0": [1, 0], "send": [1, 1], "inbox": [1, 2], "p1": [0, 2], "or": [0, 1]}}
+}
+</script>
+</div>
+
+<p>So the "bonded" rule from Step 1 is two rules working together:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+R_1 &amp;: \quad \text{O} \\
+R_2 &amp;: \quad \underbrace{\text{N}}_{\text{part 0}} \;\wedge\; \underbrace{\text{a neighbour sent } R_1}_{\text{part 1}} .
+\end{aligned}
+\]</div>
+<p><span class="arithmatex">\(R_2\)</span> reads as "an N with an O neighbour". Its part 1 does not mention O at all; it mentions <strong>another rule</strong>. That is what the paper calls a <strong>deep</strong> or <strong>nested clause</strong>: rules built from rules. To read it, you trace each message back to the rule that sent it (the paper does exactly this in its Table 1).</p>
+<p><strong>Try it:</strong> step through the evaluation. The widget starts on the N atom (dashed ring); its inbox is shown in the readout.</p>
+<div id="viz-messages" class="viz"><div class="viz-title">📨 Interactive: rules send messages to their neighbours</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Layer 0:</strong> R1 matches at the O; R2 and R4 match at the N (their part 0 is "N"); R3 matches at every C.</li>
+<li><strong>Round 1:</strong> only the O's neighbour (the C in the middle) receives R1. The N's inbox gets R3 (from its C neighbours) and nothing else, so <strong>R2 fails</strong>: this N is not bonded to an O.</li>
+<li><strong>Layer 1:</strong> R3 ("a C next to an O") now matches only at the middle C. <strong>Round 2</strong> carries that fact one bond further, so in <strong>layer 2</strong>, R4 ("an N next to a C that is next to an O") matches at the N.</li>
+<li><strong>Faded atoms</strong> are the ones that cannot have influenced the selected atom yet. After layer 0 the N sees only itself, after layer 1 its neighbours, after layer 2 everything within two bonds.</li>
+<li>Click the O's neighbour twice to turn it into an N: now R2 fires in layer 1, and R4 no longer does.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-depth-is-hierarchy-seeing-further-one-round-at-a-time">Step 5 — Depth is hierarchy: seeing further, one round at a time<a class="headerlink" href="#step-5-depth-is-hierarchy-seeing-further-one-round-at-a-time" title="Permanent link">&para;</a></h2>
+<p>With <span class="arithmatex">\(D\)</span> layers (the paper's <strong>depth</strong> <span class="arithmatex">\(D\)</span>), a rule has parts <span class="arithmatex">\(0, 1, \dots, D-1\)</span>, and there are <span class="arithmatex">\(D - 1\)</span> rounds of messages. In round <span class="arithmatex">\(i\)</span>, a node sends <span class="arithmatex">\(R_k\)</span> if rule <span class="arithmatex">\(R_k\)</span> matched <strong>all its parts up to layer <span class="arithmatex">\(i-1\)</span></strong> at that node (Granmo et al. 2025, Algorithm in §2 and Appendix A.3). So messages get richer every round:</p>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>A message "<span class="arithmatex">\(R_k\)</span>" from a neighbour means …</th>
+<th>What a rule can see from a node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>— (part 0)</td>
+<td>—</td>
+<td>the node itself</td>
+</tr>
+<tr>
+<td>1</td>
+<td>the neighbour matches part 0 of <span class="arithmatex">\(R_k\)</span></td>
+<td>its neighbours</td>
+</tr>
+<tr>
+<td>2</td>
+<td>the neighbour matches parts 0–1 of <span class="arithmatex">\(R_k\)</span>, which already looked at <strong>its</strong> neighbours</td>
+<td>everything up to 2 edges away</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(D-1\)</span></td>
+<td>…</td>
+<td>everything up to <span class="arithmatex">\(D-1\)</span> edges away</td>
+</tr>
+</tbody>
+</table>
+<p>This growing <strong>receptive field</strong> is the same idea as stacking convolution layers in a convolutional neural network, and it is where the hierarchy comes from: R1 (an O) is used by R3 (a C next to an O), which is used by R4 (an N next to a C next to an O). Each level is a readable rule, and it can be traced back to atoms.</p>
+<p>Two details make the rules shorter than you might expect:</p>
+<ul>
+<li><strong>The receptive field is a radius, not a path length.</strong> "N and O two bonds apart" (N–X–O) needs only depth 2, if the rule is centred on the middle atom: "any atom, with a neighbour that sent R(N) and a neighbour that sent R(O)".</li>
+<li><strong>Reasoning by elimination.</strong> A rule may describe a node by what it is <em>not</em>. In the paper's Figure 1, a part that memorized ¬1 ∧ ¬3 ∧ ¬5 ∧ ¬7 ∧ ¬9 matches every even number. In our molecules (one N and one O each), "an N-or-O atom next to an N-or-O atom" can only be the N–O bond. The paper argues that this kind of sharing, rules reusing other rules, lets the machine recognise sub-graph patterns "with exponentially fewer clauses" (quoted from its abstract).</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">The paper's sequence example</p>
+<p>Granmo et al. (2025, §3.1) classify 5-letter sequences by whether they contain three A's in a row. Each letter is a node, with <em>left</em> and <em>right</em> edges. A depth-2 machine with only <strong>four</strong> rules reaches 100% test accuracy after four epochs (quoted), and its rules read as, for example, "an A whose left and right neighbours match the A-rules": three A's centred on the middle one.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>More layers = a wider view</strong>, built from rules about neighbours of neighbours. The paper reports that depth matters on real data: on IMDB sentiment, 86.43% test accuracy at depth 1 vs 88.15% at depth 2, and on 5-class viral genome sequences, 59.81% at depth 1 vs 95.14% at depth 2 (Granmo et al. 2025, Tables 5 and 8, quoted).</li>
+<li>Depth also makes learning <strong>harder</strong>: a deep rule only works once the rules it relies on have learned something useful. Step 7 shows this in our toy runs.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-learning-same-feedback-at-one-matching-node">Step 6 — Learning: same feedback, at one matching node<a class="headerlink" href="#step-6-learning-same-feedback-at-one-matching-node" title="Permanent link">&para;</a></h2>
+<p>Nothing in the learning rule is new; it is the convolutional machine's procedure with <strong>nodes in place of patches</strong> (Granmo et al. 2025, §2, step 5; the code picks the node at random among the nodes where the clause is True):</p>
+<ul>
+<li>Compute every rule's output for the graph (all layers, then OR over nodes), and the vote sum <span class="arithmatex">\(v\)</span> for the true class, clipped to <span class="arithmatex">\([-T, T]\)</span>.</li>
+<li>Select each rule for feedback with probability <span class="arithmatex">\((T - v)/2T\)</span>, as in the <a href="../tsetlin-machine-classification/">classification lesson</a>.</li>
+<li>A selected rule of the true class that is <strong>True</strong> gets <strong>Recognize Feedback</strong> at <strong>one node where it matched, picked at random</strong>. A selected rule of the other class that is True gets <strong>Reject Feedback</strong> at one random matching node. A selected rule of the true class that is <strong>False</strong> gets <strong>Erase Feedback</strong> (no node needed).</li>
+<li>At the chosen node, the rule's literal vector is <strong>everything the node had</strong>: its properties (for part 0) and its inboxes (for parts 1, 2, …). Message literals are simply more literals, learned with the same memory, Memorize Value and Forget Value.</li>
+</ul>
+<p>One thing <em>is</em> new in spirit: a message literal means "a neighbour sent <span class="arithmatex">\(R_k\)</span>", and what <span class="arithmatex">\(R_k\)</span> matches <strong>changes while <span class="arithmatex">\(R_k\)</span> learns</strong>. Rules are learning on top of each other's moving results. It works because a rule that is useful to others keeps being reinforced, so its meaning settles, and the rules built on it settle with it.</p>
+<div class="admonition warning">
+<p class="admonition-title">Our simplifications (what this lesson's code does differently from the paper)</p>
+<ul>
+<li><strong>One feature per symbol</strong>, no hypervectors (Step 2), and one edge type (bonds).</li>
+<li><strong>Votes for and against</strong> with equal weight, as in the <a href="../tsetlin-machine-classification/">classification lesson</a>. The paper's machine is built on the Coalesced Tsetlin machine (Glimsdal &amp; Granmo 2021): one shared pool of rules, each with a learned integer weight per class.</li>
+<li><strong>Only positive message literals</strong> ("a neighbour sent <span class="arithmatex">\(R_k\)</span>"). The paper's rules can also use negated ones ("no neighbour sent <span class="arithmatex">\(R_k\)</span>"; its Table 1 shows several). In our small runs with negated message literals, Reject Feedback quickly taught rules "no neighbour sent <span class="arithmatex">\(R_k\)</span>" for some <span class="arithmatex">\(R_k\)</span> that matches everywhere. That literal is False at every node, so the rule never fired again, and the machine never got above 51.0% test accuracy (seed 1, the Step 7 task, 15 epochs). With thousands of rules and the full update scheme this is presumably not a problem in the paper, but we could not check it at toy scale, so our toy drops the negations.</li>
+<li>Small and slow: 8 rules per class, plain Python and JavaScript, no GPU. The paper's code runs on GPUs with thousands of rules.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The only new ingredient compared with the convolutional machine is <strong>where the literals come from</strong>: a node's own properties <em>and</em> its inbox. "Pick one matching node at random" is the convolutional machine's "pick one matching patch at random".</li>
+<li>Erase Feedback lowers message literals too, so a rule that fails everywhere loosens both what it asks of the node and what it asks of the neighbours.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-training-a-graph-tsetlin-machine-on-toy-molecules">Step 7 — Training a graph Tsetlin machine on toy molecules<a class="headerlink" href="#step-7-training-a-graph-tsetlin-machine-on-toy-molecules" title="Permanent link">&para;</a></h2>
+<p>The task: random tree-shaped molecules of 6 to 8 atoms, all carbon except <strong>exactly one N and one O</strong>, and the question "<strong>is the N bonded to the O?</strong>". Every molecule has the same element counts (apart from the number of carbons), so flat features carry almost no information. There are 300 training and 300 test molecules, half of each class. The machine has 8 rules per class, Voting Margin <span class="arithmatex">\(T = 4\)</span>, Forget Value 0.8 (Memorize Value 0.2), and a memory depth of 10 positions per literal, as in the convolutional lesson. Everything is seeded; the widget runs a line-by-line port of our Python check script with the same random numbers, so it shows exactly the numbers below.</p>
+<p><strong>Try it:</strong> press <em>Train to 15 epochs</em> for each model. Then click rules in the list to see where they match.</p>
+<div id="viz-train" class="viz"><div class="viz-title">🧠 Interactive: train a graph Tsetlin machine on "is the N bonded to the O?"</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Flat features fail.</strong> The standard machine sees thermometer-coded element counts. It ends at <strong>51.0%</strong> test accuracy (seed 1), and <strong>50.9%</strong> on average over seeds 1 to 10: a coin flip, because the counts say nothing about bonds.</li>
+<li><strong>Depth 1 fails too.</strong> Rules that see one node at a time end at <strong>51.0%</strong> (seed 1; <strong>51.8%</strong> on average). This is the convolutional machine of Step 3.</li>
+<li><strong>Depth 2 solves it.</strong> With one round of messages, the machine reaches <strong>100%</strong> test accuracy after the first epoch (seed 1), and every seed from 1 to 10 is at 100% after 15 epochs (reached within 1 to 4 epochs). Depth 3 also ends at 100% for all ten seeds.</li>
+<li><strong>The rules read like chemistry.</strong> With seed 1 and depth 2, all eight "yes" rules fire on all 147 test molecules where the N is bonded to the O, and on none of the other 153. Their descriptions say it in different words, for example "N, next to [O], next to [N or O]", "O, next to [N], next to [N or O]", and, by elimination, "N or O, next to [N or O]". One "no" rule found a pattern that rules out a bond: "C, next to [N], next to [O], next to [N or O]", i.e. N–C–O, which fires on 78 of the 153 "no" molecules and on none of the "yes" ones.</li>
+<li><strong>A harder question exposes the learning problem.</strong> Switch the task to "N within 2 bonds of O?". Depth 2 can express the answer (Step 5), and with seed 1 it does reach <strong>100%</strong> test accuracy at epoch 5, but then loses it and ends at <strong>50.7%</strong>. Over seeds 1 to 10 the final accuracy averages <strong>56.2%</strong> (49.3% to 69.3%); three seeds touched 100% at some epoch. Depth 3 does no better (<strong>49.6%</strong> on average). The "no" class is the hard part: "the N has no O within 2 bonds" is a statement about <strong>every</strong> path, and a rule that is an OR over nodes can only find something that <strong>exists</strong>. The "yes" rules have to carry the whole decision, and in our small runs they don't settle. Bigger machines, weighted rules and more data are what the paper uses.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-8-another-kind-of-depth-stacking-tsetlin-machines">Step 8 — Another kind of depth: stacking Tsetlin machines<a class="headerlink" href="#step-8-another-kind-of-depth-stacking-tsetlin-machines" title="Permanent link">&para;</a></h2>
+<p>Message passing builds a hierarchy <strong>over the graph</strong>: rules about neighbours of neighbours. There is a second, older idea for hierarchy that works on ordinary flat inputs: <strong>stack whole Tsetlin machines</strong>, so that the rule outputs of one machine become the Boolean features of the next.</p>
+<ul>
+<li>Granmo's original Tsetlin machine paper (2018, §6.2) sketches a "Fully Connected Deep Tsetlin Machine": the clause outputs of one machine are the input of the next, and each layer is trained on its own, directly from the class label, similar to how deep belief networks were trained layer by layer. If one layer has learned <span class="arithmatex">\(P \wedge \lnot Q\)</span> and <span class="arithmatex">\(\lnot P \wedge Q\)</span>, the next layer can combine them into larger formulas.</li>
+<li>Tarasyuk, Gorbenko, Yakovlev and Shafik (2024) built and tested such a <strong>multi-layer Tsetlin machine</strong>. They train the layers one after another: train layer 1 until its accuracy levels off, <strong>freeze</strong> its rules, then use their outputs as inputs for layer 2, and so on. On Digits-MNIST with 100 rules per class, they report validation accuracy 96.58% with one layer, 97.42% with two and 96.90% with five, while training accuracy keeps rising (97.72% to 99.93%). They conclude that two layers were best and that more layers overfit (quoted from their Tables II and III).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Stacked (multi-layer) Tsetlin machine</th>
+<th>Graph Tsetlin machine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>a flat feature list</td>
+<td>a graph of nodes, properties and typed edges</td>
+</tr>
+<tr>
+<td>What a higher layer reads</td>
+<td>the outputs of <strong>all</strong> rules of the layer below, for the whole input</td>
+<td>messages from <strong>neighbouring nodes</strong>: which rules matched next door</td>
+</tr>
+<tr>
+<td>Hierarchy means</td>
+<td>formulas made of formulas</td>
+<td>patterns made of neighbouring patterns, wider each layer</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>layer by layer, earlier layers frozen (Tarasyuk et al.)</td>
+<td>all parts of all rules at once, with the usual feedback</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>Both kinds of depth build <strong>rules over rules</strong>, and both keep every level readable: a higher-level rule is an AND of lower-level rules, each of which is an AND of literals.</li>
+<li>Both papers find that depth helps up to a point, and both show that it is not free: the multi-layer machine overfits beyond two layers, and our toy graph machine struggles to learn deeper patterns.</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p>The complete learning loop is the <a href="../convolutional-tsetlin-machine/">convolutional</a> loop with layers of messages in the middle.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 How a graph Tsetlin machine learns",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 115,
+  "nodes": [
+    {"id": "obs", "col": 0, "row": 0, "icon": "🕸️", "label": "Observe a graph and its class", "role": "data", "note": "Nodes with properties, edges with types."},
+    {"id": "layers", "col": 1, "row": 0, "icon": "📨", "label": "Evaluate layer by layer", "sub": "parts, then messages", "role": "model", "note": "Part 0 on properties; send messages; part 1 on the inbox; and so on for D layers."},
+    {"id": "or", "col": 2, "row": 0, "icon": "∨", "label": "OR over nodes", "sub": "one output per rule", "role": "model", "note": "A rule is True for the graph if all its parts match at some node."},
+    {"id": "vote", "col": 2, "row": 1, "icon": "🗳️", "label": "Vote sum v", "sub": "clipped to [−T, T]", "role": "loss", "note": "Rules of the true class that fire add 1; rules of the other class that fire subtract 1."},
+    {"id": "sel", "col": 1, "row": 1, "icon": "🎲", "label": "Select rules", "sub": "probability (T − v) / 2T", "role": "loss", "note": "Far from the Voting Margin: many rules learn. At or beyond it: none do."},
+    {"id": "fb", "col": 0, "row": 1, "icon": "✏️", "label": "Feedback", "sub": "at 1 random matching node", "role": "opt", "note": "Recognize / Reject use the chosen node's properties and inboxes. Erase needs no node."}
+  ],
+  "edges": [
+    {"from": "obs", "to": "layers"},
+    {"from": "layers", "to": "or"},
+    {"from": "or", "to": "vote"},
+    {"from": "vote", "to": "sel"},
+    {"from": "sel", "to": "fb"},
+    {"from": "fb", "to": "obs", "label": "next graph"}
+  ],
+  "steps": [
+    {"show": ["obs"], "text": "Take a training graph and its class: here, a molecule and \"bonded or not\"."},
+    {"show": ["obs>layers", "layers"], "text": "<b>New:</b> evaluate the rules layer by layer. Part 0 checks each node's properties; matching parts send messages to the neighbours; the next part checks the inbox."},
+    {"show": ["layers>or", "or"], "text": "As in convolution: a rule is True for the graph if it matches at <b>some node</b>."},
+    {"show": ["or>vote", "vote"], "text": "As before: votes for the true class minus votes against, clipped to the Voting Margin T."},
+    {"show": ["vote>sel", "sel"], "text": "As before: each rule is selected for feedback with probability (T − v) / 2T."},
+    {"show": ["sel>fb", "fb"], "text": "<b>New detail:</b> Recognize and Reject Feedback use <b>one matching node, picked at random</b>, and update the property literals and the message literals from that node's inboxes."},
+    {"show": ["fb>obs", "obs"], "text": "Repeat for the next graph, epoch after epoch."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"obs": [0, 0], "layers": [1, 0], "or": [1, 1], "vote": [1, 2], "sel": [0, 2], "fb": [0, 1]}}
+}
+</script>
+</div>
+
+<p>Here is a complete (simplified) graph Tsetlin machine in numpy, on the Step 7 task. It uses numpy's random numbers, so its exact numbers differ from the widget's.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">ELEMENTS</span> <span class="o">=</span> <span class="s2">"CNO"</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">make_molecule</span><span class="p">():</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""A random tree of 6-8 atoms: all C except one N and one O; at most 3 bonds per atom."""</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">nbr</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">nbr</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>            <span class="n">p</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">nbr</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">nbr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">el</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">el</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>                     <span class="c1"># one N, one O</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">return</span> <span class="n">el</span><span class="p">,</span> <span class="n">nbr</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="k">def</span><span class="w"> </span><span class="nf">make_data</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="sd">"""Balanced data: label 1 if the N is bonded to the O."""</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>            <span class="n">el</span><span class="p">,</span> <span class="n">nbr</span> <span class="o">=</span> <span class="n">make_molecule</span><span class="p">()</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>            <span class="n">bonded</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">el</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">nbr</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">el</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])])</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>            <span class="k">if</span> <span class="n">bonded</span> <span class="o">==</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>                <span class="k">break</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">props</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)[</span><span class="n">el</span><span class="p">]</span>                              <span class="c1"># one-hot element per atom</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">props</span><span class="p">,</span> <span class="o">~</span><span class="n">props</span><span class="p">]),</span> <span class="n">nbr</span><span class="p">))</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="k">class</span><span class="w"> </span><span class="nc">GraphTM</span><span class="p">:</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">forget</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">mem</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rules_per_class</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">forget</span><span class="p">,</span> <span class="n">mem</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rules_per_class</span><span class="p">)</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>                         <span class="c1"># literals per layer: properties, then messages</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">]</span>  <span class="c1"># start just below Memorized</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">        </span><span class="sd">"""Literals of every node, layer by layer, and M[j, v] = rule j matches (all layers) at node v."""</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="n">lits</span><span class="p">,</span> <span class="n">nbr</span> <span class="o">=</span> <span class="p">[</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">graph</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">M</span> <span class="o">=</span> <span class="o">~</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">lits</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">):</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>            <span class="n">inbox</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">M</span><span class="p">[:,</span> <span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">u</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">nbr</span><span class="p">])</span>  <span class="c1"># a neighbour sent R_k</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>            <span class="n">lits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inbox</span><span class="p">)</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>            <span class="n">M</span> <span class="o">=</span> <span class="n">M</span> <span class="o">&amp;</span> <span class="o">~</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">inbox</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        <span class="k">return</span> <span class="n">lits</span><span class="p">,</span> <span class="n">M</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>        <span class="n">fires</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">graph</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                             <span class="c1"># OR over nodes</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">else</span> <span class="mi">1</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>        <span class="n">lits</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>        <span class="n">fires</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">fires</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">!=</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)):</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>            <span class="n">node</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="k">if</span> <span class="n">fires</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">else</span> <span class="kc">None</span>  <span class="c1"># ONE matching node, at random</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">):</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>                <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>                                   <span class="c1"># Erase Feedback</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>                        <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>                    <span class="k">continue</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>                <span class="n">p</span> <span class="o">=</span> <span class="n">lits</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">node</span><span class="p">]</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>                                       <span class="c1"># Recognize Feedback</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>                    <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span><span class="p">)</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>                    <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="o">~</span><span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>                <span class="k">else</span><span class="p">:</span>                                                      <span class="c1"># Reject Feedback</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>                    <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="o">~</span><span class="n">p</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a><span class="n">Xtr</span><span class="p">,</span> <span class="n">ytr</span> <span class="o">=</span> <span class="n">make_data</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a><span class="n">Xte</span><span class="p">,</span> <span class="n">yte</span> <span class="o">=</span> <span class="n">make_data</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a><span class="k">for</span> <span class="n">depth</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    <span class="n">tm</span> <span class="o">=</span> <span class="n">GraphTM</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">)</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xtr</span><span class="p">)):</span>
+<a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>            <span class="n">tm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Xtr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ytr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>    <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">g</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">Xte</span><span class="p">,</span> <span class="n">yte</span><span class="p">)])</span>
+<a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"depth </span><span class="si">{</span><span class="n">depth</span><span class="si">}</span><span class="s2">: test accuracy </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>
+<a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>
+<a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a><span class="k">def</span><span class="w"> </span><span class="nf">atom</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a><span class="w">    </span><span class="sd">"""Which elements rule j's layer-0 part allows (x_e memorized: must be e; NOT x_e memorized: must not be e)."""</span>
+<a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>    <span class="n">mem</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tm</span><span class="o">.</span><span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span>
+<a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>    <span class="n">ok</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">mem</span><span class="p">[</span><span class="mi">3</span> <span class="o">+</span> <span class="n">e</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="n">q</span> <span class="o">!=</span> <span class="n">e</span><span class="p">)]</span>
+<a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>    <span class="k">return</span> <span class="s2">"any"</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ok</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ELEMENTS</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ok</span><span class="p">)</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="s2">"nothing"</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>
+<a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>
+<a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">m</span><span class="p">):</span>                                                      <span class="c1"># read the rules back to atoms</span>
+<a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a>    <span class="n">sent</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">atom</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tm</span><span class="o">.</span><span class="n">mem</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)})</span>
+<a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a>    <span class="n">vote</span> <span class="o">=</span> <span class="s2">"bonded"</span> <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">cls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">else</span> <span class="s2">"not bonded"</span>
+<a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R</span><span class="si">{</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">&lt;2</span><span class="si">}</span><span class="s2"> votes </span><span class="si">{</span><span class="n">vote</span><span class="si">:</span><span class="s2">10</span><span class="si">}</span><span class="s2">: atom </span><span class="si">{</span><span class="n">atom</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2"> next to "</span> <span class="o">+</span> <span class="p">(</span><span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">]"</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">"anything"</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depth 1: test accuracy 0.500
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>depth 2: test accuracy 1.000
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>R1  votes not bonded: atom C     next to anything
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>R2  votes not bonded: atom C     next to [N], [O]
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>R3  votes not bonded: atom any   next to [N]
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>R4  votes not bonded: atom nothing next to [any]
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>R5  votes not bonded: atom N     next to [N]
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>R6  votes not bonded: atom N     next to anything
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>R7  votes not bonded: atom O     next to anything
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>R8  votes not bonded: atom any   next to [N], [O]
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>R9  votes bonded    : atom N     next to [N/O]
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>R10 votes bonded    : atom N/O   next to [N/O], [O], [any]
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>R11 votes bonded    : atom O     next to [N], [N/O], [any]
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>R12 votes bonded    : atom any   next to [O]
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>R13 votes bonded    : atom any   next to anything
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>R14 votes bonded    : atom N/O   next to [N/O], [any]
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>R15 votes bonded    : atom any   next to [N/O], [O], [any]
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>R16 votes bonded    : atom N/O   next to [N/O], [O], [any]
+</code></pre></div>
+<p>Each message literal is printed as the part 0 of the rule that sends it ("next to [O]" = "a neighbour sent a rule whose part 0 is O"). Depth 1 is at chance level and depth 2 is perfect, as in the widget. The "bonded" rules again say "an N, or an N/O atom, next to an O or N/O atom". R2 is the N–C–O pattern that rules out a bond. Some rules are vague or empty ("any atom next to anything" fires on every molecule) and some can never fire (R4: "nothing"); the clean rules outvote them. To go deeper, give a rule a third state array and read the second inbox, which is built from <code>M</code> after layer 1, exactly as the loop in <code>evaluate</code> does.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"A graph Tsetlin machine is a graph neural network with Boolean weights.\"</p>
+<p>Both pass messages along edges, but what is passed is different. A graph neural network passes vectors of real numbers and mixes them with learned weights. A graph Tsetlin machine passes <strong>rule names</strong>: "rule <span class="arithmatex">\(R_k\)</span> matched here". Every message literal can be traced back to a readable rule about the neighbour.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"More layers always help.\"</p>
+<p>More layers let a rule see further, but each layer adds rules that depend on other rules' moving results. In our toy runs, depth 2 solved "N bonded to O", while neither depth 2 nor depth 3 settled on "N within 2 bonds of O". The multi-layer Tsetlin machine paper also found that validation accuracy peaks at two layers and then drops (Tarasyuk et al. 2024).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"To find a pattern two bonds away you need three layers.\"</p>
+<p>The receptive field is a <strong>radius</strong> around the node where the rule matches. A depth-2 rule centred on the middle atom sees both ends of N–X–O. You need more layers only for patterns that are wide in every direction from their centre.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Messages are extra input features you have to design.\"</p>
+<p>You only design the graph: the nodes, their properties and the edges. The message literals are created by the machine itself, one per rule (and edge type), and their meaning is learned along with the rules.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The convolutional Tsetlin machine is something different.\"</p>
+<p>It is the special case of a graph with no edges: one node per patch, with the patch's pixels and position as properties. The paper reports similar accuracy for the two on MNIST and Fashion-MNIST (Step 2).</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. A molecule has 7 atoms. Molecule A has its N bonded to its O; molecule B has the same atoms but the N and O are 3 bonds apart. Why can no standard Tsetlin machine on element counts tell them apart?</summary>
+<p>The counts (and any thermometer features made from them) are the same for A and B, so every rule has the same truth value on both, every vote is the same, and so is the prediction. Bonds are not in the input at all. In Step 7 this showed up as 51.0% test accuracy (seed 1).</p>
+</details>
+<details class="question">
+<summary>2. Write the rule \"a C bonded to an O\" as a two-part graph rule. Which rule must exist alongside it?</summary>
+<p>You need a rule whose part 0 matches O, say <span class="arithmatex">\(R_1\)</span>: O. Then <span class="arithmatex">\(R_3\)</span>: part 0 = C, part 1 = "a neighbour sent <span class="arithmatex">\(R_1\)</span>". The widget in Step 4 uses exactly this <span class="arithmatex">\(R_3\)</span>.</p>
+</details>
+<details class="question">
+<summary>3. A graph Tsetlin machine has depth 3. Which atoms can influence whether a rule matches at atom v?</summary>
+<p>All atoms at most 2 bonds from v: part 0 sees v itself, part 1 sees messages from v's neighbours (about themselves), and part 2 sees messages that the neighbours sent after reading <strong>their</strong> neighbours. Depth <span class="arithmatex">\(D\)</span> gives a radius of <span class="arithmatex">\(D - 1\)</span>.</p>
+</details>
+<details class="question">
+<summary>4. During training, a \"bonded\" rule is True on a bonded molecule at two atoms (the N and the O), and is selected for feedback. What happens?</summary>
+<p>It belongs to the true class and is True, so it gets <strong>Recognize Feedback</strong>. One of the two matching atoms is picked at random. The rule's literals are then compared with that atom's properties (part 0) and its inbox (part 1): True literals move towards Memorized with the Memorize Value, False ones towards Forgotten with the Forget Value.</p>
+</details>
+<details class="question">
+<summary>5. Why is \"the N has no O within 2 bonds\" harder for a Tsetlin machine than \"the N has an O within 2 bonds\"?</summary>
+<p>A rule is an OR over nodes of an AND, so it says "there <strong>exists</strong> a node where this local pattern holds". The positive statement is exactly that kind of claim. The negative one says something about <strong>all</strong> paths from the N, which a single existential rule can't express; the machine has to rely on the "yes" rules not firing, and in our runs that was hard to learn (56.2% average at depth 2).</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, Youmna Abdelwahab, Per-Arne Andersen, Paul F. A. Clarke, Kunal Dumbre, Ylva Grønningsæter, Vojtech Halenka, Runar Helin, Lei Jiao, Ahmed Khalid, Rebekka Omslandseter, Rupsa Saha, Mayur Shende and Xuan Zhang, <a href="https://arxiv.org/abs/2507.14874"><em>The Tsetlin Machine Goes Deep: Logical Learning and Reasoning With Graphs</em></a> (arXiv 2507.14874, 2025; v2 2026). The graph Tsetlin machine: graph input, deep clauses, messages and depth (§2), the three-A sequence example (§3.1, Appendix A.3), results on images, text, action coreference, recommendation and viral genomes. Our main source for Steps 2 to 6.</li>
+<li>The <a href="https://github.com/cair/GraphTsetlinMachine"><code>cair/GraphTsetlinMachine</code></a> repository and its README: the tutorial (nodes, edges, properties, hypervector sizes), the sequence and hospital examples, and the CUDA code in which feedback goes to one random node where the clause is True.</li>
+<li>Vojtech Halenka, Ahmed K. Kadhim, Paul F. A. Clarke, Bimal Bhattarai, Rupsa Saha, Ole-Christoffer Granmo, Lei Jiao and Per-Arne Andersen, <a href="https://arxiv.org/abs/2406.02648"><em>Exploring Effects of Hyperdimensional Vectors for Tsetlin Machines</em></a> (ISTM 2024; arXiv 2406.02648). Hypervector inputs for Tsetlin machines, the representation the graph machine uses for its symbols.</li>
+<li>Sondre Glimsdal and Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/2108.07594"><em>Coalesced Multi-Output Tsetlin Machines with Clause Sharing</em></a> (arXiv 2108.07594, 2021). The shared, weighted pool of rules that the graph machine is built on.</li>
+<li>Olga Tarasyuk, Anatoliy Gorbenko, Alex Yakovlev and Rishad Shafik, <a href="https://doi.org/10.1109/ISTM62799.2024.10931518"><em>Multi-Layer Tsetlin Machine: Architecture and Performance Evaluation</em></a> (ISTM 2024; open accepted version at <a href="https://eprints.leedsbeckett.ac.uk/id/eprint/11082/">Leeds Beckett</a>). Stacked Tsetlin machines trained layer by layer (Step 8).</li>
+<li>Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/1804.01508"><em>The Tsetlin Machine – A Game Theoretic Bandit Driven Approach to Optimal Pattern Recognition with Propositional Logic</em></a> (arXiv 1804.01508, 2018). §6.2 sketches the Fully Connected Deep Tsetlin Machine.</li>
+<li>Ole-Christoffer Granmo, Sondre Glimsdal, Lei Jiao, Morten Goodwin, Christian W. Omlin and Geir Thore Berge, <a href="https://arxiv.org/abs/1905.09688"><em>The Convolutional Tsetlin Machine</em></a> (2019): the special case of a graph without edges.</li>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a>: Ch. 8 "Hierarchical Representation" and Ch. 9 "Graphs" are announced; this lesson will be revisited when they are published.</li>
+</ul>
+<p><strong>Next lessons:</strong> <a href="../tsetlin-machine-language-images/">Language &amp; images</a>: Tsetlin machines for text and images, from bag-of-words rules to image booleanization.</p>
+<script src="viz/graph-tsetlin-machine.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tsetlin-machine-confidence/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Confidence &amp; composites">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Confidence & composites
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tsetlin-machine-language-images/" class="md-footer__link md-footer__link--next" aria-label="Next: Language &amp; images">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Language & images
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

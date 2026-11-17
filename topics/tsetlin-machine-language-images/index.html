@@ -1,0 +1,2490 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/tsetlin-machine-language-images/">
+      
+      
+        <link rel="prev" href="../graph-tsetlin-machine/">
+      
+      
+        <link rel="next" href="../ising-model/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Language & images - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tsetlin-machines-for-language-and-images" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Language & images
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weighted-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weighted clauses & sharing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-autoencoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autoencoders & embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hierarchical & graph TMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language & images
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language & images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-text-as-a-set-of-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Text as a set of words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-what-a-text-does-not-say-negated-word-literals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — What a text does NOT say: negated word literals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-train-a-text-tsetlin-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Train a text Tsetlin machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-reading-the-rules-and-what-a-set-of-words-cannot-see" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Reading the rules, and what a set of words cannot see
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-images-as-boolean-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Images as Boolean features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-from-small-digits-to-real-photographs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — From small digits to real photographs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-an-honest-comparison-with-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — An honest comparison with neural networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../ising-model/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Energy-based models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Energy-based models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-text-as-a-set-of-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Text as a set of words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-what-a-text-does-not-say-negated-word-literals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — What a text does NOT say: negated word literals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-train-a-text-tsetlin-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Train a text Tsetlin machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-reading-the-rules-and-what-a-set-of-words-cannot-see" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Reading the rules, and what a set of words cannot see
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-images-as-boolean-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Images as Boolean features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-from-small-digits-to-real-photographs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — From small digits to real photographs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-an-honest-comparison-with-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — An honest comparison with neural networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tsetlin-machines-for-language-and-images">Tsetlin Machines for Language and Images<a class="headerlink" href="#tsetlin-machines-for-language-and-images" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>A Tsetlin machine only reads True/False features, so text and images must first be <strong>Booleanized</strong>. For text, the classic recipe is the <strong>set of words</strong>: pick a vocabulary, and give every sentence one feature per word, True if the word occurs in it. Rules are then ANDs of words and of <strong>negated words</strong> ("the note does NOT mention <em>rash</em>"). Because a sentence holds only a handful of the vocabulary's words, almost every negated literal is True, and learned text rules end up with many of them. For images, each pixel (or each colour channel, or each edge or gradient direction) becomes one or more features through a <strong>threshold</strong>, a <strong>thermometer</strong> or an <strong>adaptive threshold</strong>, and rules become little pictures of must-be-ink, must-be-blank and don't-care pixels. On a small restaurant-review task our numpy Tsetlin machine reaches 75.0% ± 1.9 test accuracy, close to logistic regression (76.7%) on the same words; on 8×8 handwritten digits it reaches 96.9% with a thermometer. The published results tell the same story at scale: competitive with classic methods and small neural networks, behind large modern ones, and readable all the way down.</p>
+</div>
+<p><strong>Level:</strong> intermediate · <strong>Prerequisites:</strong> <a href="../tsetlin-machine-classification/">Classification by voting</a> (rules voting for and against a class, the vote sum <span class="arithmatex">\(v\)</span>, the Voting Margin <span class="arithmatex">\(T\)</span>) and <a href="../convolutional-tsetlin-machine/">Convolutional Tsetlin machines</a> (windows, patches, thermometer encoding). <a href="../graph-tsetlin-machine/">Hierarchical &amp; graph TMs</a> is useful background but not needed.</p>
+<div class="admonition note">
+<p class="admonition-title">Beyond the book</p>
+<p>The chapter of Granmo's book on this topic (Ch. 10, <em>Natural Language and Image Processing</em>) has not been published yet. This lesson is therefore based on the research papers listed in <a href="#further-reading">Further reading</a>, retold with the book's vocabulary (rules, memory, Recognize/Erase/Reject Feedback, Voting Margin). The text and digit experiments are our own small numpy runs, made for this lesson; they are toy-scale on purpose and are labelled as ours throughout.</p>
+</div>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>Most medical information is not a neat table. It is <strong>free text</strong> (admission notes, discharge letters, radiology reports) and <strong>images</strong> (X-rays, slides, photographs of the skin). The models that read them best today are large neural networks, and nobody can read their reasoning.</p>
+<ul>
+<li><strong>Clinical text.</strong> Berge et al. (2019) used a Tsetlin machine to find notes about drug allergies in real electronic health records from a Norwegian hospital, written in a mixture of Latin, English and the local language, full of jargon and misspellings. Their example rule is <em>if "rash" and "reaction" and "penicillin" then Allergy</em>: a clinician can check that in a second.</li>
+<li><strong>Images.</strong> A convolutional Tsetlin machine learns small pixel patterns you can draw and inspect, and colour images are now handled by teams of machines that each look at the image in a different way (Grønningsæter et al., 2024).</li>
+<li><strong>An honest trade.</strong> You give up some accuracy compared with the best neural networks, and in exchange every decision is a sum of rules you can list. This lesson shows both sides with numbers.</li>
+</ul>
+<p>The learning algorithm doesn't change at all. Everything new in this lesson is about <strong>turning words and pixels into literals</strong>, and <strong>reading the rules</strong> that come out.</p>
+<hr />
+<h2 id="step-1-text-as-a-set-of-words">Step 1 — Text as a set of words<a class="headerlink" href="#step-1-text-as-a-set-of-words" title="Permanent link">&para;</a></h2>
+<p>The simplest way to Booleanize text (Berge et al., 2019) is:</p>
+<ol>
+<li>Build a <strong>vocabulary</strong>: a list of words, <span class="arithmatex">\(w_1, \dots, w_K\)</span>.</li>
+<li>Give every document one Boolean feature per vocabulary word: <span class="arithmatex">\(x_k\)</span> is True if word <span class="arithmatex">\(w_k\)</span> occurs in the document at least once, False otherwise.</li>
+</ol>
+<p>That's it. Word order and word counts are thrown away; only "which words are present" survives. The literature calls this a <strong>set of words</strong> (or binary <strong>bag of words</strong>). Each feature brings two literals as always: <span class="arithmatex">\(x_{\text{good}}\)</span> ("the text contains <em>good</em>") and <span class="arithmatex">\(\lnot x_{\text{good}}\)</span> ("the text does NOT contain <em>good</em>").</p>
+<p>Our running example is real data: the <strong>Yelp part of the UCI "Sentiment Labelled Sentences" dataset</strong> (Kotzias et al., 2015): 1,000 one-sentence restaurant reviews, 500 labelled Positive and 500 Negative. We split them once, 700 for training and 300 for testing. The training sentences contain 1,661 different words, far too many for a toy machine, so we keep a <strong>vocabulary of 150 words</strong>. To pick them, we drop words that appear in fewer than 2 training sentences and rank the rest by how unevenly they are spread over the two classes (a <span class="arithmatex">\(\chi^2\)</span> score, the same feature selection the TMU library's IMDb example uses). The top of the list is <em>not, great, good, amazing, delicious, friendly, bad, at, minutes, don't, …</em></p>
+<p><strong>Try it:</strong> type a sentence, or pick one of the buttons.</p>
+<div id="viz-sow" class="viz"><div class="viz-title">🔤 Interactive: a sentence becomes 150 True/False features</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Text is sparse.</strong> A training sentence contains on average only <strong>3.05</strong> of the 150 vocabulary words (at most 12). So a typical sentence has about 3 True features and 147 False ones, and <strong>147 of its negated literals are True</strong>. Hold on to that; it explains Step 2.</li>
+<li><strong>Words outside the vocabulary are invisible.</strong> In <em>"Never had anything to complain about here."</em> only <em>never</em> and <em>to</em> are in the vocabulary. 15 of the 300 test sentences contain no vocabulary word at all.</li>
+<li><strong>The vote is the familiar one.</strong> <em>"Crust is not good."</em> fires 9 rules for Positive (all "good") and 10 for Negative (8 copies of "not" plus two refined "not" rules), so <span class="arithmatex">\(v = 9 - 10 = -1\)</span>: Negative, which is right. The machine never learned that <em>not</em> belongs to <em>good</em>; the "not" rules simply outvote the "good" rules here.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-what-a-text-does-not-say-negated-word-literals">Step 2 — What a text does NOT say: negated word literals<a class="headerlink" href="#step-2-what-a-text-does-not-say-negated-word-literals" title="Permanent link">&para;</a></h2>
+<p>In a table of patient data, <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(\lnot x\)</span> are usually about equally common. In text they are not: any given word is <strong>absent</strong> from almost every sentence. That has two consequences.</p>
+<p><strong>Negation is a real, useful signal.</strong> "The note does not mention <em>penicillin</em>" is evidence too. Berge et al. stress that "even the absence of terms (negated features) can be used for categorization". Their worked example (Figure 4 of the paper) shows how a rule for <strong>Allergy</strong> grows document by document. Step through it:</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🩺 How a text rule grows (Berge et al., 2019, Fig. 4)",
+  "cols": 3,
+  "rows": 3,
+  "rowHeight": 95,
+  "nodes": [
+    {"id": "d1", "col": 0, "row": 0, "icon": "📄", "label": "Note 1: Allergy", "sub": "…reacts to Voltaren…", "role": "data", "note": "A note labelled Allergy. Rule C1 is currently just “reacts”, so it fires."},
+    {"id": "f1", "col": 1, "row": 0, "icon": "✅", "label": "Recognize", "sub": "memorize a True literal", "role": "opt", "note": "Recognize Feedback (Type I): the literal “Voltaren” is True here and moves into the Memorized half."},
+    {"id": "r1", "col": 2, "row": 0, "icon": "🧩", "label": "C1 = reacts ∧ Voltaren", "role": "model", "note": "More precise: both words must be present."},
+    {"id": "d3", "col": 0, "row": 1, "icon": "📄", "label": "Note 3: Allergy", "sub": "reacts, Apocillin, no Voltaren", "role": "data", "note": "C1 does not fire (Voltaren is missing), but another rule, C2 = “reacts”, does."},
+    {"id": "f3", "col": 1, "row": 1, "icon": "✅", "label": "Recognize", "sub": "for rule C2", "role": "opt", "note": "Recognize Feedback on C2: the literal “Apocillin” crosses into Memorized."},
+    {"id": "r3", "col": 2, "row": 1, "icon": "🧩", "label": "C2 = reacts ∧ Apocillin", "role": "model", "note": "A second rule now covers a second drug: the team of rules is an OR of ANDs."},
+    {"id": "d7", "col": 0, "row": 2, "icon": "📄", "label": "Note 7: not Allergy", "sub": "has reacts, Voltaren and “not”", "role": "data", "note": "C1 fires on a note that is not about an allergy: a false positive."},
+    {"id": "f7", "col": 1, "row": 2, "icon": "⛔", "label": "Reject", "sub": "memorize a False literal", "role": "grad", "note": "Reject Feedback (Type II): “NOT not” is False in this note, so it moves towards Memorized; it was the closest to the boundary and crossed first."},
+    {"id": "r7", "col": 2, "row": 2, "icon": "🧩", "label": "C1 = reacts ∧ Voltaren ∧ ¬not", "role": "model", "note": "The rule now refuses notes that contain the word “not”."}
+  ],
+  "edges": [
+    {"from": "d1", "to": "f1"},
+    {"from": "f1", "to": "r1"},
+    {"from": "d3", "to": "f3"},
+    {"from": "f3", "to": "r3"},
+    {"from": "d7", "to": "f7"},
+    {"from": "f7", "to": "r7"}
+  ],
+  "steps": [
+    {"show": ["d1"], "text": "A note labelled <b>Allergy</b> contains “reacts to Voltaren”. Rule C1 has memorized only <b>reacts</b>, so it fires."},
+    {"show": ["d1>f1", "f1", "f1>r1", "r1"], "text": "<b>Recognize Feedback</b> pushes the True literal “Voltaren” into the Memorized half: C1 = <b>reacts ∧ Voltaren</b>."},
+    {"show": ["d3", "d3>f3", "f3", "f3>r3", "r3"], "text": "A later Allergy note mentions Apocillin but not Voltaren. C1 stays silent; another rule, C2 = reacts, fires and learns <b>reacts ∧ Apocillin</b>. Two rules, two facets of the class."},
+    {"show": ["d7", "d7>f7", "f7"], "text": "A note that is <b>not</b> about an allergy still contains “reacts” and “Voltaren”, so C1 fires wrongly. <b>Reject Feedback</b> pushes False literals towards Memorized; the negated word “NOT not” crosses first."},
+    {"show": ["f7>r7", "r7"], "text": "C1 = <b>reacts ∧ Voltaren ∧ ¬not</b>: a negated word literal fixed the false positive. In general, many such updates over several epochs are needed."}
+  ],
+  "narrow": {"cols": 2, "rows": 6, "rowHeight": 80, "hideSub": true, "pos": {"d1": [0, 0], "f1": [1, 0], "r1": [1, 1], "d3": [0, 2], "f3": [1, 2], "r3": [1, 3], "d7": [0, 4], "f7": [1, 4], "r7": [1, 5]}}
+}
+</script>
+</div>
+
+<p><strong>Negated literals pile up.</strong> Recall <a href="../tsetlin-machine-feedback/">Recognize Feedback</a>: it memorizes the literals that are <strong>True</strong> in the example. In a sentence with 3 vocabulary words, 147 of the True literals are "NOT <em>word</em>". So every Recognize step nudges a rule towards <em>"NOT this AND NOT that AND NOT …"</em>, and only Erase Feedback and the Voting Margin hold it back. Sharma et al. (2021) report exactly this on movie reviews: "for NLP, the majority of the features appear in negated form", and a well-trained machine explains a negative review with literals like <em>NOT witty</em>, <em>NOT graceful</em>, <em>NOT terrific</em>, <em>NOT honest</em>: the review lacks every sign of praise.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>In our run</strong> (Step 3's machine, seed 1), the 200 rules hold <strong>182</strong> memorized plain-word literals and <strong>562</strong> "NOT word" literals: 76% are negated, but they are very unevenly spread: 175 rules are a single plain word like "great", while 6 rules carry 10 or more NOTs each, and three Positive rules carry 140 to 144.</li>
+<li><strong>What such a rule means.</strong> One Positive rule is <em>"NOT any of 144 words"</em>: every vocabulary word except <em>great, good, i, is, another, being</em>. In plain English: <em>the sentence uses none of the warning words</em>. It matches 61 Positive and 21 Negative training sentences. It is a description of what Positive reviews <strong>lack</strong>, the same thing Sharma et al. saw.</li>
+<li><strong>Medical notes have the same shape.</strong> "No rash", "denies chest pain", "no known drug allergies": clinical text is full of negation, and a set of words cannot tell which word a "no" belongs to. Berge et al.'s rule handles it with <span class="arithmatex">\(\lnot\)</span><em>not</em>; Step 4 shows where that breaks.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-3-train-a-text-tsetlin-machine">Step 3 — Train a text Tsetlin machine<a class="headerlink" href="#step-3-train-a-text-tsetlin-machine" title="Permanent link">&para;</a></h2>
+<p>Nothing about the learning changes. It is the two-class machine from <a href="../tsetlin-machine-classification/">Classification by voting</a>: rules voting <strong>for</strong> Positive and rules voting <strong>against</strong> it (for Negative), feedback probability <span class="arithmatex">\((T - v)/2T\)</span>, Recognize, Erase and Reject Feedback. The settings, chosen after a small search on this same split (so our test accuracy is slightly optimistic; the baselines below were not tuned at all):</p>
+<ul>
+<li>150 features → 300 literals; <strong>100 rules per class</strong>, Voting Margin <strong><span class="arithmatex">\(T = 15\)</span></strong>;</li>
+<li>specificity <span class="arithmatex">\(s = 8\)</span>: Forget Value <span class="arithmatex">\(1/8\)</span>, Memorize Value <span class="arithmatex">\(7/8\)</span> (the research papers' version; the book's later chapters use Memorize Value 1);</li>
+<li>memory depth 100 (positions 1–100, Memorized above 50); 40 epochs; a tie (<span class="arithmatex">\(v = 0\)</span>) is predicted as Negative.</li>
+</ul>
+<p>Text needs <strong>many more rules</strong> than the breast-cancer data did. Each sentence only touches 3 of the 150 words, so one rule built around one word only ever votes on the few sentences containing that word. You need rules for many words before most sentences get any votes at all.</p>
+<p><strong>Try it:</strong> press <em>Train</em>. The widget runs exactly the code of our Python check, with the same seeded random numbers, so with the defaults you will see the numbers below (it takes about 10 seconds).</p>
+<div id="viz-texttrain" class="viz"><div class="viz-title">🏋️ Interactive: train a Tsetlin machine on restaurant reviews</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>With the defaults (seed 1)</strong> the test accuracy climbs from 59.7% after one epoch to <strong>78.3%</strong> after 40 (training accuracy 83.7%). Seed 1 happens to be the best of ten: over seeds 1–10 the final test accuracy is <strong>75.0% ± 1.9</strong> (range 72.0–78.3%).</li>
+<li><strong>The baselines on the same 150 Boolean features</strong>: logistic regression <strong>76.7%</strong>, Bernoulli naive Bayes <strong>77.0%</strong>, a decision tree 75.0%, always answering Positive 51.0%. With 300 test sentences, one sentence is 0.33 percentage points, so the Tsetlin machine is roughly level with the classic methods, not ahead of them. That matches the literature: on the private clinical notes, Berge et al. report an F-measure of 69.3 for the Tsetlin machine, 69.9 for naive Bayes and 69.6 for logistic regression.</li>
+<li><strong>Too few rules hurt.</strong> With 20 rules per class and <span class="arithmatex">\(T = 5\)</span> the test accuracy ends at 68.7%; with 50 rules per class and <span class="arithmatex">\(T = 10\)</span>, 72.7% (seed 1). Many sentences get no votes at all.</li>
+<li><strong>The rules read like a sentiment dictionary.</strong> The most common Positive rules are <em>good</em> (×9, matching 50 Positive and 16 Negative training sentences), <em>great</em> (×7, 40 and 0) and <em>amazing</em> (×7, 15 and 0). The most common Negative rules are <em>not</em> (×8, 9 and 73) and <em>bad</em> (×5, 0 and 13). A refined rule says <em>"not" AND NOT "great" AND NOT "over"</em>: it matches 7 Positive and 73 Negative sentences, two fewer Positive ones than plain <em>not</em>.</li>
+<li><strong>Some rules are leftovers.</strong> With seed 1 a few Positive rules memorized words such as <em>waiting</em> or <em>barely</em>, which only occur in Negative training sentences. Reject Feedback memorizes a word that is <em>absent</em> from the sentence it fired on wrongly, and sometimes the word it picks happens to be a negative one. They cost a few wrong votes; the majority outvotes them. Reading the rules is how you find them.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-reading-the-rules-and-what-a-set-of-words-cannot-see">Step 4 — Reading the rules, and what a set of words cannot see<a class="headerlink" href="#step-4-reading-the-rules-and-what-a-set-of-words-cannot-see" title="Permanent link">&para;</a></h2>
+<p>Because every vote is a rule, you can explain any single prediction by listing the rules that fired, as the first widget does. Try these in it:</p>
+<table>
+<thead>
+<tr>
+<th>Sentence</th>
+<th>Vocabulary words</th>
+<th>Firing rules</th>
+<th><span class="arithmatex">\(v\)</span></th>
+<th>Prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>The food was good but the service was slow.</em></td>
+<td>good, slow, but, was</td>
+<td>9 × <em>good</em> for; 2 × <em>slow</em>, 1 × <em>but</em> against</td>
+<td><span class="arithmatex">\(9 - 3 = +6\)</span></td>
+<td>Positive</td>
+</tr>
+<tr>
+<td><em>Not bad at all, the staff was friendly.</em></td>
+<td>not, friendly, bad, at, staff, was</td>
+<td>5 × <em>friendly</em>, 2 × <em>staff</em> for; 8 × <em>not</em>, 5 × <em>bad</em>, … against</td>
+<td><span class="arithmatex">\(7 - 17 = -10\)</span></td>
+<td>Negative ✗</td>
+</tr>
+<tr>
+<td><em>Never had anything to complain about here.</em></td>
+<td>never, to</td>
+<td>1 × <em>never</em> against</td>
+<td><span class="arithmatex">\(0 - 1 = -1\)</span></td>
+<td>Negative ✗</td>
+</tr>
+</tbody>
+</table>
+<p>(The first and second sentences are our own; the third is a Positive sentence from the test set. All vote sums use the seed-1 rules.)</p>
+<p>The two mistakes have the same cause. "Not bad" and "never … complain" are praise built from negative words, and a set of words keeps the words but <strong>loses their order and their scope</strong>. A rule can say "<em>not</em> AND <em>bad</em>", but not "<em>not</em> directly before <em>bad</em>". The research has three main answers:</p>
+<ul>
+<li><strong>Add structure to the features.</strong> Yadav et al. (2021) classify the sentiment of one <strong>aspect</strong> of a review ("the <em>price</em> is reasonable although the <em>service</em> is poor"). They split each sentence at the aspect word and add features saying where sentiment words occur (before or after the aspect), plus a few features from the SentiWordNet lexicon. They also replace every word from an opinion lexicon by a common token <em>positive</em> or <em>negative</em>, which shrinks the vocabulary. They report 78.02% accuracy on the SemEval-2014 Restaurant data and 73.51% on Laptop, on par with the neural network models they compare against. Word pairs (bigrams such as <em>not_bad</em>) are another simple option; the TMU library's IMDb example uses words and word pairs.</li>
+<li><strong>Convolution over text.</strong> ConvTextTM (Bhattarai et al., 2022) cuts a text into a few consecutive <strong>windows</strong> and runs a <a href="../convolutional-tsetlin-machine/">convolutional Tsetlin machine</a> over them, with thermometer-coded window positions, exactly as over image patches. Each window is a set of words over BERT's fixed vocabulary of word pieces, so new words and misspellings still map to known pieces. A rule can then say <em>where</em> in the text its words must occur.</li>
+<li><strong>Better words.</strong> Combining the vocabulary with word similarities (GloVe synonyms, or Tsetlin machine word embeddings; see <a href="../tsetlin-machine-autoencoder/">Autoencoders &amp; embeddings</a>) lets a rule about <em>excellent</em> also cover <em>superb</em>.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>An explanation is not a justification.</strong> The second sentence is classified Negative for a perfectly readable reason: 17 rules about <em>not</em>, <em>bad</em> and <em>at</em> outvote 7 about <em>friendly</em> and <em>staff</em>. The model is wrong, but you can see exactly why, which is the point of interpretability.</li>
+<li><strong>The vocabulary decides what can be learned.</strong> <em>complain</em> was not among the 150 words, so no rule could use it. In a clinical setting, building the vocabulary (spelling variants, abbreviations, negation cues like <em>denies</em>) is half the work.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-5-images-as-boolean-features">Step 5 — Images as Boolean features<a class="headerlink" href="#step-5-images-as-boolean-features" title="Permanent link">&para;</a></h2>
+<p>An image is a grid of numbers: grey levels, or three colour channels per pixel. Like text, it needs Booleanizing. The papers use a small toolbox of methods; Grønningsæter et al. (2024) collect seven of them for colour photographs:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>One pixel (or region) becomes…</th>
+<th>Keeps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fixed threshold</strong></td>
+<td>1 feature: grey level ≥ <span class="arithmatex">\(t\)</span></td>
+<td>shape of dark strokes</td>
+</tr>
+<tr>
+<td><strong>Thermometer</strong> (as for <a href="../convolutional-tsetlin-machine/">positions</a>)</td>
+<td><span class="arithmatex">\(t\)</span> features: level ≥ <span class="arithmatex">\(t_1\)</span>, ≥ <span class="arithmatex">\(t_2\)</span>, …</td>
+<td>the order of grey levels; a range is an AND</td>
+</tr>
+<tr>
+<td><strong>Adaptive threshold</strong> (mean or Gaussian)</td>
+<td>1 feature: brighter than the local average minus <span class="arithmatex">\(C\)</span></td>
+<td>local contrast, robust to lighting</td>
+</tr>
+<tr>
+<td><strong>Otsu's threshold</strong></td>
+<td>1 feature per channel, threshold chosen per image</td>
+<td>object vs background</td>
+</tr>
+<tr>
+<td><strong>Colour thermometers</strong></td>
+<td><span class="arithmatex">\(t\)</span> features per colour channel</td>
+<td>colour</td>
+</tr>
+<tr>
+<td><strong>Canny edges</strong></td>
+<td>1 feature: is this pixel on an edge?</td>
+<td>outlines</td>
+</tr>
+<tr>
+<td><strong>Histogram of oriented gradients (HOG)</strong></td>
+<td>features from thresholded gradient-direction histograms of small cells</td>
+<td>local edge directions</td>
+</tr>
+</tbody>
+</table>
+<p>The convolutional Tsetlin machine paper (Granmo et al., 2019) Booleanized MNIST-style digits with <strong>adaptive Gaussian thresholding</strong> (window 11, threshold value 2), leaving just 1 bit per pixel. The toolbox paper's best single machine on CIFAR-10 used a <strong>colour thermometer</strong> on 5×5 convolution windows.</p>
+<p>Our image example is the scikit-learn <strong>digits</strong> dataset: 1,797 handwritten digits of 8×8 pixels with grey levels 0–16 (a small cousin of MNIST). We split it 1,347 / 450 and compare three Booleanizations:</p>
+<ul>
+<li><strong>threshold</strong>: ink ≥ 8 → 64 features (20.6 True per image on average);</li>
+<li><strong>thermometer</strong>: ink ≥ 4, ≥ 8, ≥ 12 → 192 features;</li>
+<li><strong>adaptive</strong>: brighter than the Gaussian-weighted mean of the 3×3 neighbourhood, minus 2 → 64 features. (On 8×8 images this marks smooth background and the light inside of strokes as True, and the darkest ink as False, so the True pixels are now mostly background.)</li>
+</ul>
+<p>For each, we trained a multi-class Tsetlin machine (one team per class, as in <a href="../tsetlin-machine-classification/">Classification, Step 8</a>) with 50 rules for and 50 against each digit, <span class="arithmatex">\(T = 15\)</span>, <span class="arithmatex">\(s = 4\)</span>, memory depth 100, 30 epochs, seed 1. The widget shows the Booleanized image, every team's vote sum, and the rules that fired for the winner. Its accuracy readout is computed in your browser from the learned rules, which we exported from the Python run.</p>
+<div id="viz-digits" class="viz"><div class="viz-title">🖼️ Interactive: Booleanize a digit and read the rules that recognise it</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>The Booleanization matters as much as the machine.</strong> Test accuracy: <strong>95.1%</strong> with the threshold, <strong>96.9%</strong> with the thermometer, <strong>89.8%</strong> with the adaptive threshold (seed 1; the means over seeds 1–3 are 95.3%, 96.9% and 90.9%). The thermometer keeps the most information about grey levels. Adaptive thresholding was designed for bigger, unevenly lit images and wastes the tiny 8×8 ones.</li>
+<li><strong>The rules are pictures.</strong> A thermometer rule shows three stencils, one per level. A memorized "≥ 4" pixel with a ring on its "≥ 12" plane means <em>some ink, but not dark</em>: a grey-level range written as one AND, as in the convolutional lesson. Rules are short: on average 11.9 memorized literals per thermometer rule and 7.4 per threshold rule, out of 384 and 128.</li>
+<li><strong>Blank space is evidence.</strong> With the threshold, 71% of the memorized literals are "must be blank" (5,304 of 7,424): a 0 is recognised as much by its empty centre as by its ring. With the adaptive threshold the roles flip: True mostly means background, and 82% of its memorized literals are plain ones. Whether a rule talks in literals or negated literals depends on which value is rare, just as with words.</li>
+<li><strong>Press "next mistake".</strong> The thermometer machine gets 14 of the 450 test digits wrong. On those, the winning team fires on average only 6.9 of its 50 rules for the digit and wins by 4.9 votes over the runner-up; on the 436 correct ones it fires 17.7 rules and wins by 22.1 votes. The vote sums double as a <a href="../tsetlin-machine-confidence/">confidence</a> score.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-from-small-digits-to-real-photographs">Step 6 — From small digits to real photographs<a class="headerlink" href="#step-6-from-small-digits-to-real-photographs" title="Permanent link">&para;</a></h2>
+<p>The digits above fit a standard Tsetlin machine because they are tiny and centred. Real images need the <a href="../convolutional-tsetlin-machine/">convolution window</a>: rules become patch patterns that may fire anywhere, optionally restricted to a region by thermometer-coded positions. The papers then add two ideas.</p>
+<ul>
+<li><strong>Look at the image in several ways at once.</strong> No single Booleanization keeps everything: thresholds keep shape, colour thermometers keep colour, HOG keeps edge directions. A <strong>TM composite</strong> (see <a href="../tsetlin-machine-confidence/">Confidence &amp; composites</a>) trains one machine per view, a <em>TM specialist</em>, normalises each machine's class sums by its own range, and adds them. Grønningsæter et al. (2024) built 22 specialists from 7 Booleanizations for CIFAR-10 (60,000 colour photos of 10 kinds of objects). With 64,000 rules each, the best specialist (5×5 colour thermometers) reached <strong>75.4%</strong>, HOG 67.5%, adaptive Gaussian thresholding 70.2% and Canny edges 60.6%; added together they reached <strong>82.8%</strong>.</li>
+<li><strong>Train with fewer rules at a time.</strong> <em>Drop clause</em> (Sharma et al., 2021) ignores a random share of the rules in each epoch, like dropout in neural networks. On CIFAR-10 it took a convolutional Tsetlin machine from 69.3% to 75.1%, and the authors show its pixel-level explanations become more object-like.</li>
+</ul>
+<p>What the learned patterns look like is the same as in our widget, only bigger. The convolutional Tsetlin machine paper prints 10×10 rule patterns for MNIST in which <code>1</code> is must-be-ink, <code>0</code> must-be-blank and <code>*</code> don't-care, each with the window positions where it may fire; patterns labelled upper-left, upper-right, lower-left and lower-right of the digit 0 jointly make up its shape.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The <strong>history of CIFAR-10 accuracy</strong> for Tsetlin machines, as told by the toolbox paper: about 61% in 2020, 75.1% in 2023 with drop clause, 82.8% in 2024 with composites. Progress came mostly from better Booleanization and teams of machines, not from changing the learning rule.</li>
+<li>On <strong>medical images</strong> we did not find a published Tsetlin machine study when writing this lesson. The toolbox paper names high-stakes medical applications as the motivation; the methods above are what such work would start from.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-7-an-honest-comparison-with-neural-networks">Step 7 — An honest comparison with neural networks<a class="headerlink" href="#step-7-an-honest-comparison-with-neural-networks" title="Permanent link">&para;</a></h2>
+<p>First our own numbers, all on the same data splits:</p>
+<table>
+<thead>
+<tr>
+<th>Task (ours)</th>
+<th>Tsetlin machine</th>
+<th>Classic baselines</th>
+<th>Neural network</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yelp sentences, 150-word set of words</td>
+<td>75.0% ± 1.9 (10 seeds)</td>
+<td>logistic regression 76.7%, naive Bayes 77.0%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8×8 digits, thermometer Booleans</td>
+<td>96.9% (seed 1)</td>
+<td>logistic regression on the same Booleans 96.7%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8×8 digits, raw grey levels</td>
+<td>(needs Booleans)</td>
+<td>logistic regression 97.3%, SVM 99.3%, 3-nearest-neighbours 99.1%</td>
+<td>one-hidden-layer MLP 98.4%</td>
+</tr>
+</tbody>
+</table>
+<p>And results <strong>reported by the papers</strong> (accuracy unless noted; each from its own setup, so compare within a row only):</p>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Tsetlin machine</th>
+<th>Neural networks in the same paper</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IMDb movie reviews (F-measure)</td>
+<td>89.1</td>
+<td>LSTM 85.6, LSTM-CNN 88.1, Bi-LSTM-CNN 87.9</td>
+<td>Berge et al., 2019</td>
+</tr>
+<tr>
+<td>Hospital notes, drug allergy (F-measure)</td>
+<td>69.3</td>
+<td>MLP 67.2; naive Bayes 69.9, logistic regression 69.6</td>
+<td>Berge et al., 2019</td>
+</tr>
+<tr>
+<td>R8 news topics</td>
+<td>ConvTextTM 96.32</td>
+<td>BERT 97.8, XLNet 98</td>
+<td>Bhattarai et al., 2022</td>
+</tr>
+<tr>
+<td>BBC Sports topics</td>
+<td>ConvTextTM 96.78</td>
+<td>BERT 99, XLNet 98</td>
+<td>Bhattarai et al., 2022</td>
+</tr>
+<tr>
+<td>MNIST digits</td>
+<td>CTM 99.33 (mean), 99.4 (peak)</td>
+<td>simple CNN 99.06, PreActResNet-18 99.56</td>
+<td>Granmo et al., 2019</td>
+</tr>
+<tr>
+<td>Fashion-MNIST</td>
+<td>CTM 91.18 (mean), 91.5 (peak)</td>
+<td>simple CNN 90.7, PreActResNet-18 92.00</td>
+<td>Granmo et al., 2019</td>
+</tr>
+<tr>
+<td>CIFAR-10</td>
+<td>CTM with drop clause 75.1</td>
+<td>Maxout network 86.8</td>
+<td>Sharma et al., 2021</td>
+</tr>
+<tr>
+<td>CIFAR-10</td>
+<td>composite of 22 specialists 82.8</td>
+<td>(Vision Transformer 99.9, cited by the authors)</td>
+<td>Grønningsæter et al., 2024</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">How to read these tables</p>
+<ul>
+<li><strong>Our runs are tiny</strong>: 300 test sentences and 450 test digits, one fixed split each. Differences of a point or two are within the noise.</li>
+<li><strong>The papers' numbers are their own</strong>, with their own preprocessing, tuning effort and ways of averaging (mean over late epochs, peak, or best run). Berge et al. note that their IMDb numbers are means over 100 runs, which is lower than reporting the best run.</li>
+<li><strong>The pattern</strong> across all of them: Tsetlin machines are competitive with classic methods and with small neural networks, especially on binary-friendly inputs (digits, short texts), and fall clearly behind large pre-trained models (BERT, XLNet, Vision Transformers) on harder tasks. The papers' authors argue that the price buys interpretability and very cheap inference; you have to decide whether that trade is right for your application.</li>
+</ul>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔗 From words and pixels to readable votes",
+  "cols": 3.3,
+  "rows": 2.6,
+  "rowHeight": 100,
+  "nodes": [
+    {"id": "text", "col": 0, "row": 0.3, "icon": "📝", "label": "Text", "sub": "a note, a review", "role": "data"},
+    {"id": "sow", "col": 1, "row": 0.3, "icon": "🔤", "label": "Set of words", "sub": "x<sub>k</sub>: word k present?", "role": "data", "note": "Choose a vocabulary (e.g. by χ²); optionally add word pairs, lexicon tokens, or windows for a convolutional TM."},
+    {"id": "img", "col": 0, "row": 1.7, "icon": "🖼️", "label": "Image", "sub": "grey levels or RGB", "role": "data"},
+    {"id": "ib", "col": 1, "row": 1.7, "icon": "🌡️", "label": "Booleanize pixels", "sub": "threshold · thermometer · adaptive", "role": "data", "note": "Or colour thermometers, Canny edges, HOG; with a convolution window over patches for real images."},
+    {"id": "rules", "col": 2.275, "row": 0.45, "icon": "🧩", "label": "Rules: AND of literals", "sub": "words and NOT-words; pixel stencils", "role": "model", "note": "Learned with Recognize, Erase and Reject Feedback, exactly as before."},
+    {"id": "vote", "col": 2.275, "row": 1.55, "icon": "🗳️", "label": "Vote sum per class", "sub": "every vote is a readable rule", "role": "loss", "note": "The largest vote sum wins; listing the firing rules explains the prediction."}
+  ],
+  "groups": [
+    {"id": "tm", "label": "Tsetlin machine (unchanged)", "col": 2.25, "row": 0, "cols": 1.05, "rows": 2.6}
+  ],
+  "edges": [
+    {"from": "text", "to": "sow"},
+    {"from": "img", "to": "ib"},
+    {"from": "sow", "to": "tm"},
+    {"from": "ib", "to": "tm"},
+    {"from": "rules", "to": "vote"}
+  ],
+  "steps": [
+    {"show": ["text", "text>sow", "sow"], "text": "<b>Text</b> becomes a set of words: one True/False feature per vocabulary word. Each feature gives a literal and a negated literal."},
+    {"show": ["img", "img>ib", "ib"], "text": "<b>Images</b> become Boolean planes: a threshold, a thermometer of levels, or an adaptive threshold (and for colour photos, colour thermometers, edges or HOG)."},
+    {"show": ["sow>tm", "ib>tm", "tm", "rules"], "text": "From here on it is the <b>same Tsetlin machine</b>: rules are ANDs of literals, learned by Recognize, Erase and Reject Feedback. For text they mix words and NOT-words; for images they are pixel stencils."},
+    {"show": ["rules>vote", "vote"], "text": "Each class's rules vote; the largest <b>vote sum</b> wins. To explain a prediction, list the rules that fired."}
+  ],
+  "narrow": {"cols": 2, "rows": 3.95, "rowHeight": 95, "pos": {"text": [0, 0], "img": [1, 0], "sow": [0, 1], "ib": [1, 1], "rules": [0, 2.6], "vote": [1, 2.6], "tm": [0, 2.15, 2, 1.75]}}
+}
+</script>
+</div>
+
+<p>Here is the whole text pipeline in numpy: Booleanize the Yelp sentences, train the machine of Step 3, and print the most common short rules. It uses numpy's random numbers and its own split (<code>default_rng(0)</code>), so its numbers differ a little from the widget's. It needs <code>yelp_labelled.txt</code> from the <a href="https://archive.ics.uci.edu/dataset/331/sentiment+labelled+sentences">UCI dataset</a> in a <code>data/</code> folder, and runs in about 10 seconds.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># ---- 1. Booleanize: a set of words. One feature per vocabulary word: is it in the sentence?</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"data/yelp_labelled.txt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-z]+(?:'[a-z]+)?"</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span> <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">])</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="mi">700</span><span class="p">],</span> <span class="n">order</span><span class="p">[</span><span class="mi">700</span><span class="p">:]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">candidates</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">w</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">X_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">keep</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">[</span><span class="n">train</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>                                  <span class="c1"># words seen in 2+ training sentences</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">chi2</span><span class="p">(</span><span class="n">X_all</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">])[</span><span class="mi">0</span><span class="p">]),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">vocab_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">score</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"stable"</span><span class="p">)[:</span><span class="mi">150</span><span class="p">]</span>                <span class="c1"># the 150 most class-related words</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">vocab</span> <span class="o">=</span> <span class="p">[</span><span class="n">candidates</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">vocab_idx</span><span class="p">]</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">X</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">[:,</span> <span class="n">vocab_idx</span><span class="p">]</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="k">class</span><span class="w"> </span><span class="nc">TsetlinMachine</span><span class="p">:</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="sd">"""Two classes, as in the classification lesson. memory[c, j, k]: c = 0 votes Negative, 1 votes Positive."""</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">rules_per_class</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">depth</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fires</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lits</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">memorized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">ok</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">memorized</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="k">return</span> <span class="n">ok</span> <span class="k">if</span> <span class="n">training</span> <span class="k">else</span> <span class="n">ok</span> <span class="o">&amp;</span> <span class="n">memorized</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>      <span class="c1"># empty rules stay silent when classifying</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fires</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">]))</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>                     <span class="c1"># tie → Negative</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">lits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">])</span>                           <span class="c1"># words, then NOT words</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fires</span><span class="p">(</span><span class="n">lits</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>        <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>        <span class="n">own</span><span class="p">,</span> <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="n">rec</span> <span class="o">=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>                           <span class="c1"># Recognize Feedback</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">own</span> <span class="o">+=</span> <span class="n">rec</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="n">own</span> <span class="o">-=</span> <span class="n">rec</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="n">own</span> <span class="o">-=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">f</span><span class="p">[</span><span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">own</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># Erase Feedback</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>        <span class="n">other</span> <span class="o">+=</span> <span class="p">(</span><span class="n">chosen</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">other</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span><span class="p">)</span>  <span class="c1"># Reject</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">half</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">vocab</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"NOT "</span> <span class="o">+</span> <span class="n">vocab</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="n">k</span><span class="p">]]</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="n">tm</span> <span class="o">=</span> <span class="n">TsetlinMachine</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">))</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">41</span><span class="p">):</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tm</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">train</span><span class="p">):</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>        <span class="n">tm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    <span class="k">if</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">):</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>        <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">test</span><span class="p">])</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: test accuracy </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="n">memorized</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">memory</span> <span class="o">&gt;</span> <span class="n">tm</span><span class="o">.</span><span class="n">half</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"memorized literals: plain words"</span><span class="p">,</span> <span class="n">memorized</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">150</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="s2">"· NOT words"</span><span class="p">,</span> <span class="n">memorized</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">150</span><span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"Positive"</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"Negative"</span><span class="p">)):</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    <span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">rule</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>    <span class="n">common</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">r</span><span class="p">:</span> <span class="n">rules</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rules</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">kv</span><span class="p">:</span> <span class="o">-</span><span class="n">kv</span><span class="p">[</span><span class="mi">1</span><span class="p">])[:</span><span class="mi">5</span><span class="p">]</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">' AND '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="si">}</span><span class="s2"> (x</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)"</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">common</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>epoch  1: test accuracy 0.563
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>epoch 10: test accuracy 0.757
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>epoch 40: test accuracy 0.767
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>memorized literals: plain words 191 · NOT words 526
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Positive great (x8)  delicious (x6)  nice (x4)  amazing (x4)  awesome (x4)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Negative don't (x6)  disappointed (x5)  not (x4)  no (x3)  bad (x3)
+</code></pre></div>
+<p>The same picture as in the widget: about three quarters of the memorized literals are NOT-words, the short rules form a small sentiment dictionary, and the accuracy is close to logistic regression's. For images, replace the first block by a Booleanization (<code>(images &gt;= 8)</code>, or a thermometer <code>np.concatenate([images &gt;= t for t in (4, 8, 12)])</code>) and use one team of rules per class.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"A Tsetlin machine needs special learning rules for text or images.\"</p>
+<p>It doesn't. Every result in this lesson uses the same Recognize, Erase and Reject Feedback and the same Voting Margin as the classification lesson. What changes is the <strong>Booleanization</strong> in front of it (and, for images, the convolution window). Most of the progress reported on CIFAR-10 came from better Booleanizations and teams of machines.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Rules full of NOT-words are a bug.\"</p>
+<p>They are a consequence of sparse data: a sentence contains a handful of the vocabulary's words, so almost every "NOT word" literal is True, and Recognize Feedback memorizes True literals. A rule like "<em>NOT any of these 144 words</em>" means "<em>none of the warning signs appear</em>", which can be a sensible description of a class (Sharma et al. found the same in movie reviews). Very long NOT-lists can also signal a rule that has memorized a few training sentences, so check its coverage.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A set of words understands negation.\"</p>
+<p>It keeps the word <em>not</em> but not what it applies to. "Not bad at all" contains <em>not</em> and <em>bad</em>, and our machine called it Negative with <span class="arithmatex">\(v = -10\)</span>. Word pairs, position features (Yadav et al.) or windows over the text (ConvTextTM) give the rules some word order back.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Readable means right.\"</p>
+<p>Readable rules let you <strong>audit</strong> a model: you can spot a Positive rule built on <em>waiting</em>, or a vocabulary that misses <em>complain</em>. They do not make the model correct, and on hard tasks Tsetlin machines are still clearly behind large neural networks.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"A threshold at mid-grey is all an image needs.\"</p>
+<p>On our digits the choice of Booleanization moved accuracy from 89.8% (adaptive threshold) to 96.9% (thermometer), with the same machine. For colour photos the toolbox paper's single specialists ranged from 60.6% (Canny edges) to 75.4% (colour thermometers). Try several, or combine them in a composite.</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. A vocabulary has 2,000 words. How many literals does each rule choose from, and roughly how many of them are True for a 40-word clinical note with 30 distinct vocabulary words?</summary>
+<p>2 × 2,000 = <strong>4,000 literals</strong>. 30 plain-word literals are True (the words present), and 2,000 − 30 = <strong>1,970 negated literals</strong> are True (the words absent): 2,000 True literals in total, as always one of each pair. Almost all of the True ones are negated, which is why text rules collect so many NOT-words.</p>
+</details>
+<details class="question">
+<summary>2. A rule for Allergy is <em>\"penicillin\" AND \"rash\"</em>. It fires on a note that says \"no rash after penicillin\". Which feedback does it get when this note is labelled not-Allergy, and which literal might fix it?</summary>
+<p>It fired on the wrong class, so if it is selected it gets <strong>Reject Feedback</strong>: every forgotten literal that is False in this note moves one step towards Memorized. "NOT no" is False here (the note contains <em>no</em>), so it may cross first, giving <em>penicillin AND rash AND NOT no</em>, just like Berge et al.'s <em>¬not</em>. It is a blunt fix: the rule now also rejects "rash after penicillin, no fever".</p>
+</details>
+<details class="question">
+<summary>3. Why did our text machine need 100 rules per class when the breast-cancer machine managed with 10?</summary>
+<p>A typical sentence contains only 3 of the 150 vocabulary words, and most learned rules are built around one word. A rule can only vote on sentences that contain its words, so many rules (about different words) are needed before most sentences receive any votes. With 20 rules per class the test accuracy dropped to 68.7%.</p>
+</details>
+<details class="question">
+<summary>4. Write the thermometer literals that say \"this pixel has some ink but is not dark\" for our digits (planes ≥ 4, ≥ 8, ≥ 12).</summary>
+<p><span class="arithmatex">\(x_{\ge 4} \wedge \lnot x_{\ge 12}\)</span>: at least level 4, below level 12. A single AND expresses the range, which a single threshold feature cannot.</p>
+</details>
+<details class="question">
+<summary>5. The toolbox paper's composite reaches 82.8% on CIFAR-10, and its best single machine 75.4%. Where does the gain come from, given that the learning rule is the same?</summary>
+<p>From <strong>different views of the same image</strong>: each specialist Booleanizes the image differently (colour thermometers, adaptive thresholds, Canny edges, HOG, …) and so makes different mistakes. The composite normalises each machine's class sums and adds them, so a confident specialist can outvote an unsure one (<a href="../tsetlin-machine-confidence/">Confidence &amp; composites</a>).</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ole-Christoffer Granmo, <a href="https://tsetlinmachine.org/"><em>An Introduction to Tsetlin Machines</em></a> (free online). Ch. 10, <em>Natural Language and Image Processing</em>, is announced but not yet published; this lesson uses the vocabulary of the published chapters.</li>
+<li>Geir Thore Berge, Ole-Christoffer Granmo, Tor Oddbjørn Tveit, Morten Goodwin, Lei Jiao and Bernt Viggo Matheussen, <a href="https://arxiv.org/abs/1809.04547"><em>Using the Tsetlin Machine to Learn Human-Interpretable Rules for High-Accuracy Text Categorization With Medical Applications</em></a>, IEEE Access 7 (2019), 115134–115146. The set-of-words representation, negated words, the Allergy walk-through (our Step 2 diagram), and results on 20 Newsgroups, IMDb and hospital notes.</li>
+<li>Rohan Kumar Yadav, Lei Jiao, Ole-Christoffer Granmo and Morten Goodwin, <a href="https://doi.org/10.1609/aaai.v35i16.17671"><em>Human-Level Interpretable Learning for Aspect-Based Sentiment Analysis</em></a>, AAAI 2021. Booleanizing aspect, position and lexicon information for sentiment towards one aspect of a review.</li>
+<li>Bimal Bhattarai, Ole-Christoffer Granmo and Lei Jiao, <a href="https://aclanthology.org/2022.lrec-1.401"><em>ConvTextTM: An Explainable Convolutional Tsetlin Machine Framework for Text Classification</em></a>, LREC 2022. Convolution over text windows with BERT's vocabulary.</li>
+<li>Jivitesh Sharma, Rohan Yadav, Ole-Christoffer Granmo and Lei Jiao, <a href="https://arxiv.org/abs/2105.14506"><em>Drop Clause: Enhancing Performance, Interpretability and Robustness of the Tsetlin Machine</em></a> (arXiv, 2021). Dropping rules during training; the observation that text rules are mostly negated words; CIFAR-10 at 75.1%.</li>
+<li>Ole-Christoffer Granmo, Sondre Glimsdal, Lei Jiao, Morten Goodwin, Christian W. Omlin and Geir Thore Berge, <a href="https://arxiv.org/abs/1905.09688"><em>The Convolutional Tsetlin Machine</em></a> (arXiv, 2019). Adaptive Gaussian thresholding, MNIST / Fashion-MNIST / Kuzushiji-MNIST results, printed rule patterns.</li>
+<li>Ylva Grønningsæter, Halvor S. Smørvik and Ole-Christoffer Granmo, <a href="https://arxiv.org/abs/2406.00704"><em>An Optimized Toolbox for Advanced Image Processing with Tsetlin Machine Composites</em></a> (arXiv, 2024). Seven image Booleanizations, 22 specialists, CIFAR-10 at 82.8%.</li>
+<li>The <a href="https://github.com/cair/tmu"><code>cair/tmu</code></a> library: its <code>examples/classification</code> folder has the IMDb text example (words and word pairs, χ² feature selection) and MNIST convolution examples.</li>
+<li>Data: Dimitrios Kotzias, Misha Denil, Nando de Freitas and Padhraic Smyth, <em>From Group to Individual Labels using Deep Features</em>, KDD 2015: the <a href="https://archive.ics.uci.edu/dataset/331/sentiment+labelled+sentences">Sentiment Labelled Sentences</a> dataset (CC BY 4.0). The 8×8 digits are scikit-learn's <code>load_digits</code> (UCI Optical Recognition of Handwritten Digits).</li>
+</ul>
+<p><strong>Next lessons:</strong> you have reached the end of the Tsetlin machine series. Head back to the <a href="../../roadmap/#tsetlin-machines">roadmap's Tsetlin machine section</a> to revisit any lesson.</p>
+<script src="viz/tsetlin-machine-language-images.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../graph-tsetlin-machine/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hierarchical &amp; graph TMs">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Hierarchical & graph TMs
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../ising-model/" class="md-footer__link md-footer__link--next" aria-label="Next: The Ising model">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                The Ising model
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

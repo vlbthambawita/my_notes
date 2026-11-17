@@ -1,0 +1,2296 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI topics and research papers explained step by step with visualizations">
+      
+      
+        <meta name="author" content="Vajira Thambawita">
+      
+      
+        <link rel="canonical" href="https://vajira.info/my_notes/topics/ising-model/">
+      
+      
+        <link rel="prev" href="../tsetlin-machine-language-images/">
+      
+      
+        <link rel="next" href="../../papers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>The Ising model - Learning AI, Visually</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/viz.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-ising-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Learning AI, Visually" class="md-header__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Learning AI, Visually
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Ising model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../gradient-descent/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Learning AI, Visually" class="md-nav__button md-logo" aria-label="Learning AI, Visually" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+
+    </a>
+    Learning AI, Visually
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vlbthambawita/my_notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vlbthambawita/my_notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gradient-descent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reinforcement-learning-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-armed-bandits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-armed bandits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp-bellman-equations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDPs & Bellman equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monte-carlo-td-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monte Carlo & TD learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-learning-sarsa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-learning & SARSA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-q-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Q-Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy-gradients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy gradients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actor-critic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actor-critic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-based-rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model-based RL & planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../offline-rl-imitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline RL & imitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rlhf-dpo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLHF & DPO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tsetlin-machine-intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tsetlin machines
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-automaton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Tsetlin automaton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recognize, Erase & Reject feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification by voting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutional-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Tsetlin machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weighted-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weighted clauses & sharing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-autoencoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autoencoders & embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-confidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confidence & composites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-tsetlin-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hierarchical & graph TMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tsetlin-machine-language-images/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language & images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Energy-based models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Energy-based models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-should-i-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why should I care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-tiny-magnets-on-a-grid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Tiny magnets on a grid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-energy-neighbours-want-to-agree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Energy: neighbours want to agree
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-temperature-order-against-chance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Temperature: order against chance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-one-flip-at-a-time-the-metropolis-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — One flip at a time: the Metropolis rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-watch-4096-spins-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Watch 4,096 spins at once
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-the-phase-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — The phase transition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-an-ai-example-cleaning-a-noisy-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — An AI example: cleaning a noisy picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-from-magnets-to-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — From magnets to neural networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-misconceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common misconceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="the-ising-model">The Ising model<a class="headerlink" href="#the-ising-model" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<p>The Ising model is a grid of tiny arrows (<strong>spins</strong>) that each point up or down. Neighbours <strong>prefer to agree</strong>, and <strong>temperature</strong> adds random flips that fight this preference. Below a critical temperature the whole grid lines up by itself; above it, the order melts. The same three ingredients (binary units, pairwise links, an energy to minimise) are the basis of Hopfield networks, Boltzmann machines and every "temperature" knob in AI.</p>
+</div>
+<p><strong>Level:</strong> beginner · <strong>Prerequisites:</strong> none. Knowing what <span class="arithmatex">\(e^{x}\)</span> looks like helps from Step 3 on.</p>
+<hr />
+<h2 id="why-should-i-care">Why should I care?<a class="headerlink" href="#why-should-i-care" title="Permanent link">&para;</a></h2>
+<p>A piece of iron is a magnet at room temperature. Heat it above 770 °C and the magnetism disappears. Cool it and it comes back. No atom "decides" this. Each atom only feels its nearest neighbours. So how do billions of atoms agree on one direction, and why does that agreement break at one sharp temperature?</p>
+<p>The Ising model (also called the <strong>Lenz–Ising model</strong>: Wilhelm Lenz proposed it in 1920, his student Ernst Ising solved the first case in 1924) is the simplest model that answers this. It is worth learning for AI because:</p>
+<ul>
+<li><strong>Hopfield networks</strong> and <strong>Boltzmann machines</strong> are Ising models whose links are <em>learned</em>. They earned John Hopfield and Geoffrey Hinton the 2024 Nobel Prize in Physics.</li>
+<li>The <strong>Metropolis algorithm</strong>, invented to simulate models like this one, is the ancestor of the sampling methods (MCMC) used across statistics and machine learning.</li>
+<li>The <strong>temperature</strong> setting of a language model comes from the same formula you will meet in Step 3.</li>
+</ul>
+<hr />
+<h2 id="step-1-tiny-magnets-on-a-grid">Step 1 — Tiny magnets on a grid<a class="headerlink" href="#step-1-tiny-magnets-on-a-grid" title="Permanent link">&para;</a></h2>
+<p>Take a grid. Put one arrow on every square. Each arrow is called a <strong>spin</strong> and has only two options:</p>
+<ul>
+<li>up, written <span class="arithmatex">\(s_i = +1\)</span></li>
+<li>down, written <span class="arithmatex">\(s_i = -1\)</span></li>
+</ul>
+<p>That is the whole state of the model: a list of <span class="arithmatex">\(+1\)</span>s and <span class="arithmatex">\(-1\)</span>s. A 4×4 grid has 16 spins and therefore <span class="arithmatex">\(2^{16} = 65{,}536\)</span> possible patterns.</p>
+<p>One number summarises a pattern: the <strong>magnetisation</strong> <span class="arithmatex">\(m\)</span>, the average of all spins.</p>
+<div class="arithmatex">\[
+m = \frac{1}{N}\sum_{i=1}^{N} s_i
+\]</div>
+<p><span class="arithmatex">\(m = +1\)</span> means every spin is up, <span class="arithmatex">\(m = -1\)</span> means every spin is down, and <span class="arithmatex">\(m = 0\)</span> means half and half. A real magnet is a piece of material with <span class="arithmatex">\(m\)</span> far from 0.</p>
+<p><strong>Try it:</strong> click spins to flip them and watch <span class="arithmatex">\(m\)</span> in the readout. Ignore the right-hand panel for a moment; Step 2 explains it.</p>
+<div id="viz-spins" class="viz"><div class="viz-title">🧲 Interactive: flip spins, watch the energy</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>All up</strong> gives <span class="arithmatex">\(m = +1\)</span>. <strong>Two halves</strong> and <strong>Checkerboard</strong> both give <span class="arithmatex">\(m = 0\)</span>, although they look very different. Magnetisation alone doesn't tell them apart. Energy will.</li>
+<li>The model has no idea what "up" means physically. A spin can stand for an atom's magnetic moment, a pixel (black or white), a neuron (firing or silent), or a voter (yes or no).</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-2-energy-neighbours-want-to-agree">Step 2 — Energy: neighbours want to agree<a class="headerlink" href="#step-2-energy-neighbours-want-to-agree" title="Permanent link">&para;</a></h2>
+<p>Every pair of neighbouring spins shares a <strong>link</strong> (physicists say <em>bond</em>). The rule is:</p>
+<ul>
+<li>the two spins <strong>agree</strong> → the link contributes <span class="arithmatex">\(-1\)</span> to the energy (good, stable)</li>
+<li>the two spins <strong>disagree</strong> → the link contributes <span class="arithmatex">\(+1\)</span> (bad, tense)</li>
+</ul>
+<p>The smallest possible example is two spins with one link:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th><span class="arithmatex">\(s_1 s_2\)</span></th>
+<th>Energy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>↑ ↑</td>
+<td><span class="arithmatex">\(+1\)</span></td>
+<td><span class="arithmatex">\(-1\)</span></td>
+</tr>
+<tr>
+<td>↓ ↓</td>
+<td><span class="arithmatex">\(+1\)</span></td>
+<td><span class="arithmatex">\(-1\)</span></td>
+</tr>
+<tr>
+<td>↑ ↓</td>
+<td><span class="arithmatex">\(-1\)</span></td>
+<td><span class="arithmatex">\(+1\)</span></td>
+</tr>
+<tr>
+<td>↓ ↑</td>
+<td><span class="arithmatex">\(-1\)</span></td>
+<td><span class="arithmatex">\(+1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The product <span class="arithmatex">\(s_1 s_2\)</span> is <span class="arithmatex">\(+1\)</span> when the spins agree and <span class="arithmatex">\(-1\)</span> when they don't, so the energy of one link is simply <span class="arithmatex">\(-s_1 s_2\)</span>. For a whole grid, add up all links:</p>
+<div class="arithmatex">\[
+E(s) = -J \sum_{\langle i,j \rangle} s_i s_j \;-\; h \sum_i s_i
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\langle i,j \rangle\)</span> means "every pair of neighbours, counted once".</li>
+<li><span class="arithmatex">\(J\)</span> is the <strong>coupling</strong>: how strongly neighbours want to agree. We use <span class="arithmatex">\(J = 1\)</span> throughout.</li>
+<li><span class="arithmatex">\(h\)</span> is an <strong>external field</strong>: a push that makes every spin prefer up (<span class="arithmatex">\(h &gt; 0\)</span>) or down (<span class="arithmatex">\(h &lt; 0\)</span>), like holding a big magnet nearby. It is 0 until Step 5.</li>
+</ul>
+<p>Systems drift towards <strong>low energy</strong>, like a ball rolling downhill. So this formula says: <em>patterns in which neighbours agree are preferred.</em></p>
+<p>Go back to the widget above. The 4×4 grid has 24 links. Green links agree, red links disagree, and the purple marker shows the total energy.</p>
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>All up</strong> (and all down) is the lowest possible energy, <span class="arithmatex">\(-24\)</span>: every link agrees. <strong>Checkerboard</strong> is the highest, <span class="arithmatex">\(+24\)</span>.</li>
+<li><strong>Two halves</strong> has <span class="arithmatex">\(m = 0\)</span> but energy <span class="arithmatex">\(-16\)</span>. Only the 4 links on the border between the halves disagree. <strong>Energy lives on the borders between regions.</strong></li>
+<li>Start from <strong>All up</strong> and flip one spin in the middle: 4 links turn red and the energy rises by 8. Flip a 2×2 block: 8 links are red, the energy rises by 16. An island of flipped spins costs energy in proportion to its <strong>perimeter</strong>. Remember this for Step 6.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">What if neighbours want to disagree?</p>
+<p>With <span class="arithmatex">\(J &lt; 0\)</span> the signs swap: the checkerboard becomes the lowest-energy pattern. That is an <em>antiferromagnet</em>. With a different random <span class="arithmatex">\(J\)</span> on every link you get a <em>spin glass</em>, which is the starting point for Hopfield networks (Step 8).</p>
+</div>
+<hr />
+<h2 id="step-3-temperature-order-against-chance">Step 3 — Temperature: order against chance<a class="headerlink" href="#step-3-temperature-order-against-chance" title="Permanent link">&para;</a></h2>
+<p>If energy were the whole story, every grid would end up all up or all down. But a warm material jiggles. Heat keeps knocking spins into random directions.</p>
+<p>Physics gives an exact rule for how often each pattern <span class="arithmatex">\(s\)</span> shows up at temperature <span class="arithmatex">\(T\)</span>, the <strong>Boltzmann distribution</strong>:</p>
+<div class="arithmatex">\[
+P(s) = \frac{e^{-E(s)/T}}{Z},
+\qquad
+Z = \sum_{\text{all patterns } s'} e^{-E(s')/T}
+\]</div>
+<ul>
+<li>Lower energy → larger <span class="arithmatex">\(e^{-E/T}\)</span> → more likely.</li>
+<li><span class="arithmatex">\(T\)</span> decides <strong>how much</strong> energy matters. Small <span class="arithmatex">\(T\)</span>: energy differences are huge, so only the lowest-energy patterns appear. Large <span class="arithmatex">\(T\)</span>: every pattern is almost equally likely.</li>
+<li><span class="arithmatex">\(Z\)</span>, the <strong>partition function</strong>, is just the sum that makes the probabilities add up to 1.</li>
+</ul>
+<p>(We measure <span class="arithmatex">\(T\)</span> in units where Boltzmann's constant <span class="arithmatex">\(k_B\)</span> is 1, so <span class="arithmatex">\(T\)</span> and <span class="arithmatex">\(E\)</span> can be divided directly.)</p>
+<p>A 2×2 grid is small enough to list everything. It has 4 links and <span class="arithmatex">\(2^4 = 16\)</span> patterns:</p>
+<table>
+<thead>
+<tr>
+<th>Patterns</th>
+<th>How many</th>
+<th>Energy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all four spins agree</td>
+<td>2</td>
+<td><span class="arithmatex">\(-4\)</span></td>
+</tr>
+<tr>
+<td>mixed (one or two spins differ)</td>
+<td>12</td>
+<td><span class="arithmatex">\(0\)</span></td>
+</tr>
+<tr>
+<td>checkerboard</td>
+<td>2</td>
+<td><span class="arithmatex">\(+4\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>So <span class="arithmatex">\(Z = 2e^{4/T} + 12 + 2e^{-4/T}\)</span>. At <span class="arithmatex">\(T = 2\)</span> this is <span class="arithmatex">\(27.05\)</span>, and each all-agree pattern has probability <span class="arithmatex">\(e^{2}/27.05 = 27.3\%\)</span>.</p>
+<p><strong>Try it:</strong> drag the temperature. Each column is one of the 16 patterns with its probability bar.</p>
+<div id="viz-boltzmann" class="viz"><div class="viz-title">🌡️ Interactive: all 16 patterns of a 2×2 grid</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Cold (T = 0.5):</strong> the two aligned patterns take 99.8% of the probability. Energy wins.</li>
+<li><strong>Warm (T = 2):</strong> each aligned pattern (27.3%) is still far more likely than each mixed pattern (3.7%). But there are <strong>12</strong> mixed patterns and only 2 aligned ones, so together the mixed ones already hold 44.4%.</li>
+<li><strong>Hot (T = 10):</strong> the bars are nearly level and the mixed patterns hold 73.5%, close to their share by pure counting (<span class="arithmatex">\(12/16 = 75\%\)</span>). Numbers win.</li>
+<li>This is the key trade-off of the whole lesson: <strong>low energy</strong> (few ordered patterns) against <strong>large numbers</strong> (many disordered patterns, which physicists call <em>entropy</em>). Temperature sets the exchange rate.</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-4-one-flip-at-a-time-the-metropolis-rule">Step 4 — One flip at a time: the Metropolis rule<a class="headerlink" href="#step-4-one-flip-at-a-time-the-metropolis-rule" title="Permanent link">&para;</a></h2>
+<p>Listing all patterns worked for 4 spins. A 64×64 grid has <span class="arithmatex">\(2^{4096}\)</span> patterns, a number with 1,234 digits. We can never compute <span class="arithmatex">\(Z\)</span>.</p>
+<p>The <strong>Metropolis algorithm</strong> (1953) avoids <span class="arithmatex">\(Z\)</span> completely. It walks from pattern to pattern by trying to flip one spin at a time, and it only needs the <strong>energy change</strong> <span class="arithmatex">\(\Delta E\)</span> of that single flip:</p>
+<div class="arithmatex">\[
+\Delta E = 2\, s_i \Big( J \sum_{j \,\in\, \text{neighbours of } i} s_j + h \Big)
+\]</div>
+<p>Only the spin's own links change, so only its four neighbours matter. The rule is then:</p>
+<ul>
+<li><span class="arithmatex">\(\Delta E \le 0\)</span> (downhill or flat): <strong>always flip</strong>.</li>
+<li><span class="arithmatex">\(\Delta E &gt; 0\)</span> (uphill): flip anyway <strong>with probability</strong> <span class="arithmatex">\(e^{-\Delta E / T}\)</span>.</li>
+</ul>
+<p>The second line is where temperature comes in. Uphill moves are how heat creates disorder: rare when it's cold, common when it's hot.</p>
+<p><strong>Try it:</strong> build a situation by clicking the spins, then change <span class="arithmatex">\(T\)</span>.</p>
+<div id="viz-flip" class="viz"><div class="viz-title">🎲 Interactive: should this spin flip?</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>The starting situation (3 neighbours agree, 1 disagrees) is uphill by <span class="arithmatex">\(\Delta E = +4\)</span>. At <span class="arithmatex">\(T = 2\)</span> the flip still happens 13.5% of the time.</li>
+<li>Make all four neighbours agree with the centre: <span class="arithmatex">\(\Delta E = +8\)</span> and the chance drops to 1.8%. A spin surrounded by friends almost never flips.</li>
+<li>Make most neighbours disagree: <span class="arithmatex">\(\Delta E\)</span> is negative and the flip is certain, whatever the temperature.</li>
+<li>With <span class="arithmatex">\(h = 0\)</span> only five values are possible: <span class="arithmatex">\(\Delta E \in \{-8, -4, 0, +4, +8\}\)</span>.</li>
+</ul>
+</div>
+<p>Repeating this rule many times makes the grid visit patterns exactly as often as the Boltzmann distribution says. One <strong>sweep</strong> means as many attempted flips as there are spins.</p>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🔁 The Metropolis loop",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "start", "col": 0, "row": 0, "icon": "🎲", "label": "Start with any pattern", "shape": "pill", "note": "Random spins or all up. After enough sweeps the start is forgotten."},
+    {"id": "pick", "col": 1, "row": 0, "icon": "👆", "label": "Pick a random spin", "role": "data", "note": "Every spin has the same chance of being picked."},
+    {"id": "de", "col": 2, "row": 0, "icon": "⚖️", "label": "Compute ΔE", "sub": "if this spin flipped", "role": "loss", "note": "ΔE = 2 · s · (J · sum of the 4 neighbours + h). No other spin is needed."},
+    {"id": "acc", "col": 2, "row": 1, "icon": "🌡️", "label": "Downhill? Flip. Uphill? Roll a die", "sub": "chance e<sup>−ΔE/T</sup>", "role": "model", "note": "ΔE ≤ 0: always flip. ΔE > 0: flip with probability e^(−ΔE/T)."},
+    {"id": "flip", "col": 1, "row": 1, "icon": "🔄", "label": "Flip or keep the spin", "role": "opt", "note": "This new pattern is the next sample, even if nothing changed."},
+    {"id": "meas", "col": 0, "row": 1, "icon": "📏", "label": "Measure m and E", "sub": "once per sweep", "note": "Average the measurements over many sweeps to get properties at temperature T."}
+  ],
+  "edges": [
+    {"from": "start", "to": "pick"},
+    {"from": "pick", "to": "de"},
+    {"from": "de", "to": "acc"},
+    {"from": "acc", "to": "flip"},
+    {"from": "flip", "to": "pick", "label": "repeat"},
+    {"from": "flip", "to": "meas"}
+  ],
+  "steps": [
+    {"show": ["start"], "text": "Begin with any pattern of spins. It doesn't have to be a likely one."},
+    {"show": ["start>pick", "pick"], "text": "Choose one spin at random."},
+    {"show": ["pick>de", "de"], "text": "Work out how much the energy would change if this one spin flipped. Only its four neighbours matter."},
+    {"show": ["de>acc", "acc"], "text": "If the energy would not rise, accept the flip. If it would rise, accept it only with probability e<sup>−ΔE/T</sup>."},
+    {"show": ["acc>flip", "flip"], "text": "Flip the spin if the move was accepted. Otherwise leave it."},
+    {"show": ["flip>pick", "pick"], "text": "Go round again. As many attempts as there are spins is called one sweep."},
+    {"show": ["flip>meas", "meas"], "text": "After each sweep, record the magnetisation and the energy. Their averages are what we compare with experiments."}
+  ],
+  "narrow": {"cols": 2, "rows": 4, "pos": {"start": [0, 0], "pick": [0, 1], "de": [1, 1], "acc": [1, 2], "flip": [0, 2], "meas": [0, 3]}}
+}
+</script>
+</div>
+
+<hr />
+<h2 id="step-5-watch-4096-spins-at-once">Step 5 — Watch 4,096 spins at once<a class="headerlink" href="#step-5-watch-4096-spins-at-once" title="Permanent link">&para;</a></h2>
+<p>Here is the Metropolis loop running on a 64×64 grid. The edges wrap around (the left column is a neighbour of the right column), so no spin sits on a border. The grid starts with random spins.</p>
+<p><strong>Try it:</strong> press <strong>▶ Play</strong> and watch for about 20 seconds. Then try the three temperature buttons, and <strong>Random start</strong> to begin again.</p>
+<div id="viz-lattice" class="viz"><div class="viz-title">🔥 Interactive: a live Ising model</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li><strong>Cold (T = 1.5):</strong> small patches form at once and then slowly eat each other. From this random start, <span class="arithmatex">\(m\)</span> climbs to <span class="arithmatex">\(+0.37\)</span> after 100 sweeps, <span class="arithmatex">\(+0.89\)</span> after 300 and <span class="arithmatex">\(+0.98\)</span> after 500. Nobody told the grid to choose "up". It was a tie, and chance broke it.</li>
+<li><strong>Hot (T = 3.5):</strong> fine-grained noise. <span class="arithmatex">\(m\)</span> stays within a few hundredths of 0, and no patch survives.</li>
+<li><strong>Critical (T = 2.27):</strong> patches of <em>every</em> size, from single spins to blobs as wide as the grid, and <span class="arithmatex">\(m\)</span> wanders slowly without settling. This is the most interesting temperature, and Step 6 is about it.</li>
+<li><strong>The field breaks the tie.</strong> At <span class="arithmatex">\(T = 3.5\)</span>, slide <span class="arithmatex">\(h\)</span> to <span class="arithmatex">\(+0.50\)</span>: <span class="arithmatex">\(m\)</span> jumps to about <span class="arithmatex">\(+0.6\)</span> within ten sweeps. Slide it back to 0 and the magnetisation is forgotten. Now do the same at <span class="arithmatex">\(T = 1.5\)</span>: the grid stays magnetised after you remove the field. That memory is what makes a permanent magnet.</li>
+<li>A cold grid sometimes gets stuck in two broad <strong>stripes</strong>. Their straight borders have no corners to shrink from, so the stripes can last a long time. It is an early taste of "stuck in a local minimum".</li>
+</ul>
+</div>
+<hr />
+<h2 id="step-6-the-phase-transition">Step 6 — The phase transition<a class="headerlink" href="#step-6-the-phase-transition" title="Permanent link">&para;</a></h2>
+<p>Let's turn what you just watched into a measurement. For each temperature, run the simulation, wait for it to settle, and record the average of <span class="arithmatex">\(|m|\)</span> (the absolute value, because up and down are equally good).</p>
+<p><strong>Try it:</strong> press <strong>Run</strong>. The green curve is the exact answer for an infinitely large grid.</p>
+<div id="viz-sweep" class="viz"><div class="viz-title">📉 Interactive: magnetisation against temperature</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>On the 32×32 grid the dots follow the exact curve closely while the grid is ordered: 0.986 at <span class="arithmatex">\(T = 1.5\)</span> (exact: 0.986) and 0.908 at <span class="arithmatex">\(T = 2.0\)</span> (exact: 0.911).</li>
+<li>Between <span class="arithmatex">\(T = 2.2\)</span> and <span class="arithmatex">\(T = 2.5\)</span> the magnetisation collapses from 0.815 to 0.252. The order does not fade gradually; it <strong>breaks</strong> over a narrow range. This is a <strong>phase transition</strong>, like ice melting.</li>
+<li>Switch to the <strong>8 × 8</strong> grid: the drop is smeared out, and at <span class="arithmatex">\(T = 4\)</span> you still measure 0.191 (against 0.044 on the 32×32 grid). A small grid can't average its random spins away. The transition is only perfectly sharp for an infinite grid.</li>
+</ul>
+</div>
+<p>The exact position of the break is the <strong>critical temperature</strong>, found by Lars Onsager in 1944:</p>
+<div class="arithmatex">\[
+T_c = \frac{2J}{\ln\!\left(1 + \sqrt{2}\right)} \approx 2.269
+\]</div>
+<p>Below it, the exact magnetisation of an infinite grid is</p>
+<div class="arithmatex">\[
+m = \left[\,1 - \sinh^{-4}\!\left(\frac{2J}{T}\right)\right]^{1/8}
+\]</div>
+<p>and above it, <span class="arithmatex">\(m = 0\)</span>. That is the green curve.</p>
+<p><strong>Why is there a sharp temperature?</strong> Go back to Step 2: a flipped island costs energy in proportion to its perimeter. When it's cold, large islands are too expensive, so one colour dominates. But the number of possible island shapes also grows with the perimeter. At <span class="arithmatex">\(T_c\)</span> the two effects balance, islands of every size appear, and the dominant colour is lost.</p>
+<div class="admonition note">
+<p class="admonition-title">Who solved what: Lenz, Ising, Onsager</p>
+<p>Ernst Ising solved the <strong>one-dimensional</strong> model, a single chain of spins, in his 1924 thesis. He found <strong>no</strong> phase transition: a chain is disordered at every temperature above zero. The reason is the island argument again. In a chain, flipping a block of any length breaks just 2 links (its two ends), so large islands are cheap and they always destroy the order. Ising guessed that the same would happen in higher dimensions. He was wrong: Rudolf Peierls showed in 1936 that the 2-D model must order, and Onsager's 1944 solution gave the exact numbers above. The 3-D model still has no exact solution, only simulations like yours.</p>
+</div>
+<hr />
+<h2 id="step-7-an-ai-example-cleaning-a-noisy-picture">Step 7 — An AI example: cleaning a noisy picture<a class="headerlink" href="#step-7-an-ai-example-cleaning-a-noisy-picture" title="Permanent link">&para;</a></h2>
+<p>The Ising model is also a tool. Take a black-and-white picture where some pixels have been flipped by noise. Two facts help us repair it:</p>
+<ol>
+<li>Most pixels are correct, so the answer should <strong>stay close to what we observe</strong>.</li>
+<li>Real pictures are smooth, so a pixel usually <strong>agrees with its neighbours</strong>.</li>
+</ol>
+<p>Fact 2 is the Ising link term. Fact 1 is a field, but a different one for every pixel: it pulls pixel <span class="arithmatex">\(i\)</span> towards its observed value <span class="arithmatex">\(y_i\)</span>.</p>
+<div class="arithmatex">\[
+E(s) = -J \sum_{\langle i,j \rangle} s_i s_j \;-\; \sum_i s_i\, y_i
+\]</div>
+<p>Here <span class="arithmatex">\(s\)</span> is our guess for the clean picture and <span class="arithmatex">\(y\)</span> is the noisy one (<span class="arithmatex">\(+1\)</span> = ink, <span class="arithmatex">\(-1\)</span> = paper). We look for a low-energy <span class="arithmatex">\(s\)</span> in the simplest way: start from <span class="arithmatex">\(s = y\)</span> and flip any pixel whose flip lowers the energy, until nothing changes. This is the Metropolis rule at <span class="arithmatex">\(T = 0\)</span> (no uphill moves).</p>
+<div id="viz-denoise" class="viz"><div class="viz-title">🧹 Interactive: denoising with an Ising energy</div></div>
+
+<div class="admonition tip">
+<p class="admonition-title">What to notice</p>
+<ul>
+<li>With 10% noise, 152 of the 1,600 pixels are wrong. With <strong>J = 1</strong> only 15 remain wrong (0.9%).</li>
+<li><strong>J = 0</strong> ignores the neighbours, so the energy is lowest at <span class="arithmatex">\(s = y\)</span> and nothing is repaired.</li>
+<li><strong>J = 0.3</strong> is cautious: a pixel flips only when all four neighbours disagree with it. That leaves 76 wrong pixels, mostly where two noisy pixels touch.</li>
+<li>Raise the noise to 30%: J = 1 still more than halves the errors (478 → 224), but clumps of noise now look like real shapes, and the model keeps them.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">The general idea</p>
+<p>A model like this, where each variable interacts only with its neighbours, is called a <strong>Markov random field</strong>. Geman and Geman introduced this picture-restoration recipe in 1984, using exactly the Ising analogy.</p>
+</div>
+<hr />
+<h2 id="step-8-from-magnets-to-neural-networks">Step 8 — From magnets to neural networks<a class="headerlink" href="#step-8-from-magnets-to-neural-networks" title="Permanent link">&para;</a></h2>
+<p>So far <span class="arithmatex">\(J\)</span> was the same on every link and fixed in advance. The step to machine learning is one sentence long: <strong>let every pair of units have its own weight <span class="arithmatex">\(w_{ij}\)</span>, and learn the weights.</strong></p>
+<div class="arithmatex">\[
+E(s) = -\sum_{i&lt;j} w_{ij}\, s_i s_j \;-\; \sum_i b_i\, s_i
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Ising model</th>
+<th>Machine learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spin <span class="arithmatex">\(s_i = \pm 1\)</span></td>
+<td>a binary neuron, pixel or other variable</td>
+</tr>
+<tr>
+<td>coupling <span class="arithmatex">\(J\)</span></td>
+<td>a <strong>weight</strong> <span class="arithmatex">\(w_{ij}\)</span> between two units</td>
+</tr>
+<tr>
+<td>field <span class="arithmatex">\(h\)</span></td>
+<td>a <strong>bias</strong> <span class="arithmatex">\(b_i\)</span></td>
+</tr>
+<tr>
+<td>energy <span class="arithmatex">\(E(s)\)</span></td>
+<td>the <strong>energy function</strong> of an energy-based model</td>
+</tr>
+<tr>
+<td>Boltzmann distribution</td>
+<td>the model's probability of a pattern; a <strong>softmax</strong> is the same formula</td>
+</tr>
+<tr>
+<td>temperature <span class="arithmatex">\(T\)</span></td>
+<td>sampling temperature (for example in a language model)</td>
+</tr>
+<tr>
+<td>Metropolis sweeps</td>
+<td><strong>MCMC</strong> sampling (Gibbs sampling is a close relative)</td>
+</tr>
+<tr>
+<td>lowest-energy patterns</td>
+<td>stored memories (Hopfield) or likely data (Boltzmann machine)</td>
+</tr>
+</tbody>
+</table>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧬 The family tree",
+  "cols": 4,
+  "rows": 1,
+  "rowHeight": 130,
+  "nodes": [
+    {"id": "ising", "col": 0, "row": 0, "icon": "🧲", "label": "Ising model", "sub": "1920–25", "role": "data", "note": "Lenz and Ising: one fixed coupling J between neighbours on a grid. Explains magnetism."},
+    {"id": "hop", "col": 1, "row": 0, "icon": "🧠", "label": "Hopfield network", "sub": "1982", "role": "model", "note": "Hopfield: every pair of units has its own weight, chosen so that stored patterns are energy minima. Rolling downhill from a damaged pattern recalls the memory."},
+    {"id": "bm", "col": 2, "row": 0, "icon": "🌡️", "label": "Boltzmann machine", "sub": "1985", "role": "loss", "note": "Ackley, Hinton and Sejnowski: sample at T > 0, add hidden units, and learn the weights so the Boltzmann distribution matches the data."},
+    {"id": "ebm", "col": 3, "row": 0, "icon": "✨", "label": "Energy-based models", "sub": "today", "role": "opt", "note": "Restricted Boltzmann machines started deep learning's revival in 2006. Modern energy-based and diffusion models keep the idea: learn an energy, then sample."}
+  ],
+  "edges": [
+    {"from": "ising", "to": "hop"},
+    {"from": "hop", "to": "bm"},
+    {"from": "bm", "to": "ebm"}
+  ],
+  "steps": [
+    {"show": ["ising"], "text": "<b>Ising model:</b> one coupling J, fixed by nature, between neighbours on a grid. The low-energy patterns are all up and all down."},
+    {"show": ["ising>hop", "hop"], "text": "<b>Hopfield network:</b> give every pair of units its own weight and choose the weights so that the patterns you want to remember are the low-energy ones. Start from a damaged pattern, flip spins downhill, and the memory comes back."},
+    {"show": ["hop>bm", "bm"], "text": "<b>Boltzmann machine:</b> turn the temperature on, add hidden units, and <i>learn</i> the weights so that the Boltzmann distribution puts high probability on the training data."},
+    {"show": ["bm>ebm", "ebm"], "text": "<b>Today:</b> restricted Boltzmann machines helped restart deep learning in 2006, and energy-based and diffusion models still follow the plan \"learn an energy, then sample from it\"."}
+  ],
+  "narrow": {"cols": 2, "rows": 2, "rowHeight": 110, "pos": {"ising": [0, 0], "hop": [1, 0], "bm": [1, 1], "ebm": [0, 1]}}
+}
+</script>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">What to notice: the temperature of a language model</p>
+<p>A language model gives every possible next word a score <span class="arithmatex">\(z_k\)</span> (a <em>logit</em>) and samples from</p>
+<div class="arithmatex">\[
+P(k) = \frac{e^{z_k / T}}{\sum_{k'} e^{z_{k'}/T}}
+\]</div>
+<p>This is the Boltzmann distribution with energy <span class="arithmatex">\(E_k = -z_k\)</span>. Low <span class="arithmatex">\(T\)</span>: the model almost always picks the top word (ordered, repetitive). High <span class="arithmatex">\(T\)</span>: all words become similar in probability (disordered, random). It is the same trade-off as in Step 3.</p>
+</div>
+<hr />
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<div class="viz diagram">
+<script type="application/json">
+{
+  "title": "🧩 The Ising model in one picture",
+  "cols": 3,
+  "rows": 2,
+  "rowHeight": 110,
+  "nodes": [
+    {"id": "spins", "col": 0, "row": 0, "icon": "🧲", "label": "Spins on a grid", "sub": "s<sub>i</sub> = +1 or −1", "role": "data", "note": "The state of the model: one up-or-down value per site."},
+    {"id": "energy", "col": 1, "row": 0, "icon": "⛰️", "label": "Energy E(s)", "sub": "low when neighbours agree", "role": "loss", "note": "E = −J Σ s_i s_j − h Σ s_i. Low when neighbours agree and spins follow the field."},
+    {"id": "boltz", "col": 2, "row": 0, "icon": "🌡️", "label": "Boltzmann distribution", "sub": "P(s) ∝ e<sup>−E(s)/T</sup>", "role": "model", "note": "Temperature T sets how strongly low energy is preferred."},
+    {"id": "metro", "col": 2, "row": 1, "icon": "🎲", "label": "Metropolis sampling", "sub": "one flip at a time", "role": "model", "note": "Flip a spin if ΔE ≤ 0, otherwise with probability e^(−ΔE/T). No partition function needed."},
+    {"id": "meas", "col": 1, "row": 1, "icon": "📏", "label": "Measure magnetisation", "sub": "average of |m|", "note": "Average over many sweeps after the grid has settled."},
+    {"id": "phase", "col": 0, "row": 1, "icon": "❄️", "label": "Phase transition", "sub": "at T<sub>c</sub> ≈ 2.27", "role": "opt", "note": "Ordered below T_c, disordered above it."}
+  ],
+  "edges": [
+    {"from": "spins", "to": "energy"},
+    {"from": "energy", "to": "boltz"},
+    {"from": "boltz", "to": "metro"},
+    {"from": "metro", "to": "meas"},
+    {"from": "meas", "to": "phase"}
+  ],
+  "steps": [
+    {"show": ["spins"], "text": "The model is a grid of spins, each +1 (up) or −1 (down)."},
+    {"show": ["spins>energy", "energy"], "text": "Every pattern gets an energy. Each pair of agreeing neighbours lowers it by J, each disagreeing pair raises it by J."},
+    {"show": ["energy>boltz", "boltz"], "text": "At temperature T, a pattern appears with probability proportional to e<sup>−E/T</sup>. Cold favours low energy. Hot makes all patterns alike."},
+    {"show": ["boltz>metro", "metro"], "text": "We can't list all patterns, so we sample them: propose single flips and accept them with the Metropolis rule."},
+    {"show": ["metro>meas", "meas"], "text": "Once the grid has settled, average the magnetisation over many sweeps."},
+    {"show": ["meas>phase", "phase"], "text": "Repeat at many temperatures: the magnetisation collapses near T<sub>c</sub> ≈ 2.27. Local rules have produced a global, sudden change."}
+  ],
+  "narrow": {"cols": 2, "rows": 3, "pos": {"spins": [0, 0], "energy": [1, 0], "boltz": [1, 1], "metro": [0, 1], "meas": [0, 2], "phase": [1, 2]}}
+}
+</script>
+</div>
+
+<p>The whole simulation fits in a few lines of NumPy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">sweeps</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>                 <span class="c1"># start with every spin up</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">m</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">for</span> <span class="n">sweep</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sweeps</span><span class="p">):</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">L</span><span class="p">):</span>                     <span class="c1"># one sweep = L*L attempted flips</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>         <span class="c1"># 1. pick a random spin</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="n">nb</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                  <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">])</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            <span class="n">dE</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">nb</span>                  <span class="c1"># 2. energy change if it flipped (J = 1, h = 0)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>            <span class="k">if</span> <span class="n">dE</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dE</span> <span class="o">/</span> <span class="n">T</span><span class="p">):</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>                      <span class="c1"># 3. Metropolis rule: flip</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="k">if</span> <span class="n">sweep</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">:</span>                           <span class="c1"># skip the first 200 sweeps (settling in)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>                <span class="c1"># 4. measure</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.27</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">]:</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"T = </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">: average |m| = </span><span class="si">{</span><span class="n">simulate</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>T = 1.5: average |m| = 0.987
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>T = 2.27: average |m| = 0.573
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>T = 3.5: average |m| = 0.061
+</code></pre></div>
+<p>Ordered, in between, disordered. The plain Python loop takes about 25 seconds; real codes update half of the spins at once in a checkerboard pattern.</p>
+<hr />
+<h2 id="common-misconceptions">Common misconceptions<a class="headerlink" href="#common-misconceptions" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">\"The Ising model is only about magnets.\"</p>
+<p>It is a model of <strong>any</strong> set of two-state things that influence their neighbours: atoms in an alloy, molecules in a gas (occupied / empty), neurons, pixels, opinions. Magnetism is just where it was born.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"When it's hot, high-energy patterns are more likely than low-energy ones.\"</p>
+<p>Never. At every temperature a single low-energy pattern is more likely than a single high-energy one (27.3% against 3.7% in the 2×2 grid at <span class="arithmatex">\(T = 2\)</span>). Disorder wins when it's hot only because there are so <strong>many more</strong> disordered patterns.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Below the critical temperature the spins point up.\"</p>
+<p>Up and down have exactly the same energy when <span class="arithmatex">\(h = 0\)</span>. The grid picks one of the two at random and then sticks with it. This is called <em>spontaneous symmetry breaking</em>. Only a field <span class="arithmatex">\(h \ne 0\)</span> makes one direction better.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"The Metropolis animation shows how a real magnet moves in time.\"</p>
+<p>Metropolis is a <strong>sampling</strong> method. It is built so that the patterns it visits have the right probabilities, not so that the path between them is physically realistic. The pictures at each temperature are trustworthy; the "movie" is only a rough guide.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">\"Ising discovered the phase transition.\"</p>
+<p>Ising solved the 1-D chain, found no transition, and wrongly concluded that the model could not explain magnets. The 2-D transition was proved by Peierls (1936) and solved exactly by Onsager (1944).</p>
+</div>
+<hr />
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>1. A chain of three spins is ↑ ↑ ↓ (two links, J = 1, h = 0). What is its energy?</summary>
+<p>The first link agrees (<span class="arithmatex">\(-1\)</span>), the second disagrees (<span class="arithmatex">\(+1\)</span>), so <span class="arithmatex">\(E = -1 + 1 = 0\)</span>.</p>
+</details>
+<details class="question">
+<summary>2. A spin points up and all four of its neighbours point up. At T = 1.5, how likely is Metropolis to flip it?</summary>
+<p><span class="arithmatex">\(\Delta E = 2 \cdot (+1) \cdot (+4) = +8\)</span>, so the probability is <span class="arithmatex">\(e^{-8/1.5} = 0.48\%\)</span>. About one attempt in 200.</p>
+</details>
+<details class="question">
+<summary>3. In the 2×2 grid at T = 2, which is more likely: finding the grid all up, or finding it in some mixed pattern?</summary>
+<p><strong>Some mixed pattern.</strong> All up has probability 27.3%. Each mixed pattern has only 3.7%, but there are 12 of them, so together they have 44.4%.</p>
+</details>
+<details class="question">
+<summary>4. Why does a chain of spins (1-D) never order, while a grid (2-D) does?</summary>
+<p>In a chain, flipping a block of any length breaks only 2 links, so big disordering islands are cheap at any temperature above zero. In a grid, an island costs energy in proportion to its perimeter, so big islands are rare when it's cold.</p>
+</details>
+<details class="question">
+<summary>5. A model scores two words with logits 2 and 0. What is the probability of the first word at T = 1 and at T = 0.5?</summary>
+<p>At <span class="arithmatex">\(T = 1\)</span>: <span class="arithmatex">\(e^{2}/(e^{2} + e^{0}) = 88.1\%\)</span>. At <span class="arithmatex">\(T = 0.5\)</span>: <span class="arithmatex">\(e^{4}/(e^{4} + 1) = 98.2\%\)</span>. Lowering the temperature sharpens the choice, exactly as it orders the spins.</p>
+</details>
+<details class="question">
+<summary>6. In the denoising energy, what plays the role of the field h, and why is it different for every pixel?</summary>
+<p>The observed pixel <span class="arithmatex">\(y_i\)</span>. It pulls each pixel of the answer towards the value that was actually seen at that position, so it must be local. A single global <span class="arithmatex">\(h\)</span> would only make the whole picture darker or lighter.</p>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>David MacKay, <a href="https://www.inference.org.uk/mackay/itila/"><em>Information Theory, Inference, and Learning Algorithms</em></a> (free online), Chapter 31 "Ising Models" and Chapters 42–43 on Hopfield networks and Boltzmann machines.</li>
+<li>Stephen G. Brush, <a href="https://doi.org/10.1103/RevModPhys.39.883"><em>History of the Lenz-Ising Model</em></a>, Reviews of Modern Physics 39 (1967), 883–893. Who did what, and why both names belong on the model.</li>
+<li>Ernst Ising, <a href="https://doi.org/10.1007/BF02980577"><em>Beitrag zur Theorie des Ferromagnetismus</em></a>, Zeitschrift für Physik 31 (1925), 253–258. The 1-D solution.</li>
+<li>Lars Onsager, <a href="https://doi.org/10.1103/PhysRev.65.117"><em>Crystal Statistics. I. A Two-Dimensional Model with an Order-Disorder Transition</em></a>, Physical Review 65 (1944), 117–149. The exact 2-D solution and <span class="arithmatex">\(T_c\)</span>.</li>
+<li>Nicholas Metropolis, Arianna Rosenbluth, Marshall Rosenbluth, Augusta Teller and Edward Teller, <a href="https://doi.org/10.1063/1.1699114"><em>Equation of State Calculations by Fast Computing Machines</em></a>, Journal of Chemical Physics 21 (1953), 1087–1092. The Metropolis algorithm.</li>
+<li>Stuart Geman and Donald Geman, <a href="https://doi.org/10.1109/TPAMI.1984.4767596"><em>Stochastic Relaxation, Gibbs Distributions, and the Bayesian Restoration of Images</em></a>, IEEE TPAMI 6 (1984), 721–741. Image restoration with Ising-like models (Step 7).</li>
+<li>John Hopfield, <a href="https://doi.org/10.1073/pnas.79.8.2554"><em>Neural networks and physical systems with emergent collective computational abilities</em></a>, PNAS 79 (1982), 2554–2558.</li>
+<li>David Ackley, Geoffrey Hinton and Terrence Sejnowski, <a href="https://doi.org/10.1207/s15516709cog0901_7"><em>A Learning Algorithm for Boltzmann Machines</em></a>, Cognitive Science 9 (1985), 147–169.</li>
+<li>The Nobel Prize in Physics 2024, <a href="https://www.nobelprize.org/prizes/physics/2024/summary/">summary and popular background</a>: how Hopfield's and Hinton's networks grew out of spin models.</li>
+</ul>
+<p><strong>Next lessons:</strong> Hopfield networks and associative memory · Boltzmann machines</p>
+<script src="viz/ising-model.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tsetlin-machine-language-images/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Language &amp; images">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Language & images
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../papers/" class="md-footer__link md-footer__link--next" aria-label="Next: Papers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Papers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../assets/js/mathjax-config.js"></script>
+      
+        <script src="../../assets/js/viz-common.js"></script>
+      
+        <script src="../../assets/js/diagram.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
