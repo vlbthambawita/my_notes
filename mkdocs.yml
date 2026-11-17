@@ -102,5 +102,7 @@ nav:
           - "Confidence & composites": topics/tsetlin-machine-confidence/index.md
           - "Hierarchical & graph TMs": topics/graph-tsetlin-machine/index.md
           - "Language & images": topics/tsetlin-machine-language-images/index.md
+      - Energy-based models:
+          - "The Ising model": topics/ising-model/index.md
   - Papers: papers/index.md
   - Glossary: glossary.md

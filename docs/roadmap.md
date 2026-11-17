@@ -80,6 +80,13 @@ Follows Ole-Christoffer Granmo's free book [*An Introduction to Tsetlin Machines
 | [Hierarchical and graph Tsetlin machines](topics/graph-tsetlin-machine/index.md) | ✅ |
 | [Tsetlin machines for language and images](topics/tsetlin-machine-language-images/index.md) | ✅ |
 
+### Energy-based models
+| Topic | Status |
+|---|---|
+| [The Ising model: spins, energy and temperature](topics/ising-model/index.md) | ✅ |
+| Hopfield networks and associative memory | 📝 |
+| Boltzmann machines and restricted Boltzmann machines | 📝 |
+
 ## Papers
 
 No paper walkthroughs yet.

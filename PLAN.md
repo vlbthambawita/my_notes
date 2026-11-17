@@ -210,6 +210,11 @@ Every topic page follows the same structure, so lessons feel familiar:
 - Hierarchical and graph Tsetlin machines
 - Tsetlin machines for language and images
 
+**Energy-based models**
+- The Ising model: spins, energy and temperature
+- Hopfield networks and associative memory
+- Boltzmann machines and restricted Boltzmann machines
+
 ---
 
 ## 10. Local preview

@@ -44,6 +44,10 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Bellman residual**: the gap between a value estimate and the right-hand side of its Bellman equation; it is zero for the true values. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-4-the-bellman-expectation-equation-for-vpi))
 
+**Boltzmann distribution**: the rule that a pattern with energy $E$ appears with probability proportional to $e^{-E/T}$ at temperature $T$; a softmax is the same formula. ([The Ising model](topics/ising-model/index.md#step-3-temperature-order-against-chance))
+
+**Boltzmann machine**: an Ising-like network with learned weights and hidden units, trained so that its Boltzmann distribution matches the data. ([The Ising model](topics/ising-model/index.md#step-8-from-magnets-to-neural-networks))
+
 **Boolean feature** ($x_k$): a property of an object that is either True (1) or False (0), such as "has wings" or "tumour ≥ 20 mm"; the only kind of input a Tsetlin machine reads. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-1-objects-described-by-yesno-facts))
 
 **Booleanisation**: turning raw data into Boolean features, for example one feature per category value or one per threshold on a number. ([What is a Tsetlin machine?](topics/tsetlin-machine-intro/index.md#step-2-booleanising-real-data))
@@ -78,11 +82,15 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Cosine similarity** (cos(e_k, e_l)): the dot product of two vectors divided by their lengths; 1 means same direction, 0 means no overlap. ([Autoencoders & embeddings](topics/tsetlin-machine-autoencoder/index.md#step-6-from-rules-to-embeddings))
 
+**Coupling** ($J$): how strongly two neighbouring spins prefer to agree ($J > 0$) or disagree ($J < 0$); the Ising model's version of a weight. ([The Ising model](topics/ising-model/index.md#step-2-energy-neighbours-want-to-agree))
+
 **Coverage**: the fraction of a class's examples that a rule matches. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-8-train-one-rule-yourself))
 
 **Coverage/accuracy trade-off**: answering only cases whose confidence reaches a threshold raises accuracy on the answered cases but leaves more cases to refer to a human. ([Confidence & composites](topics/tsetlin-machine-confidence/index.md#step-3-confidence-on-real-patients))
 
 **Credit assignment problem**: working out which of many earlier actions deserve the credit (or blame) for a reward that arrives later. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-1-learning-from-consequences-not-from-answers))
+
+**Critical temperature** ($T_c$): the temperature at which a phase transition happens; $2/\ln(1+\sqrt{2}) \approx 2.269$ for the 2-D Ising model. ([The Ising model](topics/ising-model/index.md#step-6-the-phase-transition))
 
 **Curse of dimensionality**: the number of states grows exponentially with the number of variables describing a state, so sweeping over all of them quickly becomes impossible. ([Dynamic programming](topics/dynamic-programming/index.md#step-6-the-catch-you-need-the-model-and-you-need-every-state))
 
@@ -118,6 +126,10 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Edge type**: a label on a graph edge (for example "bond", "left", "right") that is attached to every message sent along it, so a rule can tell which kind of neighbour sent it. ([Hierarchical & graph TMs](topics/graph-tsetlin-machine/index.md#step-2-inputs-as-graphs-nodes-properties-and-typed-edges))
 
+**Energy (of a pattern)** ($E(s)$): one number per pattern that is low for preferred patterns; in the Ising model $E = -J\sum s_i s_j - h\sum s_i$. ([The Ising model](topics/ising-model/index.md#step-2-energy-neighbours-want-to-agree))
+
+**Energy-based model**: a model that assigns every pattern an energy and treats low-energy patterns as likely, usually through the Boltzmann distribution. ([The Ising model](topics/ising-model/index.md#step-8-from-magnets-to-neural-networks))
+
 **Entropy bonus**: a term added to the loss that rewards the policy for keeping its action probabilities spread out, so it keeps exploring. ([Actor-critic](topics/actor-critic/index.md#step-4-a2c-batches-parallel-workers-and-gae))
 
 **Environment**: everything outside the agent; it responds to each action with a new state and a reward. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
@@ -125,6 +137,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **Episode**: one run of agent–environment interaction, from a starting state to a terminal state (e.g. one game). ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
 
 **Epoch**: one full pass over the entire training dataset.
+
+**External field** ($h$): a term that makes every spin prefer one direction, like a bias on a neuron. ([The Ising model](topics/ising-model/index.md#step-2-energy-neighbours-want-to-agree))
 
 **ε-greedy (epsilon-greedy)**: a policy that usually takes the best-known action but, with small probability ε, takes a random one to explore. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-6-explore-or-exploit))
 
@@ -164,6 +178,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Histogram of oriented gradients** (HOG): an image descriptor that counts edge directions in small cells; thresholded, it gives Boolean features about local edge orientation. ([Language & images](topics/tsetlin-machine-language-images/index.md#step-5-images-as-boolean-features))
 
+**Hopfield network**: an Ising-like network whose pairwise weights are chosen so that stored patterns are energy minima, which lets it recall a memory from a damaged copy. ([The Ising model](topics/ising-model/index.md#step-8-from-magnets-to-neural-networks))
+
 **Hypervector**: a fixed-length bit vector in which each symbol gets a few random bit positions, used by the graph Tsetlin machine code to store many node properties and messages compactly. ([Hierarchical & graph TMs](topics/graph-tsetlin-machine/index.md#step-2-inputs-as-graphs-nodes-properties-and-typed-edges))
 
 **Image patch** (patch features $x_{i,j}$): the pixels inside the convolution window at one position; their truth values are the patch features, which mean the same thing at every position. ([Convolutional Tsetlin machines](topics/convolutional-tsetlin-machine/index.md#step-2-looking-through-a-window-patches-and-patch-features))
@@ -182,6 +198,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Interval rule**: a rule over thermometer-coded literals, which fires for one range of an input such as "2 ≤ dose < 5". ([Regression](topics/tsetlin-machine-regression/index.md#step-2-numbers-in-intervals-out-the-staircase))
 
+**Ising model** (Lenz–Ising model): a grid of spins that are each up or down, where neighbours prefer to agree and temperature adds random flips. ([The Ising model](topics/ising-model/index.md#step-1-tiny-magnets-on-a-grid))
+
 **Iterative policy evaluation**: computing V^π by repeatedly applying the Bellman expectation equation as an assignment until the values stop changing. ([Dynamic programming](topics/dynamic-programming/index.md#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation))
 
 **KL penalty** (β): A term −β·KL(π‖π_ref) added to the RLHF objective that keeps the fine-tuned policy close to the reference model. ([RLHF & DPO](topics/rlhf-dpo/index.md#step-5-rl-fine-tuning-with-a-kl-leash))
@@ -198,11 +216,17 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Loss (loss function)**: a single number that measures how wrong a model's predictions are; training tries to make it small. ([Gradient Descent](topics/gradient-descent/index.md#step-2-what-are-we-trying-to-make-small-the-loss))
 
+**Magnetisation** ($m$): the average of all spins, from $-1$ (all down) to $+1$ (all up). ([The Ising model](topics/ising-model/index.md#step-1-tiny-magnets-on-a-grid))
+
 **Markov chain**: a random process whose next state depends only on the current state, like a literal's memory position moving one step per training example. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-4-one-literal-one-class-a-random-walk))
+
+**Markov chain Monte Carlo** (MCMC): sampling from a distribution by taking many small random steps whose long-run visits follow that distribution; Metropolis is the classic example. ([The Ising model](topics/ising-model/index.md#step-4-one-flip-at-a-time-the-metropolis-rule))
 
 **Markov decision process** (MDP): the formal model of an RL problem: states, actions, dynamics $p(s', r \mid s, a)$ and a discount $\gamma$. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-2-the-markov-decision-process))
 
 **Markov property**: the next state and reward depend only on the current state and action, not on the earlier history. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-1-the-markov-property-the-state-is-all-you-need))
+
+**Markov random field**: a probability model in which each variable interacts directly only with its neighbours, such as pixels in an image. ([The Ising model](topics/ising-model/index.md#step-7-an-ai-example-cleaning-a-noisy-picture))
 
 **Masking** (x_k := 1): hiding the word to be predicted, so that it counts as True in every rule and its memory is frozen during feedback. ([Autoencoders & embeddings](topics/tsetlin-machine-autoencoder/index.md#step-2-one-pool-of-rules-one-weight-per-word))
 
@@ -221,6 +245,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **Memory depth** (D): the number of memory positions per literal (the book's Chapter 1 uses 10), equal to the 2N states of a Tsetlin automaton; deeper memory gives sharper, more decisive but slower-changing outcomes. ([The Tsetlin automaton](topics/tsetlin-automaton/index.md#step-6-deeper-memory-sharper-decisions))
 
 **Message passing**: in a graph Tsetlin machine, a node sends a rule's name to its neighbours wherever that rule's parts so far match, and the next layer's rule parts read these messages. ([Hierarchical & graph TMs](topics/graph-tsetlin-machine/index.md#step-4-messages-rules-tell-the-neighbours-what-they-found))
+
+**Metropolis algorithm**: a sampling method that proposes a small change and accepts it always if the energy does not rise, and with probability $e^{-\Delta E/T}$ if it does. ([The Ising model](topics/ising-model/index.md#step-4-one-flip-at-a-time-the-metropolis-rule))
 
 **Mini-batch**: a small random subset of the training data used to estimate the gradient for one step.
 
@@ -268,7 +294,11 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Partially observable MDP** (POMDP): a problem where the agent's observation misses information needed to predict the future, so it is not Markov. ([MDPs & Bellman equations](topics/mdp-bellman-equations/index.md#step-1-the-markov-property-the-state-is-all-you-need))
 
+**Partition function** ($Z$): the sum of $e^{-E/T}$ over all patterns, which turns Boltzmann weights into probabilities and is usually too large to compute. ([The Ising model](topics/ising-model/index.md#step-3-temperature-order-against-chance))
+
 **Pessimism** (offline RL): the principle of distrusting values for actions the data doesn't support, by constraining or penalising them (BCQ, CQL, IQL). ([Offline RL & imitation](topics/offline-rl-imitation/index.md#step-6-the-fix-be-pessimistic-about-what-you-have-not-seen))
+
+**Phase transition**: a sudden change in the overall behaviour of a system at a particular temperature, such as the Ising model losing its magnetisation. ([The Ising model](topics/ising-model/index.md#step-6-the-phase-transition))
 
 **Planning**: computing or improving a policy from experience imagined with a model, without acting in the real environment. ([Model-based RL & planning](topics/model-based-rl/index.md#step-1-what-is-a-model))
 
@@ -368,6 +398,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Specificity** (s): the papers' single knob, with Forget Value 1/s; a larger s gives longer, more specific rules. ([Recognize, Erase & Reject feedback](topics/tsetlin-machine-feedback/index.md#step-3-recognize-feedback-become-more-like-this-example))
 
+**Spin** ($s_i$): one two-state unit of the Ising model, $+1$ (up) or $-1$ (down). ([The Ising model](topics/ising-model/index.md#step-1-tiny-magnets-on-a-grid))
+
 **Staircase output**: the piecewise-constant prediction of a regression Tsetlin machine, a sum of interval rules. ([Regression](topics/tsetlin-machine-regression/index.md#step-2-numbers-in-intervals-out-the-staircase))
 
 **State** ($s$): a description of the situation the agent is in at a given time step. ([What is RL?](topics/reinforcement-learning-intro/index.md#step-2-the-loop-agent-and-environment))
@@ -386,6 +418,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 
 **Sweep**: one pass of updates over every state of an MDP. ([Dynamic programming](topics/dynamic-programming/index.md#step-1-turn-the-bellman-equation-into-an-update-rule-policy-evaluation))
 
+**Sweep (Monte Carlo)**: as many attempted spin flips as there are spins, the usual unit of time in an Ising simulation. ([The Ising model](topics/ising-model/index.md#step-4-one-flip-at-a-time-the-metropolis-rule))
+
 **Target in votes** ($\tau$): a numeric target rewritten as a number of votes, $\tau = (y-y_{\min})/(y_{\max}-y_{\min})\,T$. ([Regression](topics/tsetlin-machine-regression/index.md#step-3-feedback-the-errors-sign-picks-the-kind-its-size-the-probability))
 
 **Target network** (θ⁻): A periodically synced, frozen copy of the Q-network used only to compute TD targets, so the regression labels hold still. ([Deep Q-Networks](topics/deep-q-networks/index.md#step-5-problem-2-chasing-a-moving-target-the-target-network))
@@ -397,6 +431,8 @@ Every term used on this site, in one sentence. Terms link to the lesson where th
 **TD error** ($\delta_t$): the one-step surprise $r_{t+1} + \gamma V(s_{t+1}) - V(s_t)$, which drives every TD update. ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-3-td0-learn-a-guess-from-a-guess))
 
 **TD target**: the value $r_{t+1} + \gamma V(s_{t+1})$ that TD(0) moves $V(s_t)$ toward. ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-3-td0-learn-a-guess-from-a-guess))
+
+**Temperature** ($T$): the amount of randomness in the Boltzmann distribution; low $T$ concentrates probability on low-energy patterns, high $T$ spreads it evenly. ([The Ising model](topics/ising-model/index.md#step-3-temperature-order-against-chance))
 
 **Temporal-difference (TD) learning** (TD(0)): learning values after every step by moving $V(s)$ toward $r + \gamma V(s')$; it samples like Monte Carlo and bootstraps like DP. ([Monte Carlo & TD learning](topics/monte-carlo-td-learning/index.md#step-3-td0-learn-a-guess-from-a-guess))
 
